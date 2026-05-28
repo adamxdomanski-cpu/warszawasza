@@ -1,0 +1,557 @@
+# =========================================================
+# FIRA FLOW V3
+# OFP / TEMPORAL PROPAGATION ENGINE
+#
+# GTFS
+#   -> H3 field
+#   -> temporal propagation
+#   -> persistence
+#   -> congestion
+#   -> velocity vectors
+#   -> animated deck.gl
+#
+# =========================================================
+#
+# pip install pandas numpy h3 pydeck
+#
+# =========================================================
+
+import json
+from collections import defaultdict
+
+import h3
+import numpy as np
+import pandas as pd
+import pydeck as pdk
+
+# =========================================================
+# CONFIG
+# =========================================================
+
+GTFS_PATH = "./gtfs/"
+
+H3_RESOLUTION = 8
+
+WARSAW_LAT = 52.2297
+WARSAW_LON = 21.0122
+
+MAP_STYLE = "mapbox://styles/mapbox/dark-v11"
+
+# =========================================================
+# LOAD GTFS
+# =========================================================
+
+print()
+print("======================================")
+print("FIRA FLOW V3")
+print("======================================")
+
+stops = pd.read_csv(
+    GTFS_PATH + "stops.txt"
+)
+
+stop_times = pd.read_csv(
+    GTFS_PATH + "stop_times.txt"
+)
+
+# =========================================================
+# STOPS -> H3
+# =========================================================
+
+print()
+print("[INFO] Mapping stops to H3...")
+
+stops["h3"] = stops.apply(
+
+    lambda r: h3.latlng_to_cell(
+        r["stop_lat"],
+        r["stop_lon"],
+        H3_RESOLUTION
+    ),
+
+    axis=1
+
+)
+
+stop_to_h3 = dict(
+    zip(
+        stops["stop_id"],
+        stops["h3"]
+    )
+)
+
+# =========================================================
+# SORT TRAJECTORIES
+# =========================================================
+
+stop_times = stop_times.sort_values(
+    by=[
+        "trip_id",
+        "stop_sequence"
+    ]
+)
+
+# =========================================================
+# FIELD OPERATORS
+# =========================================================
+
+print("[INFO] Building propagation field...")
+
+# ---------------------------------------------------------
+# Φ(x,t)
+# temporal density
+# --------------------------------------------------------
+
+density = defaultdict(float)
+
+# ---------------------------------------------------------
+# E(x,t)
+# propagation edges
+# ---------------------------------------------------------
+
+edges = defaultdict(float)
+
+# ---------------------------------------------------------
+# P(x,t)
+# persistence
+# ---------------------------------------------------------
+
+persistence = defaultdict(float)
+
+# ---------------------------------------------------------
+# Cg(x,t)
+# congestion
+# ---------------------------------------------------------
+
+congestion = defaultdict(float)
+
+# =========================================================
+# BUILD FIELD
+# =========================================================
+
+previous_trip = None
+previous_h3 = None
+previous_hour = None
+
+for _, row in stop_times.iterrows():
+
+    stop_id = row["stop_id"]
+    trip_id = row["trip_id"]
+
+    if stop_id not in stop_to_h3:
+        continue
+
+    h = stop_to_h3[stop_id]
+
+    # -----------------------------------------------------
+    # TIME
+    # -----------------------------------------------------
+
+    try:
+
+        dep = str(row["departure_time"])
+
+        hour = int(dep.split(":")[0]) % 24
+
+    except:
+
+        continue
+
+    # =====================================================
+    # TEMPORAL DENSITY
+    # =====================================================
+
+    density[(h, hour)] += 1
+
+    # =====================================================
+    # PERSISTENCE
+    # =====================================================
+
+    persistence[h] += 1
+
+    # =====================================================
+    # PROPAGATION EDGES
+    # =====================================================
+
+    if previous_trip == trip_id:
+
+        if previous_h3 != h:
+
+            edge_key = (
+                previous_h3,
+                h,
+                hour
+            )
+
+            edges[edge_key] += 1
+
+    previous_trip = trip_id
+    previous_h3 = h
+    previous_hour = hour
+
+# =========================================================
+# CONGESTION OPERATOR
+# =========================================================
+
+print("[INFO] Computing congestion...")
+
+for (h, hour), val in density.items():
+
+    neighbor_sum = 0
+
+    neighbors = h3.grid_disk(h, 1)
+
+    for n in neighbors:
+
+        neighbor_sum += density.get(
+            (n, hour),
+            0
+        )
+
+    congestion[(h, hour)] = (
+        val / (neighbor_sum + 1)
+    )
+
+# =========================================================
+# BUILD TEMPORAL DATAFRAME
+# =========================================================
+
+print("[INFO] Building temporal field...")
+
+max_density = max(
+    density.values()
+)
+
+rows = []
+
+for (h, hour), val in density.items():
+
+    lat, lon = h3.cell_to_latlng(h)
+
+    cong = congestion[(h, hour)]
+
+    pers = persistence[h]
+
+    rows.append({
+
+        "h3": h,
+
+        "hour": hour,
+
+        "lat": lat,
+        "lon": lon,
+
+        "density": val,
+
+        "density_norm":
+            val / max_density,
+
+        "persistence":
+            pers,
+
+        "congestion":
+            cong,
+
+        # ---------------------------------------------
+        # OFP FIELD STATE
+        # ---------------------------------------------
+
+        "phi":
+            (
+                0.6 * val
+                +
+                0.25 * pers
+                -
+                0.15 * cong
+            )
+
+    })
+
+field_df = pd.DataFrame(rows)
+
+print(
+    "[INFO] field rows:",
+    len(field_df)
+)
+
+# =========================================================
+# BUILD FLOW DATAFRAME
+# =========================================================
+
+print("[INFO] Building propagation edges...")
+
+max_flow = max(
+    edges.values()
+) if len(edges) > 0 else 1
+
+edge_rows = []
+
+for (h1, h2, hour), val in edges.items():
+
+    lat1, lon1 = h3.cell_to_latlng(h1)
+    lat2, lon2 = h3.cell_to_latlng(h2)
+
+    edge_rows.append({
+
+        "hour": hour,
+
+        "source_lon": lon1,
+        "source_lat": lat1,
+
+        "target_lon": lon2,
+        "target_lat": lat2,
+
+        "flow": val,
+
+        "flow_norm":
+            val / max_flow
+
+    })
+
+edge_df = pd.DataFrame(edge_rows)
+
+print(
+    "[INFO] propagation edges:",
+    len(edge_df)
+)
+
+# =========================================================
+# EXPORT GEOJSON
+# =========================================================
+
+print("[INFO] Exporting GeoJSON...")
+
+features = []
+
+for _, row in field_df.iterrows():
+
+    boundary = h3.cell_to_boundary(
+        row["h3"]
+    )
+
+    coords = [
+        [lng, lat]
+        for lat, lng in boundary
+    ]
+
+    coords.append(coords[0])
+
+    feature = {
+
+        "type": "Feature",
+
+        "properties": {
+
+            "hour":
+                int(row["hour"]),
+
+            "density":
+                float(row["density"]),
+
+            "persistence":
+                float(row["persistence"]),
+
+            "congestion":
+                float(row["congestion"]),
+
+            "phi":
+                float(row["phi"])
+
+        },
+
+        "geometry": {
+
+            "type": "Polygon",
+
+            "coordinates": [coords]
+
+        }
+
+    }
+
+    features.append(feature)
+
+geojson = {
+
+    "type": "FeatureCollection",
+
+    "features": features
+
+}
+
+with open(
+    "h3_temporal_field.geojson",
+    "w"
+) as f:
+
+    json.dump(
+        geojson,
+        f
+    )
+
+# =========================================================
+# DECK.GL LAYERS
+# =========================================================
+
+print("[INFO] Building deck.gl layers...")
+
+# ---------------------------------------------------------
+# FIELD LAYER
+# ---------------------------------------------------------
+
+hex_layer = pdk.Layer(
+
+    "H3HexagonLayer",
+
+    data=field_df,
+
+    pickable=True,
+
+    extruded=True,
+
+    filled=True,
+
+    stroked=False,
+
+    get_hexagon="h3",
+
+    get_fill_color="""
+    [
+        phi * 3,
+        180,
+        255 - phi * 2,
+        180
+    ]
+    """,
+
+    get_elevation="""
+    phi * 8
+    """,
+
+    elevation_scale=6,
+
+)
+
+# ---------------------------------------------------------
+# FLOW LAYER
+# ---------------------------------------------------------
+
+flow_layer = pdk.Layer(
+
+    "ArcLayer",
+
+    data=edge_df,
+
+    pickable=True,
+
+    get_source_position=
+        "[source_lon, source_lat]",
+
+    get_target_position=
+        "[target_lon, target_lat]",
+
+    get_width=
+        "flow_norm * 10",
+
+    get_source_color=
+        "[0,255,255,120]",
+
+    get_target_color=
+        "[255,0,255,120]",
+
+)
+
+# =========================================================
+# VIEW
+# =========================================================
+
+view_state = pdk.ViewState(
+
+    latitude=WARSAW_LAT,
+    longitude=WARSAW_LON,
+
+    zoom=10,
+    pitch=45,
+
+)
+
+# =========================================================
+# BUILD MAP
+# =========================================================
+
+print("[INFO] Building deck...")
+
+deck = pdk.Deck(
+
+    layers=[
+        hex_layer,
+        flow_layer
+    ],
+
+    initial_view_state=view_state,
+
+    map_style=MAP_STYLE,
+
+    tooltip={
+
+        "html":
+            "<b>Hour:</b> {hour}<br/>"
+            "<b>Density:</b> {density}<br/>"
+            "<b>Persistence:</b> {persistence}<br/>"
+            "<b>Congestion:</b> {congestion}<br/>"
+            "<b>Φ:</b> {phi}",
+
+        "style": {
+
+            "backgroundColor": "black",
+            "color": "white"
+
+        }
+
+    }
+
+)
+
+# =========================================================
+# EXPORT HTML
+# =========================================================
+
+print("[INFO] Exporting HTML...")
+
+deck.to_html(
+    "deck_map.html",
+    notebook_display=False
+)
+
+# ========================================================
+# SUMMARY
+# =========================================================
+
+print()
+print("======================================")
+print("FIRA FLOW V3 READY")
+print("======================================")
+
+print()
+print("Generated:")
+print("- deck_map.html")
+print("- h3_temporal_field.geojson")
+
+print()
+print("Operators:")
+print("Φ(x,t)  = density field")
+print("E(x,t)  = propagation edges")
+print("P(x,t)  = persistence")
+print("Cg(x,t) = congestion")
+
+print()
+print("Field Prnciple:")
+print(
+    "system modulates propagation conditions,\n"
+    "not trajectories directly"
+)
+
+print()
+print("======================================")>>>
+exit()
+
