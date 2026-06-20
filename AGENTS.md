@@ -22,10 +22,18 @@ sudo apt-get install -y python3.12-venv
 
 From repo root:
 
+Run **both** services for the Next.js UI (same browser port **8000**):
+
 ```bash
+# Terminal 1 — FastAPI (internal API on 8001)
 source venv/bin/activate
-python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8000 --reload
+python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8001 --reload
+
+# Terminal 2 — Next.js frontend (browser UI on 8000, proxies API to 8001)
+cd frontend && npm run dev
 ```
+
+Legacy embedded UI only (no Next.js): run FastAPI alone on **8000** and open http://127.0.0.1:8000/
 
 - Copy `.env.example` to `.env` and set `MIXPANEL_PROJECT_TOKEN` for analytics (optional; tracking is a no-op when unset).
 - There is no `requirements.txt`; dependencies are installed into `venv` via the VM update script (`fastapi`, `uvicorn`, `pydantic`, `mixpanel`, `python-dotenv`).
@@ -34,14 +42,16 @@ python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8000 --reload
 **Smoke checks:**
 
 ```bash
-curl http://127.0.0.1:8000/ping
-curl -X POST http://127.0.0.1:8000/generate \
+curl http://127.0.0.1:8001/ping
+curl -X POST http://127.0.0.1:8001/generate \
   -H 'Content-Type: application/json' \
   -d '{"input":"MOJA WARSZAWA"}'
-curl http://127.0.0.1:8000/topdrops
+curl http://127.0.0.1:8000/topdrops   # proxied through Next.js to 8001
 ```
 
 Browser UI: `http://127.0.0.1:8000/` — click **GENERATE TOP DROPS**.
+
+**Connection error -102 / ERR_CONNECTION_REFUSED:** nothing is listening on that port. Use **8000** (Next.js) when both services run, not **3000**. Port 3000 is unused in this repo.
 
 ### Mixpanel analytics
 
@@ -53,13 +63,15 @@ Set `MIXPANEL_PROJECT_TOKEN` in `.env` (project token from Mixpanel → Settings
 
 The UI sends `X-Distinct-Id` on API calls so server events can link to the same Mixpanel user.
 
-### Frontend (optional, not runnable as an app)
+### Frontend (Next.js on port 8000)
 
 ```bash
 cd frontend && npm ci
+cp .env.example .env
+npm run dev
 ```
 
-`npm test` exits with an error by design (`no test specified`). There are no `dev`/`build` scripts until a Next.js app is added.
+Axios client: `frontend/lib/api.ts` — uses `window.location.origin` (port **8000**) and Next.js rewrites proxy API calls to FastAPI on **8001**.
 
 ### FIRA Flow (optional)
 

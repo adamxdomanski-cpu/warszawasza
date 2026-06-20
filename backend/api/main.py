@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Header, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 
@@ -6,6 +7,19 @@ from backend.analytics.mixpanel_client import tracker
 from backend.engine.engine import WarszawaszaEngine
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 engine = WarszawaszaEngine()
 
@@ -177,7 +191,7 @@ def home():
                         mixpanel.track("top_drops_clicked");
                     }}
 
-                    const res = await fetch("/topdrops", {{
+                    const res = await fetch(`${{window.location.origin}}/topdrops`, {{
                         headers: analyticsHeaders(),
                     }});
                     const data = await res.json();
