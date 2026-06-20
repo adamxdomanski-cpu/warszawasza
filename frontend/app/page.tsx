@@ -46,7 +46,9 @@ export default function Home() {
               <br />
               Twoja.
               <br />
-              Wasza Warszawa.
+              Wasza.
+              <br />
+              Warszawa.
             </h1>
             <p className="lede">
               Warszawasza turns the city into language: wearable signals, live
