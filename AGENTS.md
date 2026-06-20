@@ -27,8 +27,8 @@ source venv/bin/activate
 python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-- No `.env` or secrets are required.
-- There is no `requirements.txt`; dependencies are installed into `venv` via the VM update script (`fastapi`, `uvicorn`, `pydantic`).
+- Copy `.env.example` to `.env` and set `MIXPANEL_PROJECT_TOKEN` for analytics (optional; tracking is a no-op when unset).
+- There is no `requirements.txt`; dependencies are installed into `venv` via the VM update script (`fastapi`, `uvicorn`, `pydantic`, `mixpanel`, `python-dotenv`).
 - Run the server from the **repository root** so `backend.*` imports resolve.
 
 **Smoke checks:**
@@ -42,6 +42,16 @@ curl http://127.0.0.1:8000/topdrops
 ```
 
 Browser UI: `http://127.0.0.1:8000/` — click **GENERATE TOP DROPS**.
+
+### Mixpanel analytics
+
+Set `MIXPANEL_PROJECT_TOKEN` in `.env` (project token from Mixpanel → Settings → Access Keys).
+
+**Server events:** `api_ping`, `content_generated`, `top_drops_viewed`, `drop001_viewed`
+
+**Browser events:** page view (auto), `top_drops_clicked`, `top_drops_loaded`
+
+The UI sends `X-Distinct-Id` on API calls so server events can link to the same Mixpanel user.
 
 ### Frontend (optional, not runnable as an app)
 
