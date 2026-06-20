@@ -53,6 +53,30 @@ Browser UI: `http://127.0.0.1:8000/` — click **GENERATE TOP DROPS**.
 
 **Connection error -102 / ERR_CONNECTION_REFUSED:** nothing is listening on that port. Use **8000** (Next.js) when both services run, not **3000**. Port 3000 is unused in this repo.
 
+**`127.0.0.1 odrzucił połączenie` w Cursor Cloud:** `127.0.0.1` w Twojej lokalnej przeglądarce to Twój komputer, nie VM agenta. Zrób jedno z poniższych:
+
+1. **Ports / forwarded URL** — w Cursorze przekieruj port **8000** i otwórz wygenerowany adres (np. `https://…-8000.app…`), nie lokalne `127.0.0.1`.
+2. **Desktop pane** — otwórz przeglądarkę w VM: http://127.0.0.1:8000/
+3. **Lokalnie na swoim PC** — uruchom oba serwisy poniżej; dopiero wtedy `http://127.0.0.1:8000/` zadziała u Ciebie.
+
+Szybki start (oba serwisy):
+
+```bash
+# tmux sesja API (8001)
+tmux new-session -d -s warszawasza-api -c /workspace \
+  'source venv/bin/activate && python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8001 --reload'
+
+# tmux sesja frontend (8000)
+tmux new-session -d -s warszawasza-web -c /workspace/frontend 'npm run dev'
+```
+
+Tylko backend (prostsze, jeden port **8000**, bez Next.js):
+
+```bash
+source venv/bin/activate
+python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
 ### Mixpanel analytics
 
 Set `MIXPANEL_PROJECT_TOKEN` in `.env` (project token from Mixpanel → Settings → Access Keys).
