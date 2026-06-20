@@ -1,0 +1,11 @@
+{
+  "name": "warszawasza",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "start": "npm run start --prefix frontend",
+    "dev:api": "source venv/bin/activate && python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8001 --reload"
+  }
+}
