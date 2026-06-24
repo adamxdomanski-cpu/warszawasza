@@ -17,7 +17,7 @@ const sharedSymbols: SymbolEntry[] = [
   { glyph: "FIRA", name: "FIRA", meaning: "philosophy" },
   { glyph: "LUCY", name: "LUCY", meaning: "point of attention" },
   { glyph: "⚡", name: "signal", meaning: "change / pulse" },
-  { glyph: "`", name: "citrus tail", meaning: "signal trace" },
+  { glyph: "`", name: "citrus cursor", meaning: "attention trail" },
   { glyph: "⌖", name: "orientation", meaning: "where to look" },
 ];
 
@@ -43,9 +43,20 @@ export const copy = {
       "Tam, gdzie spojrzenie się zatrzymuje — zanim miasto zdąży wyjaśnić siebie do końca.",
     designNote:
       "Nie wyjaśniaj wszystkiego. Zostaw przestrzeń na interpretację.",
+    citrusCursorTitle: "Cytrusowy Kursar",
+    citrusCursorNot: "Cytrusowy Kursar nie jest wskaźnikiem.",
+    citrusCursorIs:
+      "To widoczny ślad uwagi poruszającej się przez sygnał i szum.",
+    citrusCursorTrace: "ślad sygnału · ścieżka uwagi · nie element UI",
     trueFalseTitle: "TRUE / FALSE",
     trueFalseSub: "terminal poetry // urban fragments",
     dichotomies: [
+      {
+        trueLabel: "TRAIL",
+        falseLabel: "POINTER",
+        trueText: "Cytrusowy Kursar — ślad uwagi w polu sygnału.",
+        falseText: "Nie kursor. Nie klik. Nie interfejs sklepu.",
+      },
       {
         trueLabel: "TRUE",
         falseLabel: "FALSE",
@@ -74,8 +85,8 @@ export const copy = {
             ? "punkt uwagi"
             : s.name === "signal"
               ? "zmiana / impuls"
-              : s.name === "citrus tail"
-                ? "ślad sygnału"
+              : s.name === "citrus cursor"
+                ? "ślad uwagi — nie wskaźnik"
                 : "orientacja",
     })),
     fieldLabel: "FIELD PHASE",
@@ -109,9 +120,20 @@ export const copy = {
     lucyText:
       "Where the gaze stops — before the city explains itself completely.",
     designNote: "Do not explain everything. Leave space for interpretation.",
+    citrusCursorTitle: "The Citrus Cursor",
+    citrusCursorNot: "The Citrus Cursor is not a pointer.",
+    citrusCursorIs:
+      "It is the visible trail left by attention moving through signal and noise.",
+    citrusCursorTrace: "signal trace · attention path · not UI chrome",
     trueFalseTitle: "TRUE / FALSE",
     trueFalseSub: "terminal poetry // urban fragments",
     dichotomies: [
+      {
+        trueLabel: "TRAIL",
+        falseLabel: "POINTER",
+        trueText: "The Citrus Cursor — a trace of attention in the field.",
+        falseText: "Not a cursor. Not a click. Not a shop interface.",
+      },
       {
         trueLabel: "TRUE",
         falseLabel: "FALSE",
@@ -164,9 +186,20 @@ export const copy = {
       "Dove lo sguardo si ferma — prima che la città finisca di spiegarsi.",
     designNote:
       "Non spiegare tutto. Lascia spazio all'interpretazione — come in una pagina di rivista.",
+    citrusCursorTitle: "Cursore Agrumato",
+    citrusCursorNot: "Il Cursore Agrumato non è un puntatore.",
+    citrusCursorIs:
+      "È la scia visibile lasciata dall'attenzione che attraversa segnale e rumore.",
+    citrusCursorTrace: "traccia del segnale · percorso dell'attenzione · non UI",
     trueFalseTitle: "TRUE / FALSE",
     trueFalseSub: "poesia terminale // frammenti urbani",
     dichotomies: [
+      {
+        trueLabel: "TRAIL",
+        falseLabel: "POINTER",
+        trueText: "Cursore Agrumato — scia dell'attenzione nel campo.",
+        falseText: "Non un cursore. Non un click. Non una vetrina.",
+      },
       {
         trueLabel: "TRUE",
         falseLabel: "FALSE",
@@ -195,8 +228,8 @@ export const copy = {
             ? "punto di attenzione"
             : s.name === "signal"
               ? "cambiamento"
-              : s.name === "citrus tail"
-                ? "traccia del segnale"
+              : s.name === "citrus cursor"
+                ? "scia dell'attenzione — non puntatore"
                 : "orientamento",
     })),
     fieldLabel: "FIELD PHASE",
