@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Syne } from "next/font/google";
+import { Fira_Sans, IBM_Plex_Mono } from "next/font/google";
 
 import "./globals.css";
 
-const syne = Syne({
+const firaSans = Fira_Sans({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-syne",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-fira",
   display: "swap",
 });
 
@@ -17,9 +18,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WARSZAWASZA | Moja, Twoja, Wasza Warszawa",
+  title: "WARSZAWASZA // FIRA // LUCY",
   description:
-    "Warszawasza — miejski silnik sygnału: streetwear, FIRA, język tożsamości.",
+    "Warszawa nie jest produktem. Warszawa jest stanem. Dark editorial urban system.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -43,8 +44,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${syne.variable} ${ibmPlexMono.variable}`}>
-      <body className="mobile-shell min-h-screen overflow-x-hidden bg-[#050505] font-[family-name:var(--font-syne)] antialiased">
+    <html lang="pl" className={`${firaSans.variable} ${ibmPlexMono.variable}`}>
+      <body className="mobile-shell min-h-screen overflow-x-hidden bg-[#050505] font-[family-name:var(--font-fira)] antialiased">
         {children}
       </body>
     </html>

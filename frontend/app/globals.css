@@ -4,7 +4,8 @@
   color-scheme: dark;
   --warszawa-red: #e40045;
   --warszawa-black: #050505;
-  --warszawa-grid: rgba(255, 255, 255, 0.04);
+  --warszawa-graphite: #111111;
+  --warszawa-grid: rgba(255, 255, 255, 0.035);
 }
 
 html {
@@ -30,14 +31,10 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-@media (max-width: 767px) {
-  .grid-noise {
-    background-size: 32px 32px;
-  }
-
-  .scanlines::after {
-    opacity: 0.12;
-  }
+.editorial-shell {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, #1a1a1a 0%, transparent 55%),
+    var(--warszawa-black);
 }
 
 ::selection {
@@ -52,6 +49,16 @@ body {
   background-size: 48px 48px;
 }
 
+.grain::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .scanlines::after {
   content: "";
   pointer-events: none;
@@ -60,18 +67,18 @@ body {
   z-index: 50;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.08) 0px,
-    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.07) 0px,
+    rgba(0, 0, 0, 0.07) 1px,
     transparent 1px,
-    transparent 3px
+    transparent 4px
   );
-  opacity: 0.25;
+  opacity: 0.18;
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
-    opacity: 0.45;
+    opacity: 0.4;
   }
   50% {
     opacity: 1;
@@ -95,7 +102,21 @@ body {
 
 .cursor-blink::after {
   content: "▌";
-  margin-left: 0.15em;
+  margin-left: 0.12em;
   color: var(--warszawa-red);
   animation: blink 1s step-end infinite;
+}
+
+@media (max-width: 767px) {
+  .grid-noise {
+    background-size: 32px 32px;
+  }
+
+  .scanlines::after {
+    opacity: 0.1;
+  }
+
+  .grain::before {
+    opacity: 0.035;
+  }
 }
