@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --warszawa-red: #e40045;
+  --warszawa-black: #050505;
+  --warszawa-grid: rgba(255, 255, 255, 0.04);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--warszawa-black);
+  color: white;
+}
+
+::selection {
+  background: rgba(228, 0, 69, 0.35);
+  color: white;
+}
+
+.grid-noise {
+  background-image:
+    linear-gradient(var(--warszawa-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--warszawa-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.scanlines::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.08) 0px,
+    rgba(0, 0, 0, 0.08) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.25;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink::after {
+  content: "▌";
+  margin-left: 0.15em;
+  color: var(--warszawa-red);
+  animation: blink 1s step-end infinite;
+}
