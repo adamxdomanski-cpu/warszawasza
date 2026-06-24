@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { CitrusCursorSection } from "../components/CitrusCursorSection";
+import { CitrusCursor } from "../components/CitrusCursor";
 import { FieldWatch } from "../components/FieldWatch";
 import { FiraLucySection } from "../components/FiraLucySection";
 import { LanguageToggle } from "../components/LanguageToggle";
@@ -97,12 +97,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <CitrusCursorSection
-          title={t.citrusCursorTitle}
-          notLine={t.citrusCursorNot}
-          isLine={t.citrusCursorIs}
-          traceNote={t.citrusCursorTrace}
-        />
+        <CitrusCursor {...t.citrusMotif} />
 
         <FiraLucySection
           firaLabel={t.firaLabel}

@@ -19,6 +19,7 @@ const sharedSymbols: SymbolEntry[] = [
   { glyph: "⚡", name: "signal", meaning: "change / pulse" },
   { glyph: "`", name: "citrus cursor", meaning: "attention trail" },
   { glyph: "⌖", name: "orientation", meaning: "where to look" },
+  { glyph: "◇", name: "signal crystal", meaning: "polished signal / artifact" },
 ];
 
 export const copy = {
@@ -43,11 +44,42 @@ export const copy = {
       "Tam, gdzie spojrzenie się zatrzymuje — zanim miasto zdąży wyjaśnić siebie do końca.",
     designNote:
       "Nie wyjaśniaj wszystkiego. Zostaw przestrzeń na interpretację.",
-    citrusCursorTitle: "Cytrusowy Kursar",
-    citrusCursorNot: "Cytrusowy Kursar nie jest wskaźnikiem.",
-    citrusCursorIs:
-      "To widoczny ślad uwagi poruszającej się przez sygnał i szum.",
-    citrusCursorTrace: "ślad sygnału · ścieżka uwagi · nie element UI",
+    citrusMotif: {
+      sectionTag: "MOTIF",
+      motifLabel: "cytrusowy_kursar.v1",
+      asciiPrimary: "⚡ ~~~~ ◇",
+      asciiAlt: "alternatywa: ⚡ ~~~~ ●",
+      flow: "zmiana → ślad → sygnał",
+      notLine: "Cytrusowy Kursar nie jest wskaźnikiem.",
+      isLine:
+        "To widoczny ślad uwagi poruszającej się przez sygnał i szum.",
+      validationTitle: "TRUE / FALSE",
+      validationTrue: "TRUE — sygnał. Miasto mówi przez fragmenty.",
+      validationFalse: "FALSE — szum. To nie sklep. To nie monitoring.",
+      hudLabel: "Ray-Ban HUD // walidacja pola",
+      lexicon: [
+        {
+          glyph: "⚡",
+          name: "błyskawica",
+          meaning: "impuls, zmiana, anomalia, moment uwagi",
+        },
+        {
+          glyph: "`~~~~`",
+          name: "ogon kursora",
+          meaning: "ślad, pamięć ruchu, ścieżka uwagi",
+        },
+        {
+          glyph: "◇",
+          name: "kryształ sygnału",
+          meaning: "wypolerowany sygnał, artefakt, wzorzec",
+        },
+        {
+          glyph: "T/F",
+          name: "walidacja",
+          meaning: "TRUE = sygnał · FALSE = szum",
+        },
+      ],
+    },
     trueFalseTitle: "TRUE / FALSE",
     trueFalseSub: "terminal poetry // urban fragments",
     dichotomies: [
@@ -87,7 +119,9 @@ export const copy = {
               ? "zmiana / impuls"
               : s.name === "citrus cursor"
                 ? "ślad uwagi — nie wskaźnik"
-                : "orientacja",
+                : s.name === "signal crystal"
+                  ? "kryształ sygnału / artefakt"
+                  : "orientacja",
     })),
     fieldLabel: "FIELD PHASE",
     fieldPhase: "RECOVERY",
@@ -120,11 +154,42 @@ export const copy = {
     lucyText:
       "Where the gaze stops — before the city explains itself completely.",
     designNote: "Do not explain everything. Leave space for interpretation.",
-    citrusCursorTitle: "The Citrus Cursor",
-    citrusCursorNot: "The Citrus Cursor is not a pointer.",
-    citrusCursorIs:
-      "It is the visible trail left by attention moving through signal and noise.",
-    citrusCursorTrace: "signal trace · attention path · not UI chrome",
+    citrusMotif: {
+      sectionTag: "MOTIF",
+      motifLabel: "citrus_cursor.v1",
+      asciiPrimary: "⚡ ~~~~ ◇",
+      asciiAlt: "alt: ⚡ ~~~~ ●",
+      flow: "change → trace → signal",
+      notLine: "The Citrus Cursor is not a pointer.",
+      isLine:
+        "It is the visible trail left by attention moving through signal and noise.",
+      validationTitle: "TRUE / FALSE",
+      validationTrue: "TRUE — signal. The city speaks in fragments.",
+      validationFalse: "FALSE — noise. Not a shop. Not surveillance.",
+      hudLabel: "Ray-Ban HUD // field validation",
+      lexicon: [
+        {
+          glyph: "⚡",
+          name: "lightning",
+          meaning: "impulse, change, anomaly, moment of attention",
+        },
+        {
+          glyph: "`~~~~`",
+          name: "cursor tail",
+          meaning: "trace, memory of movement, path of attention",
+        },
+        {
+          glyph: "◇",
+          name: "signal crystal",
+          meaning: "polished signal, artifact, validated pattern",
+        },
+        {
+          glyph: "T/F",
+          name: "validation",
+          meaning: "TRUE = signal · FALSE = noise",
+        },
+      ],
+    },
     trueFalseTitle: "TRUE / FALSE",
     trueFalseSub: "terminal poetry // urban fragments",
     dichotomies: [
@@ -153,7 +218,21 @@ export const copy = {
         falseText: "Startup gradients. Rainbow UI.",
       },
     ] as Dichotomy[],
-    symbols: sharedSymbols,
+    symbols: sharedSymbols.map((s) => ({
+      ...s,
+      meaning:
+        s.name === "FIRA"
+          ? "philosophy"
+          : s.name === "LUCY"
+            ? "point of attention"
+            : s.name === "signal"
+              ? "change / impulse"
+              : s.name === "citrus cursor"
+                ? "attention trail — not a pointer"
+                : s.name === "signal crystal"
+                  ? "polished signal / artifact"
+                  : "orientation",
+    })),
     fieldLabel: "FIELD PHASE",
     fieldPhase: "RECOVERY",
     fieldWatchTitle: "FIELD WATCH",
@@ -186,11 +265,42 @@ export const copy = {
       "Dove lo sguardo si ferma — prima che la città finisca di spiegarsi.",
     designNote:
       "Non spiegare tutto. Lascia spazio all'interpretazione — come in una pagina di rivista.",
-    citrusCursorTitle: "Cursore Agrumato",
-    citrusCursorNot: "Il Cursore Agrumato non è un puntatore.",
-    citrusCursorIs:
-      "È la scia visibile lasciata dall'attenzione che attraversa segnale e rumore.",
-    citrusCursorTrace: "traccia del segnale · percorso dell'attenzione · non UI",
+    citrusMotif: {
+      sectionTag: "MOTIF",
+      motifLabel: "cursore_agrumato.v1",
+      asciiPrimary: "⚡ ~~~~ ◇",
+      asciiAlt: "alternativa: ⚡ ~~~~ ●",
+      flow: "cambiamento → scia → segnale",
+      notLine: "Il Cursore Agrumato non è un puntatore.",
+      isLine:
+        "È la scia visibile lasciata dall'attenzione che attraversa segnale e rumore.",
+      validationTitle: "TRUE / FALSE",
+      validationTrue: "TRUE — segnale. La città parla a frammenti.",
+      validationFalse: "FALSE — rumore. Non è un negozio. Non sorveglianza.",
+      hudLabel: "Ray-Ban HUD // validazione del campo",
+      lexicon: [
+        {
+          glyph: "⚡",
+          name: "fulmine",
+          meaning: "impulso, cambiamento, anomalia, momento di attenzione",
+        },
+        {
+          glyph: "`~~~~`",
+          name: "coda del cursore",
+          meaning: "traccia, memoria del movimento, percorso dell'attenzione",
+        },
+        {
+          glyph: "◇",
+          name: "cristallo del segnale",
+          meaning: "segnale levigato, artefatto, pattern validato",
+        },
+        {
+          glyph: "T/F",
+          name: "validazione",
+          meaning: "TRUE = segnale · FALSE = rumore",
+        },
+      ],
+    },
     trueFalseTitle: "TRUE / FALSE",
     trueFalseSub: "poesia terminale // frammenti urbani",
     dichotomies: [
@@ -230,7 +340,9 @@ export const copy = {
               ? "cambiamento"
               : s.name === "citrus cursor"
                 ? "scia dell'attenzione — non puntatore"
-                : "orientamento",
+                : s.name === "signal crystal"
+                  ? "cristallo del segnale / artefatto"
+                  : "orientamento",
     })),
     fieldLabel: "FIELD PHASE",
     fieldPhase: "RECOVERY",
