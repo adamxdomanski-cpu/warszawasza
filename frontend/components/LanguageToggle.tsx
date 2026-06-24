@@ -25,7 +25,7 @@ export function LanguageToggle({ lang, onChange }: Props) {
           <button
             type="button"
             onClick={() => onChange(code)}
-            className={`transition ${
+            className={`min-h-[44px] min-w-[44px] px-2 py-2 transition ${
               lang === code
                 ? "text-[#E40045]"
                 : "hover:text-white/80"

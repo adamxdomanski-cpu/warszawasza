@@ -20,6 +20,21 @@ export const metadata: Metadata = {
   title: "WARSZAWASZA | Moja, Twoja, Wasza Warszawa",
   description:
     "Warszawasza — miejski silnik sygnału: streetwear, FIRA, język tożsamości.",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "WARSZAWASZA",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+  themeColor: "#050505",
 };
 
 export default function RootLayout({
@@ -29,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl" className={`${syne.variable} ${ibmPlexMono.variable}`}>
-      <body className="min-h-screen bg-[#050505] font-[family-name:var(--font-syne)] antialiased">
+      <body className="mobile-shell min-h-screen overflow-x-hidden bg-[#050505] font-[family-name:var(--font-syne)] antialiased">
         {children}
       </body>
     </html>

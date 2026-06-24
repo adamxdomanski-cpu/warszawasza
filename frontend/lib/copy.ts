@@ -24,6 +24,7 @@ export const copy = {
     dropsEmpty: "Pole ciche. Uruchom skan, aby odczytać dropy.",
     studio: "Wejście do studia",
     footer: "Moja. Twoja. Wasza. Warszawa.",
+    mobileDomain: "www.warszawasza.online",
   },
   en: {
     title: "WARSZAWASZA",
@@ -48,6 +49,7 @@ export const copy = {
     dropsEmpty: "Field silent. Run scan to read drops.",
     studio: "Studio entrance",
     footer: "Mine. Yours. Ours. Warsaw.",
+    mobileDomain: "www.warszawasza.online",
   },
   it: {
     title: "WARSZAWASZA",
@@ -72,6 +74,7 @@ export const copy = {
     dropsEmpty: "Campo silenzioso. Avvia scansione per leggere i drop.",
     studio: "Ingresso studio",
     footer: "Mia. Tua. Nostra. Varsavia.",
+    mobileDomain: "www.warszawasza.online",
   },
 } as const;
 
