@@ -1,0 +1,179 @@
+---
+description: Warszawasza is an interactive narrative observation system, not a store
+alwaysApply: true
+globs: ["frontend/**"]
+---
+
+# WARSZAWASZA // FIRA // OBSERWACJA TRWA
+
+## Cel projektu
+
+Budujemy **interaktywny system narracji**, nie sklep ani landing e-commerce.
+
+Kluczowa zasada: **OBSERWACJA TRWA** — wszystko zaczyna się od obserwacji.
+
+**Celem nie jest więcej danych. Celem jest mniej szumu.** Nie dodawaj warstw schematu, dashboardów ani logów „dla pełności”. Diamente = sygnał po redukcji szumu. Struktura ma być czytelna przez **odejmowanie**, nie akumulację.
+
+**Każda informacja musi odpowiadać na pytanie: co z tego wynika?** Jeśli element UI/copy nie ma konsekwencji — to szum (FALSE). Jeśli prowadzi do następnego kroku, decyzji lub trajektorii — zostaje (TRUE).
+
+**Krystaliczna czystość interfejsu:** maksymalnie zrozumiały, transparentny, bezpieczny i ciekawy — nie dekoracyjny. T/F: czy element przechodzi test czytelności i uczciwości? Bez hover-ów, bez ukrytych mechanizmów, bez manipulacji uwagą.
+
+## Rozproszone źródła (archeologia pola)
+
+Pomysły autora są rozproszone między folderami. Przy kompilacji sprawdzaj:
+
+| Ścieżka | Co zawiera |
+|---------|------------|
+| `warszawasza/frontend/` | Interfejs obserwacji (Next.js) |
+| `warszawasza/fira_flow/` | Silnik faz pola miejskiego |
+| `warszawasza/backend/` | Engine drops (warstwa produktowa — nie główny UI) |
+| `polandrock_field_engine/polandrock-livemesh/src/mobile_preview.py` | Living Interface v1, OBSERWACJA TRWA |
+| **Obsidian vault `WARSZAWASZA`** | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/WARSZAWASZA/warszawasza/` — kanon, modele, raporty, pipeline badawczy |
+
+### Obsidian — kluczowe notatki
+
+- `02_MODELE/WARSZAWASZA-JAKO-SYSTEM.md` — obserwacja → wpływ, produkt jako nośnik
+- `02_MODELE/FIRA_Civic_Operating_System.md` — PLACE→SIGNAL→FLOW→TRAJECTORY
+- `09_METODOLOGIA/Kanon FIRA.md` — „The system remembers. Humans decide.”
+- `01_PROJEKTY/Warszawasza OS.md` — pipeline: Meta Ray-Ban → FIRA → Obsidian → Warszawasza
+- `00_DASHBOARD/STAN-SYSTEMU.md` — stan vaulta, pipeline Obserwacja→Decyzja
+
+## Język wizualny
+
+- Tło: prawie czarne (#030303), grain, miękki czerwony glow
+- Akcent: **#E40045** (buraczkowa czerwień)
+- Typografia: **Fira Sans** + **Fira Mono** dla HUD
+- Atmosfera: Ray-Ban HUD, północna Warszawa, editorial terminal
+
+## Warstwa narracji
+
+- SYGNAŁ → TARCIE → ADAPTACJA → TRAJEKTORIA
+- Diamente = sygnał · Shafir = tarcie · Lustra = adaptacja · Griffin = trajektoria · FIRA = ruch
+- Dysonans Poznawczy = kwestionuje założenia
+
+## PRIMARY ENTRY
+
+Pierwszy ekran (`ObservationGate`):
+
+1. ● OBSERWACJA TRWA + PL | EN | IT
+2. [ FALSE ] / [ TRUE ] — wybór trajektorii, nie poprawnej odpowiedzi
+3. ⚡ ~~~~ „Nie wybrałeś odpowiedzi. Wybrałeś kierunek.”
+4. Wejście w pole (`LivingInterface`)
+
+## Obiekty narracji
+
+| Symbol | Obiekt | Route |
+|--------|--------|-------|
+| ● | LUCY | punkt uwagi (interakcja) |
+| ◇ | Diamente | `/artefacts/diamente` |
+| ∥ | Shafir | `/artefacts/shafir` |
+| ⌁ | Lustra | `/artefacts/lustra` |
+| ↗ | Griffin | `/artefacts/griffin` |
+| ● | FIRA | `/artefacts/fira` |
+| ≠ | Dysonans | `/meta` |
+| 🕸 | GRAFEN | warstwa tła |
+
+## Pipeline decyzyjny (stan systemu, nie diagram)
+
+8 etapów — każdy ma **własny status jednocześnie** (`DecisionPipeline.tsx`):
+
+```
+Rzeczywistość → Sygnały → Obserwacja → Filtracja → Pamięć → Walidacja → Wiedza → Narracja
+```
+
+Symbole: `○` oczekuje · `◐` analiza · `●` aktywny/zakończono · `≈` hipoteza · `⊗` odrzucono
+
+- **Filtracja** — metafora kompresji (hover blisko etapu): rzeczywistość → ████ → ◉ → jeden sygnał
+- **Pamięć** — ASCII buduje strukturę klatka po klatce
+- **Walidacja** — subtelny cykl binarny (300 ms), nie Matrix
+- **Narracja** — wynik (NARRACJA / HIPOTEZA %), nie etykieta „Decyzja”
+
+Filozofia: **oscyloskop miasta** — system pokazuje proces dochodzenia do wniosku, nie tłumaczy go wall of text.
+
+Silnik: `frontend/lib/pipelineEngine.ts` · copy: `frontend/lib/i18n.ts` · `PIPELINE_ORDER`
+
+## Civic Tech — pozycjonowanie T/T
+
+- **TRUE (instrument):** warstwa listening + deliberation — uwaga, filtracja, walidacja hipotezy
+- **TRUE (most):** `LeaveTraceControl` — rejestr śladów + clipboard + mailto (`frontend/lib/observationTrace.ts`)
+- **FALSE:** udawanie platformy urzędowej (zgłoszenia, budżet partycypacyjny, API miasta) bez implementacji
+
+Nie wdrażaj standalone `index.html` z zewnętrznych promptów — często ucięte CDN/JS. Źródło prawdy: **Next.js w `frontend/`**.
+
+## Deploy
+
+Produkcja: `https://www.warszawasza.online` · root Vercel = `frontend/` · `npm run build` przed push.
+
+## Cursor AI — workflow dla tego repo
+
+1. **Reguły projektu** — `.cursor/rules/warszawasza-field.mdc` (ten plik). Przy większych feature’ach: @-mention plików (`DecisionPipeline.tsx`, `i18n.ts`).
+2. **Mały kontekst wygrywa** — jeden etap pipeline / jeden komponent na prompt. Unikaj „zrób cały civic tech platform”.
+3. **Plan przed kodem** — T/F filter: czy zmiana redukuje szum czy go dodaje?
+4. **Weryfikacja** — `cd frontend && npm run build`. Nie akceptuj uciętego outputu modelu jako „gotowego kodu”.
+5. **Nie commituj** bez prośby użytkownika. Deploy = push na `main` (Vercel).
+
+Przykładowe prompty:
+- „Rozszerz etap Walidacja o X — bez nowych zależności, zgodnie z pipelineEngine”
+- „Dodaj tłumaczenie IT dla trace.* w i18n.ts”
+- „Zostaw instrument; dodaj most do akcji przez [konkretny kanał]”
+
+## Citrus Cursor
+
+⚡~~~~● — pamięć uwagi. `LucyAttention.tsx` — pointer + touch, bez hover.
+
+## Field Energy
+
+Strona nie animuje się — **oddycha**. `GrapheneField.tsx` — żywe pole grafenowe, niska opacity.
+
+## TRUE / FALSE chain
+
+FAŁSZ(0) → ⚡ → ~~~~ → ◇ → PRAWDA(1). FALSE ≠ błąd. TRUE = „jestem gotów kontynuować”.
+
+## Interakcja
+
+Kursor to **uwaga**, nie wskaźnik nawigacji. Subtelny ślad, bez efektów gamingowych.
+
+## MOBILE IS REALITY — konstytucja responsywności
+
+**MASTERHAK #002:** The experience must survive the loss of the cursor.
+
+```
+Desktop → Mobile → Touch → Gaze → Attention
+                              ● OBSERWACJA TRWA
+```
+
+Prawdziwym interfejsem nie jest mysz. Prawdziwym interfejsem jest **uwaga użytkownika**.
+
+### Trzy wejścia, jeden system
+
+| Wejście | Urządzenie | Efekt |
+|---------|------------|-------|
+| Pointer | Desktop | ● ~~~~ |
+| Touch | Telefon | ● ~~~~ |
+| Gaze | Ray-Ban | ● ~~~~ |
+
+Implementacja: `frontend/lib/attention.ts` + `frontend/hooks/useAttention.ts`
+
+### Reguły
+
+1. Design **mobile first** — desktop to bonus, nie odwrotnie.
+2. Każda strona musi działać na **390px**, **768px**, **1440px**.
+3. Brak horizontal scroll. Brak ukrytej krytycznej treści.
+4. Typografia skaluje się płynnie (`clamp`).
+5. Animacje degradują na mobile (`prefers-reduced-motion`).
+6. Efekty kursora → efekty dotyku. Zero zależności od hover.
+7. **ACID TEST:** użytkownik na przystanku tramwajowym, jedna ręka — PASS/FAIL.
+
+### Jeśli działa tylko na desktopie → FAIL
+
+## Języki UI
+
+PL / EN / IT — włoski ma brzmieć filozoficznie, nie jak mechaniczne tłumaczenie.
+
+## WARSZAWASZA META (smart glasses / perception layer)
+
+- Route: `/meta`
+- Not AR, navigation, or surveillance — perception layer only
+- Gaze simulates attention (web: dwell → ●, path → ~~~~, pattern → ◇, change → ⚡)
+- LUCY = attention point; city is the background; UI = text + symbols + traces + light
+- Colors: #E40045 primary, soft sapphire secondary

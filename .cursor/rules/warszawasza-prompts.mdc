@@ -1,0 +1,62 @@
+---
+description: Szablony promptów i rygor operacyjny dla modyfikacji silnika FIRA oraz dystrybucji WARSZAWASZA
+globs: ["frontend/**/*"]
+alwaysApply: false
+---
+
+# WARSZAWASZA — Prompt Engine & Micro-Actions v0.98
+
+Ten plik instruuje model, jak interpretować intencje operatora podczas modyfikacji kodu w `frontend/`. Każda akcja musi przejść przez filtr redukcji szumu.
+
+## MICRO-PROMPTS OPERACYJNE (Wklej i uzupełnij zmienne)
+
+### 1. Aktywacja / Rozbudowa Etapu Pipeline
+
+Use case: modyfikacja konkretnego stanu w silniku lub komponencie wizualnym.
+
+```text
+@DecisionPipeline.tsx @pipelineEngine.ts @warszawasza-field.mdc
+Zadanie: Rozszerz komponent [Wpisz_Nazwę_Komponentu] dla etapu [Wpisz_Etap_Np_validation].
+Rygor: Zmiana musi bezpośrednio odzwierciedlać stan z `pipelineEngine.ts`.
+Wizualizacja: Ruch (ASCII/wektory) musi być czasownikiem — budować się liniowo w czasie trwania etapu.
+Zasada: Zero nowych zależności. Wykonaj `npm run build` w `frontend/` na końcu.
+```
+
+### 2. Tłumaczenia i Semantyka (Internationalization)
+
+Use case: dodawanie kopii językowej. Włoski = język filozofii uniwersum LUCY, nie mechaniki.
+
+```text
+@i18n.ts @warszawasza-field.mdc
+Zadanie: Dodaj klucze lokalizacyjne do COPY w `i18n.ts` dla elementu [Wpisz_Nazwę_Elementu].
+Rygor: EN/PL — surowe, techniczne, laboratoryjne. IT — filozoficzny, poetycki, zgodny z manifestem.
+Nie tłumacz mechanicznie słowo w słowo.
+```
+
+### 3. Civic Most (Integracja Śladu Obywatelskiego)
+
+Use case: metody wejścia/wyjścia (eksport, rejestr śladu, kanał obywatelski).
+
+```text
+@observationTrace.ts @LeaveTraceControl.tsx @pipelineEngine.ts @warszawasza-field.mdc
+Zadanie: Dodaj most obywatelski przez [Wpisz_Metodę_Np_Eksport_JSON_lub_Rejestr_Śladu].
+Rygor: Zachowaj oscyloskop — obywatel zostawia impuls uwagi, nie formularz urzędowy.
+Minimalny diff. Zero szumu wizualnego.
+```
+
+## ANTY-WZORCE (CRITICAL FAST-FAIL)
+
+1. **ZAKAZ autonomicznych plików `index.html`.** Źródło prawdy: Next.js w `frontend/`.
+2. **ZAKAZ ucinania outputu.** Za długi wynik → rozbij na mikro-operacje (np. tylko render jednego etapu).
+3. **ZAKAZ ignorowania builda.** Błąd `npm run build` = stan `REJECTED` — cofnij do bazy.
+
+## DEPLOYMENT
+
+- Root Vercel: `frontend/`
+- Weryfikacja: `cd frontend && npm run build`
+- Produkcja: `https://www.warszawasza.online`
+- Push: `main` → Vercel auto-deploy
+
+## WARSAWJS / DEMO (30 s)
+
+„Cursor buduje instrument obserwacji, nie landing. Pipeline = stan systemu na żywo. Civic tech zaczyna się od uwagi, nie od formularza urzędowego.”
