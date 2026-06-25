@@ -26,7 +26,7 @@ export default function LangNav({
         return (
           <span key={code} className="inline-flex items-center gap-x-2 sm:gap-x-3">
             {index > 0 ? (
-              <span className="select-none text-accent/25" aria-hidden="true">
+              <span className="lang-nav-sep select-none" aria-hidden="true">
                 ·
               </span>
             ) : null}
@@ -34,8 +34,8 @@ export default function LangNav({
               type="button"
               direction="none"
               onClick={() => onChange(code)}
-              className={`min-h-11 min-w-11 touch-manipulation px-1.5 sm:px-2 ${
-                active ? "text-accent opacity-100" : "text-graphite opacity-35"
+              className={`lang-nav-btn min-h-11 min-w-11 touch-manipulation px-1.5 sm:px-2 ${
+                active ? "lang-nav-btn--active" : ""
               }`}
             >
               {label}

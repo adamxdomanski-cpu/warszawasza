@@ -13,6 +13,10 @@
   --color-citrus-glow: rgba(184, 230, 46, 0.42);
   --color-graphite: rgba(190, 190, 188, 0.62);
   --color-ink: rgba(248, 248, 246, 0.94);
+  --color-lang-active: var(--color-accent);
+  --color-lang-idle: rgba(190, 190, 188, 0.52);
+  --color-lang-hover: rgba(228, 0, 69, 0.68);
+  --color-lang-sep: rgba(190, 190, 188, 0.28);
   --font-sans: var(--font-fira-sans), "Fira Sans", sans-serif;
   --font-mono: var(--font-fira-mono), "Fira Mono", monospace;
 }
@@ -27,6 +31,23 @@
     @apply min-h-dvh overflow-x-hidden bg-field text-accent antialiased;
     font-family: var(--font-sans);
     -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  a {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  button:focus,
+  a:focus {
+    outline: none;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 1px solid var(--color-accent-muted);
+    outline-offset: 3px;
   }
 
   html.has-fine-pointer body.field-cursor-none {
@@ -55,6 +76,29 @@
 
   .text-balance-field {
     text-wrap: balance;
+  }
+
+  .lang-nav-sep {
+    color: var(--color-lang-sep);
+  }
+
+  .lang-nav-btn {
+    color: var(--color-lang-idle);
+    transition: color 140ms ease;
+  }
+
+  .lang-nav-btn:hover,
+  .lang-nav-btn:focus-visible {
+    color: var(--color-lang-hover);
+  }
+
+  .lang-nav-btn--active {
+    color: var(--color-lang-active);
+  }
+
+  .lang-nav-btn--active:hover,
+  .lang-nav-btn--active:focus-visible {
+    color: var(--color-lang-active);
   }
 
   .lucy-tail {

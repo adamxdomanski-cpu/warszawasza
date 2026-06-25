@@ -172,7 +172,7 @@
 }
 
 .metaLangSep {
-  color: rgba(228, 0, 69, 0.25);
+  color: rgba(190, 190, 188, 0.28);
   user-select: none;
 }
 
@@ -187,6 +187,7 @@
   letter-spacing: 0.12em;
   cursor: pointer;
   touch-action: manipulation;
+  transition: color 140ms ease;
 }
 
 .metaLangOn {
@@ -194,7 +195,12 @@
 }
 
 .metaLangOff {
-  color: var(--meta-graphite);
+  color: rgba(190, 190, 188, 0.52);
+}
+
+.metaLangOff:hover,
+.metaLangOff:focus-visible {
+  color: rgba(228, 0, 69, 0.68);
 }
 
 .metaTruth {
