@@ -1,5 +1,33 @@
+import {
+  lookupCivicOrgByKrs,
+  lookupCivicOrgByTag,
+  type CivicOrgRecord,
+} from "./civicOrgRegistry";
 import type { PipelineKey } from "./i18n";
 import { STATE } from "./symbols";
+
+export type CivicOrgRef = {
+  krs: string;
+  operationalClass: string;
+  trustLevel: 0 | 1 | 2 | 3 | 4 | 5;
+};
+
+/** Optional observation metadata — mirrors civic_observations + Channel H intersection */
+export type PipelineObservationInput = {
+  civicOrgRef?: CivicOrgRef;
+  sourceNodeId?: string;
+  tags?: string[];
+};
+
+export type CivicOrgIntersection = {
+  matched: CivicOrgRecord;
+  trigger: "civicOrgRef" | "tag" | "sourceNodeId";
+  trustWeight: 0 | 1 | 2 | 3 | 4 | 5;
+  stagesApplied: ("filtration" | "validation")[];
+};
+
+/** Validation stage in PIPELINE_ORDER */
+export const VALIDATION_STAGE_INDEX = 5;
 
 export type StagePhase =
   | "waiting"
@@ -119,4 +147,96 @@ export function resolveChainStepPhase(
   if (stepIndex < chainActive) return "done";
   if (stepIndex > chainActive) return "waiting";
   return analyzing ? "analyzing" : "active";
+}
+
+/**
+ * Cross-check observation input against civic org registry (008 seed).
+ * Fires when civicOrgRef, ngo-watchdog tag, or sourceNodeId matches registry KRS.
+ */
+export function intersectCivicOrg(
+  input: PipelineObservationInput,
+): CivicOrgIntersection | null {
+  if (input.civicOrgRef) {
+    const matched = lookupCivicOrgByKrs(input.civicOrgRef.krs);
+    if (
+      matched &&
+      matched.operationalClass === input.civicOrgRef.operationalClass
+    ) {
+      return buildIntersection(matched, "civicOrgRef");
+    }
+    return null;
+  }
+
+  for (const tag of input.tags ?? []) {
+    const matched = lookupCivicOrgByTag(tag);
+    if (matched) return buildIntersection(matched, "tag");
+  }
+
+  if (input.sourceNodeId) {
+    const matched = lookupCivicOrgByKrs(input.sourceNodeId);
+    if (matched) return buildIntersection(matched, "sourceNodeId");
+  }
+
+  return null;
+}
+
+function buildIntersection(
+  matched: CivicOrgRecord,
+  trigger: CivicOrgIntersection["trigger"],
+): CivicOrgIntersection {
+  return {
+    matched,
+    trigger,
+    trustWeight: matched.trustLevel,
+    stagesApplied: [],
+  };
+}
+
+/** Apply WATCHDOG trust weight at Filtracja / Walidacja when intersection is active */
+export function applyCivicOrgTrustAtStage(
+  stageIndex: number,
+  intersection: CivicOrgIntersection | null,
+): CivicOrgIntersection | null {
+  if (!intersection) return null;
+  if (
+    stageIndex !== FILTRATION_STAGE_INDEX &&
+    stageIndex !== VALIDATION_STAGE_INDEX
+  ) {
+    return intersection;
+  }
+
+  const stage =
+    stageIndex === FILTRATION_STAGE_INDEX ? "filtration" : "validation";
+  if (intersection.stagesApplied.includes(stage)) return intersection;
+
+  return {
+    ...intersection,
+    stagesApplied: [...intersection.stagesApplied, stage],
+  };
+}
+
+/** Console / trace line — technical metadata only (no PII) */
+export function formatCivicOrgIntersectionTrace(
+  intersection: CivicOrgIntersection,
+): string {
+  const { matched, trigger, trustWeight, stagesApplied } = intersection;
+  const stageNote =
+    stagesApplied.length > 0 ? stagesApplied.join("+") : "pending";
+  return [
+    "CIVIC_ORG ∩ stream",
+    `KRS ${matched.krs} → ${matched.operationalClass} · trust ${trustWeight}`,
+    `trigger:${trigger} · stages:${stageNote}`,
+  ].join(" · ");
+}
+
+/** Default observation input for ?ngo-watchdog=1 test hook */
+export function ngoWatchdogObservationInput(): PipelineObservationInput {
+  return {
+    tags: ["ngo-watchdog"],
+    civicOrgRef: {
+      krs: "0000217821",
+      operationalClass: "WATCHDOG",
+      trustLevel: 5,
+    },
+  };
 }

@@ -36,13 +36,15 @@ Dystrybucja gotowa lokalnie; prod na 50f6bfe do czasu push.
 | **Cursor rules** (`.cursor/rules/`) | ◐ IMPLEMENTED | Commit operational-log rule |
 | **warszawasza.online / Vercel** | ○ DEPLOYED @ `50f6bfe` | `git push origin main` po build |
 | **Frontend** `/` | ◐ IMPLEMENTED | build → push |
+| **Branding** `public/logo.png` · OG · favicon | ◐ IMPLEMENTED | — |
 | **Frontend** `/meta` | ● DEPLOYED @ `50f6bfe` | — |
 | **Frontend** `/learn` | ● DEPLOYED @ `50f6bfe` | — |
 | **Frontend** `/deliberation` | ◐ IMPLEMENTED (untracked) | build → push |
 | **Frontend** `/electoral-lab` | ◐ IMPLEMENTED (untracked) | build → push |
 | **FIRA core** (`fira/core/`) | ● VERIFIED | — |
-| **SQL stack** `001`–`007` | ● VERIFIED (files) · ○ DRAFT (DB) | `psql "$DATABASE_URL" -f backend/sql/00N_*.sql` |
-| **SQL** `008` NGO matrix | ○ DRAFT | Not in repo yet |
+| **SQL stack** `001`–`009` | ◐ IMPLEMENTED (files) · ○ DRAFT (DB) | `psql "$DATABASE_URL" -f backend/sql/00N_*.sql` |
+| **SQL** `008` NGO matrix | ● TEST (pipeline ∩ registry) · ◐ IMPLEMENTED (SQL) | `?ngo-watchdog=1` · apply 008 on DB |
+| **SQL** `009` local initiatives | ● TEST (frontend pilot) · ◐ IMPLEMENTED (SQL) | apply 009 · Muranów pilot on `/` |
 | **COP validator CI** | ● VERIFIED · legacy FLUX echoes | Optional: migrate workflow to OPERATIONAL_LOG |
 | **monitor.py** | ◐ IMPLEMENTED (untracked) | Operator smoke after deploy |
 | **electoral_mandate_proof.py** | ● VERIFIED (stdlib) | Run against seeded DB post-migration |
@@ -174,5 +176,6 @@ Scanner active; operator report format pending migration.
 ## Related
 
 - [`fira/OPERATIONAL_LOG.md`](./OPERATIONAL_LOG.md) — block template
+- [`fira/LOCAL_INITIATIVE_MODEL.md`](./LOCAL_INITIATIVE_MODEL.md) — courtyard pivot · local initiatives
 - [`fira/PROTOCOL.md`](./PROTOCOL.md) — FOP spec
 - [`backend/sql/README.md`](../backend/sql/README.md) — migration order

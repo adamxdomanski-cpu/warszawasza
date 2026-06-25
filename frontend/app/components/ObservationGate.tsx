@@ -54,6 +54,13 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
       <FieldBackdrop />
 
       <header className="relative z-10 flex flex-col gap-5">
+        <img
+          src="/logo.png"
+          alt="WARSZAWASZA"
+          width={44}
+          height={64}
+          className="h-[clamp(3rem,12vw,4rem)] w-auto self-start"
+        />
         <p className="m-0 font-mono-field text-xs tracking-[0.16em] text-accent drop-shadow-[0_0_20px_rgba(228,0,69,0.35)] sm:text-sm">
           {copy.observationMark}
         </p>

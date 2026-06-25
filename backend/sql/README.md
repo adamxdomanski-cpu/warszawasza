@@ -8,7 +8,7 @@ Requires PostgreSQL 13+ (or any version with `pgcrypto` / `gen_random_uuid()`).
 
 ```bash
 # From repo root — replace with your connection string
-# Order: 001 → 002 → 003 → 004 → 005 → 006 → 007 (003+ require pgcrypto from 001; 007 requires 005)
+# Order: 001 → 002 → … → 009 (003+ require pgcrypto from 001; 007 requires 005; 008 requires 001+002; 009 requires 001)
 psql "$DATABASE_URL" -f backend/sql/001_cop_init.sql
 psql "$DATABASE_URL" -f backend/sql/002_state_registry_nodes.sql
 psql "$DATABASE_URL" -f backend/sql/003_state_archives.sql
@@ -16,6 +16,8 @@ psql "$DATABASE_URL" -f backend/sql/004_electoral_protocol.sql
 psql "$DATABASE_URL" -f backend/sql/005_electoral_domain.sql
 psql "$DATABASE_URL" -f backend/sql/006_electoral_audit_views.sql
 psql "$DATABASE_URL" -f backend/sql/007_referendum_domain.sql
+psql "$DATABASE_URL" -f backend/sql/008_civic_organizations.sql
+psql "$DATABASE_URL" -f backend/sql/009_local_initiatives.sql
 ```
 
 Or with explicit flags:
@@ -28,6 +30,8 @@ psql -h localhost -U cop -d warszawasza -f backend/sql/004_electoral_protocol.sq
 psql -h localhost -U cop -d warszawasza -f backend/sql/005_electoral_domain.sql
 psql -h localhost -U cop -d warszawasza -f backend/sql/006_electoral_audit_views.sql
 psql -h localhost -U cop -d warszawasza -f backend/sql/007_referendum_domain.sql
+psql -h localhost -U cop -d warszawasza -f backend/sql/008_civic_organizations.sql
+psql -h localhost -U cop -d warszawasza -f backend/sql/009_local_initiatives.sql
 ```
 
 **Idempotency:**
@@ -41,6 +45,8 @@ psql -h localhost -U cop -d warszawasza -f backend/sql/007_referendum_domain.sql
 | `005_electoral_domain.sql` | Canonical electoral domain (`elections`, districts, stations, committees, funding, candidates, ballot stream, audit, mandates, results). Uses `IF NOT EXISTS`, `CREATE INDEX IF NOT EXISTS`. Requires `001`. Does not drop `004` objects. Safe to re-run. |
 | `006_electoral_audit_views.sql` | Audit read model (`v_ballot_box_integrity`, `v_audit_log_stream`, `v_election_determinism_input`). Uses `CREATE OR REPLACE`. Requires `001`, `005`. Safe to re-run. |
 | `007_referendum_domain.sql` | Referendum domain (`referendums`, `referendum_questions`, `referendum_ballot_stream`, `referendum_audit_records`, `v_referendum_live_analytics`). FK to `ballot_boxes` from `005`. Uses `IF NOT EXISTS`, `CREATE OR REPLACE` view. Requires `001`, `005`. Safe to re-run. |
+| `008_civic_organizations.sql` | Channel H — civic NGO registry (`civic_organizations`). Uses `CREATE TABLE IF NOT EXISTS`, `ON CONFLICT (krs_number) DO NOTHING` on seeds. Requires `001`, `002` (KRS provenance). Safe to re-run. |
+| `009_local_initiatives.sql` | Local initiative layer (`focus_areas`, `local_micro_nodes`). Uses `CREATE TABLE IF NOT EXISTS`, idempotent seeds (Muranów pilot). Requires `001`. Safe to re-run. |
 
 Verify:
 
@@ -56,6 +62,8 @@ psql "$DATABASE_URL" -c "\d ballot_event_stream"
 psql "$DATABASE_URL" -c "SELECT box_id, ballot_count, chain_head_hash, integrity_status FROM v_ballot_box_integrity LIMIT 5;"
 psql "$DATABASE_URL" -c "\d referendums"
 psql "$DATABASE_URL" -c "SELECT question_number, tak_count, nie_count, tally_status FROM v_referendum_live_analytics LIMIT 5;"
+psql "$DATABASE_URL" -c "SELECT krs_number, org_name, operational_class, trust_level_indicator FROM civic_organizations ORDER BY krs_number;"
+psql "$DATABASE_URL" -c "SELECT fa.slug, n.partner_label, n.address, n.district, n.status FROM local_micro_nodes n JOIN focus_areas fa ON fa.focus_area_id = n.focus_area_id ORDER BY n.created_at;"
 ```
 
 ## Objects
@@ -69,7 +77,7 @@ psql "$DATABASE_URL" -c "SELECT question_number, tak_count, nie_count, tally_sta
 | `state_data_layer` | Enum: KAPITALOWA \| KONTROLA \| FIZYCZNA \| TOZSAMOSCI |
 | `v_operator_console` | FOP-style `notation_string` + `evidence_indicator` for operators |
 
-Migration files: `001_cop_init.sql`, `002_state_registry_nodes.sql`, `003_state_archives.sql`, `004_electoral_protocol.sql`, `005_electoral_domain.sql`, `006_electoral_audit_views.sql`, `007_referendum_domain.sql`
+Migration files: `001_cop_init.sql`, `002_state_registry_nodes.sql`, `003_state_archives.sql`, `004_electoral_protocol.sql`, `005_electoral_domain.sql`, `006_electoral_audit_views.sql`, `007_referendum_domain.sql`, `008_civic_organizations.sql`, `009_local_initiatives.sql`
 
 ### Electoral domain (004 + 005)
 
@@ -107,6 +115,9 @@ Migration files: `001_cop_init.sql`, `002_state_registry_nodes.sql`, `003_state_
 | `referendum_ballot_stream` | Append-only TAK/NIE/INVALID events; FK `box_id` → `ballot_boxes` |
 | `referendum_audit_records` | Referendum-scoped audit log |
 | `v_referendum_live_analytics` | *(007)* interim per-question tallies (non-authoritative) |
+| `civic_organizations` | *(008)* Channel H — KRS-grounded NGO civic nodes (zero natural-person PII) |
+| `focus_areas` | *(009)* Local initiative focus domains — slug + display names |
+| `local_micro_nodes` | *(009)* Courtyard anchors — partner, address, district, status (UX: Inicjatywa lokalna) |
 
 Civic web instrument remains `/deliberation` (GrapheneVote) — separate from this schema. No `/referendum` glyph-bar UI for electoral/referendum audit layer.
 
@@ -148,9 +159,11 @@ Each row may anchor a historical reference point by `geographic_anchor` (e.g. `W
 
 ## Related docs
 
+- `fira/LOCAL_INITIATIVE_MODEL.md` — local initiative / courtyard pivot
 - `fira/PROTOCOL.md` — FOP notation
 - `fira/electoral/` — electoral protocol (manifest · architecture · COP lens · domain model)
 - `fira/ELECTORAL_PROTOCOL_DRAFT.md` — redirect stub (monolith split)
 - `fira/COP_ARCHIVE_JSON.md` — COP-JSON archival retention format
 - `fira/STATE_DATA_MATRIX.md` — State Data Matrix (Matryca Państwowa)
+- `fira/CIVIC_ORGANIZATION_MATRIX.md` — Channel H civic NGO matrix
 - `fira/FIELD_DOMAIN_konstytucja.md` — konstytucja.pl field artefact (seed domain)

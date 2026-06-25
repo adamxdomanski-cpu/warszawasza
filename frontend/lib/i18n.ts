@@ -87,6 +87,10 @@ type Copy = {
     attentionUnits: string;
     registry: string;
   };
+  localInitiative: {
+    title: string;
+    statusLabel: string;
+  };
   interference: {
     title: string;
     secondarySource: string;
@@ -236,6 +240,10 @@ export const COPY: Record<Lang, Copy> = {
         "Instrument obserwacji → wspólny ślad obywatelski (civic tech: listening → action)",
       attentionUnits: "impulsów uwagi",
       registry: "● {n} śladów w polu",
+    },
+    localInitiative: {
+      title: "Inicjatywa lokalna",
+      statusLabel: "Status",
     },
     interference: {
       title: "INTERFERENCJA MATRYCY",
@@ -395,6 +403,10 @@ export const COPY: Record<Lang, Copy> = {
       attentionUnits: "attention pulses",
       registry: "● {n} traces in the field",
     },
+    localInitiative: {
+      title: "Local initiative",
+      statusLabel: "Status",
+    },
     interference: {
       title: "MATRIX INTERFERENCE",
       secondarySource: "Secondary source",
@@ -553,6 +565,10 @@ export const COPY: Record<Lang, Copy> = {
       attentionUnits: "impulsi di attenzione",
       registry: "● {n} tracce nel campo",
     },
+    localInitiative: {
+      title: "Iniziativa locale",
+      statusLabel: "Stato",
+    },
     interference: {
       title: "INTERFERENZA MATRICE",
       secondarySource: "Fonte secondaria",
@@ -705,6 +721,10 @@ export const COPY: Record<Lang, Copy> = {
       attentionUnits: "імпульсів уваги",
       registry: "● {n} слідів у полі",
     },
+    localInitiative: {
+      title: "Локальна ініціатива",
+      statusLabel: "Статус",
+    },
     interference: {
       title: "ІНТЕРФЕРЕНЦІЯ МАТРИЦІ",
       secondarySource: "Вторинне джерело",
@@ -856,6 +876,10 @@ export const COPY: Record<Lang, Copy> = {
         "Megfigyelő eszköz → közös polgári nyom (civic tech: hallgatás → cselekvés)",
       attentionUnits: "figyelem-impulzus",
       registry: "● {n} nyom a mezőben",
+    },
+    localInitiative: {
+      title: "Helyi kezdeményezés",
+      statusLabel: "Állapot",
     },
     interference: {
       title: "MÁTRIX INTERFERENCIA",

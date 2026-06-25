@@ -27,6 +27,18 @@ export const metadata: Metadata = {
     url: "https://www.warszawasza.online",
     siteName: "Warszawasza",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 699,
+        height: 1024,
+        alt: "WARSZAWASZA",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    images: ["/logo.png"],
   },
 };
 

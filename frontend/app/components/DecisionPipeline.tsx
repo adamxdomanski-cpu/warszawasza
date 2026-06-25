@@ -13,9 +13,11 @@ import {
   MEMORY_FRAMES,
   TERMINAL_STAGE_INDEX,
   VALIDATION_FRAMES,
+  formatCivicOrgIntersectionTrace,
   hypothesisPercent,
   resolveStagePhase,
   statusSymbol,
+  type CivicOrgIntersection,
   type StageDisplayKey,
   type StagePhase,
 } from "../../lib/pipelineEngine";
@@ -35,6 +37,7 @@ type DecisionPipelineProps = {
   trajectory: TrajectoryChoice | null;
   attentionSeed: number;
   interference?: InterferenceResult | null;
+  civicIntersection?: CivicOrgIntersection | null;
   variant?: "sidebar" | "inline";
 };
 
@@ -59,6 +62,7 @@ export default function DecisionPipeline({
   trajectory,
   attentionSeed,
   interference = null,
+  civicIntersection = null,
   variant = "sidebar",
 }: DecisionPipelineProps) {
   const copy = COPY[lang];
@@ -220,6 +224,27 @@ export default function DecisionPipeline({
     );
   }
 
+  function renderCivicIntersectionBlock(
+    intersection: CivicOrgIntersection,
+  ): ReactNode {
+    const trace = formatCivicOrgIntersectionTrace(intersection);
+    return (
+      <div
+        className="mt-2 space-y-0.5 text-[10px] leading-relaxed text-accent/55 sm:text-[11px]"
+        aria-live="polite"
+      >
+        <div className="tracking-[0.12em] text-accent/70">
+          {SEMANTIC.compression} CIVIC_ORG ∩
+        </div>
+        <div className="tabular-nums tracking-tight">{trace}</div>
+        <div>
+          {GRAPH.horizontal}
+          {DIRECTION.right} trust {intersection.trustWeight}/5
+        </div>
+      </div>
+    );
+  }
+
   return (
     <aside className={wrapClass} aria-label={copy.processChainLabel}>
       {PIPELINE_ORDER.map((key, index) => {
@@ -271,6 +296,25 @@ export default function DecisionPipeline({
                 <div>{copy.filtrationFilter.oneSignal}</div>
               </div>
             )}
+
+            {isFiltration &&
+              civicIntersection &&
+              civicIntersection.stagesApplied.includes("filtration") &&
+              index === engineIndex && (
+                <div aria-live="polite">
+                  {renderCivicIntersectionBlock(civicIntersection)}
+                </div>
+              )}
+
+            {key === "validation" &&
+              civicIntersection &&
+              civicIntersection.stagesApplied.includes("validation") &&
+              index === engineIndex &&
+              (phase === "analyzing" || phase === "active") && (
+                <div aria-live="polite">
+                  {renderCivicIntersectionBlock(civicIntersection)}
+                </div>
+              )}
 
             {key === "validation" &&
               index === engineIndex &&

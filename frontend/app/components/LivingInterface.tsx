@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { TRAJECTORY_KEY, type TrajectoryChoice } from "../../lib/artifactI18n";
 import { COPY, type Lang } from "../../lib/i18n";
-import { computeEngineIndex, INITIAL_ENGINE_INDEX } from "../../lib/pipelineEngine";
+import { computeEngineIndex, INITIAL_ENGINE_INDEX, applyCivicOrgTrustAtStage, formatCivicOrgIntersectionTrace, intersectCivicOrg, ngoWatchdogObservationInput, type CivicOrgIntersection, type PipelineObservationInput } from "../../lib/pipelineEngine";
 import {
   detectInterference,
   seedDemoInterferenceGraph,
@@ -17,6 +17,7 @@ import FieldFooter from "./FieldFooter";
 import GrapheneField from "./GrapheneField";
 import LangNav from "./LangNav";
 import LeaveTraceControl from "./LeaveTraceControl";
+import LocalInitiativePilot from "./LocalInitiativePilot";
 import LivingSignalText from "./LivingSignalText";
 import NarrativeArc from "./NarrativeArc";
 import ObservationGate from "./ObservationGate";
@@ -75,6 +76,8 @@ export default function LivingInterface() {
   const [attentionCount, setAttentionCount] = useState(0);
   const [log, setLog] = useState<{ id: number; line: string }[]>([]);
   const [interference, setInterference] = useState<InterferenceResult | null>(null);
+  const [observationInput, setObservationInput] = useState<PipelineObservationInput | null>(null);
+  const [civicIntersection, setCivicIntersection] = useState<CivicOrgIntersection | null>(null);
   const [corePrinted, setCorePrinted] = useState(false);
   const [cityPrinted, setCityPrinted] = useState(false);
   const noisePrincipleRef = useStructureAnchor<HTMLDivElement>();
@@ -85,8 +88,25 @@ export default function LivingInterface() {
     if (params.get("palimpsest") === "1") {
       seedDemoInterferenceGraph();
     }
+    if (params.get("ngo-watchdog") === "1") {
+      setObservationInput(ngoWatchdogObservationInput());
+    }
     setInterference(detectInterference());
   }, [inField, engineIndex, attentionCount]);
+
+  useEffect(() => {
+    if (!inField || !observationInput) return;
+    setCivicIntersection((prev) => {
+      const base = prev ?? intersectCivicOrg(observationInput);
+      if (!base) return null;
+      const next = applyCivicOrgTrustAtStage(engineIndex, base);
+      if (!next) return prev;
+      if (next.stagesApplied.length > (prev?.stagesApplied.length ?? 0)) {
+        console.info(`[COP] ${formatCivicOrgIntersectionTrace(next)}`);
+      }
+      return next;
+    });
+  }, [inField, observationInput, engineIndex]);
 
   const copy = COPY[lang];
 
@@ -226,8 +246,11 @@ export default function LivingInterface() {
               trajectory={trajectory}
               attentionSeed={attentionCount + logIdRef.current}
               interference={interference}
+              civicIntersection={civicIntersection}
               variant="sidebar"
             />
+
+            <LocalInitiativePilot lang={lang} className="hidden lg:block" />
 
             <div className="hidden lg:block">
               <LeaveTraceControl
@@ -259,6 +282,7 @@ export default function LivingInterface() {
                 trajectory={trajectory}
                 attentionSeed={attentionCount + logIdRef.current}
                 interference={interference}
+                civicIntersection={civicIntersection}
                 variant="inline"
               />
             </div>
@@ -294,6 +318,8 @@ export default function LivingInterface() {
 
           {/* —— RIGHT: log · manifest fragment —— */}
           <aside className="flex flex-col gap-6 lg:sticky lg:top-8 lg:gap-7">
+            <LocalInitiativePilot lang={lang} className="lg:hidden" />
+
             <div className="font-mono-field text-sm text-accent/35 sm:text-base">
               {log.map((entry) => (
                 <div key={entry.id}>{entry.line}</div>

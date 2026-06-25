@@ -1,0 +1,55 @@
+/**
+ * Client-side mirror of backend/sql/009_local_initiatives.sql seed.
+ * UX: "Inicjatywa lokalna" — never "Micro Node" in UI.
+ * Spec: fira/LOCAL_INITIATIVE_MODEL.md
+ */
+
+import type { Lang } from "./i18n";
+
+export type LocalInitiativeStatus = "Pilot" | "Active" | "Paused";
+
+export type FocusAreaRecord = {
+  slug: string;
+  displayName: Record<"pl" | "en" | "it", string>;
+};
+
+export type LocalMicroNodeRecord = {
+  partnerLabel: string;
+  focusAreaSlug: string;
+  address: string;
+  district: string;
+  status: LocalInitiativeStatus;
+};
+
+/** Static seed — idempotent with SQL 009 */
+export const FOCUS_AREAS: readonly FocusAreaRecord[] = [
+  {
+    slug: "WASTE_NAV",
+    displayName: {
+      pl: "FIRA Waste Navigation",
+      en: "FIRA Waste Navigation",
+      it: "FIRA Waste Navigation",
+    },
+  },
+] as const;
+
+/** Muranów courtyard pilot */
+export const LOCAL_INITIATIVE_PILOT: LocalMicroNodeRecord = {
+  partnerLabel: "Partnerstwo Muranów",
+  focusAreaSlug: "WASTE_NAV",
+  address: "Dzielna 3A/5",
+  district: "Muranów",
+  status: "Pilot",
+};
+
+export function lookupFocusArea(slug: string): FocusAreaRecord | null {
+  return FOCUS_AREAS.find((row) => row.slug === slug) ?? null;
+}
+
+export function focusAreaDisplayName(slug: string, lang: Lang): string {
+  const row = lookupFocusArea(slug);
+  if (!row) return slug;
+  if (lang === "pl") return row.displayName.pl;
+  if (lang === "it") return row.displayName.it;
+  return row.displayName.en;
+}

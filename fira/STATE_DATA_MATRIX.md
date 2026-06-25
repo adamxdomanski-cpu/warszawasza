@@ -134,4 +134,5 @@ Seed: **14 węzłów** (4 + 3 + 4 + 3 per warstwa)
 - `fira/PROTOCOL.md` — FOP algebra
 - `backend/sql/README.md` — apply + zero-PII
 - `fira/FIELD_DOMAIN_konstytucja.md` — przykład aktywa (`konstytucja.pl`) linkowanego przez `asset_ref`
+- `fira/CIVIC_ORGANIZATION_MATRIX.md` — Channel H (węzły NGO; uzupełnia KRS issuer, nie zastępuje)
 - `fira/electoral/` — protokół wyborczy COP (warstwa techniczna może linkować `source_node_id` do KRS/MF/NIK przy metrykach provenance; **nie** przechowuje głosów wyborczych)
