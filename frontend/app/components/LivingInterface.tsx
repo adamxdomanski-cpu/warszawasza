@@ -20,6 +20,7 @@ import LivingSignalText from "./LivingSignalText";
 import NarrativeArc from "./NarrativeArc";
 import ObservationGate from "./ObservationGate";
 import SignalControl from "./SignalControl";
+import { useStructureAnchor } from "../../hooks/useStructureAnchor";
 
 function elapsedClock(startMs: number): string {
   const s = Math.floor((Date.now() - startMs) / 1000);
@@ -73,6 +74,7 @@ export default function LivingInterface() {
   const [attentionCount, setAttentionCount] = useState(0);
   const [log, setLog] = useState<{ id: number; line: string }[]>([]);
   const [interference, setInterference] = useState<InterferenceResult | null>(null);
+  const noisePrincipleRef = useStructureAnchor<HTMLDivElement>();
 
   useEffect(() => {
     if (!inField) return;
@@ -293,11 +295,13 @@ export default function LivingInterface() {
 
             <DataCityDiagram lang={lang} variant="fixed" />
 
-            <LivingSignalText
-              text={copy.noisePrinciple}
-              className="fira-structure-badge font-mono-field text-xs leading-relaxed sm:text-sm"
-              intensity="low"
-            />
+            <div ref={noisePrincipleRef} className="fira-structure-proximity fira-structure-badge">
+              <LivingSignalText
+                text={copy.noisePrinciple}
+                className="font-mono-field text-xs leading-relaxed sm:text-sm"
+                intensity="low"
+              />
+            </div>
           </aside>
         </div>
 

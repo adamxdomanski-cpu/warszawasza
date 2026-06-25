@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useStructureAnchor } from "../../hooks/useStructureAnchor";
 import {
   ENTRY_COPY,
   type TrajectoryChoice,
@@ -25,6 +26,8 @@ type GatePhase = "observe" | "question" | "reveal";
 export default function ObservationGate({ onComplete }: ObservationGateProps) {
   const [lang, setLang] = useState<Lang>("pl");
   const [phase, setPhase] = useState<GatePhase>("observe");
+  const axiomSubjectRef = useStructureAnchor<HTMLDivElement>();
+  const revealWaveRef = useStructureAnchor<HTMLParagraphElement>();
   const [choice, setChoice] = useState<TrajectoryChoice | null>(null);
 
   const copy = ENTRY_COPY[lang];
@@ -63,15 +66,17 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
           aria-label={copy.gateObserve}
         >
           <div className="context-link-context max-w-md space-y-1">
-            {COPY[lang].signalAxiom.map((line, index) => (
-              <LivingSignalText
-                key={line}
-                text={line}
-                className={`context-link-axiom-line m-0 block text-lg font-light leading-snug sm:text-xl ${
-                  index === 1 ? "context-link-axiom-line--follow" : "context-link-axiom-line--subject"
-                }`}
-              />
-            ))}
+            <div ref={axiomSubjectRef} className="fira-structure-proximity fira-structure-badge">
+              {COPY[lang].signalAxiom.map((line, index) => (
+                <LivingSignalText
+                  key={line}
+                  text={line}
+                  className={`context-link-axiom-line m-0 block text-lg font-light leading-snug sm:text-xl ${
+                    index === 1 ? "context-link-axiom-line--follow" : "context-link-axiom-line--subject"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
           <div className="context-link-label font-mono-field text-sm tracking-[0.2em] text-accent/70 sm:text-base">
             {copy.gateObserve}
@@ -126,7 +131,10 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
         >
           <div className="context-link-context space-y-3">
             <p className="animate-spark-in m-0 text-3xl text-accent">{copy.revealSpark}</p>
-            <p className="fira-structure-badge m-0 mb-1 font-mono-field text-base tracking-widest">
+            <p
+              ref={revealWaveRef}
+              className="fira-structure-proximity fira-structure-badge m-0 mb-1 font-mono-field text-base tracking-widest"
+            >
               {copy.revealWave}
             </p>
             <LivingSignalText

@@ -212,16 +212,59 @@
     color: var(--color-fira-structure-mid);
   }
 
-  .context-link-axiom-line--subject::before {
+  .context-link-axiom-line--follow,
+  .context-link-follow {
+    color: var(--color-fira-structure);
+  }
+
+  .fira-structure-tone {
+    color: var(--color-fira-structure-mid);
+  }
+
+  .fira-structure-badge {
+    color: var(--color-fira-structure-mid);
+  }
+
+  .fira-structure-badge::before {
     content: "● ";
     font-family: var(--font-mono);
     color: var(--color-fira-structure-bright);
     letter-spacing: 0;
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+      opacity 420ms ease,
+      transform 420ms ease;
   }
 
-  .context-link-axiom-line--follow,
-  .context-link-follow {
-    color: var(--color-fira-structure);
+  .fira-structure-proximity.fira-structure-tone:not(.fira-structure-revealed) {
+    opacity: 0.34;
+  }
+
+  .fira-structure-proximity.fira-structure-tone.fira-structure-revealed {
+    opacity: 1;
+    color: var(--color-fira-structure-bright);
+    transition:
+      opacity 420ms ease,
+      color 420ms ease;
+  }
+
+  .fira-structure-proximity.fira-structure-badge.fira-structure-revealed::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fira-structure-proximity.fira-structure-tone:not(.fira-structure-revealed) {
+      opacity: 1;
+    }
+
+    .fira-structure-badge::before {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -281,21 +324,6 @@
   .trajectory-hesitating .trajectory-choice-letter {
     color: var(--color-fira-structure-bright);
     letter-spacing: 0.22em;
-  }
-
-  .fira-structure-tone {
-    color: var(--color-fira-structure-mid);
-  }
-
-  .fira-structure-badge {
-    color: var(--color-fira-structure-mid);
-  }
-
-  .fira-structure-badge::before {
-    content: "● ";
-    font-family: var(--font-mono);
-    color: var(--color-fira-structure-bright);
-    letter-spacing: 0;
   }
 
   .trajectory-hesitating {

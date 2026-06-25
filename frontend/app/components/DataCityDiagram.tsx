@@ -2,6 +2,7 @@
 
 import type { Lang } from "../../lib/i18n";
 import { COPY } from "../../lib/i18n";
+import { useStructureAnchor } from "../../hooks/useStructureAnchor";
 import { LivingSignalInline } from "./LivingSignalText";
 
 /** Urban data topology — trajectories converge on ● then diverge. */
@@ -24,6 +25,7 @@ export default function DataCityDiagram({
   variant = "fixed",
 }: DataCityDiagramProps) {
   const label = COPY[lang].dataCity;
+  const nodeRef = useStructureAnchor<HTMLSpanElement>();
 
   const wrapClass =
     variant === "fixed"
@@ -39,8 +41,11 @@ export default function DataCityDiagram({
         {DATA_CITY_LINES.map((line) => (
           <span
             key={line.id}
+            ref={line.kind === "node" ? nodeRef : undefined}
             className={`data-city-line block ${
-              line.kind === "node" ? "data-city-node fira-structure-tone" : "text-accent/32"
+              line.kind === "node"
+                ? "data-city-node fira-structure-proximity fira-structure-tone"
+                : "text-accent/32"
             }`}
             style={{ animationDelay: `${line.delay}s` }}
           >
