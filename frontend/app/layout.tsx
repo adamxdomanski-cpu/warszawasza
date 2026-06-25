@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fira_Mono, Fira_Sans } from "next/font/google";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const firaSans = Fira_Sans({
@@ -59,6 +60,7 @@ export default function RootLayout({
         className={`${firaSans.variable} ${firaMono.variable} bg-field text-accent antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
