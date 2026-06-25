@@ -1,12 +1,43 @@
 ---
 description: Szablony promptów i rygor operacyjny dla modyfikacji silnika FIRA oraz dystrybucji WARSZAWASZA
-globs: ["frontend/**/*"]
+globs: ["frontend/**/*", "fira/**/*", ".cursor/rules/**"]
 alwaysApply: false
 ---
 
-# WARSZAWASZA — Prompt Engine & Micro-Actions v0.98
+# WARSZAWASZA — Prompt Engine & Micro-Actions v0.99
 
 Ten plik instruuje model, jak interpretować intencje operatora podczas modyfikacji kodu w `frontend/`. Każda akcja musi przejść przez filtr redukcji szumu.
+
+## CORE METRIC LOG (status operacyjny)
+
+Zastępuje mieszane `PROCESSING FLUX` / `FOCUS` / `STATUS`. Pełna spec: `fira/OPERATIONAL_LOG.md` · stan projektu: `fira/TF_KEY.md`.
+
+Gdy agent raportuje postęp lub stan — **kończy odpowiedź** tym blokiem (nie starym FLUX):
+
+```
+PROCESS
+──────────────
+STATE        ● VERIFIED | DRAFT | REVIEW | IMPLEMENTED | DEPLOYED
+SPEC         COP v1.0
+TARGET       (channel / component)
+NEXT STEP    (jeden krok — np. `t`, `psql`, `npm run build`)
+
+VALIDATION
+──────────────
+Syntax        ✓ | ✗
+Flow          ✓ | ✗
+Consistency   ✓ | ✗
+
+OUTPUT
+──────────────
+(jedna linia wyniku)
+```
+
+**Lifecycle:** `DRAFT → REVIEW → VERIFIED → IMPLEMENTED → DEPLOYED`
+
+**Pętla pracy:** Spec → Code → Test → Observation → Fix — nie kolejne warstwy manifestu.
+
+**COP compliance** = zgodność ze spec (notation, anti-patterns, zero-PII). **Nigdy** nie twierdź o „100% COP” ani optymalności obiektywnej — tylko kryteria spec.
 
 ## MICRO-PROMPTS OPERACYJNE (Wklej i uzupełnij zmienne)
 
@@ -48,7 +79,8 @@ Minimalny diff. Zero szumu wizualnego.
 
 1. **ZAKAZ autonomicznych plików `index.html`.** Źródło prawdy: Next.js w `frontend/`.
 2. **ZAKAZ ucinania outputu.** Za długi wynik → rozbij na mikro-operacje (np. tylko render jednego etapu).
-3. **ZAKAZ ignorowania builda.** Błąd `npm run build` = stan `REJECTED` — cofnij do bazy.
+3. **ZAKAZ ignorowania builda.** Błąd `npm run build` = VALIDATION Syntax ✗ — cofnij do bazy.
+4. **ZAKAZ PROCESSING FLUX** w odpowiedziach statusowych — używaj CORE METRIC LOG powyżej.
 
 ## DEPLOYMENT
 
