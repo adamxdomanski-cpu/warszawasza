@@ -20,7 +20,7 @@ export default function NarrativeArc({ lang }: NarrativeArcProps) {
 
   if (!open) {
     return (
-      <section id="narracja" className="mt-16 border-t border-accent-muted/30 pt-8">
+      <section id="narracja" className="mt-16 pt-8">
         <SignalControl
           type="button"
           direction="down"
@@ -35,7 +35,7 @@ export default function NarrativeArc({ lang }: NarrativeArcProps) {
   }
 
   return (
-    <section id="narracja" aria-labelledby="narracja-title" className="mt-16 border-t border-accent-muted/30 pt-8">
+    <section id="narracja" aria-labelledby="narracja-title" className="mt-16 pt-8">
       <SignalControl
         type="button"
         direction="up"

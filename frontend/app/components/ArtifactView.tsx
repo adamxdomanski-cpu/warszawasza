@@ -6,6 +6,7 @@ import { ARTIFACT_COPY } from "../../lib/artifactI18n";
 import type { ArtifactSlug } from "../../lib/artifacts";
 import type { Lang } from "../../lib/i18n";
 import FieldBackdrop from "./FieldBackdrop";
+import FieldFooter from "./FieldFooter";
 import GrapheneField from "./GrapheneField";
 import LangNav from "./LangNav";
 import LivingSignalText from "./LivingSignalText";
@@ -28,7 +29,8 @@ export default function ArtifactView({ slug }: ArtifactViewProps) {
   return (
     <SignalFieldProvider>
       <LucyAttention />
-      <main className="relative z-10 min-h-dvh overflow-x-hidden p-5 pb-12 sm:p-8">
+      <FieldFooter lang={lang} />
+      <main className="relative z-10 min-h-dvh overflow-x-hidden p-5 pb-14 sm:p-8 sm:pb-16">
         <GrapheneField />
         <FieldBackdrop />
 

@@ -226,7 +226,9 @@ export default function MetaPerception() {
             ) : null}
             <button
               type="button"
-              className={lang === code ? "metaLangOn" : "metaLangOff"}
+              className={`lang-nav-btn lang-nav-btn--${code} ${
+                lang === code ? "lang-nav-btn--active" : ""
+              }`}
               onClick={() => switchLang(code)}
             >
               {code.toUpperCase()}

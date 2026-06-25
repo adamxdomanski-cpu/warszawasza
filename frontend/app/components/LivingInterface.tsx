@@ -17,8 +17,6 @@ import GrapheneField from "./GrapheneField";
 import LangNav from "./LangNav";
 import LeaveTraceControl from "./LeaveTraceControl";
 import LivingSignalText from "./LivingSignalText";
-import LucyAttention from "./LucyAttention";
-import LucyMasthead from "./LucyMasthead";
 import NarrativeArc from "./NarrativeArc";
 import ObservationGate from "./ObservationGate";
 import SignalControl from "./SignalControl";
@@ -190,9 +188,8 @@ export default function LivingInterface() {
 
   return (
     <>
-      <LucyAttention />
       <FieldFooter lang={lang} />
-      <main className="relative z-10 min-h-dvh overflow-x-hidden p-5 pb-16 sm:p-8 lg:pb-20">
+      <main className="relative z-10 min-h-dvh overflow-x-hidden p-5 pb-14 sm:p-8 sm:pb-16 lg:pb-20">
         <GrapheneField />
         <FieldBackdrop />
 
@@ -200,7 +197,6 @@ export default function LivingInterface() {
           {/* —— LEFT: masthead · controls · pipeline · trace —— */}
           <aside className="flex flex-col gap-5 lg:sticky lg:top-8 lg:gap-6">
             <div className="flex flex-col gap-3">
-              <LucyMasthead />
               <span className="font-mono-field text-sm font-semibold tracking-[0.18em] sm:text-base">
                 WARSZAWASZA
               </span>
@@ -278,7 +274,7 @@ export default function LivingInterface() {
               intensity="low"
             />
 
-            <div className="mt-10 border border-accent-muted px-4 py-3 lg:mx-auto lg:max-w-md">
+            <div className="mt-10 px-1 py-2 lg:mx-auto lg:max-w-md">
               <LivingSignalText
                 text={copy.closing}
                 className="text-base font-light tracking-wide sm:text-lg"

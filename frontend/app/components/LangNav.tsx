@@ -34,7 +34,7 @@ export default function LangNav({
               type="button"
               direction="none"
               onClick={() => onChange(code)}
-              className={`lang-nav-btn min-h-11 min-w-11 touch-manipulation px-1.5 sm:px-2 ${
+              className={`lang-nav-btn lang-nav-btn--${code} min-h-11 min-w-11 touch-manipulation px-1.5 sm:px-2 ${
                 active ? "lang-nav-btn--active" : ""
               }`}
             >

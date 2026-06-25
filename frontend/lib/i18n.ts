@@ -73,6 +73,7 @@ type Copy = {
     { name: string; role: string; symbol: string; href?: string }
   >;
   beginObservation: string;
+  workshopCredit: string;
   closing: string;
   leaveTrace: string;
   trace: {
@@ -216,6 +217,7 @@ export const COPY: Record<Lang, Copy> = {
       },
     },
     beginObservation: "Obserwuj →",
+    workshopCredit: "Zaprojektowano w warsztacie WARSZAWASZA",
     closing: "Tak wygląda moja Warszawa. A Wasza?",
     leaveTrace: "ZOSTAW SWÓJ ŚLAD →",
     trace: {
@@ -368,6 +370,7 @@ export const COPY: Record<Lang, Copy> = {
       },
     },
     beginObservation: "Observe →",
+    workshopCredit: "Designed in the WARSZAWASZA workshop",
     closing: "This is what my Warsaw looks like. And yours?",
     leaveTrace: "LEAVE YOUR TRACE →",
     trace: {
@@ -520,6 +523,7 @@ export const COPY: Record<Lang, Copy> = {
       },
     },
     beginObservation: "Osserva →",
+    workshopCredit: "Progettato nel laboratorio WARSZAWASZA",
     closing: "Così appare la mia Varsavia. E la vostra?",
     leaveTrace: "LASCIA IL TUO SEGNO →",
     trace: {
@@ -666,6 +670,7 @@ export const COPY: Record<Lang, Copy> = {
       },
     },
     beginObservation: "Спостерігай →",
+    workshopCredit: "Створено в \u043c\u0430\u0439\u0441\u0442\u0435\u0440\u043d\u0456 WARSZAWASZA",
     closing: "Так виглядає моя Варшава. А ваша?",
     leaveTrace: "ЗАЛИШ СВІЙ СЛІД →",
     trace: {
@@ -812,6 +817,7 @@ export const COPY: Record<Lang, Copy> = {
       },
     },
     beginObservation: "Figyelj →",
+    workshopCredit: "A WARSZAWASZA műhelyében tervezve",
     closing: "Így néz ki az én Varsóm. És a tiétek?",
     leaveTrace: "HAGYD A NYOMOD →",
     trace: {

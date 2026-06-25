@@ -8,6 +8,7 @@ import {
 import type { Lang } from "../../lib/i18n";
 import { COPY } from "../../lib/i18n";
 import FieldBackdrop from "./FieldBackdrop";
+import FieldFooter from "./FieldFooter";
 import GrapheneField from "./GrapheneField";
 import LangNav from "./LangNav";
 import LivingSignalText from "./LivingSignalText";
@@ -42,7 +43,9 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
   };
 
   return (
-    <div className="relative flex min-h-dvh flex-col gap-7 overflow-x-hidden p-5 pb-10 sm:gap-8 sm:p-8">
+    <>
+      <FieldFooter lang={lang} />
+      <div className="relative flex min-h-dvh flex-col gap-7 overflow-x-hidden p-5 pb-14 sm:gap-8 sm:p-8 sm:pb-16">
       <GrapheneField />
       <FieldBackdrop />
 
@@ -92,7 +95,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
               type="button"
               direction="down"
               onClick={() => selectTrajectory("false")}
-              className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 border border-accent-muted bg-field/80 px-5 py-4 text-left"
+              className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 bg-field/80 px-5 py-4 text-left"
             >
               <span className="font-mono-field text-lg tracking-[0.14em] sm:text-xl">
                 F
@@ -104,7 +107,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
               type="button"
               direction="up-right"
               onClick={() => selectTrajectory("true")}
-              className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 border border-accent-muted bg-field/80 px-5 py-4 text-left"
+              className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 bg-field/80 px-5 py-4 text-left"
             >
               <span className="font-mono-field text-lg tracking-[0.14em] sm:text-xl">
                 T
@@ -140,6 +143,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
           </SignalControl>
         </section>
       )}
-    </div>
+      </div>
+    </>
   );
 }

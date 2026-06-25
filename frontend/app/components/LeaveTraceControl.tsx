@@ -84,7 +84,7 @@ export default function LeaveTraceControl({
     <div className="space-y-1.5">
       <SignalControl
         direction="right"
-        className={`inline-flex min-h-11 items-center border border-accent-muted px-3 py-2 font-mono-field text-[11px] tracking-[0.12em] touch-manipulation sm:text-xs ${className}`}
+        className={`inline-flex min-h-11 items-center px-3 py-2 font-mono-field text-[11px] tracking-[0.12em] touch-manipulation sm:text-xs ${className}`}
         onClick={() => {
           void leaveTrace();
         }}

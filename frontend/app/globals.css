@@ -17,6 +17,21 @@
   --color-lang-idle: rgba(190, 190, 188, 0.52);
   --color-lang-hover: rgba(228, 0, 69, 0.68);
   --color-lang-sep: rgba(190, 190, 188, 0.28);
+  --color-lang-pl-idle: rgba(228, 0, 69, 0.44);
+  --color-lang-pl-active: var(--color-accent);
+  --color-lang-pl-hover: rgba(228, 0, 69, 0.72);
+  --color-lang-it-idle: rgba(120, 168, 220, 0.5);
+  --color-lang-it-active: rgba(120, 168, 220, 0.88);
+  --color-lang-it-hover: rgba(120, 168, 220, 0.68);
+  --color-lang-uk-idle: rgba(212, 180, 96, 0.48);
+  --color-lang-uk-active: rgba(212, 180, 96, 0.86);
+  --color-lang-uk-hover: rgba(212, 180, 96, 0.66);
+  --color-lang-hu-idle: rgba(184, 230, 46, 0.4);
+  --color-lang-hu-active: rgba(184, 230, 46, 0.76);
+  --color-lang-hu-hover: rgba(184, 230, 46, 0.58);
+  --color-lang-en-idle: rgba(190, 190, 188, 0.48);
+  --color-lang-en-active: rgba(248, 248, 246, 0.82);
+  --color-lang-en-hover: rgba(248, 248, 246, 0.62);
   --font-sans: var(--font-fira-sans), "Fira Sans", sans-serif;
   --font-mono: var(--font-fira-mono), "Fira Mono", monospace;
 }
@@ -87,18 +102,94 @@
     transition: color 140ms ease;
   }
 
-  .lang-nav-btn:hover,
-  .lang-nav-btn:focus-visible {
-    color: var(--color-lang-hover);
+  .lang-nav-btn--pl {
+    color: var(--color-lang-pl-idle);
   }
 
-  .lang-nav-btn--active {
-    color: var(--color-lang-active);
+  .lang-nav-btn--it {
+    color: var(--color-lang-it-idle);
   }
 
-  .lang-nav-btn--active:hover,
-  .lang-nav-btn--active:focus-visible {
-    color: var(--color-lang-active);
+  .lang-nav-btn--uk {
+    color: var(--color-lang-uk-idle);
+  }
+
+  .lang-nav-btn--hu {
+    color: var(--color-lang-hu-idle);
+  }
+
+  .lang-nav-btn--en {
+    color: var(--color-lang-en-idle);
+  }
+
+  .lang-nav-btn--pl:hover,
+  .lang-nav-btn--pl:focus-visible {
+    color: var(--color-lang-pl-hover);
+  }
+
+  .lang-nav-btn--it:hover,
+  .lang-nav-btn--it:focus-visible {
+    color: var(--color-lang-it-hover);
+  }
+
+  .lang-nav-btn--uk:hover,
+  .lang-nav-btn--uk:focus-visible {
+    color: var(--color-lang-uk-hover);
+  }
+
+  .lang-nav-btn--hu:hover,
+  .lang-nav-btn--hu:focus-visible {
+    color: var(--color-lang-hu-hover);
+  }
+
+  .lang-nav-btn--en:hover,
+  .lang-nav-btn--en:focus-visible {
+    color: var(--color-lang-en-hover);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--pl {
+    color: var(--color-lang-pl-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--it {
+    color: var(--color-lang-it-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--uk {
+    color: var(--color-lang-uk-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--hu {
+    color: var(--color-lang-hu-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--en {
+    color: var(--color-lang-en-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--pl:hover,
+  .lang-nav-btn--active.lang-nav-btn--pl:focus-visible {
+    color: var(--color-lang-pl-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--it:hover,
+  .lang-nav-btn--active.lang-nav-btn--it:focus-visible {
+    color: var(--color-lang-it-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--uk:hover,
+  .lang-nav-btn--active.lang-nav-btn--uk:focus-visible {
+    color: var(--color-lang-uk-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--hu:hover,
+  .lang-nav-btn--active.lang-nav-btn--hu:focus-visible {
+    color: var(--color-lang-hu-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--en:hover,
+  .lang-nav-btn--active.lang-nav-btn--en:focus-visible {
+    color: var(--color-lang-en-active);
   }
 
   .lucy-tail {
