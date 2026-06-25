@@ -53,6 +53,8 @@ type Copy = {
     oneSignal: string;
   };
   pipelineValidationResult: string;
+  processOutput: string;
+  processChainLabel: string;
   signalAxiom: string;
   noisePrinciple: string;
   clarityPrinciple: string;
@@ -62,11 +64,15 @@ type Copy = {
   principle: [string, string];
   dissonance: string;
   narrativeTitle: string;
+  narrativeLexicon: string;
+  narrativeLexiconClose: string;
+  narrativeMore: string;
+  narrativeLess: string;
   narrative: Record<
     NarrativeKey,
     { name: string; role: string; symbol: string; href?: string }
   >;
-  launchFira: string;
+  beginObservation: string;
   closing: string;
   leaveTrace: string;
   trace: {
@@ -140,6 +146,8 @@ export const COPY: Record<Lang, Copy> = {
       oneSignal: "jeden sygnał",
     },
     pipelineValidationResult: "→ zgodne",
+    processOutput: "OUTPUT",
+    processChainLabel: "Proces obserwacji",
     signalAxiom:
       "Małe, lokalne sygnały zawierają informacje o strukturze całego systemu.",
     noisePrinciple:
@@ -170,6 +178,10 @@ export const COPY: Record<Lang, Copy> = {
     ],
     dissonance: "Dysonans poznawczy",
     narrativeTitle: "NARRACJA",
+    narrativeLexicon: "słownik narracji ↓",
+    narrativeLexiconClose: "zwiń ↑",
+    narrativeMore: "więcej ↓",
+    narrativeLess: "mniej ↑",
     narrative: {
       fira: { name: "FIRA", role: "ruch", symbol: "●", href: "/artefacts/fira" },
       diamente: {
@@ -203,7 +215,7 @@ export const COPY: Record<Lang, Copy> = {
         href: "/meta",
       },
     },
-    launchFira: "Uruchom FIRA →",
+    beginObservation: "Obserwuj →",
     closing: "Tak wygląda moja Warszawa. A Wasza?",
     leaveTrace: "ZOSTAW SWÓJ ŚLAD →",
     trace: {
@@ -281,6 +293,8 @@ export const COPY: Record<Lang, Copy> = {
       oneSignal: "one signal",
     },
     pipelineValidationResult: "→ match",
+    processOutput: "OUTPUT",
+    processChainLabel: "Observation process",
     signalAxiom:
       "Small, local signals contain information about the structure of the entire system.",
     noisePrinciple:
@@ -311,6 +325,10 @@ export const COPY: Record<Lang, Copy> = {
     ],
     dissonance: "Cognitive dissonance",
     narrativeTitle: "NARRATIVE",
+    narrativeLexicon: "narrative lexicon ↓",
+    narrativeLexiconClose: "collapse ↑",
+    narrativeMore: "more ↓",
+    narrativeLess: "less ↑",
     narrative: {
       fira: {
         name: "FIRA",
@@ -349,7 +367,7 @@ export const COPY: Record<Lang, Copy> = {
         href: "/meta",
       },
     },
-    launchFira: "Launch FIRA →",
+    beginObservation: "Observe →",
     closing: "This is what my Warsaw looks like. And yours?",
     leaveTrace: "LEAVE YOUR TRACE →",
     trace: {
@@ -427,6 +445,8 @@ export const COPY: Record<Lang, Copy> = {
       oneSignal: "un segnale",
     },
     pipelineValidationResult: "→ coerente",
+    processOutput: "OUTPUT",
+    processChainLabel: "Processo di osservazione",
     signalAxiom:
       "I piccoli segnali locali contengono informazioni sulla struttura dell'intero sistema.",
     noisePrinciple:
@@ -457,6 +477,10 @@ export const COPY: Record<Lang, Copy> = {
     ],
     dissonance: "Dissonanza cognitiva",
     narrativeTitle: "NARRAZIONE",
+    narrativeLexicon: "lessico narrativo ↓",
+    narrativeLexiconClose: "chiudi ↑",
+    narrativeMore: "altro ↓",
+    narrativeLess: "meno ↑",
     narrative: {
       fira: {
         name: "FIRA",
@@ -495,7 +519,7 @@ export const COPY: Record<Lang, Copy> = {
         href: "/meta",
       },
     },
-    launchFira: "Avvia FIRA →",
+    beginObservation: "Osserva →",
     closing: "Così appare la mia Varsavia. E la vostra?",
     leaveTrace: "LASCIA IL TUO SEGNO →",
     trace: {

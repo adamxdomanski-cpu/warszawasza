@@ -18,11 +18,11 @@ type ObservationGateProps = {
   onComplete: (choice: TrajectoryChoice, lang: Lang) => void;
 };
 
-type GatePhase = "choose" | "reveal";
+type GatePhase = "observe" | "question" | "reveal";
 
 export default function ObservationGate({ onComplete }: ObservationGateProps) {
   const [lang, setLang] = useState<Lang>("pl");
-  const [phase, setPhase] = useState<GatePhase>("choose");
+  const [phase, setPhase] = useState<GatePhase>("observe");
   const [choice, setChoice] = useState<TrajectoryChoice | null>(null);
 
   const copy = ENTRY_COPY[lang];
@@ -53,18 +53,39 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
         <LangNav lang={lang} onChange={setLang} />
       </header>
 
-      {phase === "choose" ? (
+      {phase === "observe" ? (
         <section
-          className="relative z-10 flex flex-1 flex-col justify-center gap-8 py-6 sm:gap-10"
-          aria-label={copy.observationMark}
+          className="relative z-10 flex flex-1 flex-col justify-center gap-6 py-6 sm:gap-8"
+          aria-label={copy.gateObserve}
         >
           <LivingSignalText
             text={COPY[lang].signalAxiom}
             className="m-0 max-w-md text-lg font-light leading-relaxed text-sapphire/80 sm:text-xl"
           />
-          <p className="m-0 font-mono-field text-sm tracking-widest text-accent/50">
-            T / F ?
-          </p>
+          <div className="font-mono-field text-sm tracking-[0.2em] text-accent/70 sm:text-base">
+            {copy.gateObserve}
+          </div>
+          <SignalControl
+            type="button"
+            direction="down"
+            onClick={() => setPhase("question")}
+            className="min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
+          >
+            {copy.gateObserveAction}
+          </SignalControl>
+        </section>
+      ) : phase === "question" ? (
+        <section
+          className="relative z-10 flex flex-1 flex-col justify-center gap-6 py-6 sm:gap-8"
+          aria-label={copy.gateQuestion}
+        >
+          <div className="space-y-1 font-mono-field text-sm tracking-[0.18em] text-accent/55 sm:text-base">
+            <div className="text-accent/40">{copy.gateObserve}</div>
+            <div className="py-1 text-xs opacity-25" aria-hidden="true">
+              ↓
+            </div>
+            <div className="text-accent/70">{copy.gateQuestion}</div>
+          </div>
 
           <div className="flex flex-col gap-3 sm:gap-4">
             <SignalControl
@@ -74,7 +95,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
               className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 border border-accent-muted bg-field/80 px-5 py-4 text-left"
             >
               <span className="font-mono-field text-lg tracking-[0.14em] sm:text-xl">
-                [ {copy.falseLabel} ]
+                F
               </span>
               <span className="text-sm leading-snug text-accent/50">{copy.falseHint}</span>
             </SignalControl>
@@ -86,7 +107,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
               className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 border border-accent-muted bg-field/80 px-5 py-4 text-left"
             >
               <span className="font-mono-field text-lg tracking-[0.14em] sm:text-xl">
-                [ {copy.trueLabel} ]
+                T
               </span>
               <span className="text-sm leading-snug text-accent/50">{copy.trueHint}</span>
             </SignalControl>

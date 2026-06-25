@@ -1,4 +1,5 @@
 import type { PipelineKey } from "./i18n";
+import { STATE } from "./symbols";
 
 export type StagePhase =
   | "waiting"
@@ -18,18 +19,18 @@ export const TERMINAL_STAGE_INDEX = 7;
 export function statusSymbol(phase: StagePhase): string {
   switch (phase) {
     case "waiting":
-      return "○";
+      return STATE.rest;
     case "analyzing":
-      return "◐";
+      return STATE.progress;
     case "active":
     case "done":
-      return "●";
+      return STATE.active;
     case "rejected":
-      return "⊗";
+      return STATE.rejected;
     case "hypothesis":
-      return "≈";
+      return STATE.hypothesis;
     default:
-      return "○";
+      return STATE.rest;
   }
 }
 
@@ -103,3 +104,19 @@ export const RECON_FRAMES = MEMORY_FRAMES;
 
 /** @deprecated use FILTRATION_STAGE_INDEX */
 export const KEYHOLE_STAGE_INDEX = FILTRATION_STAGE_INDEX;
+
+/** Index in PROCESS_CHAIN (0–6) or 7 = OUTPUT */
+export function resolveProcessChainIndex(engineIndex: number): number {
+  if (engineIndex >= TERMINAL_STAGE_INDEX) return 7;
+  return Math.min(engineIndex, 6);
+}
+
+export function resolveChainStepPhase(
+  stepIndex: number,
+  chainActive: number,
+  analyzing: boolean,
+): StagePhase {
+  if (stepIndex < chainActive) return "done";
+  if (stepIndex > chainActive) return "waiting";
+  return analyzing ? "analyzing" : "active";
+}

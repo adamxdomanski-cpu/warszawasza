@@ -23,6 +23,10 @@ import {
   formatEvidenceIndicator,
   type InterferenceResult,
 } from "../../lib/patternEngine";
+import { DIRECTION, GRAPH, SEMANTIC, STATE } from "../../lib/symbols";
+
+/** Vertical breath — pause after these stages (before next ↓) */
+const BREATH_AFTER = new Set([0, 2, 5]);
 
 type DecisionPipelineProps = {
   lang: Lang;
@@ -100,8 +104,7 @@ export default function DecisionPipeline({
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dist = Math.hypot(clientX - cx, clientY - cy);
-      setFiltrationActive(dist < 120);
+      setFiltrationActive(Math.hypot(clientX - cx, clientY - cy) < 120);
     },
     [],
   );
@@ -143,10 +146,14 @@ export default function DecisionPipeline({
       return (
         <div className="leading-tight">
           <div className="flex items-baseline gap-1.5 text-xs tracking-[0.14em] sm:text-sm">
-            <span aria-hidden="true">●</span>
+            <span aria-hidden="true">{STATE.active}</span>
             <span>{copy.pipelineOutcome.trajectory}</span>
           </div>
-          <div className="mt-0.5 pl-4 text-[11px] text-accent/60 sm:text-xs">
+          <div className="mt-2 flex gap-3 font-mono-field text-[11px] tracking-[0.14em] text-accent/55 sm:text-xs">
+            <span className="text-accent/80">T</span>
+            <span className="text-accent/30">F</span>
+          </div>
+          <div className="mt-0.5 text-[11px] text-accent/60 sm:text-xs">
             {copy.pipelineOutcome.trajectoryConfirmed}
           </div>
         </div>
@@ -157,10 +164,14 @@ export default function DecisionPipeline({
       return (
         <div className="leading-tight">
           <div className="flex items-baseline gap-1.5 text-xs tracking-[0.14em] sm:text-sm">
-            <span aria-hidden="true">≈</span>
+            <span aria-hidden="true">{STATE.hypothesis}</span>
             <span>{copy.pipelineOutcome.hypothesis}</span>
           </div>
-          <div className="mt-0.5 pl-4 text-[11px] tabular-nums text-accent/60 sm:text-xs">
+          <div className="mt-2 flex gap-3 font-mono-field text-[11px] tracking-[0.14em] sm:text-xs">
+            <span className="text-accent/30">T</span>
+            <span className="text-accent/80">F</span>
+          </div>
+          <div className="mt-0.5 tabular-nums text-[11px] text-accent/60 sm:text-xs">
             {pct}%
           </div>
         </div>
@@ -184,23 +195,25 @@ export default function DecisionPipeline({
     return (
       <div className="mt-2 space-y-1 text-[10px] leading-relaxed text-accent/55 sm:text-[11px]">
         <div className="tracking-[0.12em] text-accent/70">
-          ⟳ {copy.interference.title}
+          {SEMANTIC.memory} {copy.interference.title}
         </div>
         <div>
-          {copy.interference.secondarySource} ─► Rejestr.io / KRS:{" "}
-          {match.registryEntityKrs}
+          {copy.interference.secondarySource} {GRAPH.horizontal}
+          {DIRECTION.right} Rejestr.io / KRS: {match.registryEntityKrs}
         </div>
         <div>
-          {copy.interference.relation} ─► {copy.interference.sameDominant}:{" "}
+          {copy.interference.relation} {GRAPH.horizontal}
+          {DIRECTION.right} {copy.interference.sameDominant}:{" "}
           {match.priorLogRef ?? match.priorCitizenPlace}
         </div>
         <div>
-          {copy.interference.evidence} ─►{" "}
-          {formatEvidenceIndicator(match.evidenceLevel)}
+          {copy.interference.evidence} {GRAPH.horizontal}
+          {DIRECTION.right} {formatEvidenceIndicator(match.evidenceLevel)}
         </div>
         {interference?.griffinDetected && (
           <div className="text-accent/75">
-            ↗ {copy.interference.griffin} · {copy.interference.capitalTrajectory}
+            {DIRECTION.upRight} {copy.interference.griffin} ·{" "}
+            {copy.interference.capitalTrajectory}
           </div>
         )}
       </div>
@@ -208,7 +221,7 @@ export default function DecisionPipeline({
   }
 
   return (
-    <aside className={wrapClass} aria-label="Pipeline">
+    <aside className={wrapClass} aria-label={copy.processChainLabel}>
       {PIPELINE_ORDER.map((key, index) => {
         const isTerminal = key === "narration";
         const phase = resolveStagePhase(
@@ -252,9 +265,9 @@ export default function DecisionPipeline({
               >
                 <div>{copy.filtrationFilter.source}</div>
                 <div className="tracking-tighter text-accent/35">██████████</div>
-                <div className="opacity-40">↓</div>
-                <div>◉</div>
-                <div className="opacity-40">↓</div>
+                <div className="opacity-40">{DIRECTION.down}</div>
+                <div>{SEMANTIC.compression}</div>
+                <div className="opacity-40">{DIRECTION.down}</div>
                 <div>{copy.filtrationFilter.oneSignal}</div>
               </div>
             )}
@@ -268,7 +281,7 @@ export default function DecisionPipeline({
                 >
                   {validationFrame < VALIDATION_FRAMES.length
                     ? VALIDATION_FRAMES[validationFrame]
-                    : copy.pipelineValidationResult}
+                    : `${SEMANTIC.validation} ${copy.pipelineValidationResult}`}
                 </div>
               )}
 
@@ -287,29 +300,18 @@ export default function DecisionPipeline({
                 <div aria-live="polite">{renderInterferenceBlock(interference.matches[0])}</div>
               )}
 
-            {key === "knowledge" &&
-              !interference?.matches[0] &&
-              engineIndex >= TERMINAL_STAGE_INDEX - 1 &&
-              trajectory &&
-              !showOutcome && (
+            {index < PIPELINE_ORDER.length - 1 && (
+              <>
+                {BREATH_AFTER.has(index) && (
+                  <div className="h-8 sm:h-10" aria-hidden="true" />
+                )}
                 <div
-                  className="mt-1 text-[10px] tracking-wider text-accent/45 sm:text-[11px]"
+                  className="py-0.5 text-left text-xs opacity-20 sm:text-sm"
                   aria-hidden="true"
                 >
-                  {copy.pipelineOutcome.model}{" "}
-                  {trajectory === "true"
-                    ? copy.pipelineOutcome.modelMatch
-                    : copy.pipelineOutcome.modelRejected}
+                  {DIRECTION.down}
                 </div>
-              )}
-
-            {index < PIPELINE_ORDER.length - 1 && (
-              <div
-                className="py-0.5 text-left text-xs opacity-20 sm:text-sm"
-                aria-hidden="true"
-              >
-                ↓
-              </div>
+              </>
             )}
           </div>
         );

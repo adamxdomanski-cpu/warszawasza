@@ -5,6 +5,9 @@ export type TrajectoryChoice = "false" | "true";
 
 type EntryCopy = {
   observationMark: string;
+  gateObserve: string;
+  gateObserveAction: string;
+  gateQuestion: string;
   falseLabel: string;
   trueLabel: string;
   falseHint: string;
@@ -30,39 +33,48 @@ export type ArtifactCopy = Record<ArtifactSlug, ArtifactLayer>;
 export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   pl: {
     observationMark: "● OBSERWACJA TRWA",
+    gateObserve: "OBSERWUJ",
+    gateObserveAction: "kontynuuj ↓",
+    gateQuestion: "PYTANIE",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
-    falseHint: "FALSE — zatrzymuję się; nic dalej nie wynika",
-    trueHint: "TRUE — wynika kierunek: idę od sygnału do struktury",
+    falseHint: "F — zatrzymuję się; nic dalej nie wynika",
+    trueHint: "T — wynika kierunek: idę od sygnału do struktury",
     revealSpark: "⚡",
     revealWave: "~~~~",
     revealLine1: "Nie wybrałeś odpowiedzi.",
     revealLine2: "Wybrałeś kierunek.",
-    enterField: "wejdź w pole →",
+    enterField: "Obserwuj →",
   },
   en: {
     observationMark: "● OBSERVATION IN PROGRESS",
+    gateObserve: "OBSERVE",
+    gateObserveAction: "continue ↓",
+    gateQuestion: "QUESTION",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
-    falseHint: "FALSE — I stop; nothing further follows",
-    trueHint: "TRUE — a direction follows: signal toward structure",
+    falseHint: "F — I stop; nothing further follows",
+    trueHint: "T — a direction follows: signal toward structure",
     revealSpark: "⚡",
     revealWave: "~~~~",
     revealLine1: "You did not choose an answer.",
     revealLine2: "You chose a direction.",
-    enterField: "enter the field →",
+    enterField: "Observe →",
   },
   it: {
     observationMark: "● OSSERVAZIONE IN CORSO",
+    gateObserve: "OSSERVA",
+    gateObserveAction: "continua ↓",
+    gateQuestion: "DOMANDA",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
-    falseHint: "FALSE — mi fermo; non consegue nulla",
-    trueHint: "TRUE — ne consegue una direzione: segnale verso struttura",
+    falseHint: "F — mi fermo; non consegue nulla",
+    trueHint: "T — ne consegue una direzione: segnale verso struttura",
     revealSpark: "⚡",
     revealWave: "~~~~",
     revealLine1: "Non hai scelto una risposta.",
     revealLine2: "Hai scelto una direzione.",
-    enterField: "entra nel campo →",
+    enterField: "Osserva →",
   },
 };
 

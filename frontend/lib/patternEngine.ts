@@ -10,6 +10,7 @@ import {
   type FiraSignal,
   type RegistryPayload,
 } from "./signalApi";
+import { evidenceBar } from "./symbols";
 
 export type EvidenceLevel = 0 | 1 | 2 | 3 | 4 | 5;
 
@@ -31,12 +32,8 @@ export type InterferenceResult = {
   griffinDetected: boolean;
 };
 
-function evidenceBars(level: EvidenceLevel): string {
-  return "■".repeat(level) + "□".repeat(5 - level);
-}
-
 export function formatEvidenceIndicator(level: EvidenceLevel): string {
-  return evidenceBars(level);
+  return evidenceBar(level);
 }
 
 /** Dominant capital vector shared across registry records */

@@ -1,3 +1,5 @@
+import { NARRATIVE } from "./symbols";
+
 export const ARTIFACT_SLUGS = [
   "diamente",
   "shafir",
@@ -13,9 +15,9 @@ export function isArtifactSlug(value: string): value is ArtifactSlug {
 }
 
 export const ARTIFACT_SYMBOLS: Record<ArtifactSlug, string> = {
-  diamente: "◇",
-  shafir: "∥",
-  lustra: "⌁",
-  griffin: "↗",
-  fira: "●",
+  diamente: NARRATIVE.diamente,
+  shafir: NARRATIVE.shafir,
+  lustra: NARRATIVE.lustra,
+  griffin: NARRATIVE.griffin,
+  fira: NARRATIVE.fira,
 };

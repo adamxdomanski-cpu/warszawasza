@@ -1,4 +1,5 @@
 import type { TrajectoryChoice } from "./artifactI18n";
+import { buildFopDocument } from "./fopBridge";
 import { COPY, PIPELINE_ORDER, type Lang } from "./i18n";
 
 export type ObservationTracePayload = {
@@ -50,6 +51,10 @@ export function buildTraceDocument(
         : "—";
 
   const lines = [
+    buildFopDocument(trace),
+    "",
+    "---",
+    "",
     "WARSZAWASZA // ŚLAD OBYWATELSKI",
     `${new Date(trace.createdAt).toISOString()} · ${trace.lang}`,
     `${copy.entry.trueLabel}/${copy.entry.falseLabel}: ${trajectoryLabel}`,

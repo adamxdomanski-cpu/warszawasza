@@ -1,13 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { TRAJECTORY_KEY, type TrajectoryChoice } from "../../lib/artifactI18n";
-import {
-  COPY,
-  NARRATIVE_ORDER,
-  type Lang,
-} from "../../lib/i18n";
+import { COPY, type Lang } from "../../lib/i18n";
 import { computeEngineIndex, INITIAL_ENGINE_INDEX } from "../../lib/pipelineEngine";
 import {
   detectInterference,
@@ -21,12 +16,12 @@ import FieldFooter from "./FieldFooter";
 import GrapheneField from "./GrapheneField";
 import LangNav from "./LangNav";
 import LeaveTraceControl from "./LeaveTraceControl";
-import LivingSignalText, { LivingSignalInline } from "./LivingSignalText";
+import LivingSignalText from "./LivingSignalText";
 import LucyAttention from "./LucyAttention";
 import LucyMasthead from "./LucyMasthead";
+import NarrativeArc from "./NarrativeArc";
 import ObservationGate from "./ObservationGate";
 import SignalControl from "./SignalControl";
-import TrajectorySwitch, { persistTrajectory } from "./TrajectorySwitch";
 
 function elapsedClock(startMs: number): string {
   const s = Math.floor((Date.now() - startMs) / 1000);
@@ -55,7 +50,11 @@ function readTrajectory(): TrajectoryChoice | null {
 }
 
 function storeTrajectory(choice: TrajectoryChoice) {
-  persistTrajectory(choice);
+  try {
+    sessionStorage.setItem(TRAJECTORY_KEY, choice);
+  } catch {
+    /* session unavailable */
+  }
 }
 
 export default function LivingInterface() {
@@ -183,11 +182,6 @@ export default function LivingInterface() {
     startMsRef.current = Date.now();
   };
 
-  const handleTrajectoryChange = (choice: TrajectoryChoice) => {
-    storeTrajectory(choice);
-    setTrajectory(choice);
-  };
-
   if (!ready) return null;
 
   if (!inField) {
@@ -211,12 +205,6 @@ export default function LivingInterface() {
                 WARSZAWASZA
               </span>
               <LangNav lang={lang} onChange={setLang} variant="bracket" />
-              <TrajectorySwitch
-                lang={lang}
-                value={trajectory}
-                onChange={handleTrajectoryChange}
-                compact
-              />
             </div>
 
             <div aria-live="polite">
@@ -247,6 +235,14 @@ export default function LivingInterface() {
                 clock={clock}
                 logLines={log.map((entry) => entry.line)}
               />
+              <SignalControl
+                as="a"
+                href="mailto:hello@warszawasza.online"
+                direction="right"
+                className="mt-3 inline-flex min-h-10 items-center font-mono-field text-xs tracking-wider text-accent/45 touch-manipulation"
+              >
+                {copy.beginObservation}
+              </SignalControl>
             </div>
           </aside>
 
@@ -289,18 +285,9 @@ export default function LivingInterface() {
                 intensity="low"
               />
             </div>
-
-            <SignalControl
-              as="a"
-              href="#narracja"
-              direction="down"
-              className="mt-8 inline-flex min-h-11 items-center font-mono-field text-xs tracking-widest text-accent/55 uppercase touch-manipulation lg:hidden"
-            >
-              {copy.dissonance}
-            </SignalControl>
           </section>
 
-          {/* —— RIGHT: log · data city · noise · narracja —— */}
+          {/* —— RIGHT: log · manifest fragment —— */}
           <aside className="flex flex-col gap-6 lg:sticky lg:top-8 lg:gap-7">
             <div className="font-mono-field text-sm text-accent/35 sm:text-base">
               {log.map((entry) => (
@@ -315,60 +302,6 @@ export default function LivingInterface() {
               className="font-mono-field text-xs leading-relaxed text-sapphire/70 sm:text-sm"
               intensity="low"
             />
-
-            <section id="narracja" aria-labelledby="narracja-title">
-              <h2
-                id="narracja-title"
-                className="mb-4 font-mono-field text-xs tracking-[0.18em] sm:text-sm"
-              >
-                {copy.narrativeTitle}
-              </h2>
-              <ul className="m-0 list-none p-0">
-                {NARRATIVE_ORDER.map((key) => {
-                  const row = copy.narrative[key];
-                  return (
-                    <li key={key}>
-                      <SignalControl
-                        as={Link}
-                        href={row.href ?? "#"}
-                        direction="right"
-                        className="flex min-h-10 touch-manipulation items-start gap-2 py-1.5"
-                      >
-                        <span className="font-mono-field text-base text-accent/80">
-                          {row.symbol}
-                        </span>
-                        <span className="text-sm leading-snug">
-                          <span className="tracking-wide">{row.name}</span>
-                          <span className="font-mono-field text-accent/55">
-                            {" "}
-                            · {row.role}
-                          </span>
-                        </span>
-                      </SignalControl>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="mt-5 flex flex-col gap-2">
-                <SignalControl
-                  as={Link}
-                  href="/meta"
-                  direction="right"
-                  className="inline-flex min-h-10 items-center font-mono-field text-sm tracking-wider touch-manipulation"
-                >
-                  META →
-                </SignalControl>
-                <SignalControl
-                  as="a"
-                  href="mailto:hello@warszawasza.online"
-                  direction="right"
-                  className="inline-flex min-h-10 items-center font-mono-field text-sm tracking-wider touch-manipulation"
-                >
-                  {copy.launchFira}
-                </SignalControl>
-              </div>
-            </section>
           </aside>
         </div>
 
@@ -381,7 +314,17 @@ export default function LivingInterface() {
             clock={clock}
             logLines={log.map((entry) => entry.line)}
           />
+          <SignalControl
+            as="a"
+            href="mailto:hello@warszawasza.online"
+            direction="right"
+            className="mt-3 inline-flex min-h-10 items-center font-mono-field text-xs tracking-wider text-accent/45 touch-manipulation"
+          >
+            {copy.beginObservation}
+          </SignalControl>
         </div>
+
+        <NarrativeArc lang={lang} />
       </main>
     </>
   );

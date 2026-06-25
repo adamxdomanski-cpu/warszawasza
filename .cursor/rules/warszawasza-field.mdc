@@ -6,9 +6,15 @@ globs: ["frontend/**"]
 
 # WARSZAWASZA // FIRA // OBSERWACJA TRWA
 
+> **WARSZAWASZA to dystrybucja (warstwa 3), nie produkt główny.**
+> Produkt główny to **FIRA Observation Protocol** — język obserwacji.
+> Spec: `fira/PROTOCOL.md` · reguła: `fira-protocol.mdc`
+
 ## Cel projektu
 
-Budujemy **interaktywny system narracji**, nie sklep ani landing e-commerce.
+Budujemy **język obserwacji obywatelskiej** (FOP), nie sklep ani landing e-commerce.
+
+Pierwsza dystrybucja protokołu: interaktywny interfejs WARSZAWASZA (`frontend/`).
 
 Kluczowa zasada: **OBSERWACJA TRWA** — wszystko zaczyna się od obserwacji.
 
@@ -73,20 +79,28 @@ Pierwszy ekran (`ObservationGate`):
 | ≠ | Dysonans | `/meta` |
 | 🕸 | GRAFEN | warstwa tła |
 
-## Pipeline decyzyjny (stan systemu, nie diagram)
+## Pipeline decyzyjny (łańcuch symboli)
 
-8 etapów — każdy ma **własny status jednocześnie** (`DecisionPipeline.tsx`):
+Interfejs pokazuje **skompresowany łańcuch** — bez etykiet etapów (`DecisionPipeline.tsx`):
 
 ```
-Rzeczywistość → Sygnały → Obserwacja → Filtracja → Pamięć → Walidacja → Wiedza → Narracja
+○ → ● → ◐ → ◉ → ≈ → ✓ → ■ → OUTPUT
 ```
 
-Symbole: `○` oczekuje · `◐` analiza · `●` aktywny/zakończono · `≈` hipoteza · `⊗` odrzucono
+Silnik wewnętrzny nadal ma 8 etapów (`PIPELINE_ORDER` · `pipelineEngine.ts`). UI = tylko glify + OUTPUT.
 
-- **Filtracja** — metafora kompresji (hover blisko etapu): rzeczywistość → ████ → ◉ → jeden sygnał
-- **Pamięć** — ASCII buduje strukturę klatka po klatce
-- **Walidacja** — subtelny cykl binarny (300 ms), nie Matrix
-- **Narracja** — wynik (NARRACJA / HIPOTEZA %), nie etykieta „Decyzja”
+| Glyph | engineIndex | Wewnętrzny etap |
+|-------|-------------|-----------------|
+| ○ | 0 | Rzeczywistość |
+| ● | 1 | Sygnały |
+| ◐ | 2 | Obserwacja |
+| ◉ | 3 | Filtracja (+ kompresja przy bliskości) |
+| ≈ | 4 | Pamięć (ASCII buduje) |
+| ✓ | 5 | Walidacja (cykl binarny) |
+| ■ | 6 | Wiedza (+ interferencja KRS) |
+| OUTPUT | 7 | Narracja — NARRACJA / HIPOTEZA % |
+
+Kanoniczny leksykon: `frontend/lib/symbols.ts` · `PROCESS_CHAIN`
 
 Filozofia: **oscyloskop miasta** — system pokazuje proces dochodzenia do wniosku, nie tłumaczy go wall of text.
 

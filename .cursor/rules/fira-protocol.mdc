@@ -1,0 +1,36 @@
+---
+description: FIRA is a Civic Observation Protocol — four layers, not a website
+alwaysApply: true
+---
+
+# FIRA Observation Protocol (FOP)
+
+**Myśl o projekcie jako o języku obserwacji**, nie jako o stronie, terminalu ani frameworku.
+
+## Cztery warstwy
+
+1. **FIRA Core** (`fira/core/`) — algebra: Source → Signal → Process → Evidence → Relation → Result. Nie zna Warszawy, polityki, bohaterów.
+2. **Notacja** (`fira/core/notation.ts`) — ASCII to **zapis** (czytać · pisać · porównać · archiwizować), nie grafika UI.
+3. **Dystrybucja** (`frontend/`) — WARSZAWASZA = pierwsza dystrybucja. Warstwa kulturowa **wymienna**.
+4. **Społeczność** — obywatel dostaje wspólny język opisu zjawisk, nie AI.
+
+## Zasady implementacji
+
+- **Core nie importuje z frontend/** — zależność jednokierunkowa: dystrybucja → core.
+- Nowe funkcje: najpierw czy protokół FOP/0.1 je opisuje? Potem UI.
+- **Cel v2:** `observationsAlign()` — dwie niezależne obserwacje tego samego zjawiska dają zgodny fingerprint. Nie więcej glifów ani ekranów.
+- **Najpierw obserwacja, potem interpretacja** — protokół nie narzuca wniosków.
+- Spec: `fira/PROTOCOL.md`
+
+## Antywzorce
+
+- ❌ Traktowanie WARSZAWASZA jako „produktu głównego” — to dystrybucja protokołu
+- ❌ Mieszanie narracji (LUCY, Muranów) do `fira/core/`
+- ❌ ASCII tylko jako animacja — musi dać się skopiować i sparsować
+- ❌ AI jako warstwa interpretacji w protokole
+
+## Prompty v2
+
+- „Dodaj pole do FOP/0.1 i zaktualizuj encode/parse”
+- „Nowa dystrybucja X — ten sam core, inne i18n”
+- „Czy ten zapis przechodzi observationsAlign z przykładem?”
