@@ -12,6 +12,37 @@ type NarrativeArcProps = {
   lang: Lang;
 };
 
+function NarrativeLinkRow({
+  symbol,
+  name,
+  lead,
+  href,
+  symbolClassName = "text-base text-accent/75",
+}: {
+  symbol: string;
+  name: string;
+  lead: string;
+  href: string;
+  symbolClassName?: string;
+}) {
+  return (
+    <div className="context-link-group py-1">
+      <p className="context-link-lead m-0 mb-1 font-mono-field text-[11px] tracking-[0.14em] text-accent/38 sm:text-xs">
+        {lead}
+      </p>
+      <SignalControl
+        as={Link}
+        href={href}
+        direction="right"
+        className="context-link-target flex min-h-10 touch-manipulation items-baseline gap-2"
+      >
+        <span className={symbolClassName}>{symbol}</span>
+        <span className="text-sm tracking-wide">{name}</span>
+      </SignalControl>
+    </div>
+  );
+}
+
 /** Secondary layer — hidden until user opens the lexicon (not first-screen). */
 export default function NarrativeArc({ lang }: NarrativeArcProps) {
   const copy = COPY[lang];
@@ -61,18 +92,12 @@ export default function NarrativeArc({ lang }: NarrativeArcProps) {
           const row = copy.narrative[key];
           return (
             <div key={key}>
-              <SignalControl
-                as={Link}
+              <NarrativeLinkRow
+                symbol={row.symbol}
+                name={row.name}
+                lead={row.role}
                 href={row.href ?? "#"}
-                direction="right"
-                className="flex min-h-10 touch-manipulation items-baseline gap-2 py-1"
-              >
-                <span className="text-base text-accent/75">{row.symbol}</span>
-                <span className="text-sm leading-snug">
-                  <span className="tracking-wide">{row.name}</span>
-                  <span className="text-accent/50"> ({row.role.split(" · ")[0]})</span>
-                </span>
-              </SignalControl>
+              />
               {index < PRIMARY_KEYS.length - 1 && (
                 <div className="py-1 pl-1 text-xs opacity-25" aria-hidden="true">
                   ↓
@@ -99,30 +124,24 @@ export default function NarrativeArc({ lang }: NarrativeArcProps) {
             const row = copy.narrative[key];
             return (
               <li key={key}>
-                <SignalControl
-                  as={Link}
+                <NarrativeLinkRow
+                  symbol={row.symbol}
+                  name={row.name}
+                  lead={row.role}
                   href={row.href ?? "#"}
-                  direction="right"
-                  className="flex min-h-10 touch-manipulation items-baseline gap-2 py-1"
-                >
-                  <span className="text-base text-accent/60">{row.symbol}</span>
-                  <span className="text-sm text-accent/70">
-                    {row.name}
-                    <span className="text-accent/45"> · {row.role}</span>
-                  </span>
-                </SignalControl>
+                  symbolClassName="text-base text-accent/60"
+                />
               </li>
             );
           })}
           <li>
-            <SignalControl
-              as={Link}
+            <NarrativeLinkRow
+              symbol="→"
+              name="META"
+              lead={copy.narrativeMetaHint}
               href="/meta"
-              direction="right"
-              className="inline-flex min-h-10 items-center font-mono-field text-sm tracking-wider touch-manipulation"
-            >
-              META →
-            </SignalControl>
+              symbolClassName="text-sm text-accent/55"
+            />
           </li>
         </ul>
       )}

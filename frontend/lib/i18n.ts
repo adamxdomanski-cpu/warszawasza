@@ -55,7 +55,7 @@ type Copy = {
   pipelineValidationResult: string;
   processOutput: string;
   processChainLabel: string;
-  signalAxiom: string;
+  signalAxiom: readonly [string, string];
   noisePrinciple: string;
   clarityPrinciple: string;
   implicationPrinciple: string;
@@ -68,6 +68,7 @@ type Copy = {
   narrativeLexiconClose: string;
   narrativeMore: string;
   narrativeLess: string;
+  narrativeMetaHint: string;
   narrative: Record<
     NarrativeKey,
     { name: string; role: string; symbol: string; href?: string }
@@ -149,8 +150,10 @@ export const COPY: Record<Lang, Copy> = {
     pipelineValidationResult: "→ zgodne",
     processOutput: "OUTPUT",
     processChainLabel: "Proces obserwacji",
-    signalAxiom:
-      "Małe, lokalne sygnały zawierają informacje o strukturze całego systemu.",
+    signalAxiom: [
+      "Małe, lokalne sygnały",
+      "niosą informację o strukturze całego systemu.",
+    ],
     noisePrinciple:
       "Celem nie jest więcej danych. Celem jest mniej szumu.",
     clarityPrinciple:
@@ -183,6 +186,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLexiconClose: "zwiń ↑",
     narrativeMore: "więcej ↓",
     narrativeLess: "mniej ↑",
+    narrativeMetaHint: "warstwa percepcji",
     narrative: {
       fira: { name: "FIRA", role: "ruch", symbol: "●", href: "/artefacts/fira" },
       diamente: {
@@ -297,8 +301,10 @@ export const COPY: Record<Lang, Copy> = {
     pipelineValidationResult: "→ match",
     processOutput: "OUTPUT",
     processChainLabel: "Observation process",
-    signalAxiom:
-      "Small, local signals contain information about the structure of the entire system.",
+    signalAxiom: [
+      "Small, local signals",
+      "carry information about the structure of the whole system.",
+    ],
     noisePrinciple:
       "The goal is not more data. The goal is less noise.",
     clarityPrinciple:
@@ -331,6 +337,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLexiconClose: "collapse ↑",
     narrativeMore: "more ↓",
     narrativeLess: "less ↑",
+    narrativeMetaHint: "perception layer",
     narrative: {
       fira: {
         name: "FIRA",
@@ -450,8 +457,10 @@ export const COPY: Record<Lang, Copy> = {
     pipelineValidationResult: "→ coerente",
     processOutput: "OUTPUT",
     processChainLabel: "Processo di osservazione",
-    signalAxiom:
-      "I piccoli segnali locali contengono informazioni sulla struttura dell'intero sistema.",
+    signalAxiom: [
+      "I piccoli segnali locali",
+      "contengono la struttura dell'intero sistema.",
+    ],
     noisePrinciple:
       "Non serve più dati. Serve meno rumore.",
     clarityPrinciple:
@@ -484,6 +493,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLexiconClose: "chiudi ↑",
     narrativeMore: "altro ↓",
     narrativeLess: "meno ↑",
+    narrativeMetaHint: "strato di percezione",
     narrative: {
       fira: {
         name: "FIRA",
@@ -603,8 +613,10 @@ export const COPY: Record<Lang, Copy> = {
     pipelineValidationResult: "→ узгоджено",
     processOutput: "OUTPUT",
     processChainLabel: "Процес спостереження",
-    signalAxiom:
-      "Малі локальні сигнали містять інформацію про структуру всієї системи.",
+    signalAxiom: [
+      "Малі, локальні сигнали",
+      "несуть інформацію про структуру всієї системи.",
+    ],
     noisePrinciple: "Мета — не більше даних. Мета — менше шуму.",
     clarityPrinciple:
       "Будуємо кристально чистий інтерфейс — зрозумілий, прозорий, безпечний і цікавий.",
@@ -636,6 +648,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLexiconClose: "згорнути ↑",
     narrativeMore: "більше ↓",
     narrativeLess: "менше ↑",
+    narrativeMetaHint: "шар сприйняття",
     narrative: {
       fira: { name: "FIRA", role: "рух", symbol: "●", href: "/artefacts/fira" },
       diamente: {
@@ -750,8 +763,10 @@ export const COPY: Record<Lang, Copy> = {
     pipelineValidationResult: "→ egyezés",
     processOutput: "OUTPUT",
     processChainLabel: "Megfigyelési folyamat",
-    signalAxiom:
-      "A kis, helyi jelzések információt hordoznak az egész rendszer szerkezetéről.",
+    signalAxiom: [
+      "A kis, helyi jelzések",
+      "információt hordoznak az egész rendszer szerkezetéről.",
+    ],
     noisePrinciple: "A cél nem több adat. A cél kevesebb zaj.",
     clarityPrinciple:
       "Kristálytiszta felületet építünk — érthető, átlátható, biztonságos és érdekes.",
@@ -783,6 +798,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLexiconClose: "összecsuk ↑",
     narrativeMore: "több ↓",
     narrativeLess: "kevesebb ↑",
+    narrativeMetaHint: "észlelési réteg",
     narrative: {
       fira: { name: "FIRA", role: "mozgás", symbol: "●", href: "/artefacts/fira" },
       diamente: {

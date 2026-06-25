@@ -192,6 +192,64 @@
     color: var(--color-lang-en-active);
   }
 
+  .context-link-context,
+  .context-link-label,
+  .context-link-lead,
+  .context-link-axiom-line {
+    transition:
+      color 220ms ease,
+      transform 220ms ease,
+      opacity 220ms ease;
+  }
+
+  .context-link-axiom-line {
+    color: rgba(120, 168, 220, 0.8);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .context-link-group:has(.context-link-target:hover) .context-link-context,
+    .context-link-group:has(.context-link-target:focus-visible) .context-link-context,
+    .context-link-group:has(.context-link-target.signal-detected) .context-link-context {
+      transform: translateY(-3px);
+    }
+
+    .context-link-group:has(.context-link-target:hover) .context-link-lead,
+    .context-link-group:has(.context-link-target:focus-visible) .context-link-lead,
+    .context-link-group:has(.context-link-target.signal-detected) .context-link-lead {
+      transform: translateX(3px);
+    }
+  }
+
+  .context-link-group:has(.context-link-target:hover) .context-link-context,
+  .context-link-group:has(.context-link-target:focus-visible) .context-link-context,
+  .context-link-group:has(.context-link-target.signal-detected) .context-link-context {
+    color: rgba(120, 168, 220, 0.95);
+  }
+
+  .context-link-group:has(.context-link-target:hover) .context-link-axiom-line,
+  .context-link-group:has(.context-link-target:focus-visible) .context-link-axiom-line,
+  .context-link-group:has(.context-link-target.signal-detected) .context-link-axiom-line {
+    color: rgba(120, 168, 220, 0.98);
+  }
+
+  .context-link-group:has(.context-link-target:hover) .context-link-label,
+  .context-link-group:has(.context-link-target:focus-visible) .context-link-label,
+  .context-link-group:has(.context-link-target.signal-detected) .context-link-label {
+    color: rgba(228, 0, 69, 0.88);
+  }
+
+  .context-link-group:has(.context-link-target:hover) .context-link-lead,
+  .context-link-group:has(.context-link-target:focus-visible) .context-link-lead,
+  .context-link-group:has(.context-link-target.signal-detected) .context-link-lead {
+    color: rgba(120, 168, 220, 0.82);
+    opacity: 1;
+  }
+
+  .context-link-group:has(.context-link-target:hover) .context-link-target,
+  .context-link-group:has(.context-link-target:focus-visible) .context-link-target {
+    color: var(--color-accent);
+  }
+
   .lucy-tail {
     color: var(--color-citrus);
   }

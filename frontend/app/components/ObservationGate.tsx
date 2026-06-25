@@ -58,21 +58,26 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
 
       {phase === "observe" ? (
         <section
-          className="relative z-10 flex flex-1 flex-col justify-center gap-6 py-6 sm:gap-8"
+          className="context-link-group relative z-10 flex flex-1 flex-col justify-center gap-5 py-6 sm:gap-6"
           aria-label={copy.gateObserve}
         >
-          <LivingSignalText
-            text={COPY[lang].signalAxiom}
-            className="m-0 max-w-md text-lg font-light leading-relaxed text-sapphire/80 sm:text-xl"
-          />
-          <div className="font-mono-field text-sm tracking-[0.2em] text-accent/70 sm:text-base">
+          <div className="context-link-context max-w-md space-y-1">
+            {COPY[lang].signalAxiom.map((line) => (
+              <LivingSignalText
+                key={line}
+                text={line}
+                className="context-link-axiom-line m-0 block text-lg font-light leading-snug sm:text-xl"
+              />
+            ))}
+          </div>
+          <div className="context-link-label font-mono-field text-sm tracking-[0.2em] text-accent/70 sm:text-base">
             {copy.gateObserve}
           </div>
           <SignalControl
             type="button"
             direction="down"
             onClick={() => setPhase("question")}
-            className="min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
+            className="context-link-target min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
           >
             {copy.gateObserveAction}
           </SignalControl>
@@ -118,26 +123,28 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
         </section>
       ) : (
         <section
-          className="animate-gate-in relative z-10 flex flex-1 flex-col justify-center gap-3 py-6"
+          className="animate-gate-in context-link-group relative z-10 flex flex-1 flex-col justify-center gap-3 py-6"
           aria-live="polite"
         >
-          <p className="animate-spark-in m-0 text-3xl text-accent">{copy.revealSpark}</p>
-          <p className="m-0 mb-1 font-mono-field text-base tracking-widest text-sapphire/75">
-            {copy.revealWave}
-          </p>
-          <LivingSignalText
-            text={copy.revealLine1}
-            className="m-0 text-2xl font-light leading-snug sm:text-3xl"
-          />
-          <LivingSignalText
-            text={copy.revealLine2}
-            className="m-0 text-2xl font-light leading-snug text-accent sm:text-3xl"
-          />
+          <div className="context-link-context space-y-3">
+            <p className="animate-spark-in m-0 text-3xl text-accent">{copy.revealSpark}</p>
+            <p className="m-0 mb-1 font-mono-field text-base tracking-widest text-sapphire/75">
+              {copy.revealWave}
+            </p>
+            <LivingSignalText
+              text={copy.revealLine1}
+              className="m-0 block text-2xl font-light leading-snug sm:text-3xl"
+            />
+            <LivingSignalText
+              text={copy.revealLine2}
+              className="m-0 block text-2xl font-light leading-snug text-accent sm:text-3xl"
+            />
+          </div>
           <SignalControl
             type="button"
             direction="right"
             onClick={enterField}
-            className="mt-6 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
+            className="context-link-target mt-6 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
           >
             {copy.enterField}
           </SignalControl>
