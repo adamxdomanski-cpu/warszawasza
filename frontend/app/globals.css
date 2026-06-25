@@ -349,6 +349,70 @@
     will-change: transform, opacity;
   }
 
+  .print-head {
+    color: var(--color-accent);
+    animation: printHeadBlink 1.05s step-end infinite;
+  }
+
+  .print-cursor {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    animation: printHeadBlink 1.05s step-end infinite;
+  }
+
+  .print-cursor--mono {
+    font-size: 0.95em;
+    vertical-align: baseline;
+  }
+
+  .print-stress-glyph {
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+  }
+
+  .print-stress-friction {
+    transition:
+      opacity 900ms ease,
+      letter-spacing 900ms ease,
+      color 900ms ease;
+  }
+
+  .print-stress-friction.print-stress-weakened {
+    opacity: 0.34;
+    letter-spacing: 0.1em;
+    color: var(--color-graphite);
+  }
+
+  .print-stress-friction.print-stress-weakened .print-stress-glyph {
+    opacity: 0.28;
+  }
+
+  .print-stress-trajectory .print-stress-glyph {
+    color: var(--color-accent-dim);
+  }
+
+  .print-stress-city .print-stress-glyph {
+    color: var(--color-fira-structure-bright);
+  }
+
+  @keyframes printHeadBlink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .print-head,
+    .print-cursor {
+      animation: none;
+    }
+  }
+
   .lucy-head {
     color: var(--color-accent);
     animation: lucyObserve 2.6s ease-in-out infinite;

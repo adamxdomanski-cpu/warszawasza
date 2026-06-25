@@ -73,7 +73,9 @@ export default function LucyAttention() {
         className="fixed top-0 left-0 will-change-transform"
         style={{ transform: "translate(-200px, -200px)" }}
       >
-        <span className="lucy-head -ml-2.5 -mt-2.5 block text-sm sm:text-base">●</span>
+        <span className="print-head -ml-[0.35em] -mt-[0.35em] block text-sm leading-none sm:text-base">
+          ▮
+        </span>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import {
 } from "../../lib/patternEngine";
 import DataCityDiagram from "./DataCityDiagram";
 import DecisionPipeline from "./DecisionPipeline";
+import CorePrintSequence from "./CorePrintSequence";
 import FieldBackdrop from "./FieldBackdrop";
 import FieldFooter from "./FieldFooter";
 import GrapheneField from "./GrapheneField";
@@ -74,6 +75,8 @@ export default function LivingInterface() {
   const [attentionCount, setAttentionCount] = useState(0);
   const [log, setLog] = useState<{ id: number; line: string }[]>([]);
   const [interference, setInterference] = useState<InterferenceResult | null>(null);
+  const [corePrinted, setCorePrinted] = useState(false);
+  const [cityPrinted, setCityPrinted] = useState(false);
   const noisePrincipleRef = useStructureAnchor<HTMLDivElement>();
 
   useEffect(() => {
@@ -94,6 +97,8 @@ export default function LivingInterface() {
 
   useEffect(() => {
     document.documentElement.lang = lang;
+    setCorePrinted(false);
+    setCityPrinted(false);
   }, [lang]);
 
   useEffect(() => {
@@ -258,31 +263,33 @@ export default function LivingInterface() {
               />
             </div>
 
-            {copy.core.map((line) => (
-              <LivingSignalText
-                key={line}
-                text={`${line.replace(/\.$/, "")}..`}
-                className="mb-2 max-w-full text-xl font-light leading-snug sm:text-2xl lg:mx-auto lg:text-[1.65rem] lg:leading-snug xl:text-3xl"
-              />
-            ))}
-            <LivingSignalText
-              text={`${copy.principle[0].replace(/\.$/, "")}..`}
-              className="mt-8 font-mono-field text-sm text-accent/50 sm:text-base lg:mx-auto"
-              intensity="low"
+            <CorePrintSequence
+              key={lang}
+              lang={lang}
+              onComplete={() => setCorePrinted(true)}
             />
-            <LivingSignalText
-              text={`${copy.principle[1].replace(/\.$/, "")}..`}
-              className="mt-1 font-mono-field text-sm text-accent/65 sm:text-base lg:mx-auto"
-              intensity="low"
-            />
+            {cityPrinted && (
+              <>
+                <LivingSignalText
+                  text={`${copy.principle[0].replace(/\.$/, "")}..`}
+                  className="mt-8 font-mono-field text-sm text-accent/50 sm:text-base lg:mx-auto"
+                  intensity="low"
+                />
+                <LivingSignalText
+                  text={`${copy.principle[1].replace(/\.$/, "")}..`}
+                  className="mt-1 font-mono-field text-sm text-accent/65 sm:text-base lg:mx-auto"
+                  intensity="low"
+                />
 
-            <div className="mt-10 px-1 py-2 lg:mx-auto lg:max-w-md">
-              <LivingSignalText
-                text={copy.closing}
-                className="text-base font-light tracking-wide sm:text-lg"
-                intensity="low"
-              />
-            </div>
+                <div className="mt-10 px-1 py-2 lg:mx-auto lg:max-w-md">
+                  <LivingSignalText
+                    text={copy.closing}
+                    className="text-base font-light tracking-wide sm:text-lg"
+                    intensity="low"
+                  />
+                </div>
+              </>
+            )}
           </section>
 
           {/* —— RIGHT: log · manifest fragment —— */}
@@ -293,15 +300,22 @@ export default function LivingInterface() {
               ))}
             </div>
 
-            <DataCityDiagram lang={lang} variant="fixed" />
+            <DataCityDiagram
+              lang={lang}
+              variant="fixed"
+              printActive={corePrinted && !cityPrinted}
+              onPrintComplete={() => setCityPrinted(true)}
+            />
 
-            <div ref={noisePrincipleRef} className="fira-structure-proximity fira-structure-badge">
-              <LivingSignalText
-                text={copy.noisePrinciple}
-                className="font-mono-field text-xs leading-relaxed sm:text-sm"
-                intensity="low"
-              />
-            </div>
+            {cityPrinted && (
+              <div ref={noisePrincipleRef} className="fira-structure-proximity fira-structure-badge">
+                <LivingSignalText
+                  text={copy.noisePrinciple}
+                  className="font-mono-field text-xs leading-relaxed sm:text-sm"
+                  intensity="low"
+                />
+              </div>
+            )}
           </aside>
         </div>
 

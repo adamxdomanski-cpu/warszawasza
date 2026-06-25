@@ -1,0 +1,55 @@
+name: COP v1.0 Rigor Validator
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "fira/**"
+      - ".cursor/rules/**"
+      - "*.html"
+      - "scripts/cop-validate.sh"
+      - ".github/workflows/cop-validator.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-cop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Data Stream (Checkout)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Initialize COP Scanner
+        run: |
+          echo "[ INFO ] Inicjacja skanera Civic Observation Protocol v1.0"
+          echo "PROCESSING FLUX: ■■■■□"
+
+      - name: Verify Core Alphabet and Anti-Patterns
+        id: scanner
+        env:
+          COP_BASE_REF: origin/${{ github.event.pull_request.base.ref }}
+        run: |
+          git fetch origin "${{ github.event.pull_request.base.ref }}"
+          bash scripts/cop-validate.sh
+
+      - name: Frontend build gate (Draft 0.98)
+        if: success()
+        run: |
+          if git diff "origin/${{ github.event.pull_request.base.ref }}"...HEAD --name-only | grep -q '^frontend/'; then
+            echo "[ PROCES ] Weryfikacja builda dystrybucji (npm run build)..."
+            cd frontend
+            npm ci
+            npm run build
+            echo "[ SUCCESS ] Build CONFIRMED"
+          else
+            echo "[ INFO ] Brak zmian w frontend/ — pomijam build."
+          fi
+
+      - name: Post Operator Report
+        if: always()
+        run: |
+          echo "PROCESSING FLUX: □□□□□ [Pętla automatyzacji wygaszona]"
