@@ -70,6 +70,7 @@ type Copy = {
   narrativeLess: string;
   narrativeMetaHint: string;
   learnHint: string;
+  deliberationHint: string;
   narrative: Record<
     NarrativeKey,
     { name: string; role: string; symbol: string; href?: string }
@@ -189,6 +190,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLess: "mniej ↑",
     narrativeMetaHint: "warstwa percepcji",
     learnHint: "fazy PM · pipeline FIRA",
+    deliberationHint: "deliberacja grafenowa · nie wybory",
     narrative: {
       fira: { name: "FIRA", role: "ruch", symbol: "●", href: "/artefacts/fira" },
       diamente: {
@@ -341,6 +343,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLess: "less ↑",
     narrativeMetaHint: "perception layer",
     learnHint: "PM phases · FIRA pipeline",
+    deliberationHint: "graphene deliberation · not elections",
     narrative: {
       fira: {
         name: "FIRA",
@@ -498,6 +501,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLess: "meno ↑",
     narrativeMetaHint: "strato di percezione",
     learnHint: "fasi PM · pipeline FIRA",
+    deliberationHint: "deliberazione graphene · non elezioni",
     narrative: {
       fira: {
         name: "FIRA",
@@ -654,6 +658,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLess: "менше ↑",
     narrativeMetaHint: "шар сприйняття",
     learnHint: "фази PM · pipeline FIRA",
+    deliberationHint: "graphene deliberation · не вибори",
     narrative: {
       fira: { name: "FIRA", role: "рух", symbol: "●", href: "/artefacts/fira" },
       diamente: {
@@ -805,6 +810,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeLess: "kevesebb ↑",
     narrativeMetaHint: "észlelési réteg",
     learnHint: "PM fázisok · FIRA pipeline",
+    deliberationHint: "graphene deliberation · nem választás",
     narrative: {
       fira: { name: "FIRA", role: "mozgás", symbol: "●", href: "/artefacts/fira" },
       diamente: {

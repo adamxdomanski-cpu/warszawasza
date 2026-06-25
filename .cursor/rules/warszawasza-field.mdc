@@ -8,7 +8,7 @@ globs: ["frontend/**"]
 
 > **WARSZAWASZA to dystrybucja (warstwa 3), nie produkt główny.**
 > Produkt główny to **FIRA Observation Protocol** — język obserwacji.
-> Spec: `fira/PROTOCOL.md` · reguła: `fira-protocol.mdc`
+> Spec: `fira/PROTOCOL.md` · reguła: `fira-protocol.mdc` · status: `fira/OPERATIONAL_LOG.md` · `fira/TF_KEY.md`
 
 ## Cel projektu
 

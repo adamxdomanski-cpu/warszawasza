@@ -152,6 +152,15 @@ export default function NarrativeArc({ lang }: NarrativeArcProps) {
               symbolClassName="text-sm text-accent/50"
             />
           </li>
+          <li>
+            <NarrativeLinkRow
+              symbol="⌁"
+              name="/deliberation"
+              lead={copy.deliberationHint}
+              href="/deliberation"
+              symbolClassName="text-sm text-accent/50"
+            />
+          </li>
         </ul>
       )}
     </section>
