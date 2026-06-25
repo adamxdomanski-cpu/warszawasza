@@ -295,7 +295,7 @@ export default function LivingInterface() {
 
             <LivingSignalText
               text={copy.noisePrinciple}
-              className="font-mono-field text-xs leading-relaxed text-sapphire/70 sm:text-sm"
+              className="fira-structure-badge font-mono-field text-xs leading-relaxed sm:text-sm"
               intensity="low"
             />
           </aside>

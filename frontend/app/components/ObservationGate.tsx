@@ -126,7 +126,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
         >
           <div className="context-link-context space-y-3">
             <p className="animate-spark-in m-0 text-3xl text-accent">{copy.revealSpark}</p>
-            <p className="m-0 mb-1 font-mono-field text-base tracking-widest text-sapphire/75">
+            <p className="fira-structure-badge m-0 mb-1 font-mono-field text-base tracking-widest">
               {copy.revealWave}
             </p>
             <LivingSignalText

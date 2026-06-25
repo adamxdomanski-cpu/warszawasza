@@ -13,6 +13,10 @@
   --color-citrus-glow: rgba(184, 230, 46, 0.42);
   --color-graphite: rgba(190, 190, 188, 0.62);
   --color-ink: rgba(248, 248, 246, 0.94);
+  /* FIRA structural layer — local signals about system topology (not locale tint) */
+  --color-fira-structure: rgba(248, 248, 246, 0.46);
+  --color-fira-structure-mid: rgba(248, 248, 246, 0.62);
+  --color-fira-structure-bright: rgba(248, 248, 246, 0.88);
   --color-lang-active: var(--color-accent);
   --color-lang-idle: rgba(190, 190, 188, 0.52);
   --color-lang-hover: rgba(228, 0, 69, 0.68);
@@ -205,12 +209,19 @@
   }
 
   .context-link-axiom-line--subject {
-    color: rgba(120, 168, 220, 0.62);
+    color: var(--color-fira-structure-mid);
+  }
+
+  .context-link-axiom-line--subject::before {
+    content: "● ";
+    font-family: var(--font-mono);
+    color: var(--color-fira-structure-bright);
+    letter-spacing: 0;
   }
 
   .context-link-axiom-line--follow,
   .context-link-follow {
-    color: rgba(120, 168, 220, 0.84);
+    color: var(--color-fira-structure);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -245,7 +256,7 @@
   .context-link-group:has(.context-link-target:hover) .context-link-follow,
   .context-link-group:has(.context-link-target:focus-visible) .context-link-follow,
   .context-link-group:has(.context-link-target.signal-detected) .context-link-follow {
-    color: rgba(120, 168, 220, 0.98);
+    color: var(--color-fira-structure-bright);
   }
 
   .context-link-group:has(.context-link-target:hover) .context-link-lead,
@@ -268,8 +279,23 @@
   }
 
   .trajectory-hesitating .trajectory-choice-letter {
-    color: rgba(120, 168, 220, 0.92);
+    color: var(--color-fira-structure-bright);
     letter-spacing: 0.22em;
+  }
+
+  .fira-structure-tone {
+    color: var(--color-fira-structure-mid);
+  }
+
+  .fira-structure-badge {
+    color: var(--color-fira-structure-mid);
+  }
+
+  .fira-structure-badge::before {
+    content: "● ";
+    font-family: var(--font-mono);
+    color: var(--color-fira-structure-bright);
+    letter-spacing: 0;
   }
 
   .trajectory-hesitating {

@@ -40,7 +40,7 @@ export default function DataCityDiagram({
           <span
             key={line.id}
             className={`data-city-line block ${
-              line.kind === "node" ? "data-city-node text-accent/75" : "text-accent/32"
+              line.kind === "node" ? "data-city-node fira-structure-tone" : "text-accent/32"
             }`}
             style={{ animationDelay: `${line.delay}s` }}
           >

@@ -67,7 +67,7 @@ export default function ArtifactView({ slug }: ArtifactViewProps) {
           ))}
           <LivingSignalText
             text={layer.signal}
-            className="mt-8 font-mono-field text-sm tracking-wide text-sapphire/75 sm:text-base"
+            className="mt-8 font-mono-field text-sm tracking-wide fira-structure-tone sm:text-base"
             intensity="low"
           />
         </article>
