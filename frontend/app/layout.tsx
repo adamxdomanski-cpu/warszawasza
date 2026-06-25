@@ -1,20 +1,39 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Fira_Mono, Fira_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import "./globals.css";
 
+const firaSans = Fira_Sans({
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "600"],
+  variable: "--font-fira-sans",
+});
+
+const firaMono = Fira_Mono({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  variable: "--font-fira-mono",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.warszawasza.online"),
-  title: "Warszawasza | Moja, Twoja, Wasza Warszawa",
+  title: "WARSZAWASZA // FIRA | ● OBSERWACJA TRWA",
   description:
-    "Warszawasza is a Warsaw identity studio turning city signals into limited drops, field maps, and civic language.",
+    "Interaktywny system obserwacji miejskiej. Sygnał, tarcie, adaptacja, trajektoria. Moja, Twoja, Wasza Warszawa.",
   openGraph: {
-    title: "Warszawasza | Moja, Twoja, Wasza Warszawa",
+    title: "WARSZAWASZA // FIRA | ● OBSERWACJA TRWA",
     description:
-      "A Warsaw identity studio turning city signals into limited drops, field maps, and civic language.",
+      "Interaktywny system obserwacji miejskiej — nie sklep, lecz żywe pole narracji.",
     url: "https://www.warszawasza.online",
     siteName: "Warszawasza",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -24,7 +43,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body
+        className={`${firaSans.variable} ${firaMono.variable} bg-field text-accent antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

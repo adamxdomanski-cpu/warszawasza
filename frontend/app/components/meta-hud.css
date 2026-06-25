@@ -1,0 +1,621 @@
+/* META HUD — mobile-first. Desktop overlay is a bonus layer. */
+
+.metaHud {
+  --meta-red: #e40045;
+  --meta-sapphire: rgba(120, 168, 220, 0.82);
+  --meta-white: rgba(248, 248, 246, 0.94);
+  --meta-graphite: rgba(190, 190, 188, 0.62);
+  --meta-edge: 20px;
+  --meta-mono-sm: 13px;
+  --meta-mono-md: 15px;
+  --meta-mono-lg: 18px;
+  --meta-sans-core: 24px;
+  --meta-sans-principle: 15px;
+  --meta-ascii: 12px;
+  --meta-tap: 44px;
+
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--meta-white);
+  background: transparent;
+  font-family: var(--font-fira-sans), "Fira Sans", sans-serif;
+  font-weight: 300;
+  -webkit-tap-highlight-color: transparent;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "top lang"
+    "core core"
+    "truth truth"
+    "narrative narrative"
+    "grafen trajectory"
+    "objects objects";
+  gap: 28px 12px;
+  padding: var(--meta-edge);
+  padding-bottom: 40px;
+}
+
+.metaHudSpark {
+  animation: metaSpark 0.48s ease-out;
+}
+
+@keyframes metaSpark {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.35);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+.metaMarks {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.metaMark {
+  pointer-events: none;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  animation: metaFade 1.4s ease-out forwards;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  text-shadow: 0 0 18px rgba(228, 0, 69, 0.45);
+}
+
+.metaMarkdot {
+  color: var(--meta-red);
+  font-size: var(--meta-mono-md);
+}
+
+.metaMarkwave {
+  color: var(--meta-sapphire);
+  font-size: var(--meta-mono-sm);
+  letter-spacing: 0.08em;
+  animation-duration: 2.2s;
+}
+
+.metaMarkdiamond {
+  color: var(--meta-white);
+  font-size: var(--meta-mono-lg);
+}
+
+.metaMarkspark {
+  color: var(--meta-red);
+  font-size: var(--meta-mono-lg);
+  animation-duration: 0.9s;
+}
+
+@keyframes metaFade {
+  0% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+}
+
+.metaGaze {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  margin: -10px 0 0 -10px;
+  transition: transform 0.08s ease-out;
+}
+
+.metaGazeCore {
+  color: var(--meta-red);
+  font-size: 14px;
+  text-shadow: 0 0 14px rgba(228, 0, 69, 0.8);
+}
+
+.metaHudTouch .metaGazeCore {
+  font-size: 18px;
+}
+
+.metaGazeLucy {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  color: var(--meta-sapphire);
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-sm);
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}
+
+.metaTop {
+  grid-area: top;
+}
+
+.metaObservation {
+  margin: 0;
+  color: var(--meta-red);
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-sm);
+  letter-spacing: 0.16em;
+  text-shadow: 0 0 20px rgba(228, 0, 69, 0.35);
+}
+
+.metaClock {
+  margin: 6px 0 0;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-lg);
+  font-variant-numeric: tabular-nums;
+  color: var(--meta-white);
+  letter-spacing: 0.08em;
+}
+
+.metaLang {
+  grid-area: lang;
+  display: flex;
+  gap: 4px;
+  align-self: start;
+  justify-self: end;
+}
+
+.metaLang button {
+  padding: 8px 10px;
+  min-width: var(--meta-tap);
+  min-height: var(--meta-tap);
+  border: 0;
+  background: none;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-md);
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.metaLangOn {
+  color: var(--meta-red);
+}
+
+.metaLangOff {
+  color: var(--meta-graphite);
+}
+
+.metaTruth {
+  grid-area: truth;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+}
+
+.metaTruthStep {
+  opacity: 0.28;
+  transition: opacity 0.5s ease, text-shadow 0.5s ease;
+  font-size: var(--meta-mono-md);
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+  color: var(--meta-graphite);
+}
+
+.metaTruthStepActive {
+  opacity: 1;
+  color: var(--meta-white);
+  text-shadow: 0 0 20px rgba(228, 0, 69, 0.35);
+}
+
+.metaTruth > div:first-child .metaTruthStepActive,
+.metaTruth > div:last-child .metaTruthStepActive {
+  color: var(--meta-red);
+}
+
+.metaTruthArrow {
+  opacity: 0.22;
+  font-size: var(--meta-mono-sm);
+  line-height: 1.2;
+  padding: 4px 0;
+}
+
+.metaGrafen {
+  grid-area: grafen;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.metaGrafenArt {
+  margin: 0;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-ascii);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: var(--meta-graphite);
+  opacity: 0.38;
+  transition: opacity 0.6s ease, color 0.6s ease;
+}
+
+.metaGrafenLabel {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-sm);
+  letter-spacing: 0.2em;
+  color: var(--meta-graphite);
+  opacity: 0.45;
+}
+
+.metaGrafenfalse .metaGrafenArt {
+  opacity: 0.28;
+}
+
+.metaGrafenspark .metaGrafenArt {
+  opacity: 0.48;
+  color: var(--meta-red);
+}
+
+.metaGrafenwave .metaGrafenArt {
+  opacity: 0.55;
+  color: var(--meta-sapphire);
+}
+
+.metaGrafendiamond .metaGrafenArt {
+  opacity: 0.68;
+  color: var(--meta-white);
+}
+
+.metaGrafentrue .metaGrafenArt {
+  opacity: 0.82;
+  color: var(--meta-red);
+  text-shadow: 0 0 18px rgba(228, 0, 69, 0.28);
+}
+
+.metaGrafentrue .metaGrafenLabel {
+  color: var(--meta-red);
+  opacity: 0.72;
+}
+
+.metaTrajectory {
+  grid-area: trajectory;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.metaTrajectoryArt {
+  margin: 0;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-ascii);
+  line-height: 1.18;
+  letter-spacing: 0.04em;
+  color: var(--meta-graphite);
+  opacity: 0.3;
+  transition: opacity 0.6s ease, color 0.6s ease;
+}
+
+.metaTrajectoryLabel {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-sm);
+  letter-spacing: 0.18em;
+  color: var(--meta-graphite);
+  opacity: 0.42;
+}
+
+.metaTrajectoryfalse .metaTrajectoryArt {
+  opacity: 0.22;
+}
+
+.metaTrajectoryspark .metaTrajectoryArt {
+  opacity: 0.45;
+  color: var(--meta-red);
+}
+
+.metaTrajectorywave .metaTrajectoryArt {
+  opacity: 0.52;
+  color: var(--meta-sapphire);
+}
+
+.metaTrajectorydiamond .metaTrajectoryArt,
+.metaTrajectorytrue .metaTrajectoryArt {
+  opacity: 0.78;
+}
+
+.metaTrajectorydiamond .metaTrajectoryLabel,
+.metaTrajectorytrue .metaTrajectoryLabel {
+  color: var(--meta-sapphire);
+  opacity: 0.65;
+}
+
+.metaTrajectorytrue .metaTrajectoryArt {
+  color: var(--meta-white);
+  text-shadow: 0 0 16px rgba(120, 168, 220, 0.35);
+}
+
+.metaNarrativeFlow {
+  grid-area: narrative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.metaNarrativeHead {
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-sm);
+  letter-spacing: 0.1em;
+  color: var(--meta-red);
+}
+
+.metaNarrativeArrow {
+  margin: 4px 0;
+  font-size: var(--meta-mono-sm);
+  opacity: 0.35;
+  line-height: 1;
+}
+
+.metaNarrativeTail {
+  font-size: var(--meta-mono-md);
+  letter-spacing: 0.04em;
+  color: var(--meta-graphite);
+  line-height: 1.35;
+}
+
+.metaNarrativeBlock {
+  opacity: 0.28;
+  text-align: left;
+  transition: opacity 0.5s ease, color 0.5s ease;
+}
+
+.metaNarrativeBlockActive {
+  opacity: 1;
+}
+
+.metaNarrativeBlockActive .metaNarrativeTail {
+  color: var(--meta-sapphire);
+}
+
+.metaNarrativeBlockActive .metaNarrativeHead {
+  text-shadow: 0 0 16px rgba(228, 0, 69, 0.3);
+}
+
+.metaCore {
+  grid-area: core;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  text-align: left;
+}
+
+.metaCore p {
+  margin: 0 0 10px;
+  font-size: var(--meta-sans-core);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  text-shadow:
+    0 0 28px rgba(0, 0, 0, 0.88),
+    0 2px 16px rgba(0, 0, 0, 0.92);
+}
+
+.metaPrinciple {
+  margin-top: 24px !important;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-sans-principle) !important;
+  color: var(--meta-graphite) !important;
+  letter-spacing: 0.08em;
+}
+
+.metaPrincipleStrong {
+  color: var(--meta-sapphire) !important;
+}
+
+.metaObjects {
+  grid-area: objects;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.metaObject {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--meta-graphite);
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: var(--meta-mono-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+.metaObjectLink {
+  touch-action: manipulation;
+  min-height: var(--meta-tap);
+}
+
+.metaObjectActive {
+  color: var(--meta-red);
+  opacity: 1;
+}
+
+/* Tablet — 768px */
+@media (min-width: 768px) {
+  .metaHud {
+    --meta-edge: 32px;
+    --meta-mono-sm: 14px;
+    --meta-mono-md: 16px;
+    --meta-mono-lg: 20px;
+    --meta-sans-core: 28px;
+    --meta-sans-principle: 16px;
+    --meta-ascii: 13px;
+    gap: 32px 20px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .metaNarrativeFlow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .metaCore {
+    text-align: center;
+    align-items: center;
+  }
+
+  .metaCore p {
+    max-width: 22ch;
+  }
+
+  .metaTruth {
+    align-items: center;
+  }
+}
+
+/* Desktop bonus — 1024px HUD overlay */
+@media (min-width: 1024px) {
+  .metaHud {
+    --meta-edge: clamp(40px, 4vw, 64px);
+    --meta-mono-sm: clamp(12px, 0.4vw + 10px, 14px);
+    --meta-mono-md: clamp(14px, 0.5vw + 11px, 16px);
+    --meta-mono-lg: clamp(16px, 0.55vw + 12px, 19px);
+    --meta-sans-core: clamp(22px, 1.3vw + 14px, 32px);
+    --meta-sans-principle: clamp(14px, 0.45vw + 11px, 17px);
+    --meta-ascii: clamp(11px, 0.45vw + 9px, 14px);
+
+    display: block;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    padding-bottom: clamp(100px, 12vh, 140px);
+    overflow-y: hidden;
+  }
+
+  .metaHudFinePointer {
+    cursor: none;
+  }
+
+  html.hasFinePointer .metaHudFinePointer {
+    cursor: none;
+  }
+
+  .metaHudFinePointer .metaLang button {
+    cursor: none;
+  }
+
+  .metaTop {
+    position: fixed;
+    top: var(--meta-edge);
+    left: var(--meta-edge);
+    z-index: 10;
+  }
+
+  .metaLang {
+    position: fixed;
+    top: var(--meta-edge);
+    right: var(--meta-edge);
+    z-index: 10;
+    gap: clamp(12px, 1.5vw, 24px);
+  }
+
+  .metaTruth {
+    position: fixed;
+    top: 50%;
+    right: var(--meta-edge);
+    z-index: 10;
+    transform: translateY(-50%);
+    align-items: flex-end;
+    text-align: right;
+    max-width: min(26vw, 220px);
+  }
+
+  .metaTruthArrow {
+    text-align: right;
+  }
+
+  .metaGrafen {
+    position: fixed;
+    left: var(--meta-edge);
+    bottom: clamp(120px, 16vh, 180px);
+    z-index: 10;
+  }
+
+  .metaTrajectory {
+    position: fixed;
+    left: var(--meta-edge);
+    top: 50%;
+    z-index: 10;
+    transform: translateY(-58%);
+  }
+
+  .metaNarrativeFlow {
+    position: fixed;
+    left: 50%;
+    bottom: clamp(88px, 12vh, 130px);
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+    gap: clamp(16px, 2vw, 32px);
+    width: min(90vw, 880px);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .metaNarrativeBlock {
+    text-align: center;
+  }
+
+  .metaCore {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(80px, 10vh, 120px) clamp(24px, 6vw, 100px);
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .metaCore p {
+    max-width: 18ch;
+  }
+
+  .metaObjects {
+    position: fixed;
+    bottom: clamp(20px, 2.5vh, 32px);
+    left: var(--meta-edge);
+    right: var(--meta-edge);
+    z-index: 10;
+    justify-content: center;
+  }
+}
+
+/* Large desktop — 1440px */
+@media (min-width: 1440px) {
+  .metaHud {
+    --meta-sans-core: clamp(26px, 1.2vw + 16px, 36px);
+    --meta-mono-lg: clamp(17px, 0.45vw + 13px, 21px);
+    --meta-ascii: clamp(12px, 0.4vw + 10px, 15px);
+  }
+
+  .metaNarrativeFlow {
+    width: min(88vw, 960px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metaMark,
+  .metaHudSpark,
+  .metaGaze {
+    animation: none;
+    transition: none;
+  }
+}
