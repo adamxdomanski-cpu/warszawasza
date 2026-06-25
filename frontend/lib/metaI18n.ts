@@ -1,6 +1,6 @@
-export type MetaLang = "pl" | "en" | "it";
+export type MetaLang = "pl" | "it" | "uk" | "hu" | "en";
 
-export const META_LANGS: MetaLang[] = ["pl", "en", "it"];
+export const META_LANGS: MetaLang[] = ["pl", "it", "uk", "hu", "en"];
 
 export type SignalKey =
   | "fira"
@@ -181,6 +181,90 @@ export const META_COPY: Record<MetaLang, MetaCopy> = {
       { head: "Dissonanza Cognitiva", tail: "molte interpretazioni" },
       { head: "⚡", tail: "collasso delle interpretazioni" },
       { head: "Diamente", tail: "segnale levigato" },
+    ],
+  },
+  uk: {
+    observation: "СПОСТЕРЕЖЕННЯ ТРИВАЄ",
+    core: [
+      "Місто реагує на сигнали.",
+      "Сигнали виявляють тертя.",
+      "Тертя змінює траєкторії.",
+      "Траєкторії змінюють місто.",
+    ],
+    principle: [
+      "Система не пояснює світ.",
+      "Система запрошує до уваги.",
+    ],
+    stateLabel: "стан сигналу",
+    trajectoryLabel: "ТРАЄКТОРІЯ",
+    grafenLabel: "GRAFEN",
+    signals: {
+      fira: { symbol: "●", label: "FIRA", role: "рух" },
+      lucy: { symbol: "●", label: "LUCY", role: "точка уваги" },
+      diamente: { symbol: "◇", label: "Diamente", role: "затверджений сигнал" },
+      shafir: { symbol: "∥", label: "Shafir", role: "тертя" },
+      lustra: { symbol: "⌁", label: "Lustra", role: "адаптація" },
+      griffin: { symbol: "↗", label: "Griffin", role: "траєкторія" },
+      dissonance: {
+        symbol: "≠",
+        label: "Когнітивний дисонанс",
+        role: "ставить під сумнів припущення",
+      },
+    },
+    truthChain: {
+      false: { display: "ХИБНІСТЬ (0)", glyph: "ХИБНІСТЬ (0)" },
+      spark: { display: "⚡", glyph: "⚡" },
+      wave: { display: "~~~~", glyph: "~~~~" },
+      diamond: { display: "◇", glyph: "◇" },
+      true: { display: "ІСТИНА (1)", glyph: "ІСТИНА (1)" },
+    },
+    narrativeFlow: [
+      { head: "⚡", tail: "~~~~" },
+      { head: "Когнітивний дисонанс", tail: "багато інтерпретацій" },
+      { head: "⚡", tail: "колапс інтерпретацій" },
+      { head: "Diamente", tail: "відполірований сигнал" },
+    ],
+  },
+  hu: {
+    observation: "MEGFIGYELÉS FOLYAMATBAN",
+    core: [
+      "A város reagál a jelzésekre.",
+      "A jelzések felfedik a súrlódást.",
+      "A súrlódás megváltoztatja a pályákat.",
+      "A pályák megváltoztatják a várost.",
+    ],
+    principle: [
+      "A rendszer nem magyarázza a világot.",
+      "A rendszer figyelemre hív.",
+    ],
+    stateLabel: "jelzés állapota",
+    trajectoryLabel: "PÁLYA",
+    grafenLabel: "GRAFEN",
+    signals: {
+      fira: { symbol: "●", label: "FIRA", role: "mozgás" },
+      lucy: { symbol: "●", label: "LUCY", role: "figyelempont" },
+      diamente: { symbol: "◇", label: "Diamente", role: "validált jelzés" },
+      shafir: { symbol: "∥", label: "Shafir", role: "súrlódás" },
+      lustra: { symbol: "⌁", label: "Lustra", role: "adaptáció" },
+      griffin: { symbol: "↗", label: "Griffin", role: "pálya" },
+      dissonance: {
+        symbol: "≠",
+        label: "Kognitív disszonancia",
+        role: "kérdőjelezi a feltételezéseket",
+      },
+    },
+    truthChain: {
+      false: { display: "HAMIS (0)", glyph: "HAMIS (0)" },
+      spark: { display: "⚡", glyph: "⚡" },
+      wave: { display: "~~~~", glyph: "~~~~" },
+      diamond: { display: "◇", glyph: "◇" },
+      true: { display: "IGAZ (1)", glyph: "IGAZ (1)" },
+    },
+    narrativeFlow: [
+      { head: "⚡", tail: "~~~~" },
+      { head: "Kognitív disszonancia", tail: "sok értelmezés" },
+      { head: "⚡", tail: "értelmezések összeomlása" },
+      { head: "Diamente", tail: "csiszolt jelzés" },
     ],
   },
 };

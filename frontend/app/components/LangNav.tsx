@@ -16,25 +16,31 @@ export default function LangNav({
 }: LangNavProps) {
   return (
     <nav
-      className="flex gap-1 font-mono-field text-sm tracking-wider sm:gap-2 sm:text-base"
+      className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono-field text-sm tracking-wider sm:gap-x-3 sm:text-base"
       aria-label="Language"
     >
-      {LANGS.map((code) => {
+      {LANGS.map((code, index) => {
         const active = lang === code;
         const label =
           variant === "bracket" ? `[ ${code.toUpperCase()} ]` : code.toUpperCase();
         return (
-          <SignalControl
-            key={code}
-            type="button"
-            direction="none"
-            onClick={() => onChange(code)}
-            className={`min-h-11 min-w-11 touch-manipulation px-2 ${
-              active ? "text-accent opacity-100" : "text-graphite opacity-35"
-            }`}
-          >
-            {label}
-          </SignalControl>
+          <span key={code} className="inline-flex items-center gap-x-2 sm:gap-x-3">
+            {index > 0 ? (
+              <span className="select-none text-accent/25" aria-hidden="true">
+                ·
+              </span>
+            ) : null}
+            <SignalControl
+              type="button"
+              direction="none"
+              onClick={() => onChange(code)}
+              className={`min-h-11 min-w-11 touch-manipulation px-1.5 sm:px-2 ${
+                active ? "text-accent opacity-100" : "text-graphite opacity-35"
+              }`}
+            >
+              {label}
+            </SignalControl>
+          </span>
         );
       })}
     </nav>

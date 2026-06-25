@@ -217,15 +217,21 @@ export default function MetaPerception() {
       </header>
 
       <nav className="metaLang" aria-label="Language">
-        {META_LANGS.map((code) => (
-          <button
-            key={code}
-            type="button"
-            className={lang === code ? "metaLangOn" : "metaLangOff"}
-            onClick={() => switchLang(code)}
-          >
-            {code.toUpperCase()}
-          </button>
+        {META_LANGS.map((code, index) => (
+          <span key={code} className="metaLangItem">
+            {index > 0 ? (
+              <span className="metaLangSep" aria-hidden="true">
+                ·
+              </span>
+            ) : null}
+            <button
+              type="button"
+              className={lang === code ? "metaLangOn" : "metaLangOff"}
+              onClick={() => switchLang(code)}
+            >
+              {code.toUpperCase()}
+            </button>
+          </span>
         ))}
       </nav>
 

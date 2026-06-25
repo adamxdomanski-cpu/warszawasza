@@ -159,9 +159,21 @@
 .metaLang {
   grid-area: lang;
   display: flex;
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: 4px 8px;
   align-self: start;
   justify-self: end;
+}
+
+.metaLangItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metaLangSep {
+  color: rgba(228, 0, 69, 0.25);
+  user-select: none;
 }
 
 .metaLang button {
