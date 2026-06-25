@@ -62,11 +62,13 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
           aria-label={copy.gateObserve}
         >
           <div className="context-link-context max-w-md space-y-1">
-            {COPY[lang].signalAxiom.map((line) => (
+            {COPY[lang].signalAxiom.map((line, index) => (
               <LivingSignalText
                 key={line}
                 text={line}
-                className="context-link-axiom-line m-0 block text-lg font-light leading-snug sm:text-xl"
+                className={`context-link-axiom-line m-0 block text-lg font-light leading-snug sm:text-xl ${
+                  index === 1 ? "context-link-axiom-line--follow" : "context-link-axiom-line--subject"
+                }`}
               />
             ))}
           </div>
@@ -137,7 +139,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             />
             <LivingSignalText
               text={copy.revealLine2}
-              className="m-0 block text-2xl font-light leading-snug text-accent sm:text-3xl"
+              className="context-link-follow m-0 block text-2xl font-light leading-snug text-accent sm:text-3xl"
             />
           </div>
           <SignalControl

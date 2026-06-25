@@ -195,53 +195,63 @@
   .context-link-context,
   .context-link-label,
   .context-link-lead,
-  .context-link-axiom-line {
+  .context-link-axiom-line,
+  .context-link-follow,
+  .context-link-target {
     transition:
       color 220ms ease,
       transform 220ms ease,
       opacity 220ms ease;
   }
 
-  .context-link-axiom-line {
-    color: rgba(120, 168, 220, 0.8);
+  .context-link-axiom-line--subject {
+    color: rgba(120, 168, 220, 0.62);
+  }
+
+  .context-link-axiom-line--follow,
+  .context-link-follow {
+    color: rgba(120, 168, 220, 0.84);
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .context-link-group:has(.context-link-target:hover) .context-link-context,
-    .context-link-group:has(.context-link-target:focus-visible) .context-link-context,
-    .context-link-group:has(.context-link-target.signal-detected) .context-link-context {
+    .context-link-group:has(.context-link-target:hover) .context-link-label,
+    .context-link-group:has(.context-link-target:focus-visible) .context-link-label,
+    .context-link-group:has(.context-link-target.signal-detected) .context-link-label,
+    .context-link-group:has(.context-link-target:hover) .context-link-axiom-line--follow,
+    .context-link-group:has(.context-link-target:focus-visible) .context-link-axiom-line--follow,
+    .context-link-group:has(.context-link-target.signal-detected) .context-link-axiom-line--follow,
+    .context-link-group:has(.context-link-target:hover) .context-link-follow,
+    .context-link-group:has(.context-link-target:focus-visible) .context-link-follow,
+    .context-link-group:has(.context-link-target.signal-detected) .context-link-follow {
       transform: translateY(-3px);
     }
 
-    .context-link-group:has(.context-link-target:hover) .context-link-lead,
-    .context-link-group:has(.context-link-target:focus-visible) .context-link-lead,
-    .context-link-group:has(.context-link-target.signal-detected) .context-link-lead {
-      transform: translateX(3px);
+    .context-link-group:has(.context-link-target:hover) .context-link-target,
+    .context-link-group:has(.context-link-target:focus-visible) .context-link-target,
+    .context-link-group:has(.context-link-target.signal-detected) .context-link-target {
+      transform: translateX(4px);
     }
-  }
-
-  .context-link-group:has(.context-link-target:hover) .context-link-context,
-  .context-link-group:has(.context-link-target:focus-visible) .context-link-context,
-  .context-link-group:has(.context-link-target.signal-detected) .context-link-context {
-    color: rgba(120, 168, 220, 0.95);
-  }
-
-  .context-link-group:has(.context-link-target:hover) .context-link-axiom-line,
-  .context-link-group:has(.context-link-target:focus-visible) .context-link-axiom-line,
-  .context-link-group:has(.context-link-target.signal-detected) .context-link-axiom-line {
-    color: rgba(120, 168, 220, 0.98);
   }
 
   .context-link-group:has(.context-link-target:hover) .context-link-label,
   .context-link-group:has(.context-link-target:focus-visible) .context-link-label,
   .context-link-group:has(.context-link-target.signal-detected) .context-link-label {
-    color: rgba(228, 0, 69, 0.88);
+    color: rgba(228, 0, 69, 0.92);
+  }
+
+  .context-link-group:has(.context-link-target:hover) .context-link-axiom-line--follow,
+  .context-link-group:has(.context-link-target:focus-visible) .context-link-axiom-line--follow,
+  .context-link-group:has(.context-link-target.signal-detected) .context-link-axiom-line--follow,
+  .context-link-group:has(.context-link-target:hover) .context-link-follow,
+  .context-link-group:has(.context-link-target:focus-visible) .context-link-follow,
+  .context-link-group:has(.context-link-target.signal-detected) .context-link-follow {
+    color: rgba(120, 168, 220, 0.98);
   }
 
   .context-link-group:has(.context-link-target:hover) .context-link-lead,
   .context-link-group:has(.context-link-target:focus-visible) .context-link-lead,
   .context-link-group:has(.context-link-target.signal-detected) .context-link-lead {
-    color: rgba(120, 168, 220, 0.82);
+    color: rgba(190, 190, 188, 0.48);
     opacity: 1;
   }
 
