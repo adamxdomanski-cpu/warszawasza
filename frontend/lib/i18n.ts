@@ -77,6 +77,15 @@ type Copy = {
     attentionUnits: string;
     registry: string;
   };
+  interference: {
+    title: string;
+    secondarySource: string;
+    relation: string;
+    evidence: string;
+    griffin: string;
+    capitalTrajectory: string;
+    sameDominant: string;
+  };
   dataCity: string;
   log: Record<string, string>;
 };
@@ -205,6 +214,15 @@ export const COPY: Record<Lang, Copy> = {
         "Instrument obserwacji → wspólny ślad obywatelski (civic tech: listening → action)",
       attentionUnits: "impulsów uwagi",
       registry: "● {n} śladów w polu",
+    },
+    interference: {
+      title: "INTERFERENCJA MATRYCY",
+      secondarySource: "Źródło wtórne",
+      relation: "Relacja",
+      evidence: "Poziom dowodu",
+      griffin: "Griffin wykryty",
+      capitalTrajectory: "Trajektoria kapitałowa potwierdzona",
+      sameDominant: "Identyczny podmiot dominujący jak w",
     },
     dataCity: "miasto danych",
     log: {
@@ -343,6 +361,15 @@ export const COPY: Record<Lang, Copy> = {
       attentionUnits: "attention pulses",
       registry: "● {n} traces in the field",
     },
+    interference: {
+      title: "MATRIX INTERFERENCE",
+      secondarySource: "Secondary source",
+      relation: "Relation",
+      evidence: "Evidence level",
+      griffin: "Griffin detected",
+      capitalTrajectory: "Capital trajectory confirmed",
+      sameDominant: "Same dominant entity as in",
+    },
     dataCity: "city of data",
     log: {
       attention: "attention",
@@ -479,6 +506,15 @@ export const COPY: Record<Lang, Copy> = {
         "Strumento di osservazione → traccia civica condivisa (civic tech: ascolto → azione)",
       attentionUnits: "impulsi di attenzione",
       registry: "● {n} tracce nel campo",
+    },
+    interference: {
+      title: "INTERFERENZA MATRICE",
+      secondarySource: "Fonte secondaria",
+      relation: "Relazione",
+      evidence: "Livello di prova",
+      griffin: "Griffin rilevato",
+      capitalTrajectory: "Traiettoria capitale confermata",
+      sameDominant: "Stesso soggetto dominante come in",
     },
     dataCity: "città dei dati",
     log: {

@@ -9,6 +9,11 @@ import {
   type Lang,
 } from "../../lib/i18n";
 import { computeEngineIndex, INITIAL_ENGINE_INDEX } from "../../lib/pipelineEngine";
+import {
+  detectInterference,
+  seedDemoInterferenceGraph,
+  type InterferenceResult,
+} from "../../lib/patternEngine";
 import DataCityDiagram from "./DataCityDiagram";
 import DecisionPipeline from "./DecisionPipeline";
 import FieldBackdrop from "./FieldBackdrop";
@@ -70,6 +75,16 @@ export default function LivingInterface() {
   const [analyzing, setAnalyzing] = useState(false);
   const [attentionCount, setAttentionCount] = useState(0);
   const [log, setLog] = useState<{ id: number; line: string }[]>([]);
+  const [interference, setInterference] = useState<InterferenceResult | null>(null);
+
+  useEffect(() => {
+    if (!inField) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("palimpsest") === "1") {
+      seedDemoInterferenceGraph();
+    }
+    setInterference(detectInterference());
+  }, [inField, engineIndex, attentionCount]);
 
   const copy = COPY[lang];
 
@@ -219,6 +234,7 @@ export default function LivingInterface() {
               analyzing={analyzing}
               trajectory={trajectory}
               attentionSeed={attentionCount + logIdRef.current}
+              interference={interference}
               variant="sidebar"
             />
 
@@ -243,6 +259,7 @@ export default function LivingInterface() {
                 analyzing={analyzing}
                 trajectory={trajectory}
                 attentionSeed={attentionCount + logIdRef.current}
+                interference={interference}
                 variant="inline"
               />
             </div>

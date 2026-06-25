@@ -19,6 +19,10 @@ import {
   type StageDisplayKey,
   type StagePhase,
 } from "../../lib/pipelineEngine";
+import {
+  formatEvidenceIndicator,
+  type InterferenceResult,
+} from "../../lib/patternEngine";
 
 type DecisionPipelineProps = {
   lang: Lang;
@@ -26,6 +30,7 @@ type DecisionPipelineProps = {
   analyzing: boolean;
   trajectory: TrajectoryChoice | null;
   attentionSeed: number;
+  interference?: InterferenceResult | null;
   variant?: "sidebar" | "inline";
 };
 
@@ -49,6 +54,7 @@ export default function DecisionPipeline({
   analyzing,
   trajectory,
   attentionSeed,
+  interference = null,
   variant = "sidebar",
 }: DecisionPipelineProps) {
   const copy = COPY[lang];
@@ -172,6 +178,35 @@ export default function DecisionPipeline({
     );
   }
 
+  function renderInterferenceBlock(
+    match: NonNullable<InterferenceResult>["matches"][0],
+  ): ReactNode {
+    return (
+      <div className="mt-2 space-y-1 text-[10px] leading-relaxed text-accent/55 sm:text-[11px]">
+        <div className="tracking-[0.12em] text-accent/70">
+          ⟳ {copy.interference.title}
+        </div>
+        <div>
+          {copy.interference.secondarySource} ─► Rejestr.io / KRS:{" "}
+          {match.registryEntityKrs}
+        </div>
+        <div>
+          {copy.interference.relation} ─► {copy.interference.sameDominant}:{" "}
+          {match.priorLogRef ?? match.priorCitizenPlace}
+        </div>
+        <div>
+          {copy.interference.evidence} ─►{" "}
+          {formatEvidenceIndicator(match.evidenceLevel)}
+        </div>
+        {interference?.griffinDetected && (
+          <div className="text-accent/75">
+            ↗ {copy.interference.griffin} · {copy.interference.capitalTrajectory}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <aside className={wrapClass} aria-label="Pipeline">
       {PIPELINE_ORDER.map((key, index) => {
@@ -247,6 +282,13 @@ export default function DecisionPipeline({
             )}
 
             {key === "knowledge" &&
+              interference?.matches[0] &&
+              engineIndex >= PIPELINE_ORDER.indexOf("validation") && (
+                <div aria-live="polite">{renderInterferenceBlock(interference.matches[0])}</div>
+              )}
+
+            {key === "knowledge" &&
+              !interference?.matches[0] &&
               engineIndex >= TERMINAL_STAGE_INDEX - 1 &&
               trajectory &&
               !showOutcome && (
