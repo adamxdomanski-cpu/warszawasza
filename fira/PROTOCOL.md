@@ -131,4 +131,45 @@ Funkcja: `observationsAlign(a, b)` — porównanie odcisków `observationFingerp
 | Dystrybucja | `frontend/` (WARSZAWASZA) |
 | Most obywatelski | `frontend/lib/observationTrace.ts` (ślad + FOP) |
 
+---
+
+## PM phases ↔ observation pipeline (warstwa dokumentacji)
+
+> **To nie jest część core.** Faza zarządzania projektem nie jest polem FOP. Poniższe mapowanie służy interoperacyjności z językiem PM (Wrike, Atlassian, PRINCE2, HERMES) bez zanieczyszczania `fira/core/`.
+
+### Łańcuch dystrybucji WARSZAWASZA
+
+```
+○ → ● → ◐ → ◉ → ≈ → ✓ → ■ → OUTPUT
+```
+
+| engineIndex | Etap (`PIPELINE_ORDER`) | Glyph |
+|-------------|-------------------------|-------|
+| 0 | `reality` | ○ |
+| 1 | `signals` | ● |
+| 2 | `observation` | ◐ |
+| 3 | `filtration` | ◉ |
+| 4 | `memory` | ≈ |
+| 5 | `validation` | ✓ |
+| 6 | `knowledge` | ■ |
+| 7 | `narration` | OUTPUT |
+
+### Mapowanie kanoniczne (5–6 faz PM → FIRA)
+
+| Faza PM (zbiorczo) | Etapy FIRA | Core (`CORE_PIPELINE`) |
+|--------------------|------------|------------------------|
+| Initiation | ○ `reality` · Observation Gate | `source` |
+| Planning / Definition | ● `signals` · ◐ `observation` | `source` → `signal` |
+| Design / Analysis | ◉ `filtration` · ≈ `memory` | `process` |
+| Execution | ✓ `validation` | `evidence` |
+| Monitoring / Closing | ■ `knowledge` · OUTPUT | `relation` → `result` |
+
+**HERMES (4 fazy):** Initiation → ○ · Concept → ●◐◉≈ · Implementation → ✓■ · Deployment → OUTPUT.
+
+**Zasada:** FIRA opisuje **obserwację i redukcję szumu**, nie harmonogram ani budżet. PM opisuje **organizację zmiany** — mapowanie jest analogią pedagogiczną, nie importem schematu do core.
+
+Szczegóły, antywzorce i rozszerzone tabele: **`fira/PM_MAPPING.md`**. Moduł edukacyjny dystrybucji: route **`/learn`**.
+
+---
+
 Wersja protokołu: **0.1** (Draft)

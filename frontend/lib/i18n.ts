@@ -69,6 +69,7 @@ type Copy = {
   narrativeMore: string;
   narrativeLess: string;
   narrativeMetaHint: string;
+  learnHint: string;
   narrative: Record<
     NarrativeKey,
     { name: string; role: string; symbol: string; href?: string }
@@ -187,6 +188,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeMore: "więcej ↓",
     narrativeLess: "mniej ↑",
     narrativeMetaHint: "warstwa percepcji",
+    learnHint: "fazy PM · pipeline FIRA",
     narrative: {
       fira: { name: "FIRA", role: "ruch", symbol: "●", href: "/artefacts/fira" },
       diamente: {
@@ -338,6 +340,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeMore: "more ↓",
     narrativeLess: "less ↑",
     narrativeMetaHint: "perception layer",
+    learnHint: "PM phases · FIRA pipeline",
     narrative: {
       fira: {
         name: "FIRA",
@@ -494,6 +497,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeMore: "altro ↓",
     narrativeLess: "meno ↑",
     narrativeMetaHint: "strato di percezione",
+    learnHint: "fasi PM · pipeline FIRA",
     narrative: {
       fira: {
         name: "FIRA",
@@ -649,6 +653,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeMore: "більше ↓",
     narrativeLess: "менше ↑",
     narrativeMetaHint: "шар сприйняття",
+    learnHint: "фази PM · pipeline FIRA",
     narrative: {
       fira: { name: "FIRA", role: "рух", symbol: "●", href: "/artefacts/fira" },
       diamente: {
@@ -799,6 +804,7 @@ export const COPY: Record<Lang, Copy> = {
     narrativeMore: "több ↓",
     narrativeLess: "kevesebb ↑",
     narrativeMetaHint: "észlelési réteg",
+    learnHint: "PM fázisok · FIRA pipeline",
     narrative: {
       fira: { name: "FIRA", role: "mozgás", symbol: "●", href: "/artefacts/fira" },
       diamente: {
