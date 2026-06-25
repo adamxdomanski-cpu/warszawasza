@@ -260,6 +260,29 @@
     color: var(--color-accent);
   }
 
+  .trajectory-choice-letter {
+    transition:
+      color 220ms ease,
+      letter-spacing 220ms ease,
+      opacity 220ms ease;
+  }
+
+  .trajectory-hesitating .trajectory-choice-letter {
+    color: rgba(120, 168, 220, 0.92);
+    letter-spacing: 0.22em;
+  }
+
+  .trajectory-hesitating {
+    opacity: 0.92;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .trajectory-hesitating {
+      transform: translateY(-1px);
+      transition: transform 220ms ease, opacity 220ms ease;
+    }
+  }
+
   .lucy-tail {
     color: var(--color-citrus);
   }

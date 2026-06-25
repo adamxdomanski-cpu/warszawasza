@@ -8,6 +8,7 @@ type EntryCopy = {
   gateObserve: string;
   gateObserveAction: string;
   gateQuestion: string;
+  gateHesitation: string;
   falseLabel: string;
   trueLabel: string;
   falseHint: string;
@@ -36,6 +37,7 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
     gateObserve: "OBSERWUJ",
     gateObserveAction: "kontynuuj ↓",
     gateQuestion: "PYTANIE",
+    gateHesitation: "Klik to zawahanie — dopiero potem T albo F.",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
     falseHint: "F — zatrzymuję się; nic dalej nie wynika",
@@ -51,6 +53,7 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
     gateObserve: "OBSERVE",
     gateObserveAction: "continue ↓",
     gateQuestion: "QUESTION",
+    gateHesitation: "Click is hesitation — only then T or F.",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
     falseHint: "F — I stop; nothing further follows",
@@ -66,6 +69,7 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
     gateObserve: "OSSERVA",
     gateObserveAction: "continua ↓",
     gateQuestion: "DOMANDA",
+    gateHesitation: "Il clic è esitazione — poi T o F.",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
     falseHint: "F — mi fermo; non consegue nulla",
@@ -81,6 +85,7 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
     gateObserve: "СПОСТЕРІГАЙ",
     gateObserveAction: "далі ↓",
     gateQuestion: "ПИТАННЯ",
+    gateHesitation: "Клік — це зволікання. Потім T або F.",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
     falseHint: "F — зупиняюсь; далі нічого не випливає",
@@ -96,6 +101,7 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
     gateObserve: "FIGYELJ",
     gateObserveAction: "tovább ↓",
     gateQuestion: "KÉRDÉS",
+    gateHesitation: "Kattintás = habozás — aztán T vagy F.",
     falseLabel: "FALSE",
     trueLabel: "TRUE",
     falseHint: "F — megállok; semmi nem következik",

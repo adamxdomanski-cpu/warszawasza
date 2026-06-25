@@ -13,6 +13,7 @@ import GrapheneField from "./GrapheneField";
 import LangNav from "./LangNav";
 import LivingSignalText from "./LivingSignalText";
 import SignalControl from "./SignalControl";
+import TrajectoryChoiceButton from "./TrajectoryChoiceButton";
 import { persistTrajectory } from "./TrajectorySwitch";
 
 type ObservationGateProps = {
@@ -97,30 +98,25 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             <div className="text-accent/70">{copy.gateQuestion}</div>
           </div>
 
-          <div className="flex flex-col gap-3 sm:gap-4">
-            <SignalControl
-              type="button"
-              direction="down"
-              onClick={() => selectTrajectory("false")}
-              className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 bg-field/80 px-5 py-4 text-left"
-            >
-              <span className="font-mono-field text-lg tracking-[0.14em] sm:text-xl">
-                F
-              </span>
-              <span className="text-sm leading-snug text-accent/50">{copy.falseHint}</span>
-            </SignalControl>
+          <p className="m-0 font-mono-field text-xs tracking-[0.12em] text-accent/38 sm:text-sm">
+            {copy.gateHesitation}
+          </p>
 
-            <SignalControl
-              type="button"
+          <div className="flex flex-col gap-3 sm:gap-4">
+            <TrajectoryChoiceButton
+              choice="false"
+              letter="F"
+              hint={copy.falseHint}
+              direction="down"
+              onCommit={selectTrajectory}
+            />
+            <TrajectoryChoiceButton
+              choice="true"
+              letter="T"
+              hint={copy.trueHint}
               direction="up-right"
-              onClick={() => selectTrajectory("true")}
-              className="flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 bg-field/80 px-5 py-4 text-left"
-            >
-              <span className="font-mono-field text-lg tracking-[0.14em] sm:text-xl">
-                T
-              </span>
-              <span className="text-sm leading-snug text-accent/50">{copy.trueHint}</span>
-            </SignalControl>
+              onCommit={selectTrajectory}
+            />
           </div>
         </section>
       ) : (
