@@ -81,6 +81,96 @@ export const CORE_PRINT_PARTS: Record<Lang, CorePrintPart[][]> = {
       { text: "." },
     ],
   ],
+  bg: [
+    [{ text: "Градът слуша сигналите." }],
+    [
+      { text: "Сигналите разкриват " },
+      { text: "триенето", role: "friction" },
+      { text: "." },
+    ],
+    [
+      { text: "Триенето отклонява " },
+      { text: "траекторията", role: "trajectory" },
+      { text: "." },
+    ],
+    [
+      { text: "Траекторията пренаписва " },
+      { text: "града", role: "city" },
+      { text: "." },
+    ],
+  ],
+  et: [
+    [{ text: "Linn kuulab signaale." }],
+    [
+      { text: "Signaalid paljastavad " },
+      { text: "hõõrdumise", role: "friction" },
+      { text: "." },
+    ],
+    [
+      { text: "Hõõrdumine muudab " },
+      { text: "trajektoore", role: "trajectory" },
+      { text: "." },
+    ],
+    [
+      { text: "Trajektoorid kirjutavad ümber " },
+      { text: "linna", role: "city" },
+      { text: "." },
+    ],
+  ],
+  fi: [
+    [{ text: "Kaupunki kuuntelee signaaleja." }],
+    [
+      { text: "Signaalit paljastavat " },
+      { text: "kitkan", role: "friction" },
+      { text: "." },
+    ],
+    [
+      { text: "Kitka muuttaa " },
+      { text: "trajektorioita", role: "trajectory" },
+      { text: "." },
+    ],
+    [
+      { text: "Trajektoriat kirjoittavat uudelleen " },
+      { text: "kaupungin", role: "city" },
+      { text: "." },
+    ],
+  ],
+  lt: [
+    [{ text: "Miestas klauso signalų." }],
+    [
+      { text: "Signalai atskleidžia " },
+      { text: "trintį", role: "friction" },
+      { text: "." },
+    ],
+    [
+      { text: "Trintis keičia " },
+      { text: "trajektorijas", role: "trajectory" },
+      { text: "." },
+    ],
+    [
+      { text: "Trajektorijos perrašo " },
+      { text: "miestą", role: "city" },
+      { text: "." },
+    ],
+  ],
+  lv: [
+    [{ text: "Pilsēta klausās signālus." }],
+    [
+      { text: "Signāli atklāj " },
+      { text: "berzi", role: "friction" },
+      { text: "." },
+    ],
+    [
+      { text: "Berze maina " },
+      { text: "trajektorijas", role: "trajectory" },
+      { text: "." },
+    ],
+    [
+      { text: "Trajektorijas pārraksta " },
+      { text: "pilsētu", role: "city" },
+      { text: "." },
+    ],
+  ],
   hu: [
     [{ text: "A város reagál a jelzésekre." }],
     [

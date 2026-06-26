@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Fira_Mono, Fira_Sans } from "next/font/google";
 import type { ReactNode } from "react";
+import StudioOriginTrace from "./components/StudioOriginTrace";
+import { STUDIO_HTML_TRACE_COMMENT } from "../lib/studioAnchor";
 import "./globals.css";
 
 const firaSans = Fira_Sans({
@@ -30,8 +32,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/logo.png",
-        width: 699,
-        height: 1024,
+        width: 218,
+        height: 150,
         alt: "WARSZAWASZA",
       },
     ],
@@ -58,6 +60,13 @@ export default function RootLayout({
       <body
         className={`${firaSans.variable} ${firaMono.variable} bg-field text-accent antialiased`}
       >
+        <span
+          hidden
+          aria-hidden="true"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: STUDIO_HTML_TRACE_COMMENT }}
+        />
+        <StudioOriginTrace />
         {children}
       </body>
     </html>

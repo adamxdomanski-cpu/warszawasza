@@ -6,6 +6,9 @@
   --color-accent-soft: rgba(228, 0, 69, 0.14);
   --color-accent-dim: rgba(228, 0, 69, 0.42);
   --color-accent-muted: rgba(228, 0, 69, 0.22);
+  /* Static edge on #030303 — light rim, not glow animation */
+  --color-accent-ring: rgba(248, 248, 246, 0.12);
+  --color-accent-edge: rgba(248, 248, 246, 0.38);
   --color-sapphire: #78a8dc;
   /* Citrus australasica — finger lime peel / pulp green */
   --color-citrus: #b8e62e;
@@ -30,6 +33,21 @@
   --color-lang-uk-idle: rgba(212, 180, 96, 0.48);
   --color-lang-uk-active: rgba(212, 180, 96, 0.86);
   --color-lang-uk-hover: rgba(212, 180, 96, 0.66);
+  --color-lang-bg-idle: rgba(96, 158, 132, 0.48);
+  --color-lang-bg-active: rgba(96, 158, 132, 0.86);
+  --color-lang-bg-hover: rgba(96, 158, 132, 0.66);
+  --color-lang-et-idle: rgba(110, 165, 175, 0.48);
+  --color-lang-et-active: rgba(110, 165, 175, 0.86);
+  --color-lang-et-hover: rgba(110, 165, 175, 0.66);
+  --color-lang-fi-idle: rgba(140, 175, 210, 0.48);
+  --color-lang-fi-active: rgba(140, 175, 210, 0.86);
+  --color-lang-fi-hover: rgba(140, 175, 210, 0.66);
+  --color-lang-lt-idle: rgba(180, 130, 110, 0.48);
+  --color-lang-lt-active: rgba(180, 130, 110, 0.86);
+  --color-lang-lt-hover: rgba(180, 130, 110, 0.66);
+  --color-lang-lv-idle: rgba(160, 140, 175, 0.48);
+  --color-lang-lv-active: rgba(160, 140, 175, 0.86);
+  --color-lang-lv-hover: rgba(160, 140, 175, 0.66);
   --color-lang-hu-idle: rgba(184, 230, 46, 0.4);
   --color-lang-hu-active: rgba(184, 230, 46, 0.76);
   --color-lang-hu-hover: rgba(184, 230, 46, 0.58);
@@ -97,6 +115,27 @@
     text-wrap: balance;
   }
 
+  /* Field signal — static contrast on dark field (#030303), LUCY-safe (no motion) */
+  .logo-signal {
+    filter:
+      drop-shadow(0 0 0.75px var(--color-accent-edge))
+      drop-shadow(0 0 1px rgba(248, 248, 246, 0.2))
+      drop-shadow(0 1px 3px rgba(0, 0, 0, 0.82));
+  }
+
+  .accent-signal {
+    text-shadow:
+      0 0 1px var(--color-accent-edge),
+      0 0 10px var(--color-accent-ring),
+      0 0 16px rgba(228, 0, 69, 0.18),
+      0 1px 2px rgba(0, 0, 0, 0.88);
+  }
+
+  .accent-edge {
+    outline: 1px solid rgba(248, 248, 246, 0.22);
+    outline-offset: 2px;
+  }
+
   .lang-nav-sep {
     color: var(--color-lang-sep);
   }
@@ -116,6 +155,26 @@
 
   .lang-nav-btn--uk {
     color: var(--color-lang-uk-idle);
+  }
+
+  .lang-nav-btn--bg {
+    color: var(--color-lang-bg-idle);
+  }
+
+  .lang-nav-btn--et {
+    color: var(--color-lang-et-idle);
+  }
+
+  .lang-nav-btn--fi {
+    color: var(--color-lang-fi-idle);
+  }
+
+  .lang-nav-btn--lt {
+    color: var(--color-lang-lt-idle);
+  }
+
+  .lang-nav-btn--lv {
+    color: var(--color-lang-lv-idle);
   }
 
   .lang-nav-btn--hu {
@@ -141,6 +200,31 @@
     color: var(--color-lang-uk-hover);
   }
 
+  .lang-nav-btn--bg:hover,
+  .lang-nav-btn--bg:focus-visible {
+    color: var(--color-lang-bg-hover);
+  }
+
+  .lang-nav-btn--et:hover,
+  .lang-nav-btn--et:focus-visible {
+    color: var(--color-lang-et-hover);
+  }
+
+  .lang-nav-btn--fi:hover,
+  .lang-nav-btn--fi:focus-visible {
+    color: var(--color-lang-fi-hover);
+  }
+
+  .lang-nav-btn--lt:hover,
+  .lang-nav-btn--lt:focus-visible {
+    color: var(--color-lang-lt-hover);
+  }
+
+  .lang-nav-btn--lv:hover,
+  .lang-nav-btn--lv:focus-visible {
+    color: var(--color-lang-lv-hover);
+  }
+
   .lang-nav-btn--hu:hover,
   .lang-nav-btn--hu:focus-visible {
     color: var(--color-lang-hu-hover);
@@ -161,6 +245,26 @@
 
   .lang-nav-btn--active.lang-nav-btn--uk {
     color: var(--color-lang-uk-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--bg {
+    color: var(--color-lang-bg-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--et {
+    color: var(--color-lang-et-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--fi {
+    color: var(--color-lang-fi-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--lt {
+    color: var(--color-lang-lt-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--lv {
+    color: var(--color-lang-lv-active);
   }
 
   .lang-nav-btn--active.lang-nav-btn--hu {
@@ -184,6 +288,31 @@
   .lang-nav-btn--active.lang-nav-btn--uk:hover,
   .lang-nav-btn--active.lang-nav-btn--uk:focus-visible {
     color: var(--color-lang-uk-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--bg:hover,
+  .lang-nav-btn--active.lang-nav-btn--bg:focus-visible {
+    color: var(--color-lang-bg-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--et:hover,
+  .lang-nav-btn--active.lang-nav-btn--et:focus-visible {
+    color: var(--color-lang-et-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--fi:hover,
+  .lang-nav-btn--active.lang-nav-btn--fi:focus-visible {
+    color: var(--color-lang-fi-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--lt:hover,
+  .lang-nav-btn--active.lang-nav-btn--lt:focus-visible {
+    color: var(--color-lang-lt-active);
+  }
+
+  .lang-nav-btn--active.lang-nav-btn--lv:hover,
+  .lang-nav-btn--active.lang-nav-btn--lv:focus-visible {
+    color: var(--color-lang-lv-active);
   }
 
   .lang-nav-btn--active.lang-nav-btn--hu:hover,

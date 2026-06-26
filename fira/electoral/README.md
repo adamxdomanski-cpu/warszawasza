@@ -28,6 +28,7 @@ Apply after `001` → `002` → `003`. See [`backend/sql/README.md`](../backend/
 ## Related COP artefacts
 
 - [`fira/STATE_DATA_MATRIX.md`](../STATE_DATA_MATRIX.md) — state open-data provenance
+- [`fira/CIVIC_ORGANIZATION_MATRIX.md`](../CIVIC_ORGANIZATION_MATRIX.md) — third-sector org classes (WATCHDOG · LITERACY · URBAN · CIVIC_TECH); KRS via `POL_NODE_KRS`
 - [`fira/COP_ARCHIVE_JSON.md`](../COP_ARCHIVE_JSON.md) — archival metadata format
 - [`fira/PROTOCOL.md`](../PROTOCOL.md) — FOP algebra (`fira/core/` unchanged)
 

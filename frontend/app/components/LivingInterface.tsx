@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { TRAJECTORY_KEY, type TrajectoryChoice } from "../../lib/artifactI18n";
 import { COPY, type Lang } from "../../lib/i18n";
-import { computeEngineIndex, INITIAL_ENGINE_INDEX, applyCivicOrgTrustAtStage, formatCivicOrgIntersectionTrace, intersectCivicOrg, ngoWatchdogObservationInput, type CivicOrgIntersection, type PipelineObservationInput } from "../../lib/pipelineEngine";
+import { computeEngineIndex, INITIAL_ENGINE_INDEX, applyCivicOrgTrustAtStage, formatCivicOrgIntersectionTrace, intersectCivicOrg, ngoWatchdogObservationInput, wospObservationInput, type CivicOrgIntersection, type PipelineObservationInput } from "../../lib/pipelineEngine";
 import {
   detectInterference,
   seedDemoInterferenceGraph,
@@ -90,6 +90,9 @@ export default function LivingInterface() {
     }
     if (params.get("ngo-watchdog") === "1") {
       setObservationInput(ngoWatchdogObservationInput());
+    }
+    if (params.get("wosp") === "1" || params.get("civic-tech") === "1") {
+      setObservationInput(wospObservationInput());
     }
     setInterference(detectInterference());
   }, [inField, engineIndex, attentionCount]);

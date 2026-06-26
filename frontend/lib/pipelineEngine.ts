@@ -192,7 +192,7 @@ function buildIntersection(
   };
 }
 
-/** Apply WATCHDOG trust weight at Filtracja / Walidacja when intersection is active */
+/** Apply registry trust weight at Filtracja / Walidacja when intersection is active */
 export function applyCivicOrgTrustAtStage(
   stageIndex: number,
   intersection: CivicOrgIntersection | null,
@@ -239,4 +239,103 @@ export function ngoWatchdogObservationInput(): PipelineObservationInput {
       trustLevel: 5,
     },
   };
+}
+
+/** Default observation input for ?wosp=1 · ?civic-tech=1 test hooks */
+export function wospObservationInput(): PipelineObservationInput {
+  return {
+    tags: ["wosp"],
+    civicOrgRef: {
+      krs: "0000030897",
+      operationalClass: "CIVIC_TECH",
+      trustLevel: 5,
+    },
+  };
+}
+
+/** Discrete weight scale for layer control (COP v1.0) */
+export const LAYER_WEIGHT_MIN = 0;
+export const LAYER_WEIGHT_MAX = 5;
+
+export interface DataLayer {
+  id: string;
+  name: string;
+  isActive: boolean;
+  weight: number;
+}
+
+export interface LayerControlState {
+  layers: DataLayer[];
+}
+
+/** Signal row must declare which layer it belongs to for weighted filtering */
+export type LayerWeightedSignal = {
+  layerId: string;
+};
+
+export const initialLayerState: LayerControlState = {
+  layers: [
+    {
+      id: "LAYER_OBSERVATIONS",
+      name: "Obserwacje mieszkańców",
+      isActive: true,
+      weight: 3,
+    },
+    {
+      id: "LAYER_MAP_GEOMETRY",
+      name: "Mapa i sektory",
+      isActive: true,
+      weight: 1,
+    },
+  ],
+};
+
+export function clampLayerWeight(weight: number): number {
+  return Math.min(
+    LAYER_WEIGHT_MAX,
+    Math.max(LAYER_WEIGHT_MIN, Math.round(weight)),
+  );
+}
+
+export function setLayerActive(
+  state: LayerControlState,
+  layerId: string,
+  isActive: boolean,
+): LayerControlState {
+  return {
+    layers: state.layers.map((layer) =>
+      layer.id === layerId ? { ...layer, isActive } : layer,
+    ),
+  };
+}
+
+export function setLayerWeight(
+  state: LayerControlState,
+  layerId: string,
+  weight: number,
+): LayerControlState {
+  const clamped = clampLayerWeight(weight);
+  return {
+    layers: state.layers.map((layer) =>
+      layer.id === layerId ? { ...layer, weight: clamped } : layer,
+    ),
+  };
+}
+
+/** Filter signals by active layers with weight > 0 */
+export function calculateWeightedResult<T extends LayerWeightedSignal>(
+  state: LayerControlState,
+  signals: T[],
+): T[] {
+  return signals.filter((signal) => {
+    const layer = state.layers.find((entry) => entry.id === signal.layerId);
+    return layer !== undefined && layer.isActive && layer.weight > 0;
+  });
+}
+
+/** Sum of active layer weights — observable input for correlation threshold */
+export function activeLayerWeightSum(state: LayerControlState): number {
+  return state.layers
+    .filter((layer) => layer.isActive && layer.weight > 0)
+    .reduce((sum, layer) => sum + layer.weight, 0);
 }

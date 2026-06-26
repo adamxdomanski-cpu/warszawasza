@@ -217,6 +217,241 @@ export const GRAPHENE_VOTE_COPY: Record<Lang, GrapheneVoteCopy> = {
       "Це не виборчий бюлетень і не муніципальна платформа.",
     ],
   },
+  bg: {
+    back: "← поле",
+    subtitle: "ДЕЛИБЕРАЦИЯ · НЕ ОФИЦИАЛНИ ИЗБОРИ",
+    title: "Graphene deliberation",
+    disclaimer:
+      "Инструмент за слушане и делиберация. Без изборна власт. Всеки глас = наблюдение в нотация FOP.",
+    propositionLabel: "ПРЕДЛОЖЕНИЕ",
+    proposition:
+      "Трябва ли сигналите на съседско триене да влязат в полето на делиберация преди валидация в pipeline?",
+    readAction: "ПРОЧЕТИ ПОСЛЕДИЦИТЕ →",
+    voteLabel: "ТВОЯТ СИГНАЛ",
+    tallyLabel: "LIVE TALLY (локален регистър)",
+    tallyEmpty: "няма гласове в регистъра",
+    tallyRow: "{label}: {n} ({pct}%)",
+    hypothesisLabel: "ХИПОТЕЗА",
+    fingerprintLabel: "FINGERPRINT",
+    notationLabel: "НОТАЦИЯ FOP",
+    copyAction: "КОПИРАЙ НОТАЦИЯТА",
+    copied: "копирано",
+    copyFailed: "копирането е недостъпно",
+    leaveTrace: "ОСТАВИ СЛЕД →",
+    registry: "регистър: {n} наблюдения",
+    options: {
+      open: {
+        glyph: "◇",
+        label: "ОТВОРЕН СИГНАЛ",
+        consequence:
+          "Сигналът е видим в tally веднага. Без обвързващо решение — само тегло на публична хипотеза.",
+      },
+      validate: {
+        glyph: "◉",
+        label: "ПЪРВО ВАЛИДАЦИЯ",
+        consequence:
+          "Сигналът чака етапа на филтрация в pipeline. По-бавен tally, по-висок праг на доказателство.",
+      },
+      abstain: {
+        glyph: "○",
+        label: "НАБЛЮДАВАЙ БЕЗ ПОЗИЦИЯ",
+        consequence:
+          "Присъствие в делиберация без тегло на опция. Брои се като наблюдателна абстенция.",
+      },
+    },
+    footerLines: [
+      "WARSZAWASZA // GRAPHENE DELIBERATION",
+      "Това не е изборен бюлетин и не общинска платформа.",
+    ],
+  },
+  et: {
+    back: "← väli",
+    subtitle: "DELIBERATSIOON · MITTE AMETLIK VALIMINE",
+    title: "Graphene deliberation",
+    disclaimer:
+      "Kuulamise ja deliberatsiooni instrument. Valimisvolitusi pole. Iga hääl = vaatlus FOP notatsioonis.",
+    propositionLabel: "ETTEPANEK",
+    proposition:
+      "Kas naabruskonna hõõrdumissignaalid peaksid siseneda deliberatsiooniväljale enne pipeline valideerimist?",
+    readAction: "LOE TAGAJÄRGED →",
+    voteLabel: "SINU SIGNAAL",
+    tallyLabel: "LIVE TALLY (kohalik register)",
+    tallyEmpty: "registris hääli pole",
+    tallyRow: "{label}: {n} ({pct}%)",
+    hypothesisLabel: "HÜPOTEES",
+    fingerprintLabel: "FINGERPRINT",
+    notationLabel: "FOP NOTATSIOON",
+    copyAction: "KOPEERI NOTATSIOON",
+    copied: "kopeeritud",
+    copyFailed: "kopeerimine pole saadaval",
+    leaveTrace: "JÄTA JÄLG →",
+    registry: "register: {n} vaatlust",
+    options: {
+      open: {
+        glyph: "◇",
+        label: "AVATUD SIGNAAL",
+        consequence:
+          "Signaal kohe tallys nähtav. Siduvat otsust pole — ainult avaliku hüpoteesi kaal.",
+      },
+      validate: {
+        glyph: "◉",
+        label: "ESMALT VALIDEERIMINE",
+        consequence:
+          "Signaal ootab pipeline filtreerimisetappi. Aeglasem tally, kõrgem tõenduslävi.",
+      },
+      abstain: {
+        glyph: "○",
+        label: "VAATLE ILMA POSITSIOONITA",
+        consequence:
+          "Kohalolu deliberatsioonis ilma valiku kaaluta. Loetakse vaatluslikuks erapooletuseks.",
+      },
+    },
+    footerLines: [
+      "WARSZAWASZA // GRAPHENE DELIBERATION",
+      "See pole valimissedel ega omavalitsuse platvorm.",
+    ],
+  },
+  fi: {
+    back: "← kenttä",
+    subtitle: "DELIBERAATIO · EI VIRALLINEN VAALI",
+    title: "Graphene deliberation",
+    disclaimer:
+      "Kuuntelun ja deliberaation instrumentti. Ei vaalivaltaa. Jokainen ääni = havainto FOP-notaatiossa.",
+    propositionLabel: "EHDOTUS",
+    proposition:
+      "Pitäisikö naapuruston kitkasignaalien päästä deliberaatiokentälle ennen pipeline-validointia?",
+    readAction: "LUE SEURAUKSET →",
+    voteLabel: "SIGNALISI",
+    tallyLabel: "LIVE TALLY (paikallinen rekisteri)",
+    tallyEmpty: "ei ääniä rekisterissä",
+    tallyRow: "{label}: {n} ({pct}%)",
+    hypothesisLabel: "HYPOTEESI",
+    fingerprintLabel: "FINGERPRINT",
+    notationLabel: "FOP-NOTAATIO",
+    copyAction: "KOPIOI NOTAATIO",
+    copied: "kopioitu",
+    copyFailed: "kopiointi ei käytettävissä",
+    leaveTrace: "JÄTÄ JÄLKI →",
+    registry: "rekisteri: {n} havaintoa",
+    options: {
+      open: {
+        glyph: "◇",
+        label: "AVOIN SIGNAALI",
+        consequence:
+          "Signaali näkyy tallyssa heti. Ei sitovaa päätöstä — vain julkisen hypoteesin paino.",
+      },
+      validate: {
+        glyph: "◉",
+        label: "ENSIN VALIDOINTI",
+        consequence:
+          "Signaali odottaa pipeline-suodatusvaihetta. Hitaampi tally, korkeampi todistekynnys.",
+      },
+      abstain: {
+        glyph: "○",
+        label: "HAVAINNOI ILMAN KANTAA",
+        consequence:
+          "Läsnäolo deliberaatiossa ilman vaihtoehdon painoa. Lasketaan havainnolliseksi pidättymiseksi.",
+      },
+    },
+    footerLines: [
+      "WARSZAWASZA // GRAPHENE DELIBERATION",
+      "Tämä ei ole vaalilippu eikä kunnallinen alusta.",
+    ],
+  },
+  lt: {
+    back: "← laukas",
+    subtitle: "DELIBERACIJA · NE OFICIALŪS RINKIMAI",
+    title: "Graphene deliberation",
+    disclaimer:
+      "Klausymo ir deliberacijos instrumentas. Be rinkimų valdžios. Kiekvienas balsas = stebėjimas FOP notacija.",
+    propositionLabel: "PASIŪLYMAS",
+    proposition:
+      "Ar kaimynystės trinties signalai turėtų patekti į deliberacijos lauką prieš pipeline validaciją?",
+    readAction: "SKAITYTI PASEKMES →",
+    voteLabel: "TAVO SIGNALAS",
+    tallyLabel: "LIVE TALLY (vietinis registras)",
+    tallyEmpty: "registre nėra balsų",
+    tallyRow: "{label}: {n} ({pct}%)",
+    hypothesisLabel: "HIPOTEZĖ",
+    fingerprintLabel: "FINGERPRINT",
+    notationLabel: "FOP NOTACIJA",
+    copyAction: "KOPIJUOTI NOTACIJĄ",
+    copied: "nukopijuota",
+    copyFailed: "kopijavimas nepasiekiamas",
+    leaveTrace: "PALIKTI PĖDSAKĄ →",
+    registry: "registras: {n} stebėjimų",
+    options: {
+      open: {
+        glyph: "◇",
+        label: "ATVIRAS SIGNALAS",
+        consequence:
+          "Signalas iškart matomas tally. Jokio privalomo sprendimo — tik viešos hipotezės svoris.",
+      },
+      validate: {
+        glyph: "◉",
+        label: "PIRMIAU VALIDACIJA",
+        consequence:
+          "Signalas laukia pipeline filtravimo etapo. Lėtesnis tally, aukštesnis įrodymų slenkstis.",
+      },
+      abstain: {
+        glyph: "○",
+        label: "STEBĖK BE POZICIJOS",
+        consequence:
+          "Buvimas deliberacijoje be opcijos svorio. Skaičiuojama kaip stebėjimo susilaikymas.",
+      },
+    },
+    footerLines: [
+      "WARSZAWASZA // GRAPHENE DELIBERATION",
+      "Tai ne rinkimų biuletenis ir ne savivaldybės platforma.",
+    ],
+  },
+  lv: {
+    back: "← lauks",
+    subtitle: "DELIBERĀCIJA · NE OFICIĀLAS VĒLĒŠANAS",
+    title: "Graphene deliberation",
+    disclaimer:
+      "Klausīšanās un deliberācijas instruments. Bez vēlēšanu varas. Katrs balss = novērojums FOP notācijā.",
+    propositionLabel: "PRIEKŠLIKUMS",
+    proposition:
+      "Vai kaimiņu berzes signāliem jānonāk deliberācijas laukā pirms pipeline validācijas?",
+    readAction: "LASĪT SEKAS →",
+    voteLabel: "TAVS SIGNĀLS",
+    tallyLabel: "LIVE TALLY (vietējais reģistrs)",
+    tallyEmpty: "reģistrā nav balsu",
+    tallyRow: "{label}: {n} ({pct}%)",
+    hypothesisLabel: "HIPOTĒZE",
+    fingerprintLabel: "FINGERPRINT",
+    notationLabel: "FOP NOTĀCIJA",
+    copyAction: "KOPĒT NOTĀCIJU",
+    copied: "nokopēts",
+    copyFailed: "kopēšana nav pieejama",
+    leaveTrace: "ATSTĀT PĒDU →",
+    registry: "reģistrs: {n} novērojumi",
+    options: {
+      open: {
+        glyph: "◇",
+        label: "ATVĒRTS SIGNĀLS",
+        consequence:
+          "Signāls uzreiz redzams tally. Nav saistoša lēmuma — tikai publiskas hipotēzes svars.",
+      },
+      validate: {
+        glyph: "◉",
+        label: "VISPIRMS VALIDĀCIJA",
+        consequence:
+          "Signāls gaida pipeline filtrācijas posmu. Lēnāks tally, augstāks pierādījumu slieksnis.",
+      },
+      abstain: {
+        glyph: "○",
+        label: "NOVĒRO BEZ POZĪCIJAS",
+        consequence:
+          "Klātbūtne deliberācijā bez opcijas svara. Skaitās kā novērojoša atturēšanās.",
+      },
+    },
+    footerLines: [
+      "WARSZAWASZA // GRAPHENE DELIBERATION",
+      "Tas nav vēlēšanu zīmējums un nav pašvaldības platforma.",
+    ],
+  },
   hu: {
     back: "← mező",
     subtitle: "DELIBERÁCIÓ · NEM HIVATALOS VÁLASZTÁS",

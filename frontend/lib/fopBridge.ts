@@ -11,6 +11,7 @@ import {
 import { PROCESS_CHAIN } from "./symbols";
 import type { ObservationTracePayload } from "./observationTrace";
 import { SIGNAL_CHANNELS } from "./signalApi";
+import { studioFopRelation, studioPlaceSignal } from "./studioAnchor";
 
 function chainAtEngineIndex(engineIndex: number): string {
   const glyphs = PROCESS_CHAIN.map((s) => s.symbol);
@@ -40,6 +41,7 @@ export function traceToObservation(
     attention: String(trace.attentionCount),
     clock: trace.clock,
     lang: trace.lang,
+    ...studioPlaceSignal(),
   };
   if (trace.trajectory) signal.trajectory = trace.trajectory;
 
@@ -58,6 +60,7 @@ export function traceToObservation(
     evidence: {
       level: Math.min(5, Math.floor(trace.attentionCount / 2)) as 0 | 1 | 2 | 3 | 4 | 5,
     },
+    relation: studioFopRelation(),
     result: resultFromTrace(trace),
   };
 }

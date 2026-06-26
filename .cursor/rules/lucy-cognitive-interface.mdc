@@ -1,0 +1,43 @@
+---
+description: COP v1.0 — LUCY cognitive interface constitution (noise reduction, motion policy, commit gate)
+alwaysApply: false
+globs:
+  - "frontend/app/components/Lucy*.tsx"
+  - "frontend/app/components/LucyAttention.tsx"
+  - "frontend/app/components/LivingInterface.tsx"
+  - "frontend/app/components/MetaPerception.tsx"
+  - "frontend/app/components/DecisionPipeline.tsx"
+---
+
+# COP v1.0 — LUCY Cognitive Interface
+
+> **Pełna konstytucja (PL):** `docs/protocol/lucy-cognitive-interface.md` · filtr LOG: `docs/protocol/log-format-v1.md` (DR-004) · DR-005
+
+LUCY = **interfejs poznawczy operatora** — nie dashboard, admin panel, DevTools. Utrzymuj uwagę; minimalny szum. LUCY obserwuje — nie łapie uwagi.
+
+## Przed każdą zmianą
+
+1. **Jaką nową informację dostaje operator?** Brak → usuń.
+2. Czy zmienia decyzję? Czy duplikuje widoczne? Czy tylko dekoracja? → odrzuć.
+3. **Commit gate:** mniej szumu · czytelność · prostsza architektura · mniej elementów · spójność — inaczej odrzuć PR.
+
+## Motion Policy
+
+Ruch **tylko** przy zmianie stanu.
+
+| OK | NIE |
+|----|-----|
+| Wolny puls (idle) | Ciągłe animacje |
+| Reakcja na uwagę (● ~~~~) | Błyskotliwe przejścia |
+| Pojedyncze pojawienie sygnału | Ruch bez znaczenia |
+| Upływ czasu (gdy istotny) | Attention-grabbing |
+
+Projektuj **zachowania**, nie animacje. `prefers-reduced-motion` — degraduj.
+
+## Kod (LUCY scope)
+
+Prosty React · małe funkcje · minimalny stan · natywne API · **bez nowych lib** bez uzasadnienia.
+
+## Rola agenta
+
+Sprzeciw się przy naruszeniu konstytucji. Zaproponuj prostsze rozwiązanie. Priorytet: **redukcja szumu**, nie feature count.

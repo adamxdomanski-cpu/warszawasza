@@ -250,6 +250,286 @@ export const DIGITAL_OBSERVER_MANIFEST: Record<MetaLang, DigitalObserverManifest
       "Інструмент передано людям.",
     ],
   },
+  bg: {
+    title: "Манифест на цифровия наблюдател",
+    version: "v1.0",
+    distribution: "Дистрибуция: WARSZAWASZA · Двигател: FIRA Core",
+    articleZero: {
+      label: "Член Нула",
+      text: "Кодът защитава фактите. Интерфейсът връща вниманието. Системата не замества човека — тя го въоръжава с процес на чисто наблюдение.",
+    },
+    operatorVoice: [
+      "Този екран не принадлежи на алгоритъм. Принадлежи на теб.",
+      "Години наред ни хранеха с шум. Данни, от които нищо не следваше.",
+      "Статистики, за да ни успокоят. Обещания, разтворени във въздуха.",
+      "WARSZAWASZA не е още едно приложение, което краде вниманието.",
+      "Това е лабораторен инструмент в твоите ръце.",
+      "Когато видиш отрязани дървета на Воля, срутен павилион на Муранов, или усетиш, че ритъмът на улицата ти е brutално нарушен — не си безпомощен.",
+      "Твоето съобщение става сигнал.",
+      "FIRA няма да позволи този сигнал да потъне в шума.",
+      "Ще прегледа KRS, ще провери доклади на NIK, ще проследи историята на мястото.",
+      "Свързва точките. Показва невидими вектори на сила.",
+      "Доказва, че това, което се случва под прозореца ти, е част от по-голям механизъм.",
+      "Не търсим евтина сензация. Търсим твърдо, неприкосновено знание.",
+      "Имаш право да знаеш. Имаш право да виждаш по-ясно.",
+      "Инструментът е готов.",
+    ],
+    operatorCta: "Стартирай анализ на тъканта →",
+    sections: [
+      {
+        title: "I. Когнитивен суверенитет вместо алгоритмичен оракул",
+        paragraphs: ["Отхвърляме технofatalизма. Изискваме прозрачност на процеса."],
+        bullets: [
+          "Право да провериш пътя — от импулс от улицата през KRS до одити NIK/MF.",
+          "Право на тишина — без корелация системата казва: няма основание за хипотеза.",
+        ],
+      },
+      {
+        title: "II. Градът като жив палimpsest",
+        paragraphs: [
+          "Данните не са декорация. Улицата записва социално-икономически процеси.",
+          "Отхвърляме шума на таблата. Реалността описваме с кинетичната нотация FIRA.",
+        ],
+      },
+      {
+        title: "III. Инструменти за гражданско общество",
+        paragraphs: ["Съобщението на жителя е входен импулс, не пост за харесвания."],
+        bullets: [
+          "Протокол като общ език.",
+          "Неприкосновеност на записа — измерените траектории не се пренаписват.",
+        ],
+      },
+    ],
+    closing: [
+      "Шумът е отрязан.",
+      "Езикът е кристализиран.",
+      "Инструментът е предаден на хората.",
+    ],
+  },
+  et: {
+    title: "Digitaalse Vaatleja Manifest",
+    version: "v1.0",
+    distribution: "Distribuutio: WARSZAWASZA · Mootor: FIRA Core",
+    articleZero: {
+      label: "Artikkel Null",
+      text: "Kood kaitseb fakte. Liides tagastab tähelepanu. Süsteem ei asenda inimest — see relvastab teda puhta vaatluse protsessiga.",
+    },
+    operatorVoice: [
+      "See ekraan ei kuulu algoritmile. See kuulub sulle.",
+      "Aastaid toideti meid müra. Andmetega, millest midagi ei järgunud.",
+      "Statistikaga rahustamiseks. Lubadustega, mis õhus hajusid.",
+      "WARSZAWASZA pole järjekordne rakendus, mis varastab tähelepanu.",
+      "See on laboriinstrument sinu kätes.",
+      "Kui näed maha raiutud puid Wolas, lammutatud paviljoni Muranówis või tunned, et sinu tänava rütm on brutselt katkenud — sa pole abitu.",
+      "Sinu teade muutub signaaliks.",
+      "FIRA ei lase sellel signaalil müras uppuda.",
+      "Kontrollib KRS-i, NIK-i aruandeid, koha ajalugu.",
+      "Ühendab punktid. Näitab nähtamatuid jõuvektoreid.",
+      "Tõestab, et see, mis toimub sinu akna all, on suurema mehhanismi osa.",
+      "Me ei otsi odavat sensatsiooni. Me otsime kindlat teadmist.",
+      "Sul on õigus teada. Sul on õigus selgemalt näha.",
+      "Instrument on valmis.",
+    ],
+    operatorCta: "Käivita koeanalüüs →",
+    sections: [
+      {
+        title: "I. Kognitiivne suveräänsus algoritmilise oraakli asemel",
+        paragraphs: ["Lükkame tagasi tehnofatalismi. Nõuame protsessi läbipaistvust."],
+        bullets: [
+          "Õigus kontrollida teed — tänavaimpulssist KRS-i ja NIK/MF audititeni.",
+          "Õigus vaikuseni — korrelatsioonita ütleb süsteem: hüpoteesile puudub alus.",
+        ],
+      },
+      {
+        title: "II. Linn elava palimpsestina",
+        paragraphs: [
+          "Andmed pole dekoratsioon. Tänav salvestab sotsiaal-majanduslikke protsesse.",
+          "Lükkame tagasi dashboardide müra. Reaalsust kirjeldame FIRA kineetilise notatsiooniga.",
+        ],
+      },
+      {
+        title: "III. Tööriistad kodanikuühiskonnale",
+        paragraphs: ["Elaniku teade on sisendimpulss, mitte meeldimiste postitus."],
+        bullets: [
+          "Protokoll ühise keelena.",
+          "Kirje puutumatust — mõõdetud trajektoore ei kirjutata üle.",
+        ],
+      },
+    ],
+    closing: [
+      "Müra on ära lõigatud.",
+      "Keel on kristalliseerunud.",
+      "Instrument on inimestele antud.",
+    ],
+  },
+  fi: {
+    title: "Digitaalisen Havainnoijan Manifesti",
+    version: "v1.0",
+    distribution: "Jakelu: WARSZAWASZA · Moottori: FIRA Core",
+    articleZero: {
+      label: "Nollainen artikla",
+      text: "Koodi puolustaa faktoja. Käyttöliittymä palauttaa huomion. Järjestelmä ei korvaa ihmistä — se varustaa hänet puhtaan havainnon prosessilla.",
+    },
+    operatorVoice: [
+      "Tämä näyttö ei kuulu algoritmille. Se kuuluu sinulle.",
+      "Vuosia ruokittiin meitä kohinalla. Datalla, josta ei seurannut mitään.",
+      "Tilastoilla rauhoittamiseen. Lupauksilla, jotka haihtuivat ilmaan.",
+      "WARSZAWASZA ei ole uusi sovellus, joka varastaa huomiosi.",
+      "Se on laboratorioinstrumentti käsissäsi.",
+      "Kun näet kaadettuja puita Wolassa, puretun paviljongin Muranówissa tai tunnet kadun rytmin katkeavan — et ole avuton.",
+      "Ilmoituksesi muuttuu signaaliksi.",
+      "FIRA ei anna signaalin hukkua kohinaan.",
+      "Tarkistaa KRS:n, NIK-raportit, paikan historian.",
+      "Yhdistää pisteet. Näyttää näkymättömät voimavektorit.",
+      "Todistaa, että ikkunasi alla tapahtuva on osa suurempaa mekanismia.",
+      "Emme etsi halpaa sensaatiota. Etsimme kovaa tietoa.",
+      "Sinulla on oikeus tietää. Sinulla on oikeus nähdä selvemmin.",
+      "Instrumentti on valmis.",
+    ],
+    operatorCta: "Käynnistä kudosanalyysi →",
+    sections: [
+      {
+        title: "I. Kognitiivinen suvereniteetti algoritmisen oraakelin sijaan",
+        paragraphs: ["Hylkäämme teknofatalismin. Vaadimme prosessin läpinäkyvyyttä."],
+        bullets: [
+          "Oikeus tarkistaa polku — kadun impulssista KRS:ään ja NIK/MF-auditointeihin.",
+          "Oikeus hiljaisuuteen — ilman korrelaatiota järjestelmä sanoo: ei perustetta hypoteesille.",
+        ],
+      },
+      {
+        title: "II. Kaupunki elävänä palimpsestinä",
+        paragraphs: [
+          "Data ei ole koriste. Katu tallentaa sosioekonomisia prosesseja.",
+          "Hylkäämme dashboard-kohinan. Kuvaamme todellisuutta FIRA-kineettisellä notaatiolla.",
+        ],
+      },
+      {
+        title: "III. Työkalut kansalaisyhteiskunnalle",
+        paragraphs: ["Asukkaan ilmoitus on tulosignaali, ei tykkäyspostaus."],
+        bullets: [
+          "Protokolla yhteisenä kielenä.",
+          "Kirjausten koskemattomuus — mitatut trajektoriat eivät kirjoitu uudelleen.",
+        ],
+      },
+    ],
+    closing: [
+      "Kohina on katkaistu.",
+      "Kieli on kiteytynyt.",
+      "Instrumentti on annettu ihmisille.",
+    ],
+  },
+  lt: {
+    title: "Skaitmeninio Stebėtojo Manifestas",
+    version: "v1.0",
+    distribution: "Distribucija: WARSZAWASZA · Variklis: FIRA Core",
+    articleZero: {
+      label: "Nulinis straipsnis",
+      text: "Kodas gina faktus. Sąsaja grąžina dėmesį. Sistema nekeičia žmogaus — ji ginkluoja jį gryno stebėjimo procesu.",
+    },
+    operatorVoice: [
+      "Šis ekranas nepriklauso algoritmui. Jis priklauso tau.",
+      "Metus mus maitino triukšmu. Duomenimis, iš kurių nieko nesekė.",
+      "Statistika raminti. Pažadais, kurie išgaravo ore.",
+      "WARSZAWASZA — ne dar viena programėlė, vagianti dėmesį.",
+      "Tai laboratorinis instrumentas tavo rankose.",
+      "Kai matai kertamus medžius Wola, nugriautą paviljoną Muranów, ar jauti, kad tavo gatvės ritmas brutaliai sutrikęs — tu ne bejėgis.",
+      "Tavo pranešimas tampa signalu.",
+      "FIRA neleis šiam signalui paskęsti triukšme.",
+      "Patikrins KRS, NIK ataskaitas, vietos istoriją.",
+      "Sujungs taškus. Parodys nematomus jėgos vektorius.",
+      "Įrodys, kad tai, kas vyksta po tavo langais, yra didesnio mechanizmo dalis.",
+      "Mes neieškome pigios sensacijos. Ieškome tvirtos žinios.",
+      "Tu turi teisę žinoti. Tu turi teisę matyti aiškiau.",
+      "Instrumentas paruoštas.",
+    ],
+    operatorCta: "Paleisti audinių analizę →",
+    sections: [
+      {
+        title: "I. Kognityvinis suverenitetas vietoj algoritminio orakulo",
+        paragraphs: ["Atmetame technofatalizmą. Reikalaujame proceso skaidrumo."],
+        bullets: [
+          "Teisė patikrinti kelią — nuo gatvės impulso per KRS iki NIK/MF auditų.",
+          "Teisė į tylą — be koreliacijos sistema sako: nėra pagrindo hipotezei.",
+        ],
+      },
+      {
+        title: "II. Miestas kaip gyvas palimpsestas",
+        paragraphs: [
+          "Duomenys — ne dekoracija. Gatvė fiksuoja socialinius ir ekonominius procesus.",
+          "Atmetame dashboard triukšmą. Realybę aprašome FIRA kinetine notacija.",
+        ],
+      },
+      {
+        title: "III. Įrankiai pilietinei visuomenei",
+        paragraphs: ["Gyventojo pranešimas — įvesties impulsas, ne postas dėl like'ų."],
+        bullets: [
+          "Protokolas kaip bendra kalba.",
+          "Įrašo neliečiamybė — išmatuotos trajektorijos neperrašomos.",
+        ],
+      },
+    ],
+    closing: [
+      "Triukšmas nukirstas.",
+      "Kalba kristalizuota.",
+      "Instrumentas perduotas žmonėms.",
+    ],
+  },
+  lv: {
+    title: "Digitālā Novērotāja Manifests",
+    version: "v1.0",
+    distribution: "Distribūcija: WARSZAWASZA · Dzinējs: FIRA Core",
+    articleZero: {
+      label: "Nulles pants",
+      text: "Kods aizsargā faktus. Saskarne atdod uzmanību. Sistēma neaizstāj cilvēku — tā bruņo viņu ar tīra novērojuma procesu.",
+    },
+    operatorVoice: [
+      "Šis ekrāns nepieder algoritmam. Tas pieder tev.",
+      "Gadiem mūs baroja ar troksni. Ar datiem, no kuriem nekas nesekoja.",
+      "Ar statistiku nomierināšanai. Ar solījumiem, kas iztvaikoja gaisā.",
+      "WARSZAWASZA nav vēl viena lietotne, kas zog uzmanību.",
+      "Tas ir laboratorijas instruments tavās rokās.",
+      "Kad redzi nocirstus kokus Wolā, nojaukto paviljonu Muranów vai jūti, ka ielas ritms brutāli pārtraukts — tu neesi bezpalīdzīgs.",
+      "Tavs ziņojums kļūst par signālu.",
+      "FIRA neļaus šim signālam noslīkt troksnī.",
+      "Pārbaudīs KRS, NIK ziņojumus, vietas vēsturi.",
+      "Savienos punktus. Parādīs neredzamus spēka vektorus.",
+      "Pierādīs, ka tas, kas notiek zem loga, ir lielāka mehānisma daļa.",
+      "Mēs nemeklējam lētu sensāciju. Meklējam cietu zināšanu.",
+      "Tev ir tiesības zināt. Tev ir tiesības redzēt skaidrāk.",
+      "Instruments ir gatavs.",
+    ],
+    operatorCta: "Sākt auduma analīzi →",
+    sections: [
+      {
+        title: "I. Kognitīvā suverenitāte algoritmiskā orākula vietā",
+        paragraphs: ["Noraidām tehnofatalismu. Prasām procesa caurredzamību."],
+        bullets: [
+          "Tiesības pārbaudīt ceļu — no ielas impulsa caur KRS līdz NIK/MF auditiem.",
+          "Tiesības uz klusumu — bez korelācijas sistēma saka: nav pamata hipotēzei.",
+        ],
+      },
+      {
+        title: "II. Pilsēta kā dzīvs palimpsests",
+        paragraphs: [
+          "Dati nav dekorācija. Iela fiksē sociāli ekonomiskos procesus.",
+          "Noraidām dashboard troksni. Realitāti aprakstām ar FIRA kinētisko notāciju.",
+        ],
+      },
+      {
+        title: "III. Instrumenti pilsoniskajai sabiedrībai",
+        paragraphs: ["Iedzīvotāja ziņojums ir ievades impulss, ne postenis par like."],
+        bullets: [
+          "Protokols kā kopīga valoda.",
+          "Ieraksta neaizskaramība — izmērītās trajektorijas netiek pārrakstītas.",
+        ],
+      },
+    ],
+    closing: [
+      "Troksnis ir nocirsts.",
+      "Valoda ir kristalizēta.",
+      "Instruments nodots cilvēkiem.",
+    ],
+  },
   hu: {
     title: "A Digitális Megfigyelő Manifestuma",
     version: "v1.0",

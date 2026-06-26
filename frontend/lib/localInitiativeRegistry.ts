@@ -10,7 +10,10 @@ export type LocalInitiativeStatus = "Pilot" | "Active" | "Paused";
 
 export type FocusAreaRecord = {
   slug: string;
-  displayName: Record<"pl" | "en" | "it", string>;
+  displayName: Record<
+    "pl" | "en" | "it" | "uk" | "bg" | "et" | "fi" | "lt" | "lv" | "hu",
+    string
+  >;
 };
 
 export type LocalMicroNodeRecord = {
@@ -29,6 +32,13 @@ export const FOCUS_AREAS: readonly FocusAreaRecord[] = [
       pl: "FIRA Waste Navigation",
       en: "FIRA Waste Navigation",
       it: "FIRA Waste Navigation",
+      uk: "FIRA Waste Navigation",
+      bg: "FIRA Waste Navigation",
+      et: "FIRA Waste Navigation",
+      fi: "FIRA Waste Navigation",
+      lt: "FIRA Waste Navigation",
+      lv: "FIRA Waste Navigation",
+      hu: "FIRA Waste Navigation",
     },
   },
 ] as const;
@@ -51,5 +61,12 @@ export function focusAreaDisplayName(slug: string, lang: Lang): string {
   if (!row) return slug;
   if (lang === "pl") return row.displayName.pl;
   if (lang === "it") return row.displayName.it;
+  if (lang === "uk") return row.displayName.uk;
+  if (lang === "bg") return row.displayName.bg;
+  if (lang === "et") return row.displayName.et;
+  if (lang === "fi") return row.displayName.fi;
+  if (lang === "lt") return row.displayName.lt;
+  if (lang === "lv") return row.displayName.lv;
+  if (lang === "hu") return row.displayName.hu;
   return row.displayName.en;
 }

@@ -1,145 +1,167 @@
-# Civic Organization Matrix (Channel H)
+# Civic Organization Matrix (Trzeci Sektor)
 
-**Warstwa dystrybucji WARSZAWASZA.** Nie jest częścią `fira/core/`. Uzupełnia Matrycę Państwową (`fira/STATE_DATA_MATRIX.md`) o **węzły obywatelskie trzeciego sektora** — organizacje pozarządowe, które ustawiają standardy, nadzorują transparentność lub koordynują sieci grantodawców.
+**Warstwa dystrybucji WARSZAWASZA.** Nie jest częścią `fira/core/`. Rejestruje **operacyjną klasę** organizacji trzeciego sektora, które mogą **przecinać się** z sygnałami obywatelskimi zapisanymi w `civic_observations`.
 
-> **Silnik nie zna polityki.** FIRA Core operuje na Source → Signal → Process → Evidence. KRS i klasy operacyjne to metadane COP — nie algebra protokołu.
+> **To nie jest ranking NGO.** Matryca odpowiada na pytanie: *„Jaki typ actorów trzeciego sektora może skrzyżować się z tym sygnałem i przez jaki kanał COP?”*
+
+Nie odpowiada na: kogo wspierać, komu ufać emocjonalnie, kto „wygrywa” debatę.
 
 ---
 
 ## Cel
 
-Channel H odpowiada na pytanie:
+Cztery **klasy operacyjne** opisują funkcję strukturalną w polu obserwacji — nie program polityczny:
 
-**„Która organizacja obywatelska jest punktem odniesienia dla tego typu obserwacji?”**
+| Klasa (`operational_class`) | Przykładowi actorzy (nazwy publiczne) | Rola strukturalna |
+|-----------------------------|----------------------------------------|-------------------|
+| **WATCHDOG** | Watchdog Polska, Panoptykon, HFHR | Nadzór nad państwem, prawami, przejrzystością |
+| **LITERACY** | Tour de Konstytucja, Iustitia | Edukacja obywatelska, świadomość prawna |
+| **URBAN** | Miasto Jest Nasze, lokalne stowarzyszenia (Muranów, Wola) | Partycypacja miejska, sąsiedztwo |
+| **CIVIC_TECH** | Koduj dla Polski, Moje Państwo, Rejestr.io | Narzędzia, otwarte dane, rejestry |
 
-Nie odpowiada na: kogo popierać, komu ufać bez weryfikacji, co „powinno” się wydarzyć.
-
-Powiązanie z rejestrem państwowym: metryki KRS-grounded nadal przechodzą przez `POL_NODE_KRS` (`state_registry_nodes`). Channel H rejestruje **konkretne podmioty NGO** wybrane do audytu obywatelskiego — nie zastępuje KRS.
+Wpisy w SQL to **katalog instytucji** (nazwa + opcjonalny publiczny KRS). Brak danych o darczyńcach, członkach, adresach osób.
 
 ---
 
-## Stan implementacji
+## Mapowanie kanałów COP
+
+Klasy łączą się z kanałami źródła sygnału (`frontend/lib/signalApi.ts`, `fira/PROTOCOL.md`):
+
+| Klasa | Kanał(y) COP | Znaczenie |
+|-------|--------------|-----------|
+| **WATCHDOG** | `CHANNEL_H_STATE_AUDIT` · `CHANNEL_F_REGISTRY` | Audyt państwa + rejestry publiczne |
+| **LITERACY** | `CHANNEL_A_CITIZEN` · `CHANNEL_D_DOCUMENT` | Sygnał obywatelski + materiał edukacyjny |
+| **URBAN** | `CHANNEL_B_CITY` · `CHANNEL_A_CITIZEN` | Pole miejskie + uwaga mieszkańców |
+| **CIVIC_TECH** | `CHANNEL_F_REGISTRY` · `CHANNEL_C_SENSOR` | Rejestr / API + instrument techniczny |
+
+`CHANNEL_H_STATE_AUDIT` — rozszerzenie dystrybucji WARSZAWASZA dla **przecięcia sygnału z audytem państwowym** (NIK, KRS, NGO watchdog). Nie jest w `fira/core/`.
+
+---
+
+## `trust_level_indicator` (1–5)
+
+**Głębokość weryfikacji audytowej** — nie popularność, nie „ocena jakości” organizacji.
+
+| Poziom | Znaczenie |
+|--------|-----------|
+| 1 | Tylko wpis rejestrowy / placeholder DEMO — niezweryfikowany |
+| 2 | Pojedyncze źródło publiczne (np. strona programu bez KRS) |
+| 3 | KRS + jeden rejestr publiczny (domyślny seed) |
+| 4 | KRS + spójność z `POL_NODE_KRS` / drugim rejestrem |
+| 5 | Wieloźródłowe potwierdzenie (KRS + archiwum + obserwacja niezależna) |
+
+Operator ustawia poziom po **dowodzie**, nie po sympatii.
+
+---
+
+## Powiązanie z Matrycą Państwową
+
+Organizacje z numerem KRS linkują provenance przez:
 
 ```
-PROCESS — STATE, NEXT STEP
-STATE        ● TEST (frontend intersection) · ◐ IMPLEMENTATION (repo SQL) · ○ DRAFT (production DB)
-SPEC         COP v1.0 · Channel H
-TARGET       civic_organizations · backend/sql/008_civic_organizations.sql
-INTERSECT    frontend/lib/civicOrgRegistry.ts · pipelineEngine.intersectCivicOrg()
-NEXT STEP    Operator: ?ngo-watchdog=1 on field entry · psql apply 008 on DATABASE_URL
+civic_organizations.krs_source_node_id → state_registry_nodes.node_id
 ```
 
-### Pierwsza przecięcie strumienia (TEST)
+Typowy węzeł: **`POL_NODE_KRS`** (Krajowy Rejestr Sądowy). Szczegóły węzła i API: [`fira/STATE_DATA_MATRIX.md`](./STATE_DATA_MATRIX.md).
 
-Pierwszy rekord NGO z seeda SQL (`0000217821` · WATCHDOG · trust 5) przecina strumień obserwacji w silniku pipeline po wejściu w pole z parametrem `?ngo-watchdog=1`:
-
-| Warstwa | Plik | Zachowanie |
-|---------|------|------------|
-| Registry (klient) | `frontend/lib/civicOrgRegistry.ts` | Lustrzany seed 008 — bez wire do PostgreSQL |
-| Silnik | `frontend/lib/pipelineEngine.ts` | `intersectCivicOrg()` · `applyCivicOrgTrustAtStage()` na Filtracja (3) i Walidacja (5) |
-| UI | `LivingInterface.tsx` → `DecisionPipeline.tsx` | Blok `CIVIC_ORG ∩` + `console.info('[COP] …')` |
-
-**Trigger testu:** `https://www.warszawasza.online/?ngo-watchdog=1` → gate TRUE/FALSE → interakcja aż pipeline osiągnie Filtrację.
-
-**Wejście obserwacji:** tag `ngo-watchdog` + opcjonalne `civicOrgRef: { krs, operationalClass, trustLevel }` — zero PII.
-
----
-
-## Warstwa techniczna vs normatywna
-
-| Warstwa | Plik | Zawartość |
-|---------|------|-----------|
-| **Normatywna** | Ten dokument | Klasy operacyjne, węzły kontaktowe (role), konsekwencje obserwacji |
-| **Techniczna** | `backend/sql/008_civic_organizations.sql` | Tabela `civic_organizations` — KRS, nazwa, klasa, trust 0–5 |
-| **Państwowa** | `002_state_registry_nodes.sql` | Issuer KRS jako `POL_NODE_KRS` |
-
----
-
-## Klasy operacyjne (`operational_class`)
-
-| Klasa | Znaczenie | Konsekwencja obserwacji |
-|-------|-----------|-------------------------|
-| **WATCHDOG** | Standardy, transparentność, rzecznictwo sektorowe | Metryki provenance mogą linkować do tego węzła przy audycie NGO |
-| **GRANTMAKER_NETWORK** | Sieć grantodawców / federacja fundacji | Punkt odniesienia dla praktyk przyznawania dotacji (bez oceny politycznej) |
-
-Nowe klasy wymagają wpisu w tej tabeli przed seedem SQL.
-
----
-
-## Zarejestrowane węzły (`civic_organizations`)
-
-| KRS | Nazwa (KRS) | `operational_class` | trust | Weryfikacja KRS |
-|-----|-------------|---------------------|-------|-----------------|
-| `0000217821` | Forum Darczyńców w Polsce | WATCHDOG | 5 | ✓ 2026-06-25 — [forumdarczyncow.pl](https://www.forumdarczyncow.pl/pl/page/o-forum/kim-jestesmy), [spis.ngo.pl](https://spis.ngo.pl/146963-forum-darczyncow-w-polsce) |
-
-**Forma prawna (KRS):** Związek Stowarzyszeń · rejestracja 2004-09-22 · siedziba Warszawa.
-
-**Zakres (fakt publiczny):** Zrzesza niezależne organizacje przyznające dotacje na cele społecznie użyteczne; promuje standardy zarządzania i transparentność w filantropii instytucjonalnej. Nie jest grantodawcą indywidualnym — nie przyjmuje wniosków o wsparcie finansowe od osób fizycznych ani podmiotów spoza członkostwa.
-
-**Uwaga KRS:** Numer `0000213765` należy do Eurocash S.A., nie do Forum Darczyńców. Seed COP używa zweryfikowanego numeru `0000217821`.
-
----
-
-## Węzły kontaktowe (normatywne — nie w SQL)
-
-Zero-PII w schemacie COP (`backend/sql/README.md`) wyklucza kolumny z imionami i nazwiskami osób fizycznych. Role publiczne dokumentujemy tutaj, nie w `civic_organizations`.
-
-| Organizacja | Rola publiczna | Znaczenie dla Channel H |
-|-------------|----------------|-------------------------|
-| Forum Darczyńców w Polsce | **Magdalena Pękacka** — Dyrektorka (Zespół) | Centralny węzeł operacyjny dla standardów filantropii instytucjonalnej i otoczenia prawnego sektora obywatelskiego; powiązana z organizacją od 2006 r. ([władze i zespół](https://www.forumdarczyncow.pl/pl/page/o-forum/wladze-i-zespol)) |
-
-To nie jest rekomendacja osobista — to **routing provenance**: kto publicznie reprezentuje operacje organizacji w materiałach własnych Forum.
-
----
-
-## Powiązanie z COP
+Relacja FOP (przykład notacji):
 
 ```
-POL_NODE_KRS (002)              civic_organizations (008)
-┌─────────────────────┐         ┌──────────────────────────┐
-│ KRS issuer          │         │ krs_number (UNIQUE)      │
-│ KAPITALOWA layer    │◄─ground─│ org_name                 │
-└─────────────────────┘         │ operational_class        │
-         │                      │ trust_level_indicator    │
-         ▼                      └──────────────────────────┘
-civic_observations
-  source_node_id → POL_NODE_KRS (registry issuer)
-  metric_category → e.g. CIVIC_ORG_WATCHDOG (future, explicit product need)
+rel capital_vector KRS:0000181348
+src CHANNEL_F_REGISTRY
 ```
 
-Tabela `civic_organizations` nie ma dziś FK z `civic_observations`. **TEST (2026-06-25):** przecięcie działa po stronie dystrybucji (`civicOrgRegistry` + `pipelineEngine`) bez DB wire. Kolejny krok produktowy: opcjonalne `civic_org_ref` w COP store — tylko po jawnej decyzji operatora.
+---
+
+## Graf relacji (ASCII)
+
+```
+                    ┌─────────────────────────┐
+                    │  state_registry_nodes   │
+                    │  POL_NODE_KRS           │
+                    └───────────┬─────────────┘
+                                │ krs_source_node_id
+                                ▼
+┌──────────────┐    krs_number ┌─────────────────────┐
+│ Resident /   │               │ civic_organizations │
+│ instrument   │               │ operational_class   │
+│ signal       │               │ trust_level (1–5)   │
+└──────┬───────┘               └──────────┬──────────┘
+       │                                  │ org_id
+       │ signal_id                        │
+       ▼                                  ▼
+┌──────────────────────┐       ┌────────────────────────────┐
+│ civic_observations   │◄──────│ civic_signal_intersections │
+│ metric_category      │       │ validation_status          │
+│ source_node_id       │       │ geographic_anchor (opt.)   │
+│ payload_value 0–5    │       └────────────────────────────┘
+└──────────────────────┘
+       │
+       ▼
+ v_operator_console
+ (notation_string + evidence bars)
+```
+
+**Przepływ:** sygnał mieszkaniec/instrument → `civic_observations` → przecięcie z NGO → opcjonalna weryfikacja względem KRS (`POL_NODE_KRS`).
 
 ---
 
-## Zgodność z FOP
+## Węzły zewnętrzne (bez poparcia)
 
-| Warstwa FIRA | Rola Channel H |
-|--------------|----------------|
-| **Core** | Bez zmian |
-| **Dystrybucja** | COP PostgreSQL + ten dokument |
-| **Społeczność** | Wspólny język: „obserwacja z węzła WATCHDOG / Forum Darczyńców” |
+| Wpis | `seed_marker` | Uwaga |
+|------|---------------|-------|
+| **Tour de Konstytucja** | `EXTERNAL` | Węzeł edukacyjny LITERACY — inicjatywa Roberta Hojdy; **brak numeru KRS w seedzie**. Obecność w matrycy = klasa operacyjna, nie rekomendacja. |
+| **Koduj dla Polski** | `EXTERNAL` | Program społecznościowy; podmiot prawny seedu CIVIC_TECH: Fundacja Moje Państwo (`0000359730`). |
+| **Rejestr.io** | `EXTERNAL` | Serwis agregujący dane KRS — actor narzędziowy, nie NGO. |
+| Stowarzyszenia Muranów / Wola | `DEMO` | Placeholdery `SRD_MUR_01` / `SRD_WOL_01` — zastąp realnym KRS przy wdrożeniu. |
 
 ---
 
-## Antywzorce
+## `validation_status` (przecięcie)
 
-- ❌ Traktowanie `trust_level_indicator` jako rankingu politycznego
-- ❌ Wnoszenie nazwisk do SQL lub `civic_observations`
-- ❌ Udawanie rejestru urzędowego — to **matryca obywatelska**, KRS pozostaje u `POL_NODE_KRS`
-- ❌ Seed bez weryfikacji numeru KRS
+| Status | Znaczenie |
+|--------|-----------|
+| `PENDING` | Przecięcie zarejestrowane, brak audytu |
+| `VERIFIED` | Metryka zgodna z publicznym rejestrem / dokumentem |
+| `DISSONANCE` | Metryka w konflikcie z publicznym ground truth (≠ „NGO złe”) |
 
 ---
 
 ## Migracja
 
-Plik: `backend/sql/008_civic_organizations.sql`  
-Wymaga: `001_cop_init.sql`, `002_state_registry_nodes.sql` (provenance KRS)  
-Seed: **1 węzeł** (Forum Darczyńców w Polsce)
+| Plik | Wymaga |
+|------|--------|
+| `backend/sql/008_civic_organizations.sql` | `001_cop_init.sql`, `002_state_registry_nodes.sql` |
+
+```bash
+psql "$DATABASE_URL" -f backend/sql/008_civic_organizations.sql
+```
+
+**Seed:** 11 organizacji (6 × `PUBLIC_KRS`, 2 × `DEMO`, 3 × `EXTERNAL`) + 1 obserwacja DEMO + 1 przecięcie DEMO.
+
+**FK `signal_id`:** `civic_signal_intersections.signal_id` → `civic_observations.observation_id` (tabela z `001`). Usunięcie obserwacji kaskaduje do przecięć.
+
+**Widok:** `v_civic_org_matrix` — klasa, KRS, liczniki przecięć.
+
+---
+
+## Zero PII · antywzorce
+
+**Dozwolone:** nazwa instytucji, publiczny KRS, klasa operacyjna, sector ref, status weryfikacji.
+
+**Zabronione:** darczyńcy, członkowie, adresy osób, NIP osób fizycznych, treści kampanii.
+
+- ❌ Traktowanie matrycy jako listy „polecanych NGO”
+- ❌ `trust_level` jako ranking popularności
+- ❌ Polityczne poparcie w SQL lub docs
+- ❌ Import do `fira/core/`
 
 ---
 
 ## Powiązane dokumenty
 
-- `fira/STATE_DATA_MATRIX.md` — Matryca Państwowa (issuers)
-- `backend/sql/README.md` — apply + zero-PII
-- `fira/TF_KEY.md` — status SQL 008
+- [`fira/STATE_DATA_MATRIX.md`](./STATE_DATA_MATRIX.md) — `POL_NODE_KRS` i warstwy państwowe
+- [`backend/sql/README.md`](../backend/sql/README.md) — apply + zero-PII
+- [`fira/PROTOCOL.md`](./PROTOCOL.md) — FOP algebra (`src`, `rel`)
+- [`fira/electoral/README.md`](./electoral/README.md) — protokół wyborczy (osobna warstwa)
+- [`fira/COP_ARCHIVE_JSON.md`](./COP_ARCHIVE_JSON.md) — `geographic_anchor` (`SRD_MUR_01`)

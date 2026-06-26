@@ -1,6 +1,6 @@
 # TF Key — WARSZAWASZA project status
 
-> Format: [`fira/OPERATIONAL_LOG.md`](./OPERATIONAL_LOG.md) · Scenario **A** (main distribution)  
+> Format: [`docs/protocol/log-format-v1.md`](../docs/protocol/log-format-v1.md) · [`fira/OPERATIONAL_LOG.md`](./OPERATIONAL_LOG.md) · Scenario **A** (main distribution)  
 > Snapshot: local `main` @ `50f6bfe` · origin/main aligned · large uncommitted working tree
 
 ---
@@ -43,12 +43,13 @@ Dystrybucja gotowa lokalnie; prod na 50f6bfe do czasu push.
 | **Frontend** `/electoral-lab` | ◐ IMPLEMENTED (untracked) | build → push |
 | **FIRA core** (`fira/core/`) | ● VERIFIED | — |
 | **SQL stack** `001`–`009` | ◐ IMPLEMENTED (files) · ○ DRAFT (DB) | `psql "$DATABASE_URL" -f backend/sql/00N_*.sql` |
-| **SQL** `008` NGO matrix | ● TEST (pipeline ∩ registry) · ◐ IMPLEMENTED (SQL) | `?ngo-watchdog=1` · apply 008 on DB |
+| **SQL** `008` NGO matrix | ● TEST (pipeline ∩ registry) · ◐ IMPLEMENTED (SQL) | `?ngo-watchdog=1` · `?wosp=1` · `?civic-tech=1` · apply 008 on DB |
 | **SQL** `009` local initiatives | ● TEST (frontend pilot) · ◐ IMPLEMENTED (SQL) | apply 009 · Muranów pilot on `/` |
 | **COP validator CI** | ● VERIFIED · legacy FLUX echoes | Optional: migrate workflow to OPERATIONAL_LOG |
 | **monitor.py** | ◐ IMPLEMENTED (untracked) | Operator smoke after deploy |
 | **electoral_mandate_proof.py** | ● VERIFIED (stdlib) | Run against seeded DB post-migration |
 | **Backend API** (`backend/api/main.py`) | ◐ IMPLEMENTED (modified, no DB wire) | Explicit product need + `DATABASE_URL` |
+| **Data Mixer** (`fira/DATA_MIXER.md`) | ○ DRAFT v0.1 (spec) | v2 module after log-format deploy on prod |
 
 ---
 
@@ -175,7 +176,9 @@ Scanner active; operator report format pending migration.
 
 ## Related
 
-- [`fira/OPERATIONAL_LOG.md`](./OPERATIONAL_LOG.md) — block template
+- [`docs/protocol/log-format-v1.md`](../docs/protocol/log-format-v1.md) — log format handbook (DRAFT v1.0, canonical)
+- [`fira/LOG_FORMAT_v1.0.md`](./LOG_FORMAT_v1.0.md) — quick ref
+- [`fira/OPERATIONAL_LOG.md`](./OPERATIONAL_LOG.md) — lifecycle & validation companion
 - [`fira/LOCAL_INITIATIVE_MODEL.md`](./LOCAL_INITIATIVE_MODEL.md) — courtyard pivot · local initiatives
 - [`fira/PROTOCOL.md`](./PROTOCOL.md) — FOP spec
 - [`backend/sql/README.md`](../backend/sql/README.md) — migration order

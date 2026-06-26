@@ -8,7 +8,7 @@ globs: ["frontend/**"]
 
 > **WARSZAWASZA to dystrybucja (warstwa 3), nie produkt główny.**
 > Produkt główny to **FIRA Observation Protocol** — język obserwacji.
-> Spec: `fira/PROTOCOL.md` · reguła: `fira-protocol.mdc` · status: `fira/OPERATIONAL_LOG.md` · `fira/TF_KEY.md`
+> Spec: `fira/PROTOCOL.md` · reguła: `fira-protocol.mdc` · log (DRAFT v1.0): `docs/protocol/log-format-v1.md` · status: `fira/TF_KEY.md`
 
 ## Cel projektu
 
@@ -22,7 +22,7 @@ Kluczowa zasada: **OBSERWACJA TRWA** — wszystko zaczyna się od obserwacji.
 
 **Każda informacja musi odpowiadać na pytanie: co z tego wynika?** Jeśli element UI/copy nie ma konsekwencji — to szum (FALSE). Jeśli prowadzi do następnego kroku, decyzji lub trajektorii — zostaje (TRUE).
 
-**Krystaliczna czystość interfejsu:** maksymalnie zrozumiały, transparentny, bezpieczny i ciekawy — nie dekoracyjny. T/F: czy element przechodzi test czytelności i uczciwości? Bez hover-ów, bez ukrytych mechanizmów, bez manipulacji uwagą.
+**Czytelność interfejsu:** maksymalnie zrozumiały, transparentny, bezpieczny — nie dekoracyjny. T/F: czy element przechodzi test czytelności i uczciwości? Bez hover-ów, bez ukrytych mechanizmów, bez manipulacji uwagą.
 
 ## Rozproszone źródła (archeologia pola)
 
@@ -133,7 +133,7 @@ Przykładowe prompty:
 
 ## Citrus Cursor
 
-⚡~~~~● — pamięć uwagi. `LucyAttention.tsx` — pointer + touch, bez hover.
+⚡~~~~● — pamięć uwagi. `LucyAttention.tsx` — pointer + touch, bez hover. Konstytucja LUCY (motion, commit gate): `docs/protocol/lucy-cognitive-interface.md` · reguła `lucy-cognitive-interface.mdc`.
 
 ## Field Energy
 

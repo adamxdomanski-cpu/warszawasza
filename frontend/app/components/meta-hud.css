@@ -31,6 +31,7 @@
     "truth truth"
     "narrative narrative"
     "grafen trajectory"
+    "studio studio"
     "objects objects";
   gap: 28px 12px;
   padding: var(--meta-edge);
@@ -418,6 +419,28 @@
 
 .metaPrincipleStrong {
   color: var(--meta-sapphire) !important;
+}
+
+.metaStudioSignal {
+  grid-area: studio;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-fira-mono), "Fira Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  color: var(--meta-graphite);
+  opacity: 0.32;
+  animation: metaStudioFade 1.2s ease-out forwards;
+}
+
+@keyframes metaStudioFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.32;
+  }
 }
 
 .metaObjects {

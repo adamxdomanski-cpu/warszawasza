@@ -228,14 +228,21 @@ export default function DecisionPipeline({
     intersection: CivicOrgIntersection,
   ): ReactNode {
     const trace = formatCivicOrgIntersectionTrace(intersection);
+    const isMacroNode = intersection.matched.operationalClass === "CIVIC_TECH";
     return (
       <div
         className="mt-2 space-y-0.5 text-[10px] leading-relaxed text-accent/55 sm:text-[11px]"
         aria-live="polite"
       >
         <div className="tracking-[0.12em] text-accent/70">
-          {SEMANTIC.compression} CIVIC_ORG ∩
+          {copy.interference.title} · {isMacroNode ? "MACRO-NODE ∩" : "CIVIC_ORG ∩"}
         </div>
+        {isMacroNode && (
+          <div>
+            {GRAPH.horizontal}
+            {DIRECTION.right} KRS-grounded · data/telemetry routing
+          </div>
+        )}
         <div className="tabular-nums tracking-tight">{trace}</div>
         <div>
           {GRAPH.horizontal}

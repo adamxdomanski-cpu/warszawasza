@@ -8,32 +8,133 @@ alwaysApply: false
 
 Ten plik instruuje model, jak interpretować intencje operatora podczas modyfikacji kodu w `frontend/`. Każda akcja musi przejść przez filtr redukcji szumu.
 
-## CORE METRIC LOG (status operacyjny)
+## Trzy poziomy dokumentacji (DRAFT v1.0)
 
-Zastępuje mieszane `PROCESSING FLUX` / `FOCUS` / `STATUS`. Pełna spec: `fira/OPERATIONAL_LOG.md` · stan projektu: `fira/TF_KEY.md`.
+| Poziom | Blok | Kiedy |
+|--------|------|-------|
+| **DECISION** | `Decision:` + `Reason:` | Wyjaśniasz *dlaczego* — ADR-lite, osobno od logu |
+| **LOG** | PROCESS → VALIDATION → OUTPUT → NEXT STEP → ARTIFACT | Raportujesz *co widać* — tylko stan obserwowalny |
+| **CODE** | diff / pliki | Wdrażasz w repo |
 
-Gdy agent raportuje postęp lub stan — **kończy odpowiedź** tym blokiem (nie starym FLUX):
+**Przepływ:** Decision → Log → Code. **DECISION zastępuje COMMENTARY** — nigdy nie mieszaj ocen i uzasadnień w polach LOG.
+
+Handbook: [`docs/protocol/log-format-v1.md`](../../docs/protocol/log-format-v1.md) · decyzje: `fira/DECISION_RECORD.md`
+
+Po przeglądzie specyfikacji — nie pisz *„Krytyka merytoryczna została zaaplikowana”*. Użyj: *„Uwagi z przeglądu zostały uwzględnione.”* lub *„Wnioski z przeglądu zostały wprowadzone do bieżącej wersji specyfikacji.”* (w bloku DECISION, nie w LOG).
+
+Reguły ograniczają niespójność nazewnictwa — nie gwarantują braku dryfu. Log format = **DRAFT v1.0**, ewolucja z danych testów.
+
+## CORE METRIC LOG (status operacyjny · DRAFT v1.0)
+
+> **Log nie służy do opowiadania historii. Log służy do rejestrowania obserwowalnego stanu procesu.**
+
+Za pół roku: co robiliśmy, na jakim etapie, co powstało, co dalej? Format = użyteczność operacyjna. **Najpierw fakt. Potem analiza. Na końcu decyzja** — decyzja w bloku **DECISION**, nie w VALIDATION/OUTPUT.
+
+Zastępuje mieszane `PROCESSING FLUX` / `FOCUS` / `STATUS`. Quick ref: `fira/LOG_FORMAT_v1.0.md` · companion: `fira/OPERATIONAL_LOG.md` · stan: `fira/TF_KEY.md`.
+
+### Cztery pytania → pięć pól
+
+| Pytanie | Field |
+|---------|-------|
+| Co się dzieje? | **PROCESS** |
+| Skąd wiemy, że to prawda? | **VALIDATION** |
+| Co się zmieniło? | **VALIDATION** (delta: `before → after`) |
+| Co jest wynikiem? | **OUTPUT** |
+
+Plus mandatory closure: **NEXT STEP** · **ARTIFACT** (`N/A` when none).
+
+**Jedno pytanie na sekcję:** PROCESS = stan systemu · VALIDATION = co zweryfikowano · OUTPUT = wynik · NEXT STEP = co system robi dalej (nie menu) · ARTIFACT = ślad lub N/A.
+
+**AVAILABLE TARGETS** (opcjonalnie, tylko IDLE / awaiting): osobny blok z numerowanymi opcjami operatora — **nigdy** w NEXT STEP.
+
+**Język:** w jednym bloku LOG (+ AVAILABLE TARGETS) wybierz EN **lub** PL — bez mieszania. Blok DECISION może być po polsku.
+
+Gdy agent raportuje postęp lub stan — **kończy odpowiedź** blokiem LOG (nie starym FLUX). Uzasadnienie wyboru — **osobny** blok DECISION *przed* lub *po* LOG, nigdy wewnątrz pięciu pól:
+
+```
+DECISION
+──────────────
+Decision: <co wybrano>
+Reason: <dlaczego>
+```
 
 ```
 PROCESS
 ──────────────
-STATE        ● VERIFIED | DRAFT | REVIEW | IMPLEMENTED | DEPLOYED
-SPEC         COP v1.0
-TARGET       (channel / component)
-NEXT STEP    (jeden krok — np. `t`, `psql`, `npm run build`)
+(co zaszło — operacja / kanał / komponent)
 
 VALIDATION
 ──────────────
+(observable checks — exit codes, counts, chain; optional delta)
 Syntax        ✓ | ✗
 Flow          ✓ | ✗
 Consistency   ✓ | ✗
 
 OUTPUT
 ──────────────
-(jedna linia wyniku)
+(jedna linia wyniku — nie narracja)
+
+NEXT STEP
+──────────────
+(jeden krok **systemu** — np. `Awaiting operator decision.` — **nie** menu operatora)
+
+ARTIFACT
+──────────────
+N/A
 ```
 
-**Lifecycle:** `DRAFT → REVIEW → VERIFIED → IMPLEMENTED → DEPLOYED`
+**IDLE baseline (EN — gdy system czeka na operatora):**
+
+```
+PROCESS
+──────────────
+STATE        ● IDLE
+SESSION      Awaiting operator input
+
+VALIDATION
+──────────────
+Input Queue  ✓ EMPTY
+Context      ✓ AVAILABLE
+Build        ✓ Verified
+             (LayerControl → pipelineEngine.ts)
+
+OUTPUT
+──────────────
+Listening.
+
+NEXT STEP
+──────────────
+Awaiting operator decision.
+
+ARTIFACT
+──────────────
+N/A
+```
+
+Gdy wypisujesz opcje dla operatora — **osobny** blok po LOG (nie w NEXT STEP):
+
+```
+AVAILABLE TARGETS
+──────────────
+01  Commit + Push
+02  DR-003 LUCY
+03  LucyAttention / Micro-Life
+04  Custom Target
+```
+
+**Reguła AVAILABLE TARGETS:** menu wyboru operatora (ludzkie decyzje). **NEXT STEP** = następna akcja systemu. Nie łącz menu z NEXT STEP.
+
+**ARTIFACT:** `N/A` gdy brak pliku; ścieżka repo gdy dotyczy. Nigdy `None`, `null`, `—`, pusty.
+
+**COP — log block:** tylko stan obserwowalny — brak interpretacji, prognoz, ocen, metafor. Dobrze: `Input Queue ✓ EMPTY`. Źle: `City is calm.`
+
+**COP — DECISION block** (osobny blok ADR-lite — **nie** w polach LOG): uzasadnienie wyboru projektowego. Szablon: `Decision:` + `Reason:` (patrz `docs/protocol/log-format-v1.md`). Zastępuje wcześniejsze **COMMENTARY**. Ta sama dyscyplina — bez `perfect`, `crystallized`, `guaranteed`, `true essence`. Dozwolone: intent techniczny, ścieżki, `DRAFT v1.0`, exit code, wnioski z przeglądu. Reguły = instrument spójności nazewnictwa, nie gwarancja braku dryfu koncepcyjnego.
+
+**VALIDATION = stan, nie zwycięstwo** — opis warunku; PROCESS ≠ OUTPUT.
+
+**LUCY — filtr poznawczy (DR-004):** W warstwie poznawczej VALIDATION używa summary (`Build ✓ Verified`, `Input Queue ✓ EMPTY`); surowy detail techniczny (`exit 0`, BUILD_ID) idzie do ARTIFACT lub expand-on-demand. Przed dodaniem linii UI/copy: czy operator wie więcej o sytuacji? Czy to zmienia następną akcję? Nie = szum — nawet jeśli brzmi jak terminal. NEXT STEP w IDLE = `Awaiting operator decision.` — operator decyduje, system nie wykonuje. Delta w VALIDATION gdy istnieje prior state.
+
+**Lifecycle (w PROCESS):** `DRAFT → REVIEW → VERIFIED → IMPLEMENTED → DEPLOYED`
 
 **Pętla pracy:** Spec → Code → Test → Observation → Fix — nie kolejne warstwy manifestu.
 

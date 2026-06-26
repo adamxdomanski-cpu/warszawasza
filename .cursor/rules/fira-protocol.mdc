@@ -20,6 +20,7 @@ alwaysApply: true
 - Nowe funkcje: najpierw czy protokół FOP/0.1 je opisuje? Potem UI.
 - **Cel v2:** `observationsAlign()` — dwie niezależne obserwacje tego samego zjawiska dają zgodny fingerprint. Nie więcej glifów ani ekranów.
 - **Najpierw obserwacja, potem interpretacja** — protokół nie narzuca wniosków.
+- **Operational log (DRAFT v1.0):** LOG block = observable state only (five fields); rationale = separate **DECISION** block (replaces COMMENTARY). Flow: Decision → Log → Code. Handbook: `docs/protocol/log-format-v1.md` · quick ref: `fira/LOG_FORMAT_v1.0.md` · decisions: `fira/DECISION_RECORD.md`
 - Spec: `fira/PROTOCOL.md`
 
 ## Antywzorce

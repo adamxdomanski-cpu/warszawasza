@@ -57,11 +57,11 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
         <img
           src="/logo.png"
           alt="WARSZAWASZA"
-          width={44}
-          height={64}
-          className="h-[clamp(3rem,12vw,4rem)] w-auto self-start"
+          width={218}
+          height={150}
+          className="logo-signal h-[clamp(2rem,8vw,2.75rem)] w-auto self-start"
         />
-        <p className="m-0 font-mono-field text-xs tracking-[0.16em] text-accent drop-shadow-[0_0_20px_rgba(228,0,69,0.35)] sm:text-sm">
+        <p className="accent-signal m-0 font-mono-field text-xs tracking-[0.16em] text-accent sm:text-sm">
           {copy.observationMark}
         </p>
         <LangNav lang={lang} onChange={setLang} />
@@ -92,7 +92,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             type="button"
             direction="down"
             onClick={() => setPhase("question")}
-            className="context-link-target min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
+            className="accent-signal context-link-target min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
           >
             {copy.gateObserveAction}
           </SignalControl>
@@ -137,7 +137,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
           aria-live="polite"
         >
           <div className="context-link-context space-y-3">
-            <p className="animate-spark-in m-0 text-3xl text-accent">{copy.revealSpark}</p>
+            <p className="accent-signal animate-spark-in m-0 text-3xl text-accent">{copy.revealSpark}</p>
             <p
               ref={revealWaveRef}
               className="fira-structure-proximity fira-structure-badge m-0 mb-1 font-mono-field text-base tracking-widest"
@@ -157,7 +157,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             type="button"
             direction="right"
             onClick={enterField}
-            className="context-link-target mt-6 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
+            className="accent-signal context-link-target mt-6 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
           >
             {copy.enterField}
           </SignalControl>

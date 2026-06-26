@@ -12,6 +12,7 @@ import {
 } from "../../lib/metaI18n";
 import { gridZone, pathLength, type AttentionPoint } from "../../lib/attention";
 import { useAttention } from "../../hooks/useAttention";
+import { studioDiscoveryLine } from "../../lib/studioAnchor";
 import "./meta-hud.css";
 import GrafenGraph from "./GrafenGraph";
 import TrajectoryGraph from "./TrajectoryGraph";
@@ -268,6 +269,12 @@ export default function MetaPerception() {
       </section>
 
       <NarrativeFlow steps={copy.narrativeFlow} phase={truthPhase} />
+
+      {truthPhase === "true" && (
+        <p className="metaStudioSignal" aria-live="off">
+          · {studioDiscoveryLine(lang)}
+        </p>
+      )}
 
       <footer className="metaObjects" aria-label="Narrative objects">
         {(Object.keys(copy.signals) as SignalKey[]).map((key) => {

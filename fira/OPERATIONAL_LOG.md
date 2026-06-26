@@ -1,6 +1,9 @@
 # Operational Log Format
 
-Standard status notation for WARSZAWASZA / COP. Replaces mixed `PROCESSING FLUX` / `FOCUS` / `STATUS` strings.
+> **Normative (frozen):** [`docs/protocol/log-format-v1.md`](../docs/protocol/log-format-v1.md) — Log Format v1.0 handbook.  
+> Quick ref: [`fira/LOG_FORMAT_v1.0.md`](./LOG_FORMAT_v1.0.md). This file adds lifecycle and validation check guidance; it does not alter the v1.0 block structure.
+
+Standard status notation for COP / WARSZAWASZA. Replaces mixed `PROCESSING FLUX` / `FOCUS` / `STATUS` strings.
 
 Use in CI output, operator notes, and `fira/TF_KEY.md`.
 
@@ -8,28 +11,17 @@ Use in CI output, operator notes, and `fira/TF_KEY.md`.
 
 ## Block template
 
-```
-PROCESS
-──────────────
-STATE        ● VERIFIED | DRAFT | REVIEW | IMPLEMENTED | DEPLOYED
-SPEC         COP v1.0
-TARGET       (channel / component)
-NEXT STEP    (single actionable step)
+See [`docs/protocol/log-format-v1.md`](../docs/protocol/log-format-v1.md) · [`LOG_FORMAT_v1.0.md`](./LOG_FORMAT_v1.0.md). Fixed sections:
 
-VALIDATION
-──────────────
-Syntax        ✓ | ✗
-Flow          ✓ | ✗
-Consistency   ✓ | ✗
+`PROCESS` · `VALIDATION` · `OUTPUT` · `NEXT STEP` · `ARTIFACT`
 
-OUTPUT
-──────────────
-(one line outcome)
-```
+**ARTIFACT:** `N/A` when no file applies; concrete path when it does (never `None`).
+
+**COP:** Log describes only observable state — no interpretations, forecasts, evaluations, or metaphors.
 
 ---
 
-## State lifecycle
+## State lifecycle (PROCESS / TARGET context)
 
 ```
 DRAFT → REVIEW → VERIFIED → IMPLEMENTED → DEPLOYED
@@ -55,10 +47,12 @@ Do not add manifest layers, glyph progress bars, or narrative status strings whe
 
 ## Validation semantics
 
+Optional sub-lines under **VALIDATION** (observable checks only):
+
 | Check | Question |
 |-------|----------|
 | **Syntax** | Parses / builds / applies without error |
-| **Flow** | End-to-end path works for the stated TARGET |
+| **Flow** | End-to-end path works for the stated target |
 | **Consistency** | Aligns with COP spec and related artefacts |
 
 **COP compliance** = passes criteria defined in the spec (notation, anti-patterns, zero-PII, layer boundaries). It is **not** objective proof of optimality, correctness in production, or official institutional authority.
@@ -70,25 +64,32 @@ Do not add manifest layers, glyph progress bars, or narrative status strings whe
 ```
 PROCESS
 ──────────────
-STATE        ● REVIEW
-SPEC         COP v1.0
-TARGET       scripts/cop-validate.sh
-NEXT STEP    replace PROCESSING FLUX echoes with this block in CI
+COP validator CI · scripts/cop-validate.sh
 
 VALIDATION
 ──────────────
 Syntax        ✓
 Flow          ✓
-Consistency   ✗
+Consistency   ✗ — report format still legacy FLUX
 
 OUTPUT
 ──────────────
-Scanner runs on PR; report format still legacy
+Scanner runs on PR; operator report format pending migration.
+
+NEXT STEP
+──────────────
+Replace PROCESSING FLUX echoes with Log Format v1.0 block in workflow.
+
+ARTIFACT
+──────────────
+.github/workflows/cop-validator.yml
 ```
 
 ---
 
 ## Related
 
+- Handbook (canonical): [`docs/protocol/log-format-v1.md`](../docs/protocol/log-format-v1.md)
+- Frozen spec (quick ref): [`fira/LOG_FORMAT_v1.0.md`](./LOG_FORMAT_v1.0.md)
 - Current project status: [`fira/TF_KEY.md`](./TF_KEY.md)
 - FOP spec: [`fira/PROTOCOL.md`](./PROTOCOL.md)

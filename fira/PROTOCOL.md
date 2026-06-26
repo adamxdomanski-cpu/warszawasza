@@ -6,6 +6,8 @@ Nie aplikacja. Nie baza. Nie AI. **Język obserwacji.**
 
 Tak jak HTTP opisuje wymianę stron, Markdown opisuje dokumenty, Git opisuje historię zmian — **FOP opisuje obserwacje**.
 
+Operational log format (build / deploy / field): [`docs/protocol/log-format-v1.md`](../docs/protocol/log-format-v1.md).
+
 ---
 
 ## Cztery warstwy
@@ -130,6 +132,7 @@ Funkcja: `observationsAlign(a, b)` — porównanie odcisków `observationFingerp
 | Notacja | `fira/core/notation.ts`, `frontend/lib/symbols.ts` |
 | Dystrybucja | `frontend/` (WARSZAWASZA) |
 | Most obywatelski | `frontend/lib/observationTrace.ts` (ślad + FOP) |
+| Mixer wagowy | `fira/DATA_MIXER.md` (CH_A/F/H/G · macierz korelacji · DRAFT v0.1) |
 
 ---
 

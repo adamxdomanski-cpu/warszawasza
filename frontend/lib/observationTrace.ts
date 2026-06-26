@@ -1,6 +1,7 @@
 import type { TrajectoryChoice } from "./artifactI18n";
 import { buildFopDocument } from "./fopBridge";
 import { COPY, PIPELINE_ORDER, type Lang } from "./i18n";
+import { studioDiscoveryLine } from "./studioAnchor";
 
 export type ObservationTracePayload = {
   lang: Lang;
@@ -64,6 +65,8 @@ export function buildTraceDocument(
     ...trace.logLines.map((line) => `  ${line}`),
     "",
     copy.trace.civicBridge,
+    "",
+    `· ${studioDiscoveryLine(trace.lang)}`,
     buildTraceShareUrl(trace, origin),
   ];
 

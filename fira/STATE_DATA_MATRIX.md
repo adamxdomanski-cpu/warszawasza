@@ -129,6 +129,22 @@ Seed: **14 węzłów** (4 + 3 + 4 + 3 per warstwa)
 
 ---
 
+## KRS ↔ Trzeci Sektor
+
+Węzeł **`POL_NODE_KRS`** uzasadnia nie tylko metryki `civic_observations`, ale też lookup organizacji pozarządowych w Civic Organization Matrix:
+
+```
+POL_NODE_KRS  ←──  civic_organizations.krs_source_node_id
+                      │
+                      └── krs_number (publiczny, 10 cyfr)
+```
+
+Szczegóły klas operacyjnych i przecięć sygnałów: `fira/CIVIC_ORGANIZATION_MATRIX.md` · SQL: `backend/sql/008_civic_organizations.sql`
+
+`civic_signal_intersections.signal_id` → `civic_observations.observation_id`
+
+---
+
 ## Powiązane dokumenty
 
 - `fira/PROTOCOL.md` — FOP algebra
