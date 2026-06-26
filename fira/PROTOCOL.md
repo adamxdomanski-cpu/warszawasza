@@ -90,8 +90,8 @@ Przykład:
 FOP/0.1
 @2026-06-24T12:00:00.000Z
 chain ○●◐◉≈✓■
-src CHANNEL_A_CITIZEN
-sig place=Muranów friction=cisza trajectory=false
+src CHANNEL_A_CITIZEN ref=10_OBSERWACJE/OBS-VCU-2026-06-18-01.md
+sig place=Muranów subject=core-ecology clock=00:00:27 trajectory=true
 proc 4
 ev ■■■□□
 rel capital_vector KRS:0000999888
@@ -104,13 +104,89 @@ res hypothesis 73
 | `@…` | ISO 8601 |
 | `chain` | łańcuch glifów procesu |
 | `src` | kanał źródła (+ opcjonalnie `ref=`) |
-| `sig` | pary `klucz=wartość` sygnału |
+| `sig` | pary `klucz=wartość` sygnału — m.in. `place`, **`subject`** (temat/kategoria obserwacji), `trajectory`, `clock` |
 | `proc` | indeks etapu procesu |
 | `ev` | dowód `■`/`□` (0–5) |
 | `rel` | typ relacji + referencja |
 | `res` | wynik: `trajectory` · `hypothesis` · `rejected` · `pending` |
 
 Słowa kluczowe protokołu są **neutralne językowo** (angielskie identyfikatory). Dystrybucja tłumaczy wyświetlanie.
+
+---
+
+## Artefact
+
+> Definicja **semantyczna** — nie element implementacji. Nie wiąże znaczenia z konkretnym formatem danych ani kodem.
+
+### Definicja
+
+Artefakt jest trwałym, możliwym do odczytania zapisem procesu obserwacji.
+
+W modelu FOP artefakt **nie jest** interpretacją, opinią ani ostatecznym werdyktem. Jest **nośnikiem obserwacji** wraz z jej kontekstem, historią sygnałów oraz aktualnym stanem weryfikacji.
+
+Artefakt jest **semantycznie skompresowanym** zapisem procesu obserwacji — redukcja do tego, co ma znaczenie poznawcze, nie kompresja techniczna (algorytm, plik).
+
+Artefakt zachowuje materiał poznawczy, umożliwiając jego ponowny odczyt, porównanie i weryfikację w świetle nowych danych.
+
+### Struktura semantyczna
+
+```
+Obserwacja  →  co zostało zauważone
+LOG         →  jak przebiegało zbieranie sygnałów
+FOP         →  jak obserwacja została zapisana i przetworzona
+Artefakt    →  trwały zapis całego procesu
+```
+
+### Zasady
+
+1. **Artefakt zachowuje obserwację, nie zamyka jej znaczenia.**
+2. Hipoteza nie jest częścią obserwacji; jest późniejszym etapem interpretacji.
+3. Stan weryfikacji opisuje bieżący status wiedzy, a nie wartość logiczną obserwacji (`FALSE` w bramce trajektorii ≠ „fałszywa obserwacja”).
+4. Artefakt może zostać ponownie odczytany i zestawiony z kolejnymi artefaktami bez utraty pierwotnego kontekstu.
+
+### Antyteza
+
+Artefakt **nie jest** przeciwieństwem hipotezy.
+
+Hipoteza jest kolejnym etapem procesu poznawczego i powstaje na podstawie jednego lub wielu artefaktów.
+
+**Antytezą artefaktu jest ulotność** — własność zjawiska, w którym sygnał przemija bez zachowania materiału poznawczego. **Brak utrwalenia** jest skutkiem ulotności, nie samą antytezą.
+
+```
+Sygnał → (utrwalenie) → Artefakt
+Sygnał → (brak utrwalenia) → Ulotność
+```
+
+Łańcuch poznawczy: **Obserwacja → Artefakt → Hipoteza**.
+
+#### Para kanoniczna
+
+```
+Sygnał  ⇄  Artefakt
+```
+
+| Sygnał | Artefakt |
+|--------|----------|
+| chwilowy | trwały |
+| płynący | utrwalony |
+| jeszcze nie zapisany | zapisany wraz z kontekstem |
+| element pola obserwacji | nośnik pamięci operacyjnej |
+
+#### Aksjomat
+
+> **Antytezą artefaktu nie jest błąd, lecz ulotność.**
+
+Błąd może zostać wykryty dzięki artefaktowi.
+
+Ulotność odbiera możliwość weryfikacji, ponieważ nie pozostawia śladu.
+
+Największym ryzykiem nie jest to, że ktoś się pomylił, lecz to, że **nie pozostawiono śladu**, do którego można wrócić. Ciężar przesuwa się z „czy hipoteza była prawdziwa?” na „czy zachowaliśmy materiał, który pozwala ją zweryfikować?”.
+
+### Relacja z AOP
+
+Artefakt stanowi **wejście** do dalszej analizy. Hipotezy powstają **poza** artefaktem — w warstwie **AOP** (Analysis Observation Protocol) — poprzez porównanie wielu artefaktów oraz ich relacji.
+
+Analogie (pedagogiczne, nie implementacyjne): zapis z rejestratora lotu · commit w Git · wpis w dzienniku laboratoryjnym · bursztyn (utrwalony moment, nadal badalny).
 
 ---
 
