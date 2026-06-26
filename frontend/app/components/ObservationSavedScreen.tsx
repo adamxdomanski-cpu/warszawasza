@@ -89,7 +89,7 @@ export default function ObservationSavedScreen({
   }, [finalize, view]);
 
   return (
-    <main className="trace-form-panel mx-auto max-w-[420px] border border-accent/40 bg-field/95 px-6 py-[60px] font-sans text-ink leading-[1.6] antialiased">
+    <main className="trace-form-panel mx-auto max-w-[420px] border border-accent bg-field px-6 py-[60px] font-sans text-ink leading-[1.6] antialiased">
       <p className="mb-8 font-mono-field text-sm text-accent/55">{view.statusText}</p>
 
       <p className="mb-3 text-[28px] font-semibold leading-[1.3] tracking-[-0.5px] text-ink [overflow-wrap:anywhere]">

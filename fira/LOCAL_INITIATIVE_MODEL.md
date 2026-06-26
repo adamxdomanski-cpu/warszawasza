@@ -55,7 +55,7 @@ Bez warstwy wyborów / konstytucji / UE w tym drzewie — to osobne kanały COP 
 | Focus area slug | `WASTE_NAV` |
 | Display (PL) | FIRA Waste Navigation |
 | Display (EN) | FIRA Waste Navigation |
-| Adres | Dzielna 3A/5 |
+| Adres | Dzielna 3A/7 |
 | Dzielnica | Muranów |
 | Status | Pilot |
 
@@ -64,7 +64,7 @@ Bez warstwy wyborów / konstytucji / UE w tym drzewie — to osobne kanały COP 
 ```
 Partnerstwo Muranów
 ↓ FIRA Waste Navigation
-↓ Dzielna 3A/5
+↓ Dzielna 3A/7
 ↓ Status: Pilot
 ```
 

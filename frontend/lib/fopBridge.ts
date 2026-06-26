@@ -44,6 +44,18 @@ export function traceToObservation(
     ...studioPlaceSignal(),
   };
   if (trace.trajectory) signal.trajectory = trace.trajectory;
+  if (trace.citizen?.place) signal.place = trace.citizen.place;
+  if (trace.citizen?.subject) signal.subject = trace.citizen.subject;
+  if (trace.citizen?.observedAt) signal.observedAt = trace.citizen.observedAt;
+  if (trace.citizen?.relatedRefs) signal.related = trace.citizen.relatedRefs;
+  if (trace.citizen?.traceDecision && trace.citizen.traceDecision !== "none") {
+    signal.traceDecision = trace.citizen.traceDecision;
+  }
+
+  const ref =
+    trace.citizen?.obsidianRef?.trim() ||
+    trace.logLines[0] ||
+    undefined;
 
   return {
     version: "0.1",
@@ -51,7 +63,7 @@ export function traceToObservation(
     chain: chainAtEngineIndex(trace.engineIndex),
     source: {
       channel: SIGNAL_CHANNELS.CITIZEN,
-      ref: trace.logLines[0],
+      ref,
     },
     signal,
     process: {

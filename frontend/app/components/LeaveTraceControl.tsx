@@ -139,19 +139,30 @@ export default function LeaveTraceControl({
   ]);
 
   const inputClass =
-    "trace-field-input w-full min-h-11 touch-manipulation border border-accent/25 bg-field px-3 py-2.5 font-mono-field text-sm text-ink placeholder:text-accent/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent/40";
+    "trace-field-input w-full min-h-11 touch-manipulation border border-accent bg-field px-3 py-2.5 font-mono-field text-sm text-ink placeholder:text-accent/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
   return (
     <div className={`space-y-3 ${className}`}>
       <form
         lang={lang}
         autoComplete="off"
-        className="trace-form-panel space-y-3 border border-accent/45 bg-field/95 p-4 sm:p-5"
+        data-1p-ignore
+        data-lpignore="true"
+        className="trace-form-panel relative space-y-3 border border-accent bg-field p-4 sm:p-5"
         onSubmit={(event) => {
           event.preventDefault();
           void leaveTrace();
         }}
       >
+        <input
+          type="text"
+          name="wzs-honeypot"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+          defaultValue=""
+        />
         <div className="space-y-1">
           <h2 className="m-0 font-mono-field text-xs tracking-[0.16em] text-accent uppercase">
             {formCopy.heading}
@@ -168,6 +179,12 @@ export default function LeaveTraceControl({
             name="wzs-place"
             id="wzs-place"
             autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            inputMode="text"
+            data-1p-ignore
+            data-lpignore="true"
             className={inputClass}
             placeholder={formCopy.placePlaceholder}
             value={fields.place}
@@ -183,6 +200,12 @@ export default function LeaveTraceControl({
             name="wzs-observed-at"
             id="wzs-observed-at"
             autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            inputMode="numeric"
+            data-1p-ignore
+            data-lpignore="true"
             className={inputClass}
             placeholder={clock || formCopy.timePlaceholder}
             value={fields.observedAt}
@@ -197,6 +220,8 @@ export default function LeaveTraceControl({
             name="wzs-subject"
             id="wzs-subject"
             autoComplete="off"
+            data-1p-ignore
+            data-lpignore="true"
             className={inputClass}
             value={fields.subject}
             onFocus={onFieldFocus}
@@ -218,6 +243,11 @@ export default function LeaveTraceControl({
             id="wzs-related-refs"
             rows={2}
             autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            data-1p-ignore
+            data-lpignore="true"
             className={inputClass}
             placeholder={formCopy.relationsPlaceholder}
             value={fields.relatedRefs}
@@ -260,6 +290,11 @@ export default function LeaveTraceControl({
             name="wzs-obsidian-ref"
             id="wzs-obsidian-ref"
             autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            data-1p-ignore
+            data-lpignore="true"
             className={inputClass}
             placeholder={formCopy.obsidianRefPlaceholder}
             value={fields.obsidianRef ?? ""}
