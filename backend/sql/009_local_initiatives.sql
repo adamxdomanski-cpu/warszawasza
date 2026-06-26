@@ -109,7 +109,7 @@ INSERT INTO local_micro_nodes (
 SELECT
   fa.focus_area_id,
   'Partnerstwo Muranów',
-  'Dzielna 3A/5',
+  'Dzielna 3A/7',
   'Muranów',
   'Pilot'
 FROM focus_areas fa
@@ -118,5 +118,5 @@ WHERE fa.slug = 'WASTE_NAV'
     SELECT 1
     FROM local_micro_nodes n
     WHERE n.partner_label = 'Partnerstwo Muranów'
-      AND n.address = 'Dzielna 3A/5'
+      AND n.address = 'Dzielna 3A/7'
   );

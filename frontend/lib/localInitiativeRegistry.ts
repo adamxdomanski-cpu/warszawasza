@@ -47,7 +47,7 @@ export const FOCUS_AREAS: readonly FocusAreaRecord[] = [
 export const LOCAL_INITIATIVE_PILOT: LocalMicroNodeRecord = {
   partnerLabel: "Partnerstwo Muranów",
   focusAreaSlug: "WASTE_NAV",
-  address: "Dzielna 3A/5",
+  address: "Dzielna 3A/7",
   district: "Muranów",
   status: "Pilot",
 };

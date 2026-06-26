@@ -16,7 +16,7 @@ export const STUDIO_ANCHOR = {
   address: "Dzielna 3A/7",
   district: "Muranów",
   city: "Warszawa",
-  /** Muranów courtyard — same block as local initiative pilot (3A/5) */
+  /** Muranów courtyard — same block as local initiative pilot (3A/7) */
   lat: 52.24886,
   lon: 20.99241,
   fopRelationType: "broadcast_anchor",
