@@ -1,6 +1,9 @@
 import { buildFopDocument } from "./fopBridge";
 import type { ObservationTracePayload } from "./observationTrace";
-import { buildTraceShareUrl } from "./observationTrace";
+import {
+  buildTraceShareUrl,
+  formatShortTraceLabel,
+} from "./observationTrace";
 import { traceSubjectOptions } from "./traceFormI18n";
 import type { Lang } from "./i18n";
 
@@ -15,6 +18,7 @@ export type SavedScreenCopy = {
   continue: string;
   diagnostics: string;
   traceId: string;
+  shareUrlLabel: string;
   diagnosticsLegend: string;
   clipboardUnavailable: string;
   clipboardFailed: string;
@@ -25,11 +29,12 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
   pl: {
     statusA: "Obserwacja została zapisana.",
     statusB: "Ta chwila została zapisana.",
-    share: "Udostępnij obserwację",
-    shareCopied: "Skopiowano link do obserwacji",
+    share: "Udostępnij ślad",
+    shareCopied: "Skopiowano link do śladu",
     continue: "Obserwuj dalej →",
     diagnostics: "Diagnostyka",
-    traceId: "Trace ID",
+    traceId: "Ślad",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fakt · IOE = zdarzenia · AOP = analiza offline",
     clipboardUnavailable: "Kopiowanie niedostępne w tej przeglądarce.",
     clipboardFailed:
@@ -39,11 +44,12 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
   en: {
     statusA: "Observation saved.",
     statusB: "This moment was saved.",
-    share: "Share observation",
-    shareCopied: "Observation link copied",
+    share: "Share trace",
+    shareCopied: "Trace link copied",
     continue: "Keep observing →",
     diagnostics: "Diagnostics",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fact · IOE = events · AOP = offline analysis",
     clipboardUnavailable: "Copy is not available in this browser.",
     clipboardFailed: "Could not copy the link automatically. Copy it from the address bar.",
@@ -52,11 +58,12 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
   it: {
     statusA: "Osservazione salvata.",
     statusB: "Questo momento è stato salvato.",
-    share: "Condividi osservazione",
-    shareCopied: "Link dell'osservazione copiato",
+    share: "Condividi traccia",
+    shareCopied: "Link della traccia copiato",
     continue: "Continua ad osservare →",
     diagnostics: "Diagnostica",
-    traceId: "Trace ID",
+    traceId: "Traccia",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fatto · IOE = eventi · AOP = analisi offline",
     clipboardUnavailable: "Copia non disponibile in questo browser.",
     clipboardFailed: "Impossibile copiare il link. Copialo dalla barra degli indirizzi.",
@@ -69,7 +76,8 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
     shareCopied: "Посилання скопійовано",
     continue: "Спостерігати далі →",
     diagnostics: "Діагностика",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = факт · IOE = події · AOP = офлайн-аналіз",
     clipboardUnavailable: "Копіювання недоступне.",
     clipboardFailed: "Не вдалося скопіювати посилання.",
@@ -82,7 +90,8 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
     shareCopied: "Link copied",
     continue: "Keep observing →",
     diagnostics: "Diagnostics",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fact · IOE = events · AOP = offline analysis",
     clipboardUnavailable: "Copy unavailable.",
     clipboardFailed: "Could not copy link.",
@@ -95,7 +104,8 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
     shareCopied: "Link copied",
     continue: "Keep observing →",
     diagnostics: "Diagnostics",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fact · IOE = events · AOP = offline analysis",
     clipboardUnavailable: "Copy unavailable.",
     clipboardFailed: "Could not copy link.",
@@ -108,7 +118,8 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
     shareCopied: "Link copied",
     continue: "Keep observing →",
     diagnostics: "Diagnostics",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fact · IOE = events · AOP = offline analysis",
     clipboardUnavailable: "Copy unavailable.",
     clipboardFailed: "Could not copy link.",
@@ -121,7 +132,8 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
     shareCopied: "Link copied",
     continue: "Keep observing →",
     diagnostics: "Diagnostics",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fact · IOE = events · AOP = offline analysis",
     clipboardUnavailable: "Copy unavailable.",
     clipboardFailed: "Could not copy link.",
@@ -134,7 +146,8 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
     shareCopied: "Link copied",
     continue: "Keep observing →",
     diagnostics: "Diagnostics",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fact · IOE = events · AOP = offline analysis",
     clipboardUnavailable: "Copy unavailable.",
     clipboardFailed: "Could not copy link.",
@@ -147,7 +160,8 @@ export const SAVED_SCREEN_COPY: Record<Lang, SavedScreenCopy> = {
     shareCopied: "Link copied",
     continue: "Keep observing →",
     diagnostics: "Diagnostics",
-    traceId: "Trace ID",
+    traceId: "Trace",
+    shareUrlLabel: "Link",
     diagnosticsLegend: "FOP = fact · IOE = events · AOP = offline analysis",
     clipboardUnavailable: "Copy unavailable.",
     clipboardFailed: "Could not copy link.",
@@ -173,6 +187,7 @@ export type SavedObservationView = {
   place: string;
   time: string;
   shareUrl: string;
+  shortTraceId: string;
   traceToken: string;
   rawPayload: string;
 };
@@ -215,12 +230,20 @@ export function buildSavedObservationView(
     place: trace.citizen?.place?.trim() || "—",
     time: trace.citizen?.observedAt?.trim() || trace.clock,
     shareUrl,
+    shortTraceId: formatShortTraceLabel(trace.createdAt, trace.lang),
     traceToken,
     rawPayload: buildFopDocument(trace),
   };
 }
 
 export function buildShareClipboardText(view: SavedObservationView): string {
-  const copy = SAVED_SCREEN_COPY[view.lang] ?? SAVED_SCREEN_COPY.en;
-  return `${copy.shareClipboardLead}: „${view.observationText}”\n${view.shareUrl}`;
+  const lines = [
+    `„${view.observationText}"`,
+    "",
+    `${view.place} · ${view.time}`,
+    view.shortTraceId,
+    "",
+    view.shareUrl,
+  ];
+  return lines.join("\n");
 }

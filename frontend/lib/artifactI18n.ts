@@ -3,8 +3,14 @@ import type { ArtifactSlug } from "./artifacts";
 
 export type TrajectoryChoice = "false" | "true";
 
-type EntryCopy = {
+export type EntryCopy = {
   observationMark: string;
+  gateOrient: string;
+  gateOrientTitle: string;
+  gatePurpose: readonly [string, string];
+  gateOrientPrompt: string;
+  gateOrientAction: string;
+  logoLinkLabel: string;
   gateObserve: string;
   gateObserveAction: string;
   gateQuestion: string;
@@ -34,6 +40,15 @@ export type ArtifactCopy = Record<ArtifactSlug, ArtifactLayer>;
 export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   pl: {
     observationMark: "● OBSERWACJA TRWA",
+    gateOrient: "Wstęp",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "To nie jest portal o Warszawie.",
+      "To interfejs obserwacji.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "kontynuuj",
+    logoLinkLabel: "WARSZAWASZA — pracownia projektu",
     gateObserve: "OBSERWUJ",
     gateObserveAction: "kontynuuj ↓",
     gateQuestion: "PYTANIE",
@@ -50,6 +65,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   en: {
     observationMark: "● OBSERVATION IN PROGRESS",
+    gateOrient: "Opening",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "This is not a portal about Warsaw.",
+      "This is an observation interface.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "continue",
+    logoLinkLabel: "WARSZAWASZA — project origin",
     gateObserve: "OBSERVE",
     gateObserveAction: "continue ↓",
     gateQuestion: "QUESTION",
@@ -66,6 +90,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   it: {
     observationMark: "● OSSERVAZIONE IN CORSO",
+    gateOrient: "Apertura",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "Non è un portale su Varsavia.",
+      "È un'interfaccia di osservazione.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "continua",
+    logoLinkLabel: "WARSZAWASZA — origine del progetto",
     gateObserve: "OSSERVA",
     gateObserveAction: "continua ↓",
     gateQuestion: "DOMANDA",
@@ -82,6 +115,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   uk: {
     observationMark: "● СПОСТЕРЕЖЕННЯ ТРИВАЄ",
+    gateOrient: "Вступ",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "Це не портал про Варшаву.",
+      "Це інтерфейс спостереження за містом.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "далі",
+    logoLinkLabel: "WARSZAWASZA — майстерня проєкту",
     gateObserve: "СПОСТЕРІГАЙ",
     gateObserveAction: "далі ↓",
     gateQuestion: "ПИТАННЯ",
@@ -98,6 +140,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   bg: {
     observationMark: "● НАБЛЮДЕНИЕТО ПРОДЪЛЖАВА",
+    gateOrient: "Вход",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "Това не е портал за Варшава.",
+      "Това е интерфейс за наблюдение на града.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "напред",
+    logoLinkLabel: "WARSZAWASZA — работилница на проекта",
     gateObserve: "НАБЛЮДАВАЙ",
     gateObserveAction: "напред ↓",
     gateQuestion: "ВЪПРОС",
@@ -114,6 +165,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   et: {
     observationMark: "● VAATLUS JÄTKUB",
+    gateOrient: "Sissejuhatus",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "See pole Varssavi portaal.",
+      "See on linna vaatluse liides.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "edasi",
+    logoLinkLabel: "WARSZAWASZA — projekti päritolu",
     gateObserve: "VAATLE",
     gateObserveAction: "edasi ↓",
     gateQuestion: "KÜSIMUS",
@@ -130,6 +190,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   fi: {
     observationMark: "● HAVAINTO JATKUU",
+    gateOrient: "Avaus",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "Tämä ei ole portaali Varsovasta.",
+      "Tämä on kaupungin havainnoinnin käyttöliittymä.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "jatka",
+    logoLinkLabel: "WARSZAWASZA — projektin alkuperä",
     gateObserve: "HAVAINNOI",
     gateObserveAction: "jatka ↓",
     gateQuestion: "KYSYMYS",
@@ -146,6 +215,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   lt: {
     observationMark: "● STEBĖJIMAS TĘSIASI",
+    gateOrient: "Įvadas",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "Tai ne portalas apie Varšuvą.",
+      "Tai miesto stebėjimo sąsaja.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "toliau",
+    logoLinkLabel: "WARSZAWASZA — projekto kilmė",
     gateObserve: "STEBĖK",
     gateObserveAction: "toliau ↓",
     gateQuestion: "KLAUSIMAS",
@@ -162,6 +240,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   lv: {
     observationMark: "● NOVĒROJUMS TURPINĀS",
+    gateOrient: "Ievads",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "Šī nav portāls par Varšavu.",
+      "Šī ir pilsētas novērošanas saskarne.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "tālāk",
+    logoLinkLabel: "WARSZAWASZA — projekta izcelsme",
     gateObserve: "NOVĒRO",
     gateObserveAction: "tālāk ↓",
     gateQuestion: "JAUTĀJUMS",
@@ -178,6 +265,15 @@ export const ENTRY_COPY: Record<Lang, EntryCopy> = {
   },
   hu: {
     observationMark: "● MEGFIGYELÉS FOLYAMATBAN",
+    gateOrient: "Nyitás",
+    gateOrientTitle: "WARSZAWASZA",
+    gatePurpose: [
+      "Ez nem varsói portál.",
+      "Ez a város megfigyelésének felülete.",
+    ],
+    gateOrientPrompt: "> █",
+    gateOrientAction: "tovább",
+    logoLinkLabel: "WARSZAWASZA — a projekt eredete",
     gateObserve: "FIGYELJ",
     gateObserveAction: "tovább ↓",
     gateQuestion: "KÉRDÉS",

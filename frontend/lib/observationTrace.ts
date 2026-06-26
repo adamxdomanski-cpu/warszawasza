@@ -1,7 +1,7 @@
 import type { TrajectoryChoice } from "./artifactI18n";
-import { buildFopDocument } from "./fopBridge";
+import { buildFopDocument, buildFopHumanLabels } from "./fopBridge";
 import type { CitizenTraceFields } from "./domain/traceContract";
-import { COPY, PIPELINE_ORDER, type Lang } from "./i18n";
+import { COPY, PIPELINE_ORDER, traceArtifactCopy, type Lang } from "./i18n";
 import { studioDiscoveryLine } from "./studioAnchor";
 
 export type ObservationTracePayload = {
@@ -39,40 +39,104 @@ export function registerTrace(trace: ObservationTracePayload): number {
   return next.length;
 }
 
-export function buildTraceDocument(
-  trace: ObservationTracePayload,
-  origin = "https://www.warszawasza.online",
-): string {
+export function formatShortTraceId(createdAt: number): string {
+  const d = new Date(createdAt);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+}
+
+export function formatShortTraceLabel(createdAt: number, lang: Lang): string {
+  const { tracePrefix } = traceArtifactCopy(lang);
+  return `${tracePrefix} #${formatShortTraceId(createdAt)}`;
+}
+
+function observationQuote(trace: ObservationTracePayload): string | null {
+  const text = trace.citizen?.relatedRefs?.trim();
+  return text || null;
+}
+
+function traceStatusLine(trace: ObservationTracePayload): string | null {
+  const copy = traceArtifactCopy(trace.lang);
+  const decision = trace.citizen?.traceDecision;
+  if (decision === "true") return copy.statusVerified;
+  if (decision === "false") return copy.statusUnverified;
+  return null;
+}
+
+/** WARSTWA 1 — human trace: quote, title, status, narracja, short ID. */
+export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
   const copy = COPY[trace.lang];
+  const artifact = traceArtifactCopy(trace.lang);
   const stageKey = PIPELINE_ORDER[trace.engineIndex] ?? "observation";
   const stageLabel = copy.pipeline[stageKey];
-  const trajectoryLabel =
-    trace.trajectory === "true"
-      ? copy.entry.trueLabel
-      : trace.trajectory === "false"
-        ? copy.entry.falseLabel
-        : "—";
 
-  const lines = [
-    buildFopDocument(trace),
-    "",
-    "---",
-    "",
-    "WARSZAWASZA // ŚLAD OBYWATELSKI",
-    `${new Date(trace.createdAt).toISOString()} · ${trace.lang}`,
-    `${copy.entry.trueLabel}/${copy.entry.falseLabel}: ${trajectoryLabel}`,
+  const lines: string[] = [artifact.layer1, ""];
+
+  const quote = observationQuote(trace);
+  if (quote) {
+    lines.push(`„${quote}"`, "");
+  }
+
+  lines.push(artifact.documentTitle, "");
+
+  const status = traceStatusLine(trace);
+  if (status) lines.push(status);
+
+  const place = trace.citizen?.place?.trim();
+  const time = trace.citizen?.observedAt?.trim() || trace.clock;
+  if (place) {
+    lines.push(`${place} · ${time}`);
+  } else if (time) {
+    lines.push(time);
+  }
+
+  lines.push(
     `${stageLabel} · ${trace.clock} · ${trace.attentionCount} ${copy.trace.attentionUnits}`,
-    "",
-    copy.trace.logHeader,
-    ...trace.logLines.map((line) => `  ${line}`),
     "",
     copy.trace.civicBridge,
     "",
+    formatShortTraceLabel(trace.createdAt, trace.lang),
+    "",
     `· ${studioDiscoveryLine(trace.lang)}`,
-    buildTraceShareUrl(trace, origin),
-  ];
+  );
 
   return lines.join("\n");
+}
+
+/** WARSTWA 2 — timestamp log lines. */
+export function buildTraceLogLayer(trace: ObservationTracePayload): string {
+  const artifact = traceArtifactCopy(trace.lang);
+  const copy = COPY[trace.lang];
+  return [
+    artifact.layer2,
+    "",
+    copy.trace.logHeader,
+    ...trace.logLines.map((line) => `  ${line}`),
+  ].join("\n");
+}
+
+/** WARSTWA 3 — human FOP labels + parseable FOP/0.1 block. */
+export function buildTraceFopLayer(trace: ObservationTracePayload): string {
+  const artifact = traceArtifactCopy(trace.lang);
+  return [
+    artifact.separator,
+    "",
+    artifact.layer3,
+    "",
+    ...buildFopHumanLabels(trace),
+    "",
+    buildFopDocument(trace),
+  ].join("\n");
+}
+
+export function buildTraceDocument(trace: ObservationTracePayload): string {
+  return [
+    buildTraceHumanLayer(trace),
+    "",
+    buildTraceLogLayer(trace),
+    "",
+    buildTraceFopLayer(trace),
+  ].join("\n");
 }
 
 export function buildTraceShareUrl(

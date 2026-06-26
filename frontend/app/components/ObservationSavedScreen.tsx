@@ -129,7 +129,11 @@ export default function ObservationSavedScreen({
         </summary>
         <div className="mt-3 font-mono-field text-xs leading-normal text-accent/55">
           <div>
-            <strong className="text-ink">{screenCopy.traceId}:</strong> {view.traceToken}
+            <strong className="text-ink">{screenCopy.traceId}:</strong>{" "}
+            {view.shortTraceId ?? view.traceToken}
+          </div>
+          <div className="mt-1 break-all">
+            <strong className="text-ink">{screenCopy.shareUrlLabel}:</strong> {view.shareUrl}
           </div>
           <div className="mt-1 text-accent/40">{screenCopy.diagnosticsLegend}</div>
         </div>

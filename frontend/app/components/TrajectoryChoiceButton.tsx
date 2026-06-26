@@ -29,7 +29,7 @@ export default function TrajectoryChoiceButton({
     <SignalControl
       type="button"
       direction={direction}
-      className={`trajectory-choice flex min-h-11 w-full touch-manipulation flex-col items-start gap-2 bg-field/80 px-5 py-4 text-left ${
+      className={`trajectory-choice flex min-h-[3.25rem] w-full touch-manipulation flex-col items-start gap-2.5 border border-accent/30 bg-field px-5 py-5 text-left sm:min-h-11 sm:py-4 ${
         hesitating ? "trajectory-hesitating" : ""
       }`}
       onPointerDown={() => setHesitating(true)}
@@ -40,10 +40,10 @@ export default function TrajectoryChoiceButton({
         endHesitation();
       }}
     >
-      <span className="trajectory-choice-letter font-mono-field text-lg tracking-[0.14em] sm:text-xl">
+      <span className="trajectory-choice-letter font-mono-field text-2xl tracking-[0.14em] text-ink sm:text-2xl">
         {hesitating ? "◐" : letter}
       </span>
-      <span className="text-sm leading-snug text-accent/50">{hint}</span>
+      <span className="text-base leading-snug text-accent/88 sm:text-lg">{hint}</span>
     </SignalControl>
   );
 }

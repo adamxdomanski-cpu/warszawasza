@@ -34,8 +34,10 @@ export default function SignalControl<T extends ElementType = "button">({
   const elRef = useRef<HTMLElement>(null);
 
   const detect = () => {
-    triggerSignalDetection(elRef.current);
-    onSignal?.();
+    requestAnimationFrame(() => {
+      triggerSignalDetection(elRef.current);
+      onSignal?.();
+    });
   };
 
   return createElement(

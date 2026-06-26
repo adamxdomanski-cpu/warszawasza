@@ -8,10 +8,16 @@ import {
   type FiraObservation,
   type ResultKind,
 } from "./fira-core";
+import { traceArtifactCopy, type Lang } from "./i18n";
 import { PROCESS_CHAIN } from "./symbols";
 import type { ObservationTracePayload } from "./observationTrace";
 import { SIGNAL_CHANNELS } from "./signalApi";
 import { studioFopRelation, studioPlaceSignal } from "./studioAnchor";
+
+function coherenceBar(level: number, max = 5): string {
+  const filled = Math.max(0, Math.min(max, level));
+  return "█".repeat(filled) + "░".repeat(max - filled);
+}
 
 function chainAtEngineIndex(engineIndex: number): string {
   const glyphs = PROCESS_CHAIN.map((s) => s.symbol);
@@ -79,4 +85,30 @@ export function traceToObservation(
 
 export function buildFopDocument(trace: ObservationTracePayload): string {
   return encodeObservation(traceToObservation(trace));
+}
+
+/** Human-readable FOP field labels — parseable block stays separate. */
+export function buildFopHumanLabels(
+  trace: ObservationTracePayload,
+  lang: Lang = trace.lang,
+): string[] {
+  const obs = traceToObservation(trace);
+  const copy = traceArtifactCopy(lang);
+  const lines: string[] = [];
+
+  lines.push(`${copy.fopChainLabel}: ${copy.chainStages} (${obs.chain})`);
+  lines.push(copy.fopPipeline.replace("{n}", String(obs.process.stageIndex)));
+  lines.push(`${copy.fopCoherence}: ${coherenceBar(obs.evidence.level)}`);
+
+  let resultLine = copy.fopResultLabel;
+  if (obs.result.kind === "hypothesis" && obs.result.value) {
+    resultLine += ` / ${copy.fopHypothesis.replace("{value}", obs.result.value)}`;
+  } else if (obs.result.kind === "trajectory") {
+    resultLine += ` / ${copy.fopTrajectory}`;
+  } else if (obs.result.kind === "pending") {
+    resultLine += ` / ${copy.fopPending}`;
+  }
+  lines.push(resultLine);
+
+  return lines;
 }

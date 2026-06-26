@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { TRAJECTORY_KEY, type TrajectoryChoice } from "../../lib/artifactI18n";
 import { COPY, type Lang } from "../../lib/i18n";
 import { computeEngineIndex, INITIAL_ENGINE_INDEX, applyCivicOrgTrustAtStage, formatCivicOrgIntersectionTrace, intersectCivicOrg, ngoWatchdogObservationInput, wospObservationInput, type CivicOrgIntersection, type PipelineObservationInput } from "../../lib/pipelineEngine";
@@ -14,7 +14,7 @@ import DecisionPipeline from "./DecisionPipeline";
 import CorePrintSequence from "./CorePrintSequence";
 import FieldBackdrop from "./FieldBackdrop";
 import FieldFooter from "./FieldFooter";
-import GrapheneField from "./GrapheneField";
+import ObservationFieldRenderer from "./ObservationFieldRenderer";
 import LangNav from "./LangNav";
 import LeaveTraceControl from "./LeaveTraceControl";
 import LocalInitiativePilot from "./LocalInitiativePilot";
@@ -23,6 +23,7 @@ import NarrativeArc from "./NarrativeArc";
 import ObservationGate from "./ObservationGate";
 import SignalControl from "./SignalControl";
 import { useStructureAnchor } from "../../hooks/useStructureAnchor";
+import { DOMAIN_EVENTS, emitDomainEvent } from "../../lib/domain/events";
 
 function elapsedClock(startMs: number): string {
   const s = Math.floor((Date.now() - startMs) / 1000);
@@ -80,22 +81,48 @@ export default function LivingInterface() {
   const [civicIntersection, setCivicIntersection] = useState<CivicOrgIntersection | null>(null);
   const [corePrinted, setCorePrinted] = useState(false);
   const [cityPrinted, setCityPrinted] = useState(false);
+  const [fieldHydrated, setFieldHydrated] = useState(false);
+  const [, startTransition] = useTransition();
   const noisePrincipleRef = useStructureAnchor<HTMLDivElement>();
 
   useEffect(() => {
-    if (!inField) return;
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("palimpsest") === "1") {
-      seedDemoInterferenceGraph();
+    if (!inField) {
+      setFieldHydrated(false);
+      return;
     }
-    if (params.get("ngo-watchdog") === "1") {
-      setObservationInput(ngoWatchdogObservationInput());
+    const frame = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setFieldHydrated(true));
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [inField]);
+
+  useEffect(() => {
+    if (!inField || !fieldHydrated) return;
+    emitDomainEvent(DOMAIN_EVENTS.FIELD_ENTERED);
+  }, [inField, fieldHydrated]);
+
+  useEffect(() => {
+    if (!inField || !fieldHydrated) return;
+    const run = () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("palimpsest") === "1") {
+        seedDemoInterferenceGraph();
+      }
+      if (params.get("ngo-watchdog") === "1") {
+        setObservationInput(ngoWatchdogObservationInput());
+      }
+      if (params.get("wosp") === "1" || params.get("civic-tech") === "1") {
+        setObservationInput(wospObservationInput());
+      }
+      setInterference(detectInterference());
+    };
+    if (typeof requestIdleCallback === "function") {
+      const id = requestIdleCallback(run, { timeout: 400 });
+      return () => cancelIdleCallback(id);
     }
-    if (params.get("wosp") === "1" || params.get("civic-tech") === "1") {
-      setObservationInput(wospObservationInput());
-    }
-    setInterference(detectInterference());
-  }, [inField, engineIndex, attentionCount]);
+    const timer = window.setTimeout(run, 0);
+    return () => window.clearTimeout(timer);
+  }, [inField, fieldHydrated, engineIndex, attentionCount]);
 
   useEffect(() => {
     if (!inField || !observationInput) return;
@@ -204,10 +231,12 @@ export default function LivingInterface() {
 
   const handleGateComplete = (choice: TrajectoryChoice, gateLang: Lang) => {
     storeTrajectory(choice);
-    setTrajectory(choice);
-    setLang(gateLang);
-    setInField(true);
-    startMsRef.current = Date.now();
+    startTransition(() => {
+      setTrajectory(choice);
+      setLang(gateLang);
+      setInField(true);
+      startMsRef.current = Date.now();
+    });
   };
 
   if (!ready) return null;
@@ -216,11 +245,26 @@ export default function LivingInterface() {
     return <ObservationGate onComplete={handleGateComplete} />;
   }
 
+  if (!fieldHydrated) {
+    return (
+      <>
+        <FieldFooter lang={lang} />
+        <main
+          className="relative z-10 min-h-dvh overflow-x-hidden p-5 pb-14 sm:p-8 sm:pb-16"
+          aria-busy="true"
+        >
+          <ObservationFieldRenderer active={false} />
+          <FieldBackdrop />
+        </main>
+      </>
+    );
+  }
+
   return (
     <>
       <FieldFooter lang={lang} />
       <main className="relative z-10 min-h-dvh overflow-x-hidden p-5 pb-14 sm:p-8 sm:pb-16 lg:pb-20">
-        <GrapheneField />
+        <ObservationFieldRenderer active />
         <FieldBackdrop />
 
         <div className="relative z-10 flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(9.5rem,12rem)_1fr_minmax(10rem,14rem)] lg:items-start lg:gap-10 xl:grid-cols-[14rem_1fr_16rem] xl:gap-12">

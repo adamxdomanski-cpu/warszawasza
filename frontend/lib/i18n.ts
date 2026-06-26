@@ -1727,3 +1727,85 @@ export const NARRATIVE_ORDER: NarrativeKey[] = [
   "dissonance",
   "fira",
 ];
+
+/** Citizen trace artifact — three-layer export (PL / EN / IT). */
+export type TraceArtifactCopy = {
+  documentTitle: string;
+  layer1: string;
+  layer2: string;
+  layer3: string;
+  separator: string;
+  statusVerified: string;
+  statusUnverified: string;
+  tracePrefix: string;
+  fopChainLabel: string;
+  chainStages: string;
+  fopPipeline: string;
+  fopCoherence: string;
+  fopResultLabel: string;
+  fopHypothesis: string;
+  fopTrajectory: string;
+  fopPending: string;
+};
+
+export const TRACE_ARTIFACT: Record<"pl" | "en" | "it", TraceArtifactCopy> = {
+  pl: {
+    documentTitle: "WARSZAWASZA // ŚLAD OBYWATELSKI",
+    layer1: "WARSTWA 1 — ŚLAD",
+    layer2: "WARSTWA 2 — LOG",
+    layer3: "WARSTWA 3 — TELEMETRIA FOP",
+    separator: "────────────────",
+    statusVerified: "STATUS ✓ Zweryfikowano",
+    statusUnverified: "Status: NIEZWERYFIKOWANA — hipoteza oczekująca weryfikacji",
+    tracePrefix: "Ślad",
+    fopChainLabel: "Łańcuch",
+    chainStages: "OBS → SIG → PROC → FIL → PAM → WAL → WIE",
+    fopPipeline: "Pipeline / {n} etapów",
+    fopCoherence: "Spójność",
+    fopResultLabel: "Rezultat",
+    fopHypothesis: "Hipoteza #{value}",
+    fopTrajectory: "Trajektoria otwarta",
+    fopPending: "Oczekuje",
+  },
+  en: {
+    documentTitle: "WARSZAWASZA // CITIZEN TRACE",
+    layer1: "LAYER 1 — TRACE",
+    layer2: "LAYER 2 — LOG",
+    layer3: "LAYER 3 — FOP TELEMETRY",
+    separator: "────────────────",
+    statusVerified: "STATUS ✓ Verified",
+    statusUnverified: "Status: UNVERIFIED — hypothesis awaiting verification",
+    tracePrefix: "Trace",
+    fopChainLabel: "Chain",
+    chainStages: "OBS → SIG → PROC → FIL → MEM → VAL → KNO",
+    fopPipeline: "Pipeline / {n} stages",
+    fopCoherence: "Coherence",
+    fopResultLabel: "Result",
+    fopHypothesis: "Hypothesis #{value}",
+    fopTrajectory: "Trajectory open",
+    fopPending: "Pending",
+  },
+  it: {
+    documentTitle: "WARSZAWASZA // TRACCIA CIVICA",
+    layer1: "STRATO 1 — TRACCIA",
+    layer2: "STRATO 2 — LOG",
+    layer3: "STRATO 3 — TELEMETRIA FOP",
+    separator: "────────────────",
+    statusVerified: "STATUS ✓ Verificato",
+    statusUnverified: "Stato: NON VERIFICATA — ipotesi in attesa di verifica",
+    tracePrefix: "Traccia",
+    fopChainLabel: "Catena",
+    chainStages: "OBS → SIG → PROC → FIL → MEM → VAL → KNO",
+    fopPipeline: "Pipeline / {n} fasi",
+    fopCoherence: "Coerenza",
+    fopResultLabel: "Risultato",
+    fopHypothesis: "Ipotesi #{value}",
+    fopTrajectory: "Traiettoria aperta",
+    fopPending: "In attesa",
+  },
+};
+
+export function traceArtifactCopy(lang: Lang): TraceArtifactCopy {
+  if (lang === "pl" || lang === "it") return TRACE_ARTIFACT[lang];
+  return TRACE_ARTIFACT.en;
+}
