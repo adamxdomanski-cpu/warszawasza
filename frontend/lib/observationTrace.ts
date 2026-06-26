@@ -1,5 +1,6 @@
 import type { TrajectoryChoice } from "./artifactI18n";
 import { buildFopDocument } from "./fopBridge";
+import type { CitizenTraceFields } from "./domain/traceContract";
 import { COPY, PIPELINE_ORDER, type Lang } from "./i18n";
 import { studioDiscoveryLine } from "./studioAnchor";
 
@@ -11,6 +12,7 @@ export type ObservationTracePayload = {
   clock: string;
   logLines: string[];
   createdAt: number;
+  citizen?: CitizenTraceFields;
 };
 
 export const TRACE_REGISTRY_KEY = "warszawasza-field-traces";
@@ -84,6 +86,8 @@ export function buildTraceShareUrl(
     a: trace.attentionCount,
     c: trace.clock,
     ts: trace.createdAt,
+    ...(trace.citizen?.subject ? { s: trace.citizen.subject } : {}),
+    ...(trace.citizen?.obsidianRef ? { r: trace.citizen.obsidianRef } : {}),
   };
   const encoded = btoa(JSON.stringify(compact))
     .replace(/\+/g, "-")
