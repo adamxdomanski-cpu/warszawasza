@@ -19,6 +19,8 @@ psql "$DATABASE_URL" -f backend/sql/007_referendum_domain.sql
 psql "$DATABASE_URL" -f backend/sql/008_civic_organizations.sql
 psql "$DATABASE_URL" -f backend/sql/009_local_initiatives.sql
 psql "$DATABASE_URL" -f backend/sql/010_incident_resolution.sql
+psql "$DATABASE_URL" -f backend/sql/011_layer0_validation_reputation.sql
+psql "$DATABASE_URL" -f backend/sql/012_civic_matrix_graph.sql
 ```
 
 Or with explicit flags:
@@ -33,6 +35,9 @@ psql -h localhost -U cop -d warszawasza -f backend/sql/006_electoral_audit_views
 psql -h localhost -U cop -d warszawasza -f backend/sql/007_referendum_domain.sql
 psql -h localhost -U cop -d warszawasza -f backend/sql/008_civic_organizations.sql
 psql -h localhost -U cop -d warszawasza -f backend/sql/009_local_initiatives.sql
+psql -h localhost -U cop -d warszawasza -f backend/sql/010_incident_resolution.sql
+psql -h localhost -U cop -d warszawasza -f backend/sql/011_layer0_validation_reputation.sql
+psql -h localhost -U cop -d warszawasza -f backend/sql/012_civic_matrix_graph.sql
 ```
 
 **Idempotency:**
@@ -48,7 +53,9 @@ psql -h localhost -U cop -d warszawasza -f backend/sql/009_local_initiatives.sql
 | `007_referendum_domain.sql` | Referendum domain (`referendums`, `referendum_questions`, `referendum_ballot_stream`, `referendum_audit_records`, `v_referendum_live_analytics`). FK to `ballot_boxes` from `005`. Uses `IF NOT EXISTS`, `CREATE OR REPLACE` view. Requires `001`, `005`. Safe to re-run. |
 | `008_civic_organizations.sql` | Channel H — civic NGO registry (`civic_organizations`). Uses `CREATE TABLE IF NOT EXISTS`, `ON CONFLICT (krs_number) DO NOTHING` on seeds. Requires `001`, `002` (KRS provenance). Safe to re-run. |
 | `009_local_initiatives.sql` | Local initiative layer (`focus_areas`, `local_micro_nodes`). Uses `CREATE TABLE IF NOT EXISTS`, idempotent seeds (Muranów pilot). Requires `001`. Safe to re-run. |
-| `010_incident_resolution.sql` | Citizen incident lifecycle: `trace_short_id` on `civic_observations`, `civic_incident_audit_records`, `resolve_civic_incident()` / `expire_civic_incident()`. Requires `001`. Safe to re-run. |
+| `010_incident_resolution.sql` | Citizen incident lifecycle: `trace_short_id`, `civic_incident_audit_records`, `resolve_civic_incident()` / `expire_civic_incident()`. Requires `001`. Safe to re-run. |
+| `011_layer0_validation_reputation.sql` | Layer 0 validation chain + Trust Engine (`layer0_validation_records`, reputation events/scores). Requires `001`. Safe to re-run. |
+| `012_civic_matrix_graph.sql` | Channel H entity graph: action pipeline L1/L2/L3, friction profiles, funding disclosures, `civic_graph_edges`. Requires `001`, `002`, `008`. Safe to re-run. |
 
 Verify:
 
@@ -79,7 +86,7 @@ psql "$DATABASE_URL" -c "SELECT fa.slug, n.partner_label, n.address, n.district,
 | `state_data_layer` | Enum: KAPITALOWA \| KONTROLA \| FIZYCZNA \| TOZSAMOSCI |
 | `v_operator_console` | FOP-style `notation_string` + `evidence_indicator` for operators |
 
-Migration files: `001_cop_init.sql`, `002_state_registry_nodes.sql`, `003_state_archives.sql`, `004_electoral_protocol.sql`, `005_electoral_domain.sql`, `006_electoral_audit_views.sql`, `007_referendum_domain.sql`, `008_civic_organizations.sql`, `009_local_initiatives.sql`, `010_incident_resolution.sql`
+Migration files: `001_cop_init.sql` through `009_local_initiatives.sql`, `010_incident_resolution.sql`, `011_layer0_validation_reputation.sql`, `012_civic_matrix_graph.sql`
 
 ### Electoral domain (004 + 005)
 
@@ -168,4 +175,5 @@ Each row may anchor a historical reference point by `geographic_anchor` (e.g. `W
 - `fira/COP_ARCHIVE_JSON.md` — COP-JSON archival retention format
 - `fira/STATE_DATA_MATRIX.md` — State Data Matrix (Matryca Państwowa)
 - `fira/CIVIC_ORGANIZATION_MATRIX.md` — Channel H civic NGO matrix
+- `fira/CIVIC_GRAPH_MODEL.md` — Entity graph, L1/L2/L3 pipeline, funding rule
 - `fira/FIELD_DOMAIN_konstytucja.md` — konstytucja.pl field artefact (seed domain)

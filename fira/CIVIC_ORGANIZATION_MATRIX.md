@@ -17,9 +17,33 @@ Cztery **klasy operacyjne** opisują funkcję strukturalną w polu obserwacji �
 | **WATCHDOG** | Watchdog Polska, Panoptykon, HFHR | Nadzór nad państwem, prawami, przejrzystością |
 | **LITERACY** | Tour de Konstytucja, Iustitia | Edukacja obywatelska, świadomość prawna |
 | **URBAN** | Miasto Jest Nasze, lokalne stowarzyszenia (Muranów, Wola) | Partycypacja miejska, sąsiedztwo |
+| **CRISIS** | WOŚP, PCK, Dajemy Dzieciom Siłę, sieci interwencyjne | Odporność społeczna, interwencja kryzysowa |
 | **CIVIC_TECH** | Koduj dla Polski, Moje Państwo, Rejestr.io | Narzędzia, otwarte dane, rejestry |
 
 Wpisy w SQL to **katalog instytucji** (nazwa + opcjonalny publiczny KRS). Brak danych o darczyńcach, członkach, adresach osób.
+
+---
+
+## Model grafu (Entity → Activity → Observation → Evidence)
+
+**Reguła FIRA:** silnik przechowuje obserwacje, dowody i relacje — nie prawdy absolutne ani oceny podmiotów.
+
+Szczegóły: [`fira/CIVIC_GRAPH_MODEL.md`](./CIVIC_GRAPH_MODEL.md) · SQL: `backend/sql/012_civic_matrix_graph.sql`
+
+| Warstwa | Tabela | Rola |
+|---------|--------|------|
+| Entity | `civic_organizations` | Referencja KRS — bez działań w tym wierszu |
+| Activity | `civic_action_threads` | Wątek działań (1:N od encji) |
+| L1 Observation | `civic_action_field_observations` | Fakt surowy |
+| L2 Assessment | `civic_action_assessments` | Interpretacja / hipoteza |
+| L3 Outcome | `civic_action_outcomes` | Kroki proceduralne |
+| Friction vector | `civic_friction_profiles` | 6 wymiarów 0–10 |
+| N:M | `civic_thread_observation_links` | Wątek ↔ `civic_observations` |
+| Evidence | `civic_evidence_records` | Dowód (hash, dokument) |
+| Funding | `civic_funding_disclosures` | Ujawnienie — **bez** auto-wagi wiarygodności |
+| Graph | `civic_graph_edges` | Property graph z `valid_from` / `valid_to` |
+
+**Nie używamy** `civic_activity_vectors` (pojedynczy skalar + tekst mieszany) — zastąpione pipeline L1/L2/L3.
 
 ---
 
@@ -31,7 +55,8 @@ Klasy łączą się z kanałami źródła sygnału (`frontend/lib/signalApi.ts`,
 |-------|--------------|-----------|
 | **WATCHDOG** | `CHANNEL_H_STATE_AUDIT` · `CHANNEL_F_REGISTRY` | Audyt państwa + rejestry publiczne |
 | **LITERACY** | `CHANNEL_A_CITIZEN` · `CHANNEL_D_DOCUMENT` | Sygnał obywatelski + materiał edukacyjny |
-| **URBAN** | `CHANNEL_B_CITY` · `CHANNEL_A_CITIZEN` | Pole miejskie + uwaga mieszkańców |
+| **URBAN** | `CHANNEL_L_TERRAIN` · `CHANNEL_B_CITY` | Pole miejskie + uwaga mieszkańców |
+| **CRISIS** | `CHANNEL_I_RESILIENCE` · `CHANNEL_A_CITIZEN` | Infrastruktura krytyczna, interwencja |
 | **CIVIC_TECH** | `CHANNEL_F_REGISTRY` · `CHANNEL_C_SENSOR` | Rejestr / API + instrument techniczny |
 
 `CHANNEL_H_STATE_AUDIT` — rozszerzenie dystrybucji WARSZAWASZA dla **przecięcia sygnału z audytem państwowym** (NIK, KRS, NGO watchdog). Nie jest w `fira/core/`.
@@ -132,9 +157,11 @@ src CHANNEL_F_REGISTRY
 | Plik | Wymaga |
 |------|--------|
 | `backend/sql/008_civic_organizations.sql` | `001_cop_init.sql`, `002_state_registry_nodes.sql` |
+| `backend/sql/012_civic_matrix_graph.sql` | `001`, `002`, `008` — entity graph + action pipeline |
 
 ```bash
 psql "$DATABASE_URL" -f backend/sql/008_civic_organizations.sql
+psql "$DATABASE_URL" -f backend/sql/012_civic_matrix_graph.sql
 ```
 
 **Seed:** 11 organizacji (6 × `PUBLIC_KRS`, 2 × `DEMO`, 3 × `EXTERNAL`) + 1 obserwacja DEMO + 1 przecięcie DEMO.
