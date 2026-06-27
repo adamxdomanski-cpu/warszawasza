@@ -68,3 +68,16 @@ Audyt: `civic_incident_audit_records` (nie `election_audit_records` — to domen
 - **01** — tylko jeśli **fizycznie** potwierdzisz sprzątnięcie (lub masz drugi meldunek).
 - **02** — po 12 h bez domknięcia (cron / ręczne wygaszenie).
 - **03** — **domyślnie teraz** (szkło może nadal leżeć; nasłuch trwa).
+
+## Warstwa 8 — Lustro (antyteza / higiena poznawcza)
+
+**Obserwacja logiczna:** nie wolno jednocześnie utrzymywać:
+
+- statusu technicznego „zweryfikowany potok” (build OK, FOP spójny), oraz
+- statusu terenowego **NIEZWERYFIKOWANA** bez faktu z Warstwy 0.
+
+**Reguła:** samo **52 impulsy uwagi** (kliknięcia / cyfrowy rejestr) **nie uzasadnia** `ALTERED` w DB, jeśli nie ma zakotwiczenia w świecie fizycznym.
+
+**Korekta higieniczna (rollback):** gdy incydent wszedł na siłę cyfrowo — operator może sprowadzić wpis do **`STABLE`** bez narracji „sukcesu sprzątania”, tylko jako **brak aktywnego tarcia w polu** (szum wycięty). W SQL: `resolve_civic_incident()` lub ręczny `UPDATE` — audyt w `civic_incident_audit_records` z `resolution: COGNITIVE_ROLLBACK`.
+
+**Artefakt SQL w repo:** `backend/sql/010_incident_resolution.sql` (nie `004` — zajęte przez electoral).
