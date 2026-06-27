@@ -29,6 +29,7 @@ export default function MarketPage() {
           <TraceStatusBadge
             isPipelineValid
             layerZeroStatus="UNVERIFIED"
+            emotionalTemperature="POSITIVE"
             urgency={false}
           />
         </header>

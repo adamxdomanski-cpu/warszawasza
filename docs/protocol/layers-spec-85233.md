@@ -31,6 +31,27 @@ COP **nie odrzuca** notacji abstrakcyjnej (FOP, diagram Data City, łańcuch ○
 
 **Referencje (operator):** Kwan, M.-P. — embodied GIS, feminist geography, critique of masculinist cartography; por. `fira/DECISION_RECORD.md` (mapa jako narzędzie myślenia, nie ilustracja).
 
+### Podbudowa teoretyczna — thick mapping (Bogna Kietlińska 2018)
+
+**Bogna Kietlińska** (*Gruba mapa*, 2018) uzupełnia Kwan o warstwę **semiotyczną**: mapa nie jest izomorficznym odbiciem miasta, lecz **reprezentacją jakościową** ucieleśnionych wspomnień. COP traktuje to jako **Warstwę 1 (Obserwacja)** — narracje sensoryczne i kody opisowo-ilustracyjne — **osobno** od Warstwy 0 (fakt terenowy).
+
+| Pojęcie (Kietlińska) | Implementacja COP |
+|----------------------|-------------------|
+| Pięć zmysłów (węch, wzrok, słuch, dotyk, smak) | `SensorySense` — `frontend/lib/sensory.ts` |
+| Temperatura emocjonalna (zielony / niebieski / fiolet / czerwony) | `EmotionalTemperature` + `TraceStatusBadge` |
+| Kategorie ogólne / szczegółowe | `category_general`, `category_detailed` w `QualitativeTrace` |
+| Cytat z wywiadu / zgłoszenia | `narrative_excerpt` — surowa narracja, nie metryka 0–5 |
+| Kotwica sektorowa | `anchor.lat`, `anchor.lng`, `anchor.sector` |
+| Zasada Ratajskiego (7–9 klas graficznych) | `SENSORY_VISUAL_CLASS_MAX = 9` — legenda mapy |
+
+**Warstwa 0 (Świat):** ciało jako receptor geograficzny w przestrzeni Warszawy — łańcuch L0.1–L0.4 (obecność, obserwacja, integralność, konsensus).
+
+**Warstwa 1 (Obserwacja):** reprezentacja jakościowa — seed `backend/data/kietlinska_seed.json`, API `GET /api/sensory/seed`, persystencja opcjonalna `backend/sql/015_qualitative_sensory_traces.sql`.
+
+**Antywzorzec:** temperatura emocjonalna lub cytat narracyjny **≠** status `VERIFIED` Layer 0. UI musi utrzymywać dualność: potok FOP / fakt terenowy / warstwa sensoryczna (trzy niezależne sygnały).
+
+**Referencje (operator):** Kietlińska, B. (2018) — *Gruba mapa*; Zapach WARSZAWASZA (PolakPotrafi 2015) jako przykład zmysłu **WECH** w seedzie produktowym.
+
 ```
 ŚWIAT (Layer 0)
    │
@@ -203,7 +224,7 @@ Cel: interfejs **nie symuluje** wszechwiedzy. Domyślny operator to **przechodzi
 
 | Antywzorzec (God's eye) | Wzorzec COP (embodied) |
 |-------------------------|-------------------------|
-| Nagłówek „Zweryfikowano” bez warstwy | **`TraceStatusBadge`** — potok vs Warstwa 0 (`traceStatus.ts`) |
+| Nagłówek „Zweryfikowano” bez warstwy | **`TraceStatusBadge`** — potok vs Warstwa 0 (`traceStatus.ts`); opcjonalnie **temperatura emocjonalna** (Warstwa 1, Kietlińska) |
 | Mapa / pierścień sektora jako „stan miasta” | **`ObservationFieldRenderer`** — geometria pomocnicza; etykieta: *notacja, nie teren* |
 | `anchor` bez odległości od operatora | Pokazać **distanceM** + `presence_score` gdy GPS dostępny |
 | Agregat impulsów uwagi na pierwszym ekranie | **WARSTWA 1** — surowa narracja obywatelska przed FOP |
@@ -216,7 +237,7 @@ Cel: interfejs **nie symuluje** wszechwiedzy. Domyślny operator to **przechodzi
 3. Potok techniczny (FOP) — zwinięty, opcjonalny  
 4. Status dualny — integralność pakietu **≠** fakt terenowy  
 
-Implementacja referencyjna statusu: `frontend/lib/traceStatus.ts`, `frontend/app/components/civic/TraceStatusBadge.tsx`.  
+Implementacja referencyjna statusu: `frontend/lib/traceStatus.ts`, `frontend/lib/sensory.ts`, `frontend/app/components/civic/TraceStatusBadge.tsx`.  
 Komunikaty alertów (email / share): `docs/protocol/trace-alert-comms-v1.md` — alert na górze, telemetria poniżej.
 
 ---
