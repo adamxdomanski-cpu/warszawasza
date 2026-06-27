@@ -1,12 +1,26 @@
 import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
+import { forgeDisabledReason, verifyForgeAdminSecret } from "../../../../lib/flaconForgeAuth";
 import type { ForgeArtifact } from "../../../../lib/flaconTokens";
 
 /**
- * POST /api/market/forge — mint a flacon serial + crypto token.
- * Local fallback when DATABASE_URL is unset; persist via 013_product_flacon_tokens.sql when wired.
+ * POST /api/market/forge — studio-only mint (Dzielna 3A/7).
+ * Requires header X-Admin-Secret = FLACON_FORGE_ADMIN_SECRET (server env, min 16 chars).
  */
-export async function POST() {
+export async function POST(request: Request) {
+  if (!verifyForgeAdminSecret(request)) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          code: "FORGE_FORBIDDEN",
+          message: forgeDisabledReason(),
+        },
+      },
+      { status: 403 },
+    );
+  }
+
   try {
     const randomHex = randomBytes(2).toString("hex").toUpperCase();
     const flaconSerial = `WAW-2026-${randomHex}`;

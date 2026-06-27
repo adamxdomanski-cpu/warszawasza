@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TraceStatusBadge from "../components/civic/TraceStatusBadge";
 import FlaconActivation from "../components/market/FlaconActivation";
 import FieldBackdrop from "../components/FieldBackdrop";
 
@@ -25,6 +26,11 @@ export default function MarketPage() {
             Pracownia Dzielna 3A/7 · pętla O2O · migracja{" "}
             <code className="text-accent/80">013_product_flacon_tokens</code>
           </p>
+          <TraceStatusBadge
+            isPipelineValid
+            layerZeroStatus="UNVERIFIED"
+            urgency={false}
+          />
         </header>
 
         <FlaconActivation />

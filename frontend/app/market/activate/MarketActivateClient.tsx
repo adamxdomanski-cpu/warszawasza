@@ -16,7 +16,7 @@ export default function MarketActivateClient() {
           rejestrze <code className="text-accent/80">product_flacon_tokens</code>.
         </p>
       ) : null}
-      <FlaconActivation />
+      <FlaconActivation initialSerial={serial} />
     </div>
   );
 }
