@@ -2,6 +2,11 @@ import type { TrajectoryChoice } from "./artifactI18n";
 import { buildFopDocument, buildFopHumanLabels } from "./fopBridge";
 import type { CitizenTraceFields } from "./domain/traceContract";
 import { COPY, PIPELINE_ORDER, traceArtifactCopy, type Lang } from "./i18n";
+import {
+  buildTraceStatusLines,
+  crisisEmergencyHint,
+  isCriticalHumanTrace,
+} from "./traceStatus";
 import { studioDiscoveryLine } from "./studioAnchor";
 
 export type ObservationTracePayload = {
@@ -55,12 +60,8 @@ function observationQuote(trace: ObservationTracePayload): string | null {
   return text || null;
 }
 
-function traceStatusLine(trace: ObservationTracePayload): string | null {
-  const copy = traceArtifactCopy(trace.lang);
-  const decision = trace.citizen?.traceDecision;
-  if (decision === "true") return copy.statusVerified;
-  if (decision === "false") return copy.statusUnverified;
-  return null;
+function traceStatusLines(trace: ObservationTracePayload): string[] {
+  return buildTraceStatusLines(trace).lines;
 }
 
 /** WARSTWA 1 — human trace: quote, title, status, narracja, short ID. */
@@ -79,8 +80,13 @@ export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
 
   lines.push(artifact.documentTitle, "");
 
-  const status = traceStatusLine(trace);
-  if (status) lines.push(status);
+  for (const status of traceStatusLines(trace)) {
+    lines.push(status);
+  }
+  if (isCriticalHumanTrace(trace)) {
+    const hint = crisisEmergencyHint(trace.lang);
+    if (hint) lines.push(hint);
+  }
 
   const place = trace.citizen?.place?.trim();
   const time = trace.citizen?.observedAt?.trim() || trace.clock;
