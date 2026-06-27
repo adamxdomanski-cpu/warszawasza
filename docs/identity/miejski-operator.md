@@ -54,6 +54,38 @@ Kanoniczna zasada FOP: *The system remembers. Humans decide.* — operator **nie
 
 ---
 
+## Epistemologia: relacje, nie obiekty
+
+Większość patrzy na **obiekty** (metro, most, koszulka, strona).  
+Operator patrzy na **relacje** (przepływ między stacjami, most ↔ dzielnice, koszulka ↔ tożsamość miejsca, UI ↔ zachowanie).
+
+To już widać w notacji projektu — nie lista punktów, lecz łańcuch:
+
+```
+PLACE → SIGNAL → FLOW → TRAJECTORY
+```
+
+oraz w grafie obywatelskim (SQL 012): **węzły + krawędzie**, nie same węzły.
+
+---
+
+## Pułapka: nazwa przed obserwacją
+
+Naturalna pokusa: **nazwać system**, zanim wszystkie obserwacje potwierdzą, że do niego należą.
+
+| Źle (teoria-first) | Dobrze (obserwacja-first) |
+|--------------------|---------------------------|
+| „To jest Layer X, więc tu pasuje” | Zbierz ślady → szukaj **najmniejszej reguły**, która wyjaśnia jak najwięcej |
+| Model = tożsamość | Model = **hipoteza** |
+| Nowy sygnał zagraża projektowi | Nowy sygnał **ulepsza lub obala** hipotezę |
+
+**Metoda operatora** (filtr sygnał/szum) jest stabilna.  
+**Modele** (FIRA, warstwy 85233, nazwy dzielnic, nawet COP v1.0) są **hipotezami do falsyfikacji**.
+
+Pierwsza zasada (Feynman): **nie oszukiwać samego siebie** — gotowość porzucić najlepszy pomysł, gdy kolejna obserwacja mu przeczy. W repo: dual status śladu, Layer 8 (potok ✓ ≠ fakt ✓), krytyka kolapsalna persony v1→v3.
+
+---
+
 ## Jedno pytanie kolapsalne
 
 > **Jaka decyzja stanie się lepsza dzięki istnieniu Miejskiego Operatora?**
@@ -131,7 +163,8 @@ Evidence: repo paths, build, curl. Smallest diff.
 | v1 | Persona-szeroka, deklaracje bez dowodów |
 | v2 | Warstwy, odbiorca, falsyfikacja — nadal zbyt blisko „obserwacji miasta” |
 | **v3** | Oś: **operator sygnału** + decyzja, która się poprawia |
+| **v3.1** | Epistemologia: **relacje > obiekty**; modele = hipotezy, metoda = filtr |
 
 ---
 
-*Metoda, nie manifest kompetencji*
+*Metoda, nie manifest kompetencji · modele, nie tożsamość*
