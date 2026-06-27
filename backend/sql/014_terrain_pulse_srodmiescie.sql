@@ -19,23 +19,23 @@ INSERT INTO civic_observations (
 )
 ON CONFLICT (trace_short_id) WHERE trace_short_id IS NOT NULL DO NOTHING;
 
--- NGO matrix intersection (Miasto Jest Nasze · URBAN) when 012 applied
-INSERT INTO civic_signal_intersections (
-  signal_id,
-  civic_org_id,
-  validation_status,
-  geographic_anchor
-)
-SELECT
-  obs.observation_id,
-  org.civic_org_id,
-  'PENDING'::civic_intersection_status,
-  'SRODMIESCIE/022'
-FROM civic_observations obs
-CROSS JOIN civic_organizations org
-WHERE obs.trace_short_id = '20260627-224500'
-  AND org.krs_number = '0000494640'
-ON CONFLICT (signal_id, civic_org_id) DO NOTHING;
+-- NGO matrix intersection (requires 012_civic_matrix_graph.sql)
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'civic_signal_intersections'
+  ) THEN
+    INSERT INTO civic_signal_intersections (
+      signal_id, civic_org_id, validation_status, geographic_anchor
+    )
+    SELECT obs.observation_id, org.civic_org_id, 'PENDING'::civic_intersection_status, 'SRODMIESCIE/022'
+    FROM civic_observations obs
+    CROSS JOIN civic_organizations org
+    WHERE obs.trace_short_id = '20260627-224500' AND org.krs_number = '0000494640'
+    ON CONFLICT (signal_id, civic_org_id) DO NOTHING;
+  END IF;
+END $$;
 
 -- Dev test expiry (uncomment after ~60 min or for manual closure):
 -- SELECT expire_civic_incident('20260627-224500', 'STUDIO:WAW_DZ3A7', 'PING_TTL', 'Śródmieście');

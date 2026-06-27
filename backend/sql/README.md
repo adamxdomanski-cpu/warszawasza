@@ -21,6 +21,7 @@ psql "$DATABASE_URL" -f backend/sql/009_local_initiatives.sql
 psql "$DATABASE_URL" -f backend/sql/010_incident_resolution.sql
 psql "$DATABASE_URL" -f backend/sql/011_layer0_validation_reputation.sql
 psql "$DATABASE_URL" -f backend/sql/012_civic_matrix_graph.sql
+psql "$DATABASE_URL" -f backend/sql/013_product_flacon_tokens.sql
 psql "$DATABASE_URL" -f backend/sql/014_terrain_pulse_srodmiescie.sql
 ```
 
@@ -57,6 +58,7 @@ psql -h localhost -U cop -d warszawasza -f backend/sql/012_civic_matrix_graph.sq
 | `010_incident_resolution.sql` | Citizen incident lifecycle: `trace_short_id`, `civic_incident_audit_records`, `resolve_civic_incident()` / `expire_civic_incident()`. Requires `001`. Safe to re-run. |
 | `011_layer0_validation_reputation.sql` | Layer 0 validation chain + Trust Engine (`layer0_validation_records`, reputation events/scores). Requires `001`. Safe to re-run. |
 | `012_civic_matrix_graph.sql` | Channel H entity graph: action pipeline L1/L2/L3, friction profiles, funding disclosures, `civic_graph_edges`. Requires `001`, `002`, `008`. Safe to re-run. |
+| `013_product_flacon_tokens.sql` | O2O flacon registry (`product_flacon_tokens`). Hardware serial ↔ crypto token; not Layer 0 verification. Requires `001`. Safe to re-run. |
 | `014_terrain_pulse_srodmiescie.sql` | Test seed Ślad #20260627-224500 (Śródmieście / CHANNEL_L_TERRAIN). Requires `001`, `010`; optional `012`. Safe to re-run. |
 
 Verify:
