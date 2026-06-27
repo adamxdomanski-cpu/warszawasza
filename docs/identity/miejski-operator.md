@@ -79,10 +79,39 @@ Naturalna pokusa: **nazwać system**, zanim wszystkie obserwacje potwierdzą, ż
 | Model = tożsamość | Model = **hipoteza** |
 | Nowy sygnał zagraża projektowi | Nowy sygnał **ulepsza lub obala** hipotezę |
 
-**Metoda operatora** (filtr sygnał/szum) jest stabilna.  
-**Modele** (FIRA, warstwy 85233, nazwy dzielnic, nawet COP v1.0) są **hipotezami do falsyfikacji**.
+**Metoda operatora** (filtr sygnał/szum) jest stabilna — **lecz również hipotezą**, tylko o znacznie dłuższym czasie życia.  
+**Modele** (FIRA, warstwy 85233, nazwy dzielnic, COP v1.0) są hipotezami krótszego horyzontu.  
+**Meta-metoda:** nawet metodę można zmienić, jeżeli przestaje lepiej wyjaśniać obserwacje.
 
 Pierwsza zasada (Feynman): **nie oszukiwać samego siebie** — gotowość porzucić najlepszy pomysł, gdy kolejna obserwacja mu przeczy. W repo: dual status śladu, Layer 8 (potok ✓ ≠ fakt ✓), krytyka kolapsalna persony v1→v3.
+
+### Hierarchia (aksjomat)
+
+```
+Obserwacja
+    ↓
+Sygnał
+    ↓
+Relacja
+    ↓
+Hipoteza (model)
+    ↓
+Metoda (zbiór reguł)
+    ↓
+Meta-metoda: metoda też podlega obaleniu
+```
+
+**Kolejność ochrony:**
+
+```
+Observation  >  Method  >  Identity
+```
+
+**Nie:** `Identity > Method > Observation` — tak upadają systemy: zaczynają chronić model przed rzeczywistością.
+
+> Nie bronimy modelu. Bronimy **prawa rzeczywistości do jego obalenia**.
+
+Jeśli WARSZAWASZA zachowa tę zasadę, może się zmieniać bez utraty sensu — **metoda**, nie ideologia.
 
 ---
 
