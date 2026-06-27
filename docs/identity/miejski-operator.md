@@ -198,6 +198,33 @@ Observation > Method > Identity. Evidence: git, build, curl. Smallest diff.
 
 ---
 
+## Geneza (jak powstał alfabet)
+
+Nie dodawaliśmy pojęć. **Odejmowaliśmy**, aż zostawało to, co przechodzi krytykę kolapsalną.
+
+| Etap rozmowy | Ruch | Co odpadło |
+|--------------|------|------------|
+| PROCESS / VPS „LIVE” | Falsyfikacja (curl, Vercel) | Narracja bez dowodu |
+| Persona v1 | „Analityk miasta”, lista kompetencji | Tożsamość-szerokość |
+| Krytyka kolapsalna | Pytanie o **decyzję**, nie o charakter | „Lepiej zrozumiemy miasto” |
+| v3 | **Operator sygnału** | „Miasto jako system” jako fundament |
+| Relacje → odbicia → projekcja | Medium, nie pośrednik; pętla | Mylenie odbicia z obiektem |
+| Amen | Dwa zdania zamykające | Dalsze metafory |
+
+**Zmiana części mowy:** z rzeczowników (miasto, warstwa, system) na **operacje** (obserwować, filtrować, odróżniać, decydować).
+
+**Zmiana pytania:** z *„czym jest WARSZAWASZA?”* na *„co musi być prawdziwe, żeby przejść od rzeczywistości do decyzji uczciwie?”*
+
+### Teza
+
+Nie powstał nowy język — **narysowano ograniczenia** języka.  
+Minimalny alfabet obserwacji: **Obiekt · Ślad · Odbicie · Sygnał · Model · Decyzja** (+ Projekcja jako miejsce błędu).  
+WARSZAWASZA, FIRA, COP, AI = **implementacja**, nie rdzeń.
+
+> Jak uczciwie przejść od rzeczywistości do decyzji, wiedząc, że zawsze pracujemy na odbiciach?
+
+---
+
 ## Historia wersji
 
 | Wersja | Problem |
@@ -213,3 +240,7 @@ Observation > Method > Identity. Evidence: git, build, curl. Smallest diff.
 ---
 
 *Obiekt → Ślad → Odbicie → Sygnał → Model → Projekcja → Decyzja → Obiekt*
+
+Poznanie jest sztuką rozpoznawania jakości odbić.
+
+Decyzja jest tylko tak dobra, jak odbicie, z którego powstała.
