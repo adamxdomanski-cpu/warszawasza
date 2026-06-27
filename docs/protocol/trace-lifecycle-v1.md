@@ -39,21 +39,21 @@ Wpis → **`DISCONNECTED`** (szum tła / naturalne wygaszenie), nie sukces civic
 ## Mapowanie DB (COP v1.0)
 
 Tabela: `civic_observations` (`backend/sql/001_cop_init.sql`).  
-**Nie ma** osobnego `003_incident_stream.sql` w repo — incydent obywatelski to wiersz w `civic_observations`:
+Migracja zamknięcia: **`backend/sql/010_incident_resolution.sql`** (nie `004` — zajęte przez electoral).
 
 ```sql
--- Zamknięcie RESOLVED (po Layer 0 fact)
-UPDATE civic_observations
-SET status_indicator = 'STABLE'
-WHERE observation_id = '<uuid-mapowany-z-śladu>';
-
--- Wygaszenie EXPIRED (job / reguła czasu)
-UPDATE civic_observations
-SET status_indicator = 'DISCONNECTED'
-WHERE observation_id = '<uuid-mapowany-z-śladu>';
+-- Po migracji 010 — protokół RESOLVED
+SELECT resolve_civic_incident(
+  '20260627-022029',
+  'STUDIO:WAW_DZ3A7',
+  'PHYSICAL_CLEANUP',
+  'Muranów'
+);
 ```
 
-`payload_value` (0–5) pozostaje wagą impulsów uwagi z momentu zapisu (np. 52 → ev █████ w FOP).
+Audyt: `civic_incident_audit_records` (nie `election_audit_records` — to domena wyborcza).
+
+`payload_value` w DB = skala dowodu **0–5** (FOP `ev ■`), nie surowe 52 impulsy uwagi.
 
 ## Co jest obserwacją vs hipotezą
 
