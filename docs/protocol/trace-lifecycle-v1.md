@@ -9,6 +9,8 @@
 
 System **nie zamyka** trajektorii sam. Przejście wymaga faktu z **Warstwy 0** (świat) lub **reguły czasu** (EXPIRED).
 
+Łańcuch walidacji Layer 0 (Proof of Presence → … → Consensus): **`layers-spec-85233.md`**.
+
 | Operacja | Warunek (Layer 0) | `status_indicator` | FOP `res` |
 |----------|-------------------|----------------------|-----------|
 | **03 OPEN** | Domyślnie; szkło nadal może leżeć | `ALTERED` | `trajectory open` |
