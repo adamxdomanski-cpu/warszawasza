@@ -7,6 +7,30 @@
 
 Trzy (docelowo pięć) mechanizmy **nie są niezależnymi filtrami**. Tworzą **łańcuch walidacji** — każdy etap odpowiada na inne pytanie. Pojedynczy sygnał nigdy nie jest jedynym źródłem prawdy.
 
+### Podbudowa teoretyczna — geografia ucieleśniona (Mei-Po Kwan)
+
+**Mei-Po Kwan** (geografia feministyczna, krytyka GIS) opisała pułapkę **„God's eye view”** (*the view from nowhere*): klasyczne mapy i systemy GIS prezentują miasto **z góry**, jako obraz **wszechwiedzący i neutralny**, odcięty od **subiektywnego, lokalnego, ucieleśnionego** doświadczenia na chodniku.
+
+W COP ten problem mapuje się bezpośrednio na **„szum krzesłowy”**:
+
+| Perspektywa „oka Boga” | Perspektywa ucieleśniona (Layer 0) |
+|------------------------|-------------------------------------|
+| Współrzędne z biurka = „fakt” sektora | **L0.1** — operator w promieniu kotwicy (≤ 50 m) |
+| Jedna kropka na mapie całego Muranowa | **Miejsce** w narracji: „Dzielna/Zamenhofa”, nie tylko `anchor=` |
+| Spójność pakietu FOP = prawda terenowa | **Warstwa 8 (lustro)** — potok ✓ ≠ fakt ✓ |
+| 52 impulsy uwagi = wysoki priorytet | **IOE** — zdarzenia sesji, nie gęstość szkła |
+| Dashboard „całe miasto” | **Mikro-sektor** — jeden ślad, jeden przechodni, jedno okno czasu |
+
+**Embodied GIS** (Kwan): przestrzeń jest doświadczana **w czasie, w ciele, w ruchu** — nie jako statyczna warstwa rastrowa. Stąd w Spec 85233:
+
+- `motion_consistency` i `time_consistency` w **L0.1** (ścieżka w czasie, nie teleportacja z biurka),
+- wymóg **in-app camera** w **L0.2** (ślad powstaje *tam*, nie w galerii),
+- **L0.4 consensus** — inne ciała w tym samym sektorze, nie głos zdalny.
+
+COP **nie odrzuca** notacji abstrakcyjnej (FOP, diagram Data City, łańcuch ○●◐◉) — traktuje je jako **Warstwę 2–3 (interpretacja / hipoteza)**, nigdy jako zastępstwo Warstwy 0. Fałszywa neutralność kartograficzna („system zweryfikował”) jest antywzorcem Layer 8.
+
+**Referencje (operator):** Kwan, M.-P. — embodied GIS, feminist geography, critique of masculinist cartography; por. `fira/DECISION_RECORD.md` (mapa jako narzędzie myślenia, nie ilustracja).
+
 ```
 ŚWIAT (Layer 0)
    │
@@ -173,9 +197,34 @@ Funkcja `apply_reputation_event(operator_node_id, event_type, weight, …)` aktu
 
 ---
 
+## UI — od „oka Boga” do mikro-perspektywy (wytyczne)
+
+Cel: interfejs **nie symuluje** wszechwiedzy. Domyślny operator to **przechodzień w sektorze**, nie dyspozytor całej Warszawy.
+
+| Antywzorzec (God's eye) | Wzorzec COP (embodied) |
+|-------------------------|-------------------------|
+| Nagłówek „Zweryfikowano” bez warstwy | **`TraceStatusBadge`** — potok vs Warstwa 0 (`traceStatus.ts`) |
+| Mapa / pierścień sektora jako „stan miasta” | **`ObservationFieldRenderer`** — geometria pomocnicza; etykieta: *notacja, nie teren* |
+| `anchor` bez odległości od operatora | Pokazać **distanceM** + `presence_score` gdy GPS dostępny |
+| Agregat impulsów uwagi na pierwszym ekranie | **WARSTWA 1** — surowa narracja obywatelska przed FOP |
+| Dystrybucja push całego miasta | Dystrybucja **geofenced** — tylko węzły w promieniu sektora (po L0.4) |
+
+**Kolejność ekranu meldunku (rekomendacja):**
+
+1. Co widzisz na chodniku? (tekst / zdjęcie in-app)  
+2. Gdzie jesteś? (GPS gate L0.1)  
+3. Potok techniczny (FOP) — zwinięty, opcjonalny  
+4. Status dualny — integralność pakietu **≠** fakt terenowy  
+
+Implementacja referencyjna statusu: `frontend/lib/traceStatus.ts`, `frontend/app/components/civic/TraceStatusBadge.tsx`.  
+Komunikaty alertów (email / share): `docs/protocol/trace-alert-comms-v1.md` — alert na górze, telemetria poniżej.
+
+---
+
 ## Powiązane dokumenty
 
 - `docs/protocol/trace-lifecycle-v1.md` — Scenariusz B, EXPIRED 12 h
+- `docs/protocol/trace-alert-comms-v1.md` — hierarchia alertu (obowatel przed telemetrią)
 - `docs/protocol/fop-ioe-aop.md` — IOE jako sensor, bez interpretacji w przeglądarce
 - `backend/sql/001_cop_init.sql` — `civic_observations`, zero-PII
 - `backend/sql/010_incident_resolution.sql` — RESOLVED / audit
