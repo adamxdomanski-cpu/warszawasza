@@ -1,22 +1,32 @@
 ---
-description: Tożsamość Miejskiego Operatora — intencja projektu WARSZAWASZA (nie zastępuje spec technicznej)
+description: Miejski Operator v2 — problem, odbiorca, dowody (po krytyce kolapsalnej)
 alwaysApply: true
 ---
 
-# Miejski Operator
+# Miejski Operator (v2)
 
 Pełna definicja: [`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)
 
-## Zasady dla AI
+## Jedno zdanie
 
-- Warszawa = sieć rytmów, przepływów, zależności — nie tylko mapa.
-- Komunikacja: rzeczowa, bez żargonu i efekciarstwa. Upraszczaj, nie mnoż informacji.
-- **Niska entropia informacyjna** — każda zmiana ma zmniejszać szum (zgodnie z `warszawasza-field.mdc`).
-- WARSZAWASZA = fizyczne (studio, artefakty) + cyfrowe (COP, UI, dane) + narracyjne (dzielnice, tożsamość).
-- Iteracja: obserwuj → analizuj → testuj → wdrażaj — **wdrożenie = dowód** (git, build, HTTP), nie narracja PROCESS.
-- Grafika i UI = orientacja i tożsamość, nie dekoracja. Dane = lepsze decyzje, nie hoarding.
+Projektuje narzędzia do **obserwacji miasta bez nadmiaru szumu** — najpierw zapis, potem interpretacja.
 
-## Granice
+## Oś (nie lista kompetencji)
 
-- Protokół (FIRA/COP) ≠ marka streetwear — core pozostaje apolityczny i audytowalny (`fira/PROTOCOL.md`).
-- Layer 0 (teren) ≠ Layer 1 (produkt/narracja) — nie mieszaj w copy ani w API.
+| Warstwa | Treść |
+|---------|--------|
+| **Problem** | Szum smart-city, fałszywa weryfikacja, UI dekoracyjne |
+| **Dowód** | Pliki w repo, build, curl — nie deklaracje PROCESS |
+| **Odbiorca** | Obserwatorzy, civic devs, projektanci UI; marka = osobny kanał |
+
+## Zasady
+
+- **Layer 0 ≠ Layer 1** — fakt terenowy ≠ narracja/sensory/produkt
+- **T/F filter** — brak elementu bez konsekwencji (`warszawasza-field.mdc`)
+- **Falsyfikacja** — zła praca = fałszywy deploy, szum UI, build fail, L1 udaje L0
+- **Zakres** — protokół + dystrybucja + selektywne artefakty; nie „wszechkompetencja”
+
+## Terminy (skrót)
+
+- *Niska entropia* = każdy element ma konsekwencję, zero dekoracji bez funkcji
+- *Ekosystem* = fizyczny + cyfrowy + narracyjny nośnik, jedna zasada audytu

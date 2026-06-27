@@ -1,45 +1,132 @@
 # Miejski Operator
 
-> Tożsamość operacyjna projektu WARSZAWASZA i dystrybucji COP/FIRA.  
-> Dla AI: stały kontekst intencji — nie zastępuje specyfikacji technicznej (`fira/PROTOCOL.md`, `docs/protocol/`).
+> Tożsamość operacyjna WARSZAWASZA · wersja 2 (po krytyce kolapsalnej)  
+> Spec techniczna: `fira/PROTOCOL.md` · warstwy: `docs/protocol/layers-spec-85233.md`
 
 ---
 
-## Definicja
+## Jedno zdanie
 
-**Miejski Operator** to twórca, analityk i projektant systemów miejskich, który postrzega Warszawę jako dynamiczną sieć rytmów, struktur, przepływów i zależności. Łączy analityczne myślenie z wrażliwością projektową, przekładając złożone zjawiska na czytelne modele, narzędzia i rozwiązania.
-
-Porusza się swobodnie między designem, analizą danych, sztuczną inteligencją, prawem, architekturą oraz komunikacją wizualną, traktując je jako elementy jednego miejskiego ekosystemu. Komunikuje się jasno, rzeczowo i bez zbędnego żargonu. Upraszcza zamiast komplikować, wydobywa strukturę zamiast mnożyć informacje.
-
-Miasto rozumie jako organizm danych, relacji i procesów, który można obserwować, analizować i świadomie projektować. Tworzy rozwiązania oparte na minimalizmie, spójności i **niskiej entropii informacyjnej**. Grafika jest narzędziem orientacji i tożsamości, a dane służą lepszemu rozumieniu rzeczywistości i podejmowaniu trafniejszych decyzji.
-
-Jego projekty łączą warstwę **fizyczną**, **cyfrową** i **narracyjną**. WARSZAWASZA nie jest wyłącznie marką ani aplikacją — jest systemem interpretowania miasta poprzez dane, obserwację, projektowanie i lokalną tożsamość. Każdy element, od interfejsu po artefakt fizyczny, powinien wnosić wartość informacyjną i pozostawać częścią spójnego ekosystemu.
-
-Miejski Operator pracuje iteracyjnie: obserwuje, analizuje, upraszcza, testuje i wdraża. Projektuje rozwiązania trwałe, użyteczne i **audytowalne**, dbając o to, aby każda zmiana zmniejszała szum i zwiększała czytelność całego systemu.
+**Miejski Operator** projektuje narzędzia, które pomagają ludziom **obserwować miasto bez nadmiaru szumu** — najpierw zapis faktu i kontekstu, potem interpretacja.
 
 ---
 
-## Relacja do WARSZAWASZA (repo)
+## Jaki problem rozwiązuje
 
-| Pojęcie | Implementacja |
-|---------|----------------|
-| Niska entropia | Low Entropy UI — `frontend/`, reguła `.cursor/rules/warszawasza-field.mdc` |
-| Obserwacja | COP / FOP — `fira/PROTOCOL.md`, bramka T/F, ślady terenowe |
-| Warstwy | Layer 0 (fakt) ≠ Layer 1 (narracja/sensory) ≠ dystrybucja — `docs/protocol/layers-spec-85233.md` |
-| Fizyczne ↔ cyfrowe | Studio Dzielna 3A/7, flacon O2O `/market` — produkt ≠ weryfikacja terenu |
-| Iteracja z dowodem | merge git + `npm run build` + smoke HTTP — nie bloki PROCESS bez walidacji |
+| Problem | Objaw | Odpowiedź operatora |
+|---------|-------|---------------------|
+| Szum „smart city” | Dashboardy, metryki bez konsekwencji, fałszywa neutralność mapy | **COP / FOP** — protokół obserwacji audytowalny w repo |
+| Mieszanie faktu z narracją | „System zweryfikował” bez dowodu terenowego | **Warstwa 0 ≠ Warstwa 1** (Spec 85233) |
+| Interfejsy dekoracyjne | Więcej animacji niż sensu | **Low Entropy UI** — każdy element musi odpowiadać: *co z tego wynika?* |
+| Tożsamość bez kotwicy | Marka oderwana od miejsca | **WARSZAWASZA** — dzielnice, studio Muranów, artefakty + ten sam język w UI |
+
+Rdzeń, który **nie załamuje się** pod krytyką: miasto traktowane jako system sygnałów, zadaniem jest **redukcja szumu** i **czytelne narzędzia**, nie slogan o „inteligentnym mieście”.
 
 ---
 
-## Blok kontekstu dla AI (skrót)
+## Dla kogo
+
+| Odbiorca | Co dostaje | Gdzie w projekcie |
+|----------|------------|-------------------|
+| **Mieszkańcy / obserwatorzy** | Wejście T/F, ślad, język bez urzędowego pozoru | `/`, `LeaveTraceControl`, trace lifecycle |
+| **Twórcy civic tech** | Otwarty protokół, schemat SQL, log format | `fira/`, `backend/sql/`, README |
+| **Projektanci UI** | Wzorzec niskiej entropii, mobile-first | `.cursor/rules/warszawasza-field.mdc` |
+| **Klient marki (streetwear)** | Artefakt fizyczny + lokalna narracja | Studio, kolekcje dzielnic — **poza** core protokołu |
+
+Operator **nie** jest uniwersalnym konsultantem dla samorządu, kancelarii ani integratora ERP. Używa prawa, danych czy architektury **tylko tam**, gdzie służą obserwacji i czytelności — nie jako lista kompetencji.
+
+---
+
+## Kim jest (wąsko)
+
+Projektant-producent **jednego ekosystemu**: protokół obserwacji (FOP/COP) + dystrybucja (WARSZAWASZA) + selektywne artefakty fizyczne.  
+Pracuje z repo, studiem (Dzielna 3A/7) i vaultem notatek — trzy nośniki, **jedna zasada**: mniej szumu, więcej audytu.
+
+---
+
+## Jak pracuje
+
+```
+Obserwacja → Zapis → Filtr (T/F) → Test → Wdrożenie z dowodem
+```
+
+1. **Obserwacja** — pole, dane, ciało na miejscu (nie „ok Boga” z biurka).  
+2. **Zapis** — FOP, SQL, log PROCESS tylko ze stanem obserwowalnym.  
+3. **Filtr** — odrzucenie elementu bez konsekwencji (FALSE = szum).  
+4. **Test** — `npm run build`, smoke HTTP, `py_compile`; mobile 390px.  
+5. **Wdrożenie** — merge git + deploy; **bez** twierdzeń bez curl/logów.
+
+---
+
+## Co tworzy (dowody, nie deklaracje)
+
+| Artefakt | Dowód w repo / polu |
+|----------|---------------------|
+| Protokół obserwacji | `fira/PROTOCOL.md`, COP v1.0 README |
+| Interfejs dystrybucji | `frontend/` — bramka, pipeline glifów, `/meta`, `/learn` |
+| Rozdzielenie fakt / narracja | L0 chain + sensory Layer 1 — `layers-spec-85233.md`, SQL 015 |
+| Persystencja obywatelska | `backend/sql/001`–`015` (schemat; DB = po `DATABASE_URL`) |
+| O2O produkt ≠ weryfikacja terenu | `/market`, `013_product_flacon_tokens.sql`, disclaimer w API |
+| Infrastruktura prod (opcja VPS) | `infra/docker-compose.prod.yml`, PR #14 |
+
+To nie „przekłada złożone zjawiska” w próżni — to **konkretne pliki i trasy**, które można otworzyć i sprawdzić.
+
+---
+
+## Słownik (metafory → definicje operacyjne)
+
+| Termin | Definicja w tym projekcie |
+|--------|---------------------------|
+| **Niska entropia informacyjna** | Każdy element UI/copy ma konsekwencję; brak dekoracji bez funkcji; test T/F |
+| **System rytmów / przepływów** | Sygnały miejskie modelowane w FIRA/OFP (fazy, GTFS, H3) — **hipoteza**, nie prawda Layer 0 |
+| **Organizm danych** | Miasto = węzły + krawędzie + ślady (`state_registry_nodes`, civic graph SQL 012) |
+| **Ekosystem WARSZAWASZA** | Trzy nośniki: **fizyczny** (studio), **cyfrowy** (repo), **narracyjny** (dzielnice) — spięte tożsamością, nie jednym monolitem |
+
+---
+
+## Kiedy praca jest dobra (falsyfikowalność)
+
+Praca **nie** jest dobra, jeśli:
+
+- UI dodaje element bez odpowiedzi na *co z tego wynika?*
+- Twierdzi się „wdrożone” bez merge na `main` + smoke URL
+- Narracja produktu (Layer 1) udaje weryfikację terenu (Layer 0)
+- Build lub mobile acid test (390px, jedna ręka) pada
+- Log PROCESS zawiera stany nieweryfikowalne
+
+Praca **jest** dobra, jeśli:
+
+- Nowy użytkownik na `/` rozumie T/F bez instrukcji PDF
+- Ślad / API / SQL da się prześledzić end-to-end w dokumentacji
+- Diff jest minimalny względem problemu
+- Metryka szumu spada: mniej elementów ekranu przy tej samej funkcji
+
+---
+
+## Po co (nie „jakim jestem człowiekiem”)
+
+**Po co:** żeby obywatel mógł **zapisać i oddać** to, co widzi w mieście, bez platformy urzędowej i bez szumu komercyjnego — a potem **sam zdecydować**, co z tego wynika (*The system remembers. Humans decide.*).
+
+Marka streetwear i instalacje Muranów są **nośnikami i kontekstem**, nie celem protokołu.
+
+---
+
+## Blok kontekstu dla AI
 
 ```markdown
-You work with Miejski Operator on WARSZAWASZA: Warsaw as a system of signals and flows.
-Principles: low information entropy, clarity over decoration, auditability, smallest useful diff.
-WARSZAWASZA = physical + digital + narrative layers; COP/FIRA = protocol; frontend = distribution.
-Do not claim deploy/production unless verified (git, curl, server logs).
-Every UI or copy change must answer: what follows from this?
+Miejski Operator: builds tools for low-noise urban observation (COP/FIRA/WARSZAWASZA).
+Axis = problem (noise, false verification) + evidence (repo paths, build, curl).
+Separate: who (designer-producer of one ecosystem) / how (observe→record→filter→test→ship) /
+what (protocol, UI, SQL, optional physical artifacts) / for whom (observers, civic devs, UI refs, brand clients).
+Do not claim deploy without git+HTTP proof. Layer 0 ≠ Layer 1. Smallest diff.
 ```
+
+---
+
+## Wersja 1
+
+Pierwsza wersja (2026-06) była **tożsamościowo-szeroka** — dobra jako kierunek, słaba jako dowód.  
+Wersja 2 odpowiada na krytykę kolapsalną: wąski zakres, warstwy rozdzielone, terminy zdefiniowane, kryteria falsyfikacji.
 
 ---
 
