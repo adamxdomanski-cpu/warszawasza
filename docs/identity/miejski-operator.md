@@ -54,65 +54,65 @@ Kanoniczna zasada FOP: *The system remembers. Humans decide.* — operator **nie
 
 ---
 
-## Epistemologia: relacje i odbicia
+## Aksjomaty epistemologiczne
 
-Większość patrzy na **obiekty** (metro, most, koszulka, strona).
+**Relacja:** A wpływa na B (krawędź w grafie).  
+**Odbicie:** informacja o obiekcie zachowana w **medium** (nośnik) — bez świadomego „pośrednika”.  
+**Projekcja:** interpretacja modelu w umyśle obserwatora — tu rodzą się błędy poznawcze.
 
-Operator patrzy dalej:
+| Warstwa | Przykład (WARSZAWASZA) |
+|---------|------------------------|
+| Obiekt | Teren (Layer 0) |
+| Ślad | Fotografia, wpis FOP, wiersz SQL |
+| Odbicie | Log HTTP, dashboard, hex grid |
+| Sygnał | Wyodrębniona część odbicia z konsekwencją |
+| Model | FIRA, COP, Spec 85233 (hipoteza) |
+| Projekcja | „System działa.” — **nie ma** w logu ani w UI |
+| Decyzja | T/F, merge, działanie w polu |
 
-| Pojęcie | Co mówi |
-|---------|---------|
-| **Relacja** | A **wpływa** na B |
-| **Odbicie** | A **ujawnia się** poprzez B |
-
-Relacja to krawędź w grafie. Odbicie to **sposób obserwacji** — większości zjawisk nie mierzymy wprost; wnioskujemy ze **śladów** (astronomia, geofizyka, epidemiologia — ten sam schemat).
-
-Przykład łańcucha odbić:
-
-```
-Miasto → rozkład jazdy → przepływy → hałas → zachowanie → dane → interfejs → sposób myślenia projektanta
-```
-
-Nie obserwujesz miasta bezpośrednio. Obserwujesz **jego odbicia**.
-
-### Łańcuch poznawczy
+### Pętla
 
 ```
-Rzeczywistość
-      ↓
-Ślad
-      ↓
-Odbicie
-      ↓
-Sygnał
-      ↓
-Model (hipoteza)
-      ↓
-Decyzja
+Obiekt → Ślad → Odbicie → Sygnał → Model → Projekcja → Decyzja → Obiekt
 ```
 
-Notacja FOP to jedno z odbić pola — nie pole samo:
+Rozszerzony zapis:
 
 ```
-PLACE → SIGNAL → FLOW → TRAJECTORY
+Obiekt istnieje.
+Ślad jest skutkiem obiektu.
+Odbicie przenosi ślad przez medium.
+Sygnał jest częścią odbicia.
+Model porządkuje sygnały.
+Projekcja interpretuje model.
+Decyzja zmienia obiekt.
 ```
 
-Graf SQL 012: węzły **i** krawędzie (relacje) — ale każdy wpis to też **ślad**, nie „całe miasto”.
+### Trzy prawa (+ czwarte)
 
-### Zasada: nie myl odbicia z obiektem
+1. **Nie myl obiektu ze śladem.**
+2. **Nie myl odbicia z obiektem.**
+3. **Nie myl modelu z rzeczywistością.**
+4. **Nie myl projekcji z modelem** — dane i model bez zmian; zmienia się tylko interpretacja → tu najczęściej **kolaps**.
 
-| Odbicie | Nie jest |
-|---------|----------|
-| Mapa | Miastem |
-| Log PROCESS | Procesem |
-| Wykres / hex grid | Ruchem |
-| Interfejs | Systemem |
-| Model (FIRA, COP) | Rzeczywistością |
-| Narracja sensoryczna (Layer 1) | Faktem terenowym (Layer 0) |
+### Aksjomat głęboki
 
-> **Nigdy nie myl odbicia z obiektem.**
+> Wszystko, co poznajemy, jest odbiciem. Nigdy obiektem.
 
-Chroni przed zakochaniem się we własnym opisie świata zamiast w świecie — ten sam błąd co Layer 8 (potok ✓ ≠ fakt ✓) i PROCESS bez curl.
+### Jedno pytanie
+
+> **Jak wiernym odbiciem jest to, na podstawie czego właśnie podejmuję decyzję?**
+
+Reszta — filtr sygnał/szum, T/F, Layer 0 ≠ Layer 1, audyt — to **implementacja**.
+
+### Kolejność ochrony
+
+```
+Observation  >  Method  >  Identity
+```
+
+Metoda (filtr) = hipoteza **dłuższego horyzontu**. Meta-metoda: metoda też podlega obaleniu.  
+Nie bronimy modelu — bronimy **prawa rzeczywistości do jego obalenia**.
 
 ---
 
@@ -126,43 +126,7 @@ Naturalna pokusa: **nazwać system**, zanim wszystkie obserwacje potwierdzą, ż
 | Model = tożsamość | Model = **hipoteza** |
 | Nowy sygnał zagraża projektowi | Nowy sygnał **ulepsza lub obala** hipotezę |
 
-**Metoda operatora** (filtr sygnał/szum) jest stabilna — **lecz również hipotezą**, tylko o znacznie dłuższym czasie życia.  
-**Modele** (FIRA, warstwy 85233, nazwy dzielnic, COP v1.0) są hipotezami krótszego horyzontu.  
-**Meta-metoda:** nawet metodę można zmienić, jeżeli przestaje lepiej wyjaśniać obserwacje.
-
-Pierwsza zasada (Feynman): **nie oszukiwać samego siebie** — gotowość porzucić najlepszy pomysł, gdy kolejna obserwacja mu przeczy. W repo: dual status śladu, Layer 8 (potok ✓ ≠ fakt ✓), krytyka kolapsalna persony v1→v3.
-
-### Hierarchia (aksjomat)
-
-```
-Obserwacja (rzeczywistość)
-    ↓
-Ślad
-    ↓
-Odbicie
-    ↓
-Sygnał
-    ↓
-Relacja
-    ↓
-Hipoteza (model)
-    ↓
-Metoda (zbiór reguł)
-    ↓
-Meta-metoda: metoda też podlega obaleniu
-```
-
-**Kolejność ochrony:**
-
-```
-Observation  >  Method  >  Identity
-```
-
-**Nie:** `Identity > Method > Observation` — tak upadają systemy: zaczynają chronić model przed rzeczywistością.
-
-> Nie bronimy modelu. Bronimy **prawa rzeczywistości do jego obalenia**.
-
-Jeśli WARSZAWASZA zachowa tę zasadę, może się zmieniać bez utraty sensu — **metoda**, nie ideologia.
+Pierwsza zasada (Feynman): **nie oszukiwać samego siebie.**
 
 ---
 
@@ -243,8 +207,9 @@ Observation > Method > Identity. Evidence: git, build, curl. Smallest diff.
 | **v3** | Oś: **operator sygnału** + decyzja, która się poprawia |
 | **v3.1** | Epistemologia: **relacje > obiekty**; modele = hipotezy, metoda = filtr |
 | **v3.2** | Aksjomat: **metoda też hipoteza**; `Observation > Method > Identity` |
-| **v3.3** | **Odbicia** — relacja vs ujawnienie; nie myl odbicia z obiektem |
+| **v3.3** | Odbicia + medium; odbicie ≠ obiekt |
+| **v4** | **Projekcja**; pętla zamknięta; 4 prawa; jedno pytanie o wierność odbicia |
 
 ---
 
-*Metoda, nie ideologia · obserwacja pierwsza · odbicie ≠ obiekt*
+*Obiekt → Ślad → Odbicie → Sygnał → Model → Projekcja → Decyzja → Obiekt*
