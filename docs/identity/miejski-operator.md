@@ -54,18 +54,65 @@ Kanoniczna zasada FOP: *The system remembers. Humans decide.* — operator **nie
 
 ---
 
-## Epistemologia: relacje, nie obiekty
+## Epistemologia: relacje i odbicia
 
-Większość patrzy na **obiekty** (metro, most, koszulka, strona).  
-Operator patrzy na **relacje** (przepływ między stacjami, most ↔ dzielnice, koszulka ↔ tożsamość miejsca, UI ↔ zachowanie).
+Większość patrzy na **obiekty** (metro, most, koszulka, strona).
 
-To już widać w notacji projektu — nie lista punktów, lecz łańcuch:
+Operator patrzy dalej:
+
+| Pojęcie | Co mówi |
+|---------|---------|
+| **Relacja** | A **wpływa** na B |
+| **Odbicie** | A **ujawnia się** poprzez B |
+
+Relacja to krawędź w grafie. Odbicie to **sposób obserwacji** — większości zjawisk nie mierzymy wprost; wnioskujemy ze **śladów** (astronomia, geofizyka, epidemiologia — ten sam schemat).
+
+Przykład łańcucha odbić:
+
+```
+Miasto → rozkład jazdy → przepływy → hałas → zachowanie → dane → interfejs → sposób myślenia projektanta
+```
+
+Nie obserwujesz miasta bezpośrednio. Obserwujesz **jego odbicia**.
+
+### Łańcuch poznawczy
+
+```
+Rzeczywistość
+      ↓
+Ślad
+      ↓
+Odbicie
+      ↓
+Sygnał
+      ↓
+Model (hipoteza)
+      ↓
+Decyzja
+```
+
+Notacja FOP to jedno z odbić pola — nie pole samo:
 
 ```
 PLACE → SIGNAL → FLOW → TRAJECTORY
 ```
 
-oraz w grafie obywatelskim (SQL 012): **węzły + krawędzie**, nie same węzły.
+Graf SQL 012: węzły **i** krawędzie (relacje) — ale każdy wpis to też **ślad**, nie „całe miasto”.
+
+### Zasada: nie myl odbicia z obiektem
+
+| Odbicie | Nie jest |
+|---------|----------|
+| Mapa | Miastem |
+| Log PROCESS | Procesem |
+| Wykres / hex grid | Ruchem |
+| Interfejs | Systemem |
+| Model (FIRA, COP) | Rzeczywistością |
+| Narracja sensoryczna (Layer 1) | Faktem terenowym (Layer 0) |
+
+> **Nigdy nie myl odbicia z obiektem.**
+
+Chroni przed zakochaniem się we własnym opisie świata zamiast w świecie — ten sam błąd co Layer 8 (potok ✓ ≠ fakt ✓) i PROCESS bez curl.
 
 ---
 
@@ -193,7 +240,8 @@ Evidence: repo paths, build, curl. Smallest diff.
 | v2 | Warstwy, odbiorca, falsyfikacja — nadal zbyt blisko „obserwacji miasta” |
 | **v3** | Oś: **operator sygnału** + decyzja, która się poprawia |
 | **v3.1** | Epistemologia: **relacje > obiekty**; modele = hipotezy, metoda = filtr |
+| **v3.2** | Aksjomat: **metoda też hipoteza**; `Observation > Method > Identity` |
 
 ---
 
-*Metoda, nie manifest kompetencji · modele, nie tożsamość*
+*Metoda, nie ideologia · obserwacja pierwsza*

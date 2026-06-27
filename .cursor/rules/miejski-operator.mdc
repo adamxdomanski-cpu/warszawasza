@@ -31,8 +31,9 @@ T/F gate · Layer 0 ≠ Layer 1 · FOP/COP · Low Entropy UI · audyt (git, buil
 
 ## Epistemologia
 
-Patrz na **relacje** (PLACE→SIGNAL→FLOW), nie tylko obiekty.  
-Modele = hipotezy. Metoda (filtr sygnał/szum) = hipoteza **dłuższego horyzontu**.  
-**Observation > Method > Identity** — nie bronimy modelu; bronimy prawa rzeczywistości do obalenia.
+**Relacja** = A wpływa na B. **Odbicie** = A ujawnia się przez B.  
+Łańcuch: Rzeczywistość → Ślad → Odbicie → Sygnał → Model → Decyzja.  
+**Nigdy nie myl odbicia z obiektem** (mapa ≠ miasto, UI ≠ system, log ≠ proces).  
+`Observation > Method > Identity` — metoda też hipoteza dłuższego horyzontu.
 
 *The system remembers. Humans decide.*
