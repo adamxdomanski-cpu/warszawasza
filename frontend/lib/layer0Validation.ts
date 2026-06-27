@@ -1,6 +1,7 @@
 /**
  * Layer 0 validation chain — Spec 85233 (COP v1.0).
  * Client-side scoring for L0.1 Proof of Presence; types mirror backend/sql/011.
+ * Theoretical frame: embodied GIS (Mei-Po Kwan) — sidewalk presence, not God's-eye map truth.
  */
 
 export type Layer0PipelineStage =

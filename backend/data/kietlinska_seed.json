@@ -1,0 +1,58 @@
+[
+  {
+    "trace_id": "20260627-022029-SENSORY",
+    "linked_trace_short_id": "20260627-022029",
+    "sense": "DOTYK",
+    "temperature": "NEGATIVE",
+    "category_general": "nawierzchnia",
+    "category_detailed": "szkło",
+    "narrative_excerpt": "W nocy ktoś rzucił butelką. Ta się rozbiła. Szkła leżą na skrzyżowaniu Dzielnej i Zamenhofa. Uważajcie!",
+    "anchor": {
+      "lat": 52.24886,
+      "lng": 20.99241,
+      "sector": "Muranów"
+    }
+  },
+  {
+    "trace_id": "20260627-125750-SENSORY",
+    "linked_trace_short_id": "20260627-125750",
+    "sense": "WZROK",
+    "temperature": "NEGATIVE",
+    "category_general": "bezpieczeństwo",
+    "category_detailed": "uraz / mobilność",
+    "narrative_excerpt": "Ktoś wyrżnął orła na rowerze. Potrzebna pomoc.",
+    "anchor": {
+      "lat": 52.2247,
+      "lng": 21.0042,
+      "sector": "Aleje Jerozolimskie"
+    }
+  },
+  {
+    "trace_id": "20260627-224500-SENSORY",
+    "linked_trace_short_id": "20260627-224500",
+    "sense": "WZROK",
+    "temperature": "AMBIVALENT",
+    "category_general": "infrastruktura",
+    "category_detailed": "oświetlenie / mobilność",
+    "narrative_excerpt": "Test drożności bramki O2O. Przy wjeździe na ścieżkę rowerową od ul. Siennej świeci tylko jedna latarnia.",
+    "anchor": {
+      "lat": 52.232,
+      "lng": 21.012,
+      "sector": "Śródmieście"
+    }
+  },
+  {
+    "trace_id": "20260627-ZAPACH-WAW",
+    "sense": "WECH",
+    "temperature": "POSITIVE",
+    "category_general": "przyroda",
+    "category_detailed": "zapach miasta",
+    "narrative_excerpt": "Inspiracja rzemieślnicza ze stołu na Dzielnej 3A/7. Nuty liści pomidorów z podwórek i ozonu po burzy.",
+    "theme": "Zapach WARSZAWASZA (PolakPotrafi 2015)",
+    "anchor": {
+      "lat": 52.24886,
+      "lng": 20.99241,
+      "sector": "Muranów"
+    }
+  }
+]
