@@ -9,6 +9,7 @@ Kanoniczne URL-e obecności w polu. Źródło prawdy w kodzie: `frontend/lib/cha
 | `IG_WSZ` | brand_social | Instagram | https://www.instagram.com/warszawasza | @warszawasza |
 | `IG_WARSALLICA` | operator_social | Instagram | https://www.instagram.com/warsallica/ | @warsallica |
 | `TBL_WSZ` | brand_social | Tumblr | https://www.tumblr.com/warszawasza | warszawasza |
+| `PIN_WSZ` | brand_social | Pinterest | https://pl.pinterest.com/warszawasza | warszawasza |
 | `MAIL_WSZ` | contact | e-mail | hello@warszawasza.online | hello@warszawasza.online |
 
 ## FOP
@@ -20,6 +21,7 @@ rel channel IG:warszawasza
 rel channel IG:warsallica
 rel channel FB:100085586858916
 rel channel TBL:warszawasza
+rel channel PIN:warszawasza
 ```
 
 ## UI

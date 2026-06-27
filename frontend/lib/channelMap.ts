@@ -13,7 +13,7 @@ export type ChannelRole =
 export type ChannelRecord = {
   id: string;
   role: ChannelRole;
-  platform: "web" | "facebook" | "instagram" | "tumblr" | "email";
+  platform: "web" | "facebook" | "instagram" | "tumblr" | "pinterest" | "email";
   url: string;
   /** Short handle or label shown in UI */
   label: string;
@@ -71,6 +71,16 @@ export const CHANNEL_TUMBLR: ChannelRecord = {
   fopRef: "TBL:warszawasza",
 };
 
+/** Pinterest — brand moodboard / archiwum wizualne */
+export const CHANNEL_PINTEREST: ChannelRecord = {
+  id: "PIN_WSZ",
+  role: "brand_social",
+  platform: "pinterest",
+  url: "https://pl.pinterest.com/warszawasza",
+  label: "warszawasza",
+  fopRef: "PIN:warszawasza",
+};
+
 export const CHANNEL_EMAIL: ChannelRecord = {
   id: "MAIL_WSZ",
   role: "contact",
@@ -87,6 +97,7 @@ export const WARSZAWASZA_CHANNELS: readonly ChannelRecord[] = [
   CHANNEL_INSTAGRAM_WARSZAWASZA,
   CHANNEL_INSTAGRAM_WARSALLICA,
   CHANNEL_TUMBLR,
+  CHANNEL_PINTEREST,
   CHANNEL_EMAIL,
 ] as const;
 
@@ -97,6 +108,7 @@ export const ORIGIN_CHANNEL_LINKS: readonly ChannelRecord[] = [
   CHANNEL_INSTAGRAM_WARSZAWASZA,
   CHANNEL_INSTAGRAM_WARSALLICA,
   CHANNEL_TUMBLR,
+  CHANNEL_PINTEREST,
 ] as const;
 
 export function channelFopRelation(channel: ChannelRecord): string {
