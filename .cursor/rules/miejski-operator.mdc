@@ -1,32 +1,32 @@
 ---
-description: Miejski Operator v2 — problem, odbiorca, dowody (po krytyce kolapsalnej)
+description: Operator sygnału miejskiego v3 — filtr szumu, nie analityk miasta
 alwaysApply: true
 ---
 
-# Miejski Operator (v2)
+# Miejski Operator (v3)
 
 Pełna definicja: [`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)
 
 ## Jedno zdanie
 
-Projektuje narzędzia do **obserwacji miasta bez nadmiaru szumu** — najpierw zapis, potem interpretacja.
+Filtruje rzeczywistość miejską: **sygnał vs szum** → narzędzia → **człowiek decyduje**.
 
-## Oś (nie lista kompetencji)
+## Fundament (jedyny)
 
-| Warstwa | Treść |
-|---------|--------|
-| **Problem** | Szum smart-city, fałszywa weryfikacja, UI dekoracyjne |
-| **Dowód** | Pliki w repo, build, curl — nie deklaracje PROCESS |
-| **Odbiorca** | Obserwatorzy, civic devs, projektanci UI; marka = osobny kanał |
+**Redukcja szumu, wydobycie sygnału** — nie „miasto jako system”, nie lista kompetencji.
 
-## Zasady
+## vs inne role
 
-- **Layer 0 ≠ Layer 1** — fakt terenowy ≠ narracja/sensory/produkt
-- **T/F filter** — brak elementu bez konsekwencji (`warszawasza-field.mdc`)
-- **Falsyfikacja** — zła praca = fałszywy deploy, szum UI, build fail, L1 udaje L0
-- **Zakres** — protokół + dystrybucja + selektywne artefakty; nie „wszechkompetencja”
+- Analityk: *co mówią dane?* → Operator: *czy to sygnał z konsekwencją?*
+- Urbanista: *jak planować?* → Operator: *co zapisać w terenie vs interpretacja?*
+- UX: *jak ułatwić task?* → Operator: *co z tego wynika?* (T/F)
 
-## Terminy (skrót)
+## Test kolapsu
 
-- *Niska entropia* = każdy element ma konsekwencję, zero dekoracji bez funkcji
-- *Ekosystem* = fizyczny + cyfrowy + narracyjny nośnik, jedna zasada audytu
+Jaka **decyzja** jest lepsza? Fail: „lepiej zrozumiemy miasto”. Pass: odróżnienie sygnał/szum, fałszywa weryfikacja, zapis przed utratą.
+
+## Implementacja w repo
+
+T/F gate · Layer 0 ≠ Layer 1 · FOP/COP · Low Entropy UI · audyt (git, build, curl).
+
+*The system remembers. Humans decide.*

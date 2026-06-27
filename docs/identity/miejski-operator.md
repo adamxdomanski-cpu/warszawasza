@@ -1,133 +1,137 @@
 # Miejski Operator
 
-> Tożsamość operacyjna WARSZAWASZA · wersja 2 (po krytyce kolapsalnej)  
-> Spec techniczna: `fira/PROTOCOL.md` · warstwy: `docs/protocol/layers-spec-85233.md`
+> **Operator sygnału miejskiego** — nie analityk miasta, nie urbanista, nie projektant UX.  
+> Spec: `fira/PROTOCOL.md` · filtr warstw: `docs/protocol/layers-spec-85233.md`
 
 ---
 
 ## Jedno zdanie
 
-**Miejski Operator** projektuje narzędzia, które pomagają ludziom **obserwować miasto bez nadmiaru szumu** — najpierw zapis faktu i kontekstu, potem interpretacja.
+**Miejski Operator** filtruje rzeczywistość miejską: **oddziela sygnał od szumu** i buduje narzędzia, dzięki którym kolejna decyzja opiera się na tym, co da się obronić — nie na tym, co głośniejsze.
 
 ---
 
-## Jaki problem rozwiązuje
+## Czym **nie** jest fundamentem
 
-| Problem | Objaw | Odpowiedź operatora |
-|---------|-------|---------------------|
-| Szum „smart city” | Dashboardy, metryki bez konsekwencji, fałszywa neutralność mapy | **COP / FOP** — protokół obserwacji audytowalny w repo |
-| Mieszanie faktu z narracją | „System zweryfikował” bez dowodu terenowego | **Warstwa 0 ≠ Warstwa 1** (Spec 85233) |
-| Interfejsy dekoracyjne | Więcej animacji niż sensu | **Low Entropy UI** — każdy element musi odpowiadać: *co z tego wynika?* |
-| Tożsamość bez kotwicy | Marka oderwana od miejsca | **WARSZAWASZA** — dzielnice, studio Muranów, artefakty + ten sam język w UI |
+| Sformułowanie | Dlaczego słabe jako tożsamość |
+|---------------|-------------------------------|
+| „Miasto jako system” | Wspólne dla urbanistyki, GIS, cybernetyki od dekad — **tło**, nie wyróżnik |
+| „Łączy analitykę z wrażliwością projektową” | Opis tysięcy projektantów — **nie definiuje** nic unikalnego |
+| Metafory bez metody | „Rytmy”, „organizm”, „ekosystem” bez filtra → **język**, nie narzędzie |
 
-Rdzeń, który **nie załamuje się** pod krytyką: miasto traktowane jako system sygnałów, zadaniem jest **redukcja szumu** i **czytelne narzędzia**, nie slogan o „inteligentnym mieście”.
+**Fundament:** metodologia **redukcji szumu i wydobycia sygnału** — reszta jest implementacją.
+
+---
+
+## Czym różni się od innych ról
+
+| Rola | Typowe pytanie | Miejski Operator |
+|------|----------------|------------------|
+| **Analityk danych** | Co mówią metryki? | Czy ta metryka **nie jest szumem**? Czy ma konsekwencję dla decyzji? |
+| **Urbanista** | Jak zaplanować przestrzeń? | Co **w terenie** da się zapisać i oddzielić od interpretacji (Layer 0)? |
+| **Projektant UX** | Jak ułatwić zadanie? | Czy każdy element UI przechodzi test: **co z tego wynika?** (T/F) |
+| **Miejski Operator** | Co jest sygnałem, a co szumem? | **Filtr + zapis + audyt** — protokół, nie dashboard |
+
+Operator **nie zbiera więcej danych**. Operator **tnie to, co nie niesie konsekwencji**, i utrwala resztę w formie audytowalnej.
+
+---
+
+## Metoda (operacyjna, nie metaforyczna)
+
+```
+Pole / strumień → Zapis (FOP) → Filtr szumu → Łańcuch weryfikacji → Decyzja człowieka
+```
+
+| Krok | Narzędzie w projekcie | Efekt |
+|------|----------------------|--------|
+| **Filtr wejścia** | Bramka T/F na `/` | Użytkownik wybiera trajektorię, nie „poprawną odpowiedź” |
+| **Redukcja w UI** | Pipeline glifów, Low Entropy | Mniej elementów, każdy z konsekwencją |
+| **Oddzielenie sygnału od narracji** | Layer 0 (fakt) ≠ Layer 1 (jakość/sensory) | Brak fałszywego „system zweryfikował” |
+| **Łańcuch L0** | L0.1–L0.4 (obecność, camera, integralność, consensus) | Sygnał terenowy ≠ opinia z biurka |
+| **Audyt** | SQL, log PROCESS = stan obserwowalny | Twierdzenia da się falsyfikować |
+
+Kanoniczna zasada FOP: *The system remembers. Humans decide.* — operator **nie decyduje za człowieka**; przygotowuje **oczyszczony sygnał** do decyzji.
+
+---
+
+## Jedno pytanie kolapsalne
+
+> **Jaka decyzja stanie się lepsza dzięki istnieniu Miejskiego Operatora?**
+
+| Odpowiedź (słaba) | Dlaczego fail |
+|-------------------|---------------|
+| „Lepiej zrozumiemy miasto” | Nieobserwowalna, niefalsyfikowalna |
+
+| Odpowiedź (silna) | Przykład w WARSZAWASZA |
+|-------------------|------------------------|
+| **Odróżnimy sygnał od szumu przed działaniem** | T/F + odrzucenie elementu UI bez konsekwencji |
+| **Nie uznamy narracji za fakt terenowy** | Dual status śladu (#125750): pipeline ≠ terrain |
+| **Nie uznamy produktu za weryfikację Layer 0** | `/market` activate — disclaimer w API |
+| **Zapiszemy zmianę zanim zginie w szumie** | Trace short ID, FOP artefakt, SQL 010 |
+| **Wykryjemy fałszywą „pewność” systemu** | Layer 8 lustro: potok ✓ ≠ fakt ✓ |
+
+Decyzja nie musi być „policyjna” ani urzędowa. Wystarczy: *czy idę dalej w tej trajektorii, czy odrzucam jako szum?*
+
+---
+
+## Co tworzy (dowód metody, nie CV)
+
+| Artefakt | Co filtruje |
+|----------|-------------|
+| `fira/PROTOCOL.md` | Język obserwacji vs werdykt |
+| `frontend/` — ObservationGate, pipeline | Szum wizualny i poznawczy |
+| Spec 85233 + SQL 010–015 | Fałszywa weryfikacja, mieszanie warstw |
+| `docs/protocol/log-format-v1.md` | Narracja PROCESS bez dowodu |
+
+WARSZAWASZA (marka, studio, dzielnice) = **nośnik i kontekst sygnału**, nie rdzeń metody.
 
 ---
 
 ## Dla kogo
 
-| Odbiorca | Co dostaje | Gdzie w projekcie |
-|----------|------------|-------------------|
-| **Mieszkańcy / obserwatorzy** | Wejście T/F, ślad, język bez urzędowego pozoru | `/`, `LeaveTraceControl`, trace lifecycle |
-| **Twórcy civic tech** | Otwarty protokół, schemat SQL, log format | `fira/`, `backend/sql/`, README |
-| **Projektanci UI** | Wzorzec niskiej entropii, mobile-first | `.cursor/rules/warszawasza-field.mdc` |
-| **Klient marki (streetwear)** | Artefakt fizyczny + lokalna narracja | Studio, kolekcje dzielnic — **poza** core protokołu |
-
-Operator **nie** jest uniwersalnym konsultantem dla samorządu, kancelarii ani integratora ERP. Używa prawa, danych czy architektury **tylko tam**, gdzie służą obserwacji i czytelności — nie jako lista kompetencji.
+- **Obserwator w polu** — zapis bez urzędu  
+- **Twórca civic tech** — protokół audytowalny w repo  
+- **Projektant** — wzorzec filtra T/F, nie „ładny dashboard”  
 
 ---
 
-## Kim jest (wąsko)
+## Kiedy metoda działa / zawodzi
 
-Projektant-producent **jednego ekosystemu**: protokół obserwacji (FOP/COP) + dystrybucja (WARSZAWASZA) + selektywne artefakty fizyczne.  
-Pracuje z repo, studiem (Dzielna 3A/7) i vaultem notatek — trzy nośniki, **jedna zasada**: mniej szumu, więcej audytu.
+**Działa**, gdy:
 
----
+- Da się wskazać, **co zostało odrzucone jako szum** (element UI, claim, warstwa)  
+- Decyzja następnego kroku jest **jaśniejsza niż przed filtrem**  
+- Dowód: plik, commit, curl — nie sam opis  
 
-## Jak pracuje
+**Zawodzi**, gdy:
 
-```
-Obserwacja → Zapis → Filtr (T/F) → Test → Wdrożenie z dowodem
-```
-
-1. **Obserwacja** — pole, dane, ciało na miejscu (nie „ok Boga” z biurka).  
-2. **Zapis** — FOP, SQL, log PROCESS tylko ze stanem obserwowalnym.  
-3. **Filtr** — odrzucenie elementu bez konsekwencji (FALSE = szum).  
-4. **Test** — `npm run build`, smoke HTTP, `py_compile`; mobile 390px.  
-5. **Wdrożenie** — merge git + deploy; **bez** twierdzeń bez curl/logów.
-
----
-
-## Co tworzy (dowody, nie deklaracje)
-
-| Artefakt | Dowód w repo / polu |
-|----------|---------------------|
-| Protokół obserwacji | `fira/PROTOCOL.md`, COP v1.0 README |
-| Interfejs dystrybucji | `frontend/` — bramka, pipeline glifów, `/meta`, `/learn` |
-| Rozdzielenie fakt / narracja | L0 chain + sensory Layer 1 — `layers-spec-85233.md`, SQL 015 |
-| Persystencja obywatelska | `backend/sql/001`–`015` (schemat; DB = po `DATABASE_URL`) |
-| O2O produkt ≠ weryfikacja terenu | `/market`, `013_product_flacon_tokens.sql`, disclaimer w API |
-| Infrastruktura prod (opcja VPS) | `infra/docker-compose.prod.yml`, PR #14 |
-
-To nie „przekłada złożone zjawiska” w próżni — to **konkretne pliki i trasy**, które można otworzyć i sprawdzić.
-
----
-
-## Słownik (metafory → definicje operacyjne)
-
-| Termin | Definicja w tym projekcie |
-|--------|---------------------------|
-| **Niska entropia informacyjna** | Każdy element UI/copy ma konsekwencję; brak dekoracji bez funkcji; test T/F |
-| **System rytmów / przepływów** | Sygnały miejskie modelowane w FIRA/OFP (fazy, GTFS, H3) — **hipoteza**, nie prawda Layer 0 |
-| **Organizm danych** | Miasto = węzły + krawędzie + ślady (`state_registry_nodes`, civic graph SQL 012) |
-| **Ekosystem WARSZAWASZA** | Trzy nośniki: **fizyczny** (studio), **cyfrowy** (repo), **narracyjny** (dzielnice) — spięte tożsamością, nie jednym monolitem |
-
----
-
-## Kiedy praca jest dobra (falsyfikowalność)
-
-Praca **nie** jest dobra, jeśli:
-
-- UI dodaje element bez odpowiedzi na *co z tego wynika?*
-- Twierdzi się „wdrożone” bez merge na `main` + smoke URL
-- Narracja produktu (Layer 1) udaje weryfikację terenu (Layer 0)
-- Build lub mobile acid test (390px, jedna ręka) pada
-- Log PROCESS zawiera stany nieweryfikowalne
-
-Praca **jest** dobra, jeśli:
-
-- Nowy użytkownik na `/` rozumie T/F bez instrukcji PDF
-- Ślad / API / SQL da się prześledzić end-to-end w dokumentacji
-- Diff jest minimalny względem problemu
-- Metryka szumu spada: mniej elementów ekranu przy tej samej funkcji
-
----
-
-## Po co (nie „jakim jestem człowiekiem”)
-
-**Po co:** żeby obywatel mógł **zapisać i oddać** to, co widzi w mieście, bez platformy urzędowej i bez szumu komercyjnego — a potem **sam zdecydować**, co z tego wynika (*The system remembers. Humans decide.*).
-
-Marka streetwear i instalacje Muranów są **nośnikami i kontekstem**, nie celem protokołu.
+- Opis br brzmi jak smart city / portfolio designer  
+- Metryki rosną bez spadku szumu  
+- Layer 1 lub marketing udaje Layer 0  
 
 ---
 
 ## Blok kontekstu dla AI
 
 ```markdown
-Miejski Operator: builds tools for low-noise urban observation (COP/FIRA/WARSZAWASZA).
-Axis = problem (noise, false verification) + evidence (repo paths, build, curl).
-Separate: who (designer-producer of one ecosystem) / how (observe→record→filter→test→ship) /
-what (protocol, UI, SQL, optional physical artifacts) / for whom (observers, civic devs, UI refs, brand clients).
-Do not claim deploy without git+HTTP proof. Layer 0 ≠ Layer 1. Smallest diff.
+Miejski Operator = urban SIGNAL operator, not city analyst.
+Core method: reduce noise, extract defensible signal, then human decides.
+Differentiators: T/F filter, Layer 0 ≠ Layer 1, auditable FOP/COP, no decorative UI.
+Collapse test: name the DECISION that improves — not "understand city better".
+Do not use "city as system" as identity; use signal/noise methodology.
+Evidence: repo paths, build, curl. Smallest diff.
 ```
 
 ---
 
-## Wersja 1
+## Historia wersji
 
-Pierwsza wersja (2026-06) była **tożsamościowo-szeroka** — dobra jako kierunek, słaba jako dowód.  
-Wersja 2 odpowiada na krytykę kolapsalną: wąski zakres, warstwy rozdzielone, terminy zdefiniowane, kryteria falsyfikacji.
+| Wersja | Problem |
+|--------|---------|
+| v1 | Persona-szeroka, deklaracje bez dowodów |
+| v2 | Warstwy, odbiorca, falsyfikacja — nadal zbyt blisko „obserwacji miasta” |
+| **v3** | Oś: **operator sygnału** + decyzja, która się poprawia |
 
 ---
 
-*Dokument tożsamości · nie specyfikacja wdrożenia*
+*Metoda, nie manifest kompetencji*
