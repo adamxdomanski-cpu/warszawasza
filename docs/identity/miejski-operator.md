@@ -135,7 +135,11 @@ Pierwsza zasada (Feynman): **nie oszukiwać samego siebie** — gotowość porzu
 ### Hierarchia (aksjomat)
 
 ```
-Obserwacja
+Obserwacja (rzeczywistość)
+    ↓
+Ślad
+    ↓
+Odbicie
     ↓
 Sygnał
     ↓
@@ -222,12 +226,10 @@ WARSZAWASZA (marka, studio, dzielnice) = **nośnik i kontekst sygnału**, nie rd
 ## Blok kontekstu dla AI
 
 ```markdown
-Miejski Operator = urban SIGNAL operator, not city analyst.
-Core method: reduce noise, extract defensible signal, then human decides.
-Differentiators: T/F filter, Layer 0 ≠ Layer 1, auditable FOP/COP, no decorative UI.
-Collapse test: name the DECISION that improves — not "understand city better".
-Do not use "city as system" as identity; use signal/noise methodology.
-Evidence: repo paths, build, curl. Smallest diff.
+Miejski Operator = signal operator. Loop: Obiekt→Ślad→Odbicie→Sygnał→Model→Projekcja→Decyzja→Obiekt.
+Laws: ślad≠obiekt, odbicie≠obiekt, model≠rzeczywistość, projekcja≠model.
+Question: How faithful is the reflection I'm deciding on?
+Observation > Method > Identity. Evidence: git, build, curl. Smallest diff.
 ```
 
 ---
@@ -241,7 +243,8 @@ Evidence: repo paths, build, curl. Smallest diff.
 | **v3** | Oś: **operator sygnału** + decyzja, która się poprawia |
 | **v3.1** | Epistemologia: **relacje > obiekty**; modele = hipotezy, metoda = filtr |
 | **v3.2** | Aksjomat: **metoda też hipoteza**; `Observation > Method > Identity` |
+| **v3.3** | **Odbicia** — relacja vs ujawnienie; nie myl odbicia z obiektem |
 
 ---
 
-*Metoda, nie ideologia · obserwacja pierwsza*
+*Metoda, nie ideologia · obserwacja pierwsza · odbicie ≠ obiekt*
