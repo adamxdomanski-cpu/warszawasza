@@ -7,7 +7,7 @@ alwaysApply: true
 
 [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md) · [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md) · [`docs/protocol/cos-cursor-rules.json`](../../docs/protocol/cos-cursor-rules.json)
 
-**Aksjomaty: STABLE** (nie LOCKED). Supreme axiom: *All knowledge begins and ends in reality.*
+**Aksjomaty: STABLE** (nie LOCKED). Supreme axiom: *All knowledge begins and ends in reality.* Humility: *The more experience, the readier to revise the model when reality shows error.*
 
 ## Rule 0
 
@@ -40,5 +40,6 @@ Przed merge: pięć funkcji + Failure per funkcja. Reality wins — **if reality
 - Brak „Layer X” / deploy bez merge + `curl` / testu w terenie.
 - System bez rozumu, intencji, moralności — tylko rejestr/korelacja/pamięć.
 - Kod = EXECUTION adapter only; methodology survives if Python/Cursor/Jira are replaced.
+- AI → Model → Human. AI correlates/filters; never decides. Intuition = hypothesis to verify, not verdict.
 
 *Humans decide.*

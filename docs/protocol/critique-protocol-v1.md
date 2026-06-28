@@ -9,6 +9,10 @@
 
 **Każda wiedza zaczyna się i kończy w rzeczywistości.** Jeżeli rzeczywistość przeczy modelowi — zmienia się model, nie rzeczywistość.
 
+**Pokora (STABLE):** Im większe doświadczenie, tym większa gotowość do poprawienia własnego modelu, gdy rzeczywistość pokaże błąd.
+
+**Intuicja** nie jest werdyktem — jest hipotezą (*„Sprawdź tutaj”*). Dobra intuicja często wynika z bogatego doświadczenia; błędna — z uprzedzeń i złudzeń poznawczych.
+
 ## Model funkcjonalny (stały) · Interfejs ludzki (zmienny)
 
 **Lewa strona — ludzie:** zmieniają się (dziś Tomek, jutro ktoś inny). Role społeczne.  

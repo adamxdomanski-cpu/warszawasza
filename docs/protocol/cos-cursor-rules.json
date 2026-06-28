@@ -3,9 +3,12 @@
   "description": "Zasady separacji modelu od implementacji i redukcji oporu poznawczego.",
   "axioms_status": "STABLE",
   "supreme_axiom": "Każda wiedza zaczyna się i kończy w rzeczywistości.",
+  "humility_axiom": "Im większe doświadczenie, tym większa gotowość do poprawienia własnego modelu, gdy rzeczywistość pokaże błąd.",
   "rules": [
     "Rule 0: Każda abstrakcja musi zmniejszać opór poznawczy. W przeciwnym razie należy ją usunąć.",
     "Separacja kompetencji: System rejestruje, koreluje i pamięta. Człowiek rozumie, decyduje i działa. Nie przypisuj maszynie ludzkich cech.",
+    "Wektor AI: AI → Model → Człowiek. AI dostarcza korelacje i filtr szumu; nie decyduje. Jedynym ujściem łańcucha jest ludzkie działanie.",
+    "Intuicja jako hipoteza: Dobra intuicja często wynika z bogatego doświadczenia, ale nie jest ostatnim sędzią. Mówi «Sprawdź tutaj», nie «To jest prawda».",
     "Agnostycyzm technologiczny: Kod jest wyłącznie wymiennym adapterem wykonawczym (Execution Layer). Ma realizować cel przy najmniejszej liczbie kroków do decyzji.",
     "Zasada Dziadka: W polu wszystko wyjdzie. Każda generowana funkcja lub struktura musi kończyć się jasnym kryterium weryfikacji w świecie fizycznym lub na produkcji.",
     "Workflow rygor: Przed oddaniem refaktoru lub kodu przetestuj go pętlą krytyczną COS (Sens, Cel, Działanie, Człowiek, Skala). Identyfikuj stany awarii (Failure Modes) przed wdrożeniem.",

@@ -1,21 +1,29 @@
 # BABCIA OS v1.0
 
 > **Status aksjomatów:** STABLE — nie LOCKED.  
-> Aksjomaty są **stabilne**, nie **zamrożone**. System, który zablokowałby własne aksjomaty, stałby się religią, a nie metodą naukową i rzemiosłem.
+> Aksjomaty są **stabilne**, nie **zamrożone**. Bronimy je tak długo, jak dobrze opisują rzeczywistość.
 
 Powiązane: [`cos-v1.md`](cos-v1.md) · [`miejski-operator.md`](miejski-operator.md) · [`../protocol/critique-protocol-v1.md`](../protocol/critique-protocol-v1.md)
 
 ---
 
-## Nadrzędny aksjomat (STABLE)
+## Intencja (jedno zdanie)
 
-**Każda wiedza zaczyna się i kończy w rzeczywistości.**
+**BABCIA OS to próba zachowania ludzkiego sposobu dochodzenia do decyzji, zanim zostanie on zapisany w modelach i technologii.**
 
-To zdanie obejmuje wszystko wypracowane w projekcie — i jest **bezpiecznikiem** całego systemu:
+To opisuje **intencję** projektu, nie implementację. Ważniejsze niż nazwa, AI, Jira czy Python.
 
-> Jeżeli rzeczywistość przeczy modelowi, **zmienia się model**. Nie rzeczywistość.
+---
 
-Bronimy aksjomaty tak długo, jak dobrze opisują rzeczywistość. To odróżnia **metodę** od **dogmatu**.
+## Aksjomaty (STABLE)
+
+| # | Aksjomat |
+|---|----------|
+| **0** | **Każda wiedza zaczyna się i kończy w rzeczywistości.** |
+| **1** | Jeżeli rzeczywistość przeczy modelowi — **zmienia się model**. Nie rzeczywistość. |
+| **2** | **Im większe doświadczenie, tym większa gotowość do poprawienia własnego modelu**, gdy rzeczywistość pokaże błąd. *(Pokora)* |
+
+Aksjomat 2 odróżnia **mistrza rzemiosła** od osoby, która jedynie długo wykonuje ten sam zawód.
 
 ---
 
@@ -23,74 +31,142 @@ Bronimy aksjomaty tak długo, jak dobrze opisują rzeczywistość. To odróżnia
 
 BABCIA OS **nie jest** systemem operacyjnym komputerów.
 
-To **próba zapisania rodzinnego rzemiosła poznawczego** — nie rodzinnych poglądów ani przekonań, lecz **sposobu dochodzenia do decyzji**:
+To **rodzinne rzemiosło poznawcze** — język, którym opisuje się, jak ludzie uczą się od siebie nawzajem i jak przekazują wiedzę dalej **bez gubienia jej w technologicznym szumie**.
 
-1. **Zobacz**
-2. **Zrozum**
-3. **Zrób**
-4. **Sprawdź**, czy życie potwierdziło, że miałeś rację
+Nazwa „Babcia” przypomina **skąd** wyrósł sposób myślenia — nie stawia jednej osoby na piedestale.
 
-Nazwa „Babcia” przypomina **skąd** ten sposób myślenia wyrósł — nie stawia jednej osoby na piedestale. Ojciec, mama, dyrektorka szkoły, dziadek, Babcia, bratanki i bratankowie — to **adaptery doświadczenia**, nie źródło same z siebie.
-
-**Najtrwalsze modele rodzą się z doświadczenia przekazywanego między ludźmi** — i dopiero później są zapisywane w kodzie. Ta kolejność jest nienaruszalna.
-
-Architektura techniczna tego samego rdzenia: [COS v1.0](cos-v1.md).
+Architektura techniczna: [COS v1.0](cos-v1.md).
 
 ---
 
-## Łańcuch (nie zaczynaj od pokoleń)
+## Dwie osie (nie władza — pochodzenie i walidacja)
 
-Pokolenia **nie są źródłem same z siebie**. Źródłem jest **rzeczywistość** — stawia opór, nagradza dobre decyzje, ujawnia błędy, wymusza uczenie się.
+To **dwukierunkowy most**, nie autorytarna hierarchia.
+
+```
+===================================================================
+                        BABCIA OS v1.0
+===================================================================
+
+  [ OŚ POCHODZENIA ZNACZENIA ]       [ OŚ WALIDACJI / WERYFIKACJI ]
+          Pokolenia                               ▲
+              │                                   │
+              ▼                                   │
+        Doświadczenie                       Rzeczywistość
+              │                                   ▲
+              ▼                                   │
+           Człowiek   ─────────────────────────> Człowiek
+              │                                   ▲
+              ▼                                   │
+            Model    ──────────────────────────>  Model
+              │                                   ▲
+              ▼                                   │
+         Technologia  ────────────────────────> Technologia
+
+===================================================================
+```
+
+| Oś | Kierunek | Pytanie |
+|----|----------|---------|
+| **Pochodzenie znaczenia** | góra → dół | Skąd bierze się sens? |
+| **Walidacja** | dół → góra | Jak sprawdzamy, czy mieliśmy rację? |
+
+**Nie** łańcuch władzy. **Tak** — łańcuch pochodzenia.
+
+Technologia może dostarczyć człowiekowi **nowej informacji** (np. wzorzec w danych), ale **nie zmienia pochodzenia sensu**. Sens powstaje, gdy człowiek interpretuje sygnał w kontekście doświadczenia i rzeczywistości.
+
+Odwrócenie osi pochodzenia → technokracja. Zachowanie kierunku → technologia służy modelowi, model człowiekowi, człowiek wyrasta z gruntu doświadczenia pokoleń.
+
+### Oś pochodzenia (pięć stopni)
+
+| Stopień | Rola |
+|---------|------|
+| **Pokolenia** | ciągłość — wspólnota w czasie (rodzina, przyjaciele, rzemieślnicy). Bez pokoleń nie ma komu przekazać wiedzy. |
+| **Doświadczenie** | filtr — to, co przetrwało próbę czasu i zderzenia z faktami. Nie da się wygenerować cyfrowo; zarabia się obecnością w świecie fizycznym. |
+| **Człowiek** | sprawca i tłumacz — intencja, moralność, emocje; nadaje współczesne znaczenie dziedzictwu. |
+| **Model** | zapis i drogowskaz — skompresowany log (np. pięć pytań, protokół krytyki). Istnieje, by **inny człowiek** mógł wrócić do rzeczywistości. |
+| **Technologia** | adapter wykonawczy — AI, SQL, Kursor, Jira, Python. Bez rozumu i woli; rejestruje, koreluje, pamięta to, co wskazał człowiek. |
+
+### Oś walidacji
+
+Technologia → Model → Człowiek → **Rzeczywistość**
+
+Kod odpalony, reguły sprawdzone, wynik w rękach użytkownika — werdykt pada dopiero przy zderzeniu czynu z fizycznym światem. **W polu wszystko wyjdzie.**
+
+---
+
+## Miejsce AI (wektor technologiczny)
+
+AI nie decyduje. AI dostarcza surowy materiał na wejściu warstwy technologicznej:
+
+```
+AI  →  Model  →  Człowiek
+```
+
+| Warstwa | Rola |
+|---------|------|
+| **AI** | surowa generacja korelacji; przetwarzanie szumu w sygnał — **najniższa** warstwa techniczna |
+| **Model** | zapis, struktura, drogowskaz powrotu |
+| **Człowiek** | rozumienie, intencja, decyzja, czyn — **jedyna** instancja decyzyjna i sprawcza |
+
+Łańcuch **nie zapętla się w maszynie**. Jedynym ujściem jest ludzkie działanie.
+
+---
+
+## Łańcuch poznawczy (intuicja jako hipoteza)
 
 ```
 Rzeczywistość
       ↓
 Doświadczenie
       ↓
-Pokolenia
+Intuicja
       ↓
-Człowiek
+Hipoteza
       ↓
-Model
+Rozumowanie
       ↓
-Technologia
+Decyzja
+      ↓
+Działanie
+      ↓
+Rzeczywistość
 ```
+
+**Nie:** „Intuicja = skompresowane doświadczenie” (zawsze).
+
+**Tak:** **Dobra intuicja jest najczęściej skutkiem bogatego doświadczenia** — ale istnieją też intuicje błędne: uprzedzenia, złudzenia poznawcze, nadmierna pewność siebie.
+
+Intuicja **nie jest** ostatnim sędzią. Jest **hipotezą**, którą rozum i rzeczywistość sprawdzają.
+
+| Intuicja mówi | Intuicja nie mówi |
+|---------------|-------------------|
+| **„Sprawdź tutaj.”** | „To jest prawda.” |
+
+### Przykład: krawiec (mama)
+
+Krawiec wie, gdzie może naciągnąć tkaninę — bez wzoru na naprężenia włókien:
+
+- „Tutaj materiał puści.”
+- „Tutaj nie wolno ciąć.”
+- „Tutaj trzeba zostawić zapas.”
+
+To intuicja. Jeśli szew pęka przy pierwszym założeniu — **rzeczywistość** mówi: ta intuicja tym razem zawiodła. I mistrz **poprawia model**, nie broni ego.
 
 ---
 
-## Dwa obiegi → jeden cykl
+## Pokora (wspólna cecha rzemiosła)
 
-### Obieg uczenia (w dół)
+Tata, mama, dziadek, Babcia — nie zakładali, że wiedzą wszystko. **Sprawdzali.**
 
-```
-Rzeczywistość → Doświadczenie → Pokolenia → Człowiek → Model → Technologia
-```
+| Rzemiosło | Walidacja |
+|-----------|-----------|
+| Budowlaniec | czy beton związał |
+| Krawcowa | czy ubranie leży |
+| Rolnik | jedzie w pole |
+| Babcia | obserwuje, co dzieje się z rodziną |
 
-### Obieg sprawdzania (w górę)
-
-```
-Technologia → Model → Człowiek → Działanie → Rzeczywistość
-```
-
-### Cykl (jedna pętla)
-
-```
-         RZECZYWISTOŚĆ
-              ▲
-              │
-Technologia ← Model ← Człowiek
-      │                    ▲
-      ▼                    │
- Działanie           Pokolenia
-                          ▲
-                          │
-                    Doświadczenie
-                          ▲
-                          │
-                    RZECZYWISTOŚĆ
-```
-
-**Rzeczywistość** jest jednocześnie początkiem uczenia i końcem walidacji.
+To nie tylko doświadczenie — to **pokora wobec rzeczywistości**.
 
 ---
 
@@ -110,6 +186,10 @@ Technologia ← Model ← Człowiek
   ROZWAŻNOŚĆ
   → Doświadczenie podpowiada, kiedy z tej wiedzy skorzystać.
 
+  POKORA
+  → Im więcej doświadczenia, tym chętniej poprawiam model,
+    gdy rzeczywistość pokaże błąd.
+
 ───────────────────────────────────────────────────────────────────
 
   Rzeczywistość pozostaje ostatecznym walidatorem.
@@ -122,15 +202,16 @@ Technologia ← Model ← Człowiek
 
 ---
 
-## Trzy filary (mapa na CORE)
+## Mapa na COS
 
-| Filar | Kompetencja | W CORE |
-|-------|-------------|--------|
-| **WIEDZA** | retencja, korelacja, zapis | SYSTEM |
-| **ZNACZENIE** | rozumienie, decyzja, intencja | CZŁOWIEK |
-| **ROZWAŻNOŚĆ** | kiedy skorzystać z wiedzy | doświadczenie · pokolenia · adaptery |
+| BABCIA OS | COS |
+|-----------|-----|
+| Oś pochodzenia / walidacji | WORKFLOW + CORE |
+| AI → Model → Człowiek | EXECUTION → KNOWLEDGE → CORE (CZŁOWIEK) |
+| Pięć pytań | CORE · pięć funkcji weryfikacji |
+| WIEDZA / ZNACZENIE / ROZWAŻNOŚĆ / POKORA | SYSTEM / CZŁOWIEK / adaptery / aksjomat 2 |
 
-WARSZAWASZA, Jira, Kursor, Python — **EXECUTION** i **KNOWLEDGE** w [COS](cos-v1.md). Nie rdzeń.
+WARSZAWASZA, Jira, Kursor, Python — warstwy **KNOWLEDGE** i **EXECUTION**. Nie rdzeń.
 
 ---
 

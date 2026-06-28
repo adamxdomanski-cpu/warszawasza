@@ -143,6 +143,20 @@ Wejście nowego użytkownika (np. osoby niewidomej) **nie wymaga przebudowy CORE
 
 ### B. Adaptery technologiczne
 
+**Wektor AI (nie decyduje — dostarcza surowy materiał):**
+
+```
+AI  →  Model  →  Człowiek
+```
+
+| Warstwa | Rola |
+|---------|------|
+| **AI** | korelacja, filtr szumu → sygnał (najniższa warstwa techniczna) |
+| **Model** | zapis, struktura, drogowskaz powrotu |
+| **Człowiek** | rozumienie, decyzja, czyn — jedyna instancja sprawcza |
+
+AI może wykryć wzorzec w danych, ale **pochodzenie sensu** pozostaje po stronie człowieka, doświadczenia i rzeczywistości ([BABCIA OS](babcia-os-v1.md) · dwie osie).
+
 Konfiguracja AI (Cursor, Claude, ChatGPT): [`docs/protocol/cos-cursor-rules.json`](../protocol/cos-cursor-rules.json)
 
 Implementacja w repozytorium: [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc)
@@ -163,9 +177,11 @@ Implementacja w repozytorium: [`.cursor/rules/miejski-operator.mdc`](../../.curs
 
 | | BABCIA OS | COS |
 |---|-----------|-----|
-| **Czym jest** | obieg ludzkiego poznania · rodzinne rzemiosło decyzyjne | architektura systemowa · separacja warstw |
-| **Źródło** | rzeczywistość → doświadczenie → pokolenia | CORE STABLE + trzy warstwy implementacji |
-| **Nazwa „Babcia”** | przypomina **skąd** wyrósł sposób myślenia — nie piedestał jednej osoby | adapter w bibliotece perspektyw |
+| **Czym jest** | zachowanie ludzkiego sposobu decyzji **przed** zapisem w modelu i technologii | architektura systemowa · separacja warstw |
+| **Mechanika** | oś pochodzenia znaczenia + oś walidacji (nie władza) | CORE STABLE + KNOWLEDGE / WORKFLOW / EXECUTION |
+| **AI** | AI → Model → Człowiek | EXECUTION · wektor technologiczny |
+| **Intuicja** | hipoteza („Sprawdź tutaj”) — nie werdykt | interpretacja przez CZŁOWIEKA w WORKFLOW |
+| **Pokora** | aksjomat 2: gotowość poprawy modelu | falsyfikacja · STABLE axioms |
 
 ---
 
