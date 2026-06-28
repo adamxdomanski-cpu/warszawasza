@@ -40,7 +40,7 @@ Colour is one implementation detail — not the brand.
 | **Decision** | Where the user commits | Identity |
 | **Interaction** | Affordance, next step | Identity |
 | **Structure** | Shape of the system | Identity |
-| **Water** | Water resource | Signal |
+| **Water** | Water resource (WATER) | Signal |
 | **Nature** | Environment / green | Signal |
 | **Warning** | Alert — pay attention | Signal |
 | **Verified** | Confirmed working | Signal |
