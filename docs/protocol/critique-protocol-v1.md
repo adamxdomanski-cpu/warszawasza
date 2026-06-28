@@ -1,7 +1,8 @@
 # WARSZAWASZA · CRITIQUE PROTOCOL v1.0
 
 > Ciągła krytyka konstruktywna — **kontrakt** (pięć funkcji) + **adaptery** (ludzie).  
-> Powiązane: [`docs/identity/miejski-operator.md`](../identity/miejski-operator.md)
+> Aksjomaty: **STABLE** (nie LOCKED).  
+> Powiązane: [`docs/identity/miejski-operator.md`](../identity/miejski-operator.md) · [`docs/identity/babcia-os-v1.md`](../identity/babcia-os-v1.md)
 
 ## Model funkcjonalny (stały) · Interfejs ludzki (zmienny)
 

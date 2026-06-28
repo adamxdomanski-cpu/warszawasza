@@ -310,6 +310,8 @@ Krytyka wymusza sprawdzenie **drogi powrotnej** do rzeczywistości.
 
 Pełny protokół (Failure per perspektywa): [`docs/protocol/critique-protocol-v1.md`](../protocol/critique-protocol-v1.md)
 
+Manifest BABCIA OS (STABLE): [`docs/identity/babcia-os-v1.md`](babcia-os-v1.md)
+
 Prąd globalny: [`docs/protocol/global-operational-flow-v1.md`](../protocol/global-operational-flow-v1.md)
 
 ```
