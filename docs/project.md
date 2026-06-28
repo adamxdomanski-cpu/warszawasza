@@ -26,7 +26,7 @@ The interface disappears. The person and the city remain.
 
 **DNA is discovered**, not menu-tabbed — like finding a kamienica, a story, a face; rollout, not “Historia → click”.
 
-**Visual language:** meanings first — [`interface-language.md`](interface-language.md) (not in `.cursorrules`).
+**Visual language:** [`design-language.md`](design-language.md) — not in `.cursorrules`.
 
 ---
 

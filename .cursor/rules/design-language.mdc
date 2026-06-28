@@ -1,0 +1,13 @@
+---
+description: Design language — load when editing UI only
+alwaysApply: false
+globs:
+  - "frontend/**"
+  - "docs/design-language.md"
+---
+
+# Design language (UI)
+
+Read [`docs/design-language.md`](../../docs/design-language.md), [`semantic-tokens.ts`](../../frontend/design/semantic-tokens.ts), [`tokens.ts`](../../frontend/design/tokens.ts).
+
+Meanings before colours. No mood or decoration. Max two active signals per screen.

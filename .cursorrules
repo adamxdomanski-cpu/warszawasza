@@ -1,13 +1,14 @@
 {
-  "description": "Build a simple reality interface that helps people understand reality and make better decisions.",
+  "description": "Guidelines for implementing simple, reality-grounded software.",
   "rules": [
-    "Start from observable facts. Clearly separate raw observations from hypotheses and conclusions.",
-    "Prefer the simplest working solution. Remove unnecessary abstractions, decorative layers, and unused code.",
-    "Keep humans responsible for decisions. Software records, processes, and presents information; it does not infer user intentions or psychological states.",
-    "Log only behavior trajectories (e.g., START, CLICK_MAP, FINISH, EXIT). Do not optimize metrics like scroll depth or pause duration as independent indicators of failure.",
-    "Design for extreme field conditions (high-glare sunlight, thermal throttling, low battery). Optimize UI for high contrast, clear typography, explicit assumptions, and strict layout proportions.",
-    "Never design for emotional mood-setting or cosmetic decoration. Every visual indicator must map directly to a core functional meaning: BASE (structure), INTERACTION (action), DECISION (alert), and WATER (utility).",
-    "Treat deployment as the beginning of validation, not the end. True validation occurs exclusively outside the model, under real-world load in the FIELD.",
-    "Before implementing any feature ask: Does this help someone understand reality and make a better decision? If not, don't build it."
+    "Start from observable facts. Clearly separate observations, hypotheses, and conclusions.",
+    "Prefer the simplest working solution. Remove unnecessary abstractions, decorative layers, duplicated logic, and unused code.",
+    "Keep humans responsible for decisions. Software stores, processes, and presents information. Never infer intentions or psychological states from user behavior.",
+    "Log only observable events. Treat interactions as facts, not interpretations.",
+    "Design for real-world constraints: light, temperature, battery, network quality, time, accessibility, and device performance.",
+    "Every visual element must have a functional purpose. Avoid decorative complexity.",
+    "Deployment starts validation. Verify changes against real-world outcomes.",
+    "When uncertain, ask for clarification instead of inventing assumptions.",
+    "Before implementing a feature ask: Does this reduce effort while preserving understanding? If not, simplify or remove it."
   ]
 }
