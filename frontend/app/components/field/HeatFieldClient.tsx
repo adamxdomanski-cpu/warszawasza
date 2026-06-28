@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import LangNav from "../LangNav";
 import SignalControl from "../SignalControl";
 import {
   HEAT_POINTS,
   HEAT_TEMP_C,
+  formatDistance,
   heatFieldCopy,
 } from "../../../lib/field/heatFieldI18n";
 import type { Lang } from "../../../lib/i18n";
@@ -17,12 +18,11 @@ import {
   getInteractionTrace,
 } from "../../../lib/interactionTrace";
 
-type FilterMode = "all" | "water" | "shade";
-
 export default function HeatFieldClient() {
   const [lang, setLang] = useState<Lang>("pl");
-  const [filter, setFilter] = useState<FilterMode>("all");
+  const [helpOpen, setHelpOpen] = useState(false);
   const [traceTick, setTraceTick] = useState(0);
+  const nearbyRef = useRef<HTMLElement>(null);
 
   const copy = heatFieldCopy(lang);
   const events = getInteractionTrace().events;
@@ -40,35 +40,19 @@ export default function HeatFieldClient() {
   const bump = () => setTraceTick((t) => t + 1);
 
   const onCta = () => {
-    appendInteractionEvent("SELECT", "ZNAJDZ_WODE_I_CIEN");
+    appendInteractionEvent("SELECT", "POMOC_W_POBLIZU");
     appendInteractionEvent("NEXT");
-    setFilter("water");
+    setHelpOpen(true);
     bump();
+    window.requestAnimationFrame(() => {
+      nearbyRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   };
 
   const onPoint = (selectValue: string) => {
     appendInteractionEvent("SELECT", selectValue);
     bump();
   };
-
-  const onBack = () => {
-    appendInteractionEvent("BACK");
-    setFilter("all");
-    bump();
-  };
-
-  const onShadeOnly = () => {
-    appendInteractionEvent("SELECT", "ZNAJDZ_CIEN");
-    setFilter("shade");
-    bump();
-  };
-
-  const visiblePoints = HEAT_POINTS.filter((p) => {
-    if (filter === "all") return true;
-    if (filter === "water") return p.id !== "biblio_mokotow" || true;
-    if (filter === "shade") return p.id === "biblio_mokotow" || p.status === "ok";
-    return true;
-  });
 
   return (
     <div className="relative min-h-dvh bg-field text-ink">
@@ -81,7 +65,7 @@ export default function HeatFieldClient() {
         }}
       />
 
-      <main className="relative z-10 mx-auto flex max-w-lg flex-col gap-8 p-5 pb-16 sm:p-8">
+      <main className="relative z-10 mx-auto flex max-w-lg flex-col gap-6 p-5 pb-16 sm:gap-8 sm:p-8">
         <header className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <Link
@@ -99,26 +83,59 @@ export default function HeatFieldClient() {
           <h1 className="m-0 text-2xl font-light leading-snug sm:text-3xl">
             {copy.factHead}
           </h1>
-          <p className="m-0 font-mono-field text-sm text-accent">{copy.alertRcb}</p>
-          <ul className="m-0 list-none space-y-2 pl-0 text-sm text-accent/75">
-            {copy.frictions.map((line) => (
-              <li key={line}>· {line}</li>
-            ))}
-          </ul>
+
+          <details className="rounded border border-accent/20 bg-field/80 px-4 py-3">
+            <summary className="cursor-pointer text-sm font-medium text-accent touch-manipulation">
+              {copy.alertRcbLabel}
+            </summary>
+            <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/75">
+              {copy.alertRcbBody}
+            </p>
+          </details>
+
+          <div className="rounded border border-accent/20 bg-field/80 px-4 py-3">
+            <p className="m-0 mb-2 text-sm font-medium text-ink/90">{copy.transportTitle}</p>
+            <ul className="m-0 list-none space-y-1.5 pl-0 text-sm text-accent/75">
+              <li>⚠ {copy.transportTram}</li>
+              <li>⚠ {copy.transportSkm}</li>
+            </ul>
+            <details className="mt-2">
+              <summary className="cursor-pointer text-xs text-accent/50 touch-manipulation">
+                {copy.transportMore}
+              </summary>
+              <p className="mt-2 mb-0 text-xs leading-relaxed text-accent/45">
+                {copy.transportTram}. {copy.transportSkm}.
+              </p>
+            </details>
+          </div>
+
+          <details className="rounded border border-accent/15 bg-field/60 px-4 py-3">
+            <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
+              {copy.waterSaveTitle}
+            </summary>
+            <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/65">
+              {copy.waterSaveQuestion}
+            </p>
+          </details>
+
           <SignalControl
             type="button"
             direction="right"
             onClick={onCta}
             className="min-h-12 w-full border border-accent/35 bg-field px-4 py-3 text-left text-sm leading-snug text-ink touch-manipulation"
           >
-            {copy.ctaWaterShade}
+            {copy.ctaNearbyHelp}
           </SignalControl>
         </header>
 
-        <section aria-label={copy.layer2Title}>
+        <section
+          ref={nearbyRef}
+          aria-label={copy.layer2Title}
+          className={helpOpen ? "opacity-100" : "opacity-100"}
+        >
           <h2 className="mb-4 text-base font-normal text-ink/90">{copy.layer2Title}</h2>
           <div className="flex flex-col gap-2">
-            {visiblePoints.map((point) => {
+            {HEAT_POINTS.map((point) => {
               const labels = copy.pointLabels[point.id];
               const ok = point.status === "ok";
               return (
@@ -132,33 +149,21 @@ export default function HeatFieldClient() {
                     className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${ok ? "bg-citrus" : "bg-accent"}`}
                     aria-hidden
                   />
-                  <span className="flex flex-col gap-0.5">
-                    <span className="text-sm leading-snug">{labels.name}</span>
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="flex flex-wrap items-baseline justify-between gap-2">
+                      <span className="text-sm leading-snug">{labels.name}</span>
+                      <span className="shrink-0 text-xs tabular-nums text-accent/55">
+                        {formatDistance(copy, point.distanceM, point.walkMin)}
+                      </span>
+                    </span>
                     <span className="text-xs text-accent/65">
-                      {ok ? labels.statusOk : labels.statusFail} · {labels.action}
+                      {labels.kindLabel} · {ok ? labels.statusOk : labels.statusFail} ·{" "}
+                      {labels.action}
                     </span>
                   </span>
                 </button>
               );
             })}
-          </div>
-          <div className="mt-4 flex flex-wrap gap-4">
-            <SignalControl
-              type="button"
-              direction="left"
-              onClick={onBack}
-              className="min-h-10 text-sm text-accent/55 touch-manipulation"
-            >
-              {copy.back}
-            </SignalControl>
-            <SignalControl
-              type="button"
-              direction="down"
-              onClick={onShadeOnly}
-              className="min-h-10 text-sm text-accent/75 touch-manipulation"
-            >
-              {copy.findShade}
-            </SignalControl>
           </div>
         </section>
 
@@ -167,12 +172,27 @@ export default function HeatFieldClient() {
             ▼ {copy.technicalData}
           </summary>
           <div className="mt-4 space-y-4 text-xs leading-relaxed text-accent/40">
-            <div>
-              <p className="m-0 mb-1 font-mono-field text-accent/50">{copy.whyContext}</p>
-              <p className="m-0 italic text-accent/45">{copy.hypothesisHeat}</p>
-              <p className="mt-2 m-0">· {copy.knowledgeLink}</p>
-              <p className="m-0">· {copy.paperLink}</p>
-            </div>
+            <details className="rounded border border-accent/10 bg-field/40 p-3">
+              <summary className="cursor-pointer text-accent/55 touch-manipulation">
+                {copy.whyContext}
+              </summary>
+              <div className="mt-3 space-y-3">
+                <div>
+                  <p className="m-0 mb-1 text-accent/50">{copy.sourcesTitle}</p>
+                  <p className="m-0">· {copy.knowledgeLink}</p>
+                </div>
+                <div>
+                  <p className="m-0 mb-1 text-accent/50">{copy.researchTitle}</p>
+                  <p className="m-0">· {copy.paperLink}</p>
+                </div>
+                <details>
+                  <summary className="cursor-pointer text-accent/45 touch-manipulation">
+                    {copy.hypothesisTitle}
+                  </summary>
+                  <p className="mt-2 mb-0 italic text-accent/40">{copy.hypothesisHeat}</p>
+                </details>
+              </div>
+            </details>
 
             <div className="rounded border border-accent/10 bg-field/60 p-3 font-mono-field">
               <div className="mb-1 text-accent/55">{copy.traceTitle}</div>
