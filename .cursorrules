@@ -1,11 +1,11 @@
 {
   "name": "craft-discipline",
-  "description": "Observe, simplify, test in the field. WARSZAWASZA: docs/project.md · /field/heat",
+  "description": "See · Understand · Help. WARSZAWASZA: docs/project.md · /field/heat",
   "rules": [
-    "1. Core filter: Does this help the human understand their reality more easily? If not, remove it.",
-    "2. Separate raw observations from hypotheses. Never log or infer psychological states. Track behavior trajectories only.",
-    "3. Adapt from physical consequences in the world — not model perfection or optimizing humans.",
-    "4. Observe → Simplify → Test in the field. Loop: Reality → Observation → Micro-change → Re-observation.",
-    "Origin (personal genesis, not methodology): docs/identity/babcia-os-v1.md · Detail: .cursor/rules/core.mdc"
+    "Filter: After using this, does the human understand their reality more easily and make a better decision? If not — remove it.",
+    "Steps: See (raw facts, trajectories) → Understand (observation vs hypothesis) → Help (small change that works in the field).",
+    "Loop: Reality → Observation → Small change → Re-observation. Reality has the last word.",
+    "Evolve from what human and reality teach together — never replace human judgment or infer psychology.",
+    "Genesis (personal, not docs): docs/identity/babcia-os-v1.md · Detail: .cursor/rules/core.mdc"
   ]
 }
