@@ -1,6 +1,11 @@
 import type { TrajectoryChoice } from "./artifactI18n";
 import { buildFopDocument, buildFopHumanLabels } from "./fopBridge";
 import type { CitizenTraceFields } from "./domain/traceContract";
+import {
+  decisionEventsForLog,
+  formatDecisionPath,
+  suggestTrajectoryHypotheses,
+} from "./decisionTrajectory";
 import { COPY, PIPELINE_ORDER, traceArtifactCopy, type Lang } from "./i18n";
 import {
   buildTraceStatusLines,
@@ -18,6 +23,8 @@ export type ObservationTracePayload = {
   logLines: string[];
   createdAt: number;
   citizen?: CitizenTraceFields;
+  /** Observable decision path — facts only; see decision-trajectory-v1.md */
+  decisionEvents?: import("./decisionTrajectory").DecisionEvent[];
 };
 
 export const TRACE_REGISTRY_KEY = "warszawasza-field-traces";
@@ -109,15 +116,24 @@ export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
   return lines.join("\n");
 }
 
-/** WARSTWA 2 — timestamp log lines. */
+/** WARSTWA 2 — timestamp log lines + decision path (observation). */
 export function buildTraceLogLayer(trace: ObservationTracePayload): string {
   const artifact = traceArtifactCopy(trace.lang);
   const copy = COPY[trace.lang];
+  const decisionLines = trace.decisionEvents?.length
+    ? decisionEventsForLog(trace.decisionEvents)
+    : [];
+  const pathBlock =
+    trace.decisionEvents && trace.decisionEvents.length > 0
+      ? ["", "path:", formatDecisionPath(trace.decisionEvents)]
+      : [];
   return [
     artifact.layer2,
     "",
     copy.trace.logHeader,
     ...trace.logLines.map((line) => `  ${line}`),
+    ...decisionLines,
+    ...pathBlock,
   ].join("\n");
 }
 
@@ -135,13 +151,29 @@ export function buildTraceFopLayer(trace: ObservationTracePayload): string {
   ].join("\n");
 }
 
+/** Optional hypothesis block — never mixed into observation facts without label. */
+export function buildTraceHypothesisLayer(trace: ObservationTracePayload): string {
+  if (!trace.decisionEvents?.length) return "";
+  const suggestions = suggestTrajectoryHypotheses(trace.decisionEvents);
+  if (suggestions.length === 0) return "";
+  const lines = ["HYPOTHESIS (provisional — not verified):", ""];
+  for (const s of suggestions) {
+    lines.push(`Observation: ${s.observation}`);
+    lines.push(`Hypothesis: ${s.hypothesis}`);
+    lines.push("");
+  }
+  return lines.join("\n").trimEnd();
+}
+
 export function buildTraceDocument(trace: ObservationTracePayload): string {
+  const hypothesis = buildTraceHypothesisLayer(trace);
   return [
     buildTraceHumanLayer(trace),
     "",
     buildTraceLogLayer(trace),
     "",
     buildTraceFopLayer(trace),
+    ...(hypothesis ? ["", hypothesis] : []),
   ].join("\n");
 }
 

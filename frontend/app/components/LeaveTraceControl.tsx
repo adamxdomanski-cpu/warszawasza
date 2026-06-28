@@ -20,6 +20,10 @@ import {
   registerTrace,
   type ObservationTracePayload,
 } from "../../lib/observationTrace";
+import {
+  appendDecisionEvent,
+  getDecisionEvents,
+} from "../../lib/decisionTrajectory";
 import { TRACE_FORM_COPY, traceSubjectOptions } from "../../lib/traceFormI18n";
 import SignalControl from "./SignalControl";
 
@@ -95,6 +99,8 @@ export default function LeaveTraceControl({
   };
 
   const leaveTrace = useCallback(async () => {
+    appendDecisionEvent("FINISH");
+    const decisionEvents = getDecisionEvents();
     const payload: ObservationTracePayload = {
       lang,
       trajectory,
@@ -103,6 +109,7 @@ export default function LeaveTraceControl({
       clock,
       logLines,
       createdAt: Date.now(),
+      decisionEvents,
       citizen: {
         ...fields,
         observedAt: fields.observedAt || clock,

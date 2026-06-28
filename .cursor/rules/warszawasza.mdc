@@ -59,4 +59,5 @@ Template: [`docs/protocol/trace-alert-comms-v1.md`](../../docs/protocol/trace-al
 
 - Observation before interpretation; **less noise** over more data.
 - Operational log: observable state in LOG; rationale in DECISION — [`docs/protocol/log-format-v1.md`](../../docs/protocol/log-format-v1.md)
+- Decision trajectory (facts only): [`docs/protocol/decision-trajectory-v1.md`](../../docs/protocol/decision-trajectory-v1.md)
 - Default task: write minimal, verifiable code — not methodology essays unless asked.

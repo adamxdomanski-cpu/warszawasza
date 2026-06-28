@@ -18,6 +18,10 @@ import SignalControl from "./SignalControl";
 import TrajectoryChoiceButton from "./TrajectoryChoiceButton";
 import WarszawaszaLogoLink from "./WarszawaszaLogoLink";
 import { persistTrajectory } from "./TrajectorySwitch";
+import {
+  appendDecisionEvent,
+  type DecisionEventType,
+} from "../../lib/decisionTrajectory";
 
 type ObservationGateProps = {
   onComplete: (choice: TrajectoryChoice, lang: Lang) => void;
@@ -77,6 +81,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
     if (orientExitDoneRef.current) return;
     orientExitDoneRef.current = true;
     markOrientSeen();
+    appendDecisionEvent("NEXT");
     setOrientExiting(false);
     setPhase("question");
   };
@@ -88,13 +93,29 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
   }, [orientExiting]);
 
   const selectTrajectory = (next: TrajectoryChoice) => {
+    const event: DecisionEventType =
+      next === "true" ? "ANSWER_TRUE" : "ANSWER_FALSE";
+    appendDecisionEvent(event);
     setChoice(next);
     setPhase("reveal");
     persistTrajectory(next);
   };
 
+  const returnToQuestion = () => {
+    appendDecisionEvent("BACK");
+    setChoice(null);
+    setPhase("question");
+  };
+
   const enterField = () => {
-    if (choice) onComplete(choice, lang);
+    if (choice) {
+      appendDecisionEvent("NEXT");
+      onComplete(choice, lang);
+    }
+  };
+
+  const onHesitate = () => {
+    appendDecisionEvent("PAUSE");
   };
 
   if (phase === "orient") {
@@ -156,6 +177,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
                 hint={copy.falseHint}
                 direction="down"
                 onCommit={selectTrajectory}
+                onHesitate={onHesitate}
               />
               <TrajectoryChoiceButton
                 choice="true"
@@ -163,6 +185,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
                 hint={copy.trueHint}
                 direction="up-right"
                 onCommit={selectTrajectory}
+                onHesitate={onHesitate}
               />
             </div>
           </section>
@@ -190,9 +213,17 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             </div>
             <SignalControl
               type="button"
+              direction="left"
+              onClick={returnToQuestion}
+              className="mt-2 min-h-10 self-start font-mono-field text-xs tracking-wider text-accent/45 touch-manipulation"
+            >
+              ← T / F
+            </SignalControl>
+            <SignalControl
+              type="button"
               direction="right"
               onClick={enterField}
-              className="accent-signal context-link-target mt-6 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
+              className="accent-signal context-link-target mt-4 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
             >
               {copy.enterField}
             </SignalControl>
