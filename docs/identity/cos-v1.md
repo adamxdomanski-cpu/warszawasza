@@ -1,0 +1,172 @@
+# Civic Operating System (COS) v1.0
+
+> **Aksjomaty:** STABLE — nie LOCKED. Bronimy je tak długo, jak dobrze opisują rzeczywistość.  
+> **Test architektury:** COS jest **niezależny od narzędzi** — zmiana Jiry, Cursora lub Pythona nie wymaga przebudowy rdzenia.  
+> Powiązane: [`babcia-os-v1.md`](babcia-os-v1.md) · [`../protocol/critique-protocol-v1.md`](../protocol/critique-protocol-v1.md)
+
+---
+
+## Nadrzędny aksjomat (STABLE)
+
+**Każda wiedza zaczyna się i kończy w rzeczywistości.**
+
+Beton od taty, szycie od mamy, praktyka dziadka, pytania Babci, modele, AI i kod — wszystko to jest **pośrodku**. Ani początkiem. Ani końcem.
+
+---
+
+## Stos (separacja modelu od implementacji)
+
+```
+===================================================================
+                    CIVIC OPERATING SYSTEM (COS)
+                            VERSION 1.0
+===================================================================
+
+                            ┌─────────┐
+                            │  CORE   │  ← STABLE · bez person i oprogramowania
+                            └────┬────┘
+                                 │
+         ┌───────────────────────┼───────────────────────┐
+         ▼                       ▼                       ▼
+   [ KNOWLEDGE ]           [ WORKFLOW ]            [ EXECUTION ]
+  Repozytoria wiedzy      Pętla procesowa         Narzędzia i kod
+  (Markdown/SQL/Wiki)    (Jira/Git/Kanban)       (Cursor/AI/Python)
+
+===================================================================
+```
+
+| Warstwa | Rola | Wymienność |
+|---------|------|------------|
+| **CORE** | epistemologia, pięć funkcji, podział SYSTEM/CZŁOWIEK | **nie** — STABLE, falsyfikowalny |
+| **KNOWLEDGE** | ślady, logi, zapisy strukturalne | agnostyczna technologicznie |
+| **WORKFLOW** | przepływ zadań i uczenia | mapowanie na Jira/Linear/GitHub |
+| **EXECUTION** | adaptery ludzkie i technologiczne | **całkowicie** wymienna |
+
+---
+
+## 1. CORE (rdzeń epistemiczny)
+
+Nienaruszalna, stała matematyczno-logiczna struktura. **Całkowicie niezależna** od person i oprogramowania.
+
+### A. Podział kompetencji procesowych
+
+| | Łańcuch | Zakres |
+|---|---------|--------|
+| **SYSTEM** | Rejestruje → Koreluje → Pamięta | bezrefleksyjny zapis, korelacja, retencja |
+| **CZŁOWIEK** | Rozumie → Decyduje → Działa | intencjonalność, sens, sprawczość |
+
+Nie przypisuj maszynie rozumu, intencji ani moralności.
+
+### B. Pięć funkcji weryfikacji (matryca pytań)
+
+| Funkcja | Pytanie | Test |
+|---------|---------|------|
+| **SENS** | Czy to ma sens? | abstrakcja kontra surowy fakt |
+| **CEL** | Czy wiem, po co to jest? | pierwsze 20 s → intencja |
+| **DZIAŁANIE** | Czy to działa? | praktyka pod obciążeniem |
+| **CZŁOWIEK** | Co stanie się z człowiekiem, jeśli model odniesie sukces? | skutek ludzki i społeczny |
+| **SKALA** | A co, jeśli zmienimy skalę? | czas, przestrzeń, natężenie |
+
+> W WARSZAWASZA funkcja **DZIAŁANIE** używa sformułowania konsekwencji: *„Co stanie się z pracą, gdy przyjdzie moment weryfikacji?”* — to adapter krytyki, nie zmiana kontraktu.
+
+Ewolucja systemu = **więcej perspektyw** (adapterów), **nie więcej pytań**.
+
+---
+
+## 2. KNOWLEDGE (zarządzanie wiedzą)
+
+Warstwa przechowywania śladów i logów strukturalnych. Agnostyczna technologicznie.
+
+### Rule 0 (redukcja oporu)
+
+**Każda abstrakcja musi zmniejszać opór poznawczy. W przeciwnym razie należy ją usunąć.**
+
+### Kryterium prawdy
+
+Model jest zapisem, który umożliwia powrót do rzeczywistości. **Model kończy się tam, gdzie zaczyna się życie.**
+
+### Przykładowe implementacje (wymienne)
+
+- Markdown / Obsidian — notatki lokalne
+- Confluence — wiedza zespołowa
+- SQL — rejestracja stanów miasta
+- Git — historia zmian artefaktów
+
+---
+
+## 3. WORKFLOW (zamknięta pętla procesu)
+
+Dynamiczny przepływ zadań. COS przetwarza sygnały na czyny. Ten sam schemat mapuje się na dowolny system zarządzania (Jira, Linear, GitHub Issues).
+
+```
+  [ REJESTRACJA ]  ──>  [ OBSERWACJA ]  ──>  [ INTERPRETACJA ]
+ (Surowy sygnał)        (Wybór celu)         (Nadanie znaczenia)
+                                                      │
+                                                      ▼
+   [ HISTORIA ]    <──   [ WALIDACJA ]  <──     [ DECYZJA ]
+ (Zapis do bazy)         (W polu / Real)      (Epistemiczny kolaps)
+        │                                             │
+        ▼                                             ▼
+[ NOWA OBSERWACJA ]                             [ DZIAŁANIE ]
+                                              (Ruch fizyczny / kod)
+```
+
+| Etap | Kto | Co |
+|------|-----|-----|
+| **Rejestracja** | SYSTEM | pasywny, masowy zapis faktów |
+| **Obserwacja** | CZŁOWIEK | wybór wycinka rejestracji istotnego dla celu |
+| **Interpretacja** | CZŁOWIEK | filtry pięciu funkcji CORE + mapowanie perspektyw |
+| **Decyzja** | CZŁOWIEK | kolaps epistemiczny — jedna droga, odcięcie niepewności |
+| **Działanie** | CZŁOWIEK | krok fizyczny lub programistyczny w rzeczywistości |
+| **Walidacja** | RZECZYWISTOŚĆ | *W polu wszystko wyjdzie* — zderzenie skutku z faktem |
+| **Historia** | SYSTEM | wnioski z walidacji jako nowy ślad |
+| **Nowa obserwacja** | — | kolejny cykl na zaktualizowanych danych |
+
+---
+
+## 4. EXECUTION (wykonanie i adaptery)
+
+Wymienne wtyczki technologiczne i ludzkie. Zmiana narzędzia lub roli **nie narusza CORE**.
+
+### A. Adaptery ludzkie
+
+Dowolna rola wchodzi jako adapter mapujący doświadczenie na pięć funkcji CORE:
+
+| Przykład adaptera | Funkcje |
+|-------------------|---------|
+| Mieszkaniec | SENS, CEL |
+| Inżynier / kierowca | DZIAŁANIE |
+| Urzędnik / planista | SKALA |
+| Oluś, Tomek, Babcia, Dziadek, Orzeł | biblioteka perspektyw WARSZAWASZA |
+
+Wejście nowego użytkownika (np. osoby niewidomej) **nie wymaga przebudowy CORE** — mapujemy doświadczenie na CZŁOWIEK / DZIAŁANIE.
+
+### B. Adaptery technologiczne
+
+Konfiguracja AI (Cursor, Claude, ChatGPT): [`docs/protocol/cos-cursor-rules.json`](../protocol/cos-cursor-rules.json)
+
+Implementacja w repozytorium: [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc)
+
+---
+
+## Test architektury (checklist)
+
+| Pytanie | Odpowiedź |
+|---------|-----------|
+| Nowy użytkownik wymaga przebudowy CORE? | **Nie** — nowy adapter |
+| Jira → Linear wymaga zmiany modelu? | **Nie** — ten sam 8-etapowy workflow |
+| Usunięcie skryptu Python niszczy metodologię? | **Nie** — kod to artefakt EXECUTION |
+
+---
+
+## Relacja BABCIA OS ↔ COS
+
+| | BABCIA OS | COS |
+|---|-----------|-----|
+| **Czym jest** | obieg ludzkiego poznania · rodzinne rzemiosło decyzyjne | architektura systemowa · separacja warstw |
+| **Źródło** | rzeczywistość → doświadczenie → pokolenia | CORE STABLE + trzy warstwy implementacji |
+| **Nazwa „Babcia”** | przypomina **skąd** wyrósł sposób myślenia — nie piedestał jednej osoby | adapter w bibliotece perspektyw |
+
+---
+
+*Używaj kodu z rozwagą.*

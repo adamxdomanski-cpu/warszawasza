@@ -1,0 +1,14 @@
+{
+  "name": "Civic Operating System (COS) v1.0",
+  "description": "Zasady separacji modelu od implementacji i redukcji oporu poznawczego.",
+  "axioms_status": "STABLE",
+  "supreme_axiom": "Każda wiedza zaczyna się i kończy w rzeczywistości.",
+  "rules": [
+    "Rule 0: Każda abstrakcja musi zmniejszać opór poznawczy. W przeciwnym razie należy ją usunąć.",
+    "Separacja kompetencji: System rejestruje, koreluje i pamięta. Człowiek rozumie, decyduje i działa. Nie przypisuj maszynie ludzkich cech.",
+    "Agnostycyzm technologiczny: Kod jest wyłącznie wymiennym adapterem wykonawczym (Execution Layer). Ma realizować cel przy najmniejszej liczbie kroków do decyzji.",
+    "Zasada Dziadka: W polu wszystko wyjdzie. Każda generowana funkcja lub struktura musi kończyć się jasnym kryterium weryfikacji w świecie fizycznym lub na produkcji.",
+    "Workflow rygor: Przed oddaniem refaktoru lub kodu przetestuj go pętlą krytyczną COS (Sens, Cel, Działanie, Człowiek, Skala). Identyfikuj stany awarii (Failure Modes) przed wdrożeniem.",
+    "Aksjomaty STABLE: Jeżeli rzeczywistość przeczy modelowi, zmienia się model. Nie rzeczywistość."
+  ]
+}

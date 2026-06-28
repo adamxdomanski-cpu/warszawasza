@@ -1,7 +1,10 @@
 # GLOBALNY PRĄD OPERACYJNY v1.0
 
 > Skompresowany zapis łączący Warstwę 0, rejestrację, interfejs myślenia i krytykę.  
+> Architektura: [`cos-v1.md`](../identity/cos-v1.md) · filozofia: [`babcia-os-v1.md`](../identity/babcia-os-v1.md)  
 > Powiązane: [`critique-protocol-v1.md`](critique-protocol-v1.md) · [`../identity/miejski-operator.md`](../identity/miejski-operator.md)
+
+**Aksjomat nadrzędny (STABLE):** Każda wiedza zaczyna się i kończy w rzeczywistości.
 
 ```
 ===================================================================

@@ -312,6 +312,8 @@ Pełny protokół (Failure per perspektywa): [`docs/protocol/critique-protocol-v
 
 Manifest BABCIA OS (STABLE): [`docs/identity/babcia-os-v1.md`](babcia-os-v1.md)
 
+Architektura COS v1.0: [`docs/identity/cos-v1.md`](cos-v1.md)
+
 Prąd globalny: [`docs/protocol/global-operational-flow-v1.md`](../protocol/global-operational-flow-v1.md)
 
 ```

@@ -2,7 +2,12 @@
 
 > Ciągła krytyka konstruktywna — **kontrakt** (pięć funkcji) + **adaptery** (ludzie).  
 > Aksjomaty: **STABLE** (nie LOCKED).  
-> Powiązane: [`docs/identity/miejski-operator.md`](../identity/miejski-operator.md) · [`docs/identity/babcia-os-v1.md`](../identity/babcia-os-v1.md)
+> Architektura: [COS v1.0](../identity/cos-v1.md) · filozofia: [BABCIA OS](../identity/babcia-os-v1.md)  
+> Powiązane: [`docs/identity/miejski-operator.md`](../identity/miejski-operator.md)
+
+## Nadrzędny aksjomat
+
+**Każda wiedza zaczyna się i kończy w rzeczywistości.** Jeżeli rzeczywistość przeczy modelowi — zmienia się model, nie rzeczywistość.
 
 ## Model funkcjonalny (stały) · Interfejs ludzki (zmienny)
 

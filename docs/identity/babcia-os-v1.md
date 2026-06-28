@@ -3,15 +3,94 @@
 > **Status aksjomatów:** STABLE — nie LOCKED.  
 > Aksjomaty są **stabilne**, nie **zamrożone**. System, który zablokowałby własne aksjomaty, stałby się religią, a nie metodą naukową i rzemiosłem.
 
-Powiązane: [`miejski-operator.md`](miejski-operator.md) · [`../protocol/critique-protocol-v1.md`](../protocol/critique-protocol-v1.md)
+Powiązane: [`cos-v1.md`](cos-v1.md) · [`miejski-operator.md`](miejski-operator.md) · [`../protocol/critique-protocol-v1.md`](../protocol/critique-protocol-v1.md)
 
 ---
 
-## Czym jest
+## Nadrzędny aksjomat (STABLE)
 
-BABCIA OS to **rodzinne rzemiosło poznawcze** — międzypokoleniowa matryca podejmowania decyzji — przeniesiona do kodu i procedur operacyjnych **dopiero wtedy**, gdy udowodniła skuteczność w realnym życiu.
+**Każda wiedza zaczyna się i kończy w rzeczywistości.**
 
-**Kolejność (nienaruszalna):** najpierw życie i doświadczenie przekazywane między ludźmi → potem działanie → na samym końcu model i kod.
+To zdanie obejmuje wszystko wypracowane w projekcie — i jest **bezpiecznikiem** całego systemu:
+
+> Jeżeli rzeczywistość przeczy modelowi, **zmienia się model**. Nie rzeczywistość.
+
+Bronimy aksjomaty tak długo, jak dobrze opisują rzeczywistość. To odróżnia **metodę** od **dogmatu**.
+
+---
+
+## Czym jest (i czym nie jest)
+
+BABCIA OS **nie jest** systemem operacyjnym komputerów.
+
+To **próba zapisania rodzinnego rzemiosła poznawczego** — nie rodzinnych poglądów ani przekonań, lecz **sposobu dochodzenia do decyzji**:
+
+1. **Zobacz**
+2. **Zrozum**
+3. **Zrób**
+4. **Sprawdź**, czy życie potwierdziło, że miałeś rację
+
+Nazwa „Babcia” przypomina **skąd** ten sposób myślenia wyrósł — nie stawia jednej osoby na piedestale. Ojciec, mama, dyrektorka szkoły, dziadek, Babcia, bratanki i bratankowie — to **adaptery doświadczenia**, nie źródło same z siebie.
+
+**Najtrwalsze modele rodzą się z doświadczenia przekazywanego między ludźmi** — i dopiero później są zapisywane w kodzie. Ta kolejność jest nienaruszalna.
+
+Architektura techniczna tego samego rdzenia: [COS v1.0](cos-v1.md).
+
+---
+
+## Łańcuch (nie zaczynaj od pokoleń)
+
+Pokolenia **nie są źródłem same z siebie**. Źródłem jest **rzeczywistość** — stawia opór, nagradza dobre decyzje, ujawnia błędy, wymusza uczenie się.
+
+```
+Rzeczywistość
+      ↓
+Doświadczenie
+      ↓
+Pokolenia
+      ↓
+Człowiek
+      ↓
+Model
+      ↓
+Technologia
+```
+
+---
+
+## Dwa obiegi → jeden cykl
+
+### Obieg uczenia (w dół)
+
+```
+Rzeczywistość → Doświadczenie → Pokolenia → Człowiek → Model → Technologia
+```
+
+### Obieg sprawdzania (w górę)
+
+```
+Technologia → Model → Człowiek → Działanie → Rzeczywistość
+```
+
+### Cykl (jedna pętla)
+
+```
+         RZECZYWISTOŚĆ
+              ▲
+              │
+Technologia ← Model ← Człowiek
+      │                    ▲
+      ▼                    │
+ Działanie           Pokolenia
+                          ▲
+                          │
+                    Doświadczenie
+                          ▲
+                          │
+                    RZECZYWISTOŚĆ
+```
+
+**Rzeczywistość** jest jednocześnie początkiem uczenia i końcem walidacji.
 
 ---
 
@@ -49,9 +128,9 @@ BABCIA OS to **rodzinne rzemiosło poznawcze** — międzypokoleniowa matryca po
 |-------|-------------|--------|
 | **WIEDZA** | retencja, korelacja, zapis | SYSTEM |
 | **ZNACZENIE** | rozumienie, decyzja, intencja | CZŁOWIEK |
-| **ROZWAŻNOŚĆ** | kiedy skorzystać z wiedzy | doświadczenie między ludźmi (adaptery) |
+| **ROZWAŻNOŚĆ** | kiedy skorzystać z wiedzy | doświadczenie · pokolenia · adaptery |
 
-WARSZAWASZA, Jira, Kursor i reszta stosu to **adaptery i artefakty** — nie rdzeń. Rdzeń jest w powyższej kolejności i w pięciu funkcjach weryfikacji ([`critique-protocol-v1.md`](../protocol/critique-protocol-v1.md)).
+WARSZAWASZA, Jira, Kursor, Python — **EXECUTION** i **KNOWLEDGE** w [COS](cos-v1.md). Nie rdzeń.
 
 ---
 
