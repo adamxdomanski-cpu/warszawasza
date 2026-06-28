@@ -14,6 +14,7 @@ If not, don't build it.
 - Start from observable facts. Clearly separate observations, hypotheses and conclusions.
 - Prefer the simplest working solution. Remove unnecessary abstractions and unused code.
 - Keep humans responsible for decisions. Software records, processes and presents information; it does not infer user intentions or psychological states.
+- Never infer intentions from scrolling metrics. Treat SCROLL, PAUSE, and BACK as raw physical friction. High scroll before a core decision = design failure. Minimize necessary movement.
 - Design for low cognitive load. Use clear language, explicit assumptions and simple interfaces.
 - Treat deployment as the beginning of validation, not the end. Production feedback is the primary source of improvement.
 - Improve through small iterations. Observe → Build → Measure → Improve.
