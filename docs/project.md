@@ -4,7 +4,9 @@
 
 **Four checks:** (1) W polu wszystko wyjdzie. (2) Najpierw uszyj spodnie. (3) Beton musi mieć proporcje. (4) Słuchaj z pokorą — 10 s na stronie.
 
-**BABCIA OS** = heurystyka rzemieślnicza, nie produkt. **WARSZAWASZA** = produkt.
+**Success:** użytkownik nie myśli o WARSZAWASZA — łatwiej rozumie, co dzieje się dziś w mieście. Narzędzie ewoluuje **z** człowiekiem.
+
+**WARSZAWASZA** = produkt (strona, pole, dane). Heurystyka rzemieślnicza nie ma własnej nazwy w sesji — tylko pytania powyżej.
 
 Field test: [warszawasza.online/field/heat](/field/heat) — 10 seconds: what’s happening today, what you can do.
 

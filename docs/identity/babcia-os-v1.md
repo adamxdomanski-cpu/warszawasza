@@ -1,5 +1,7 @@
 # BABCIA OS · STABLE (adaptive architecture)
 
+> **Nazwa historyczna / origin story** — w codziennej pracy używaj **pytań rzemieślniczych** ([`core.mdc`](../../.cursor/rules/core.mdc), [`project.md`](../project.md)). Nie traktuj „BABCIA OS” jako produktu ani OS.
+
 > **Status:** STABLE — nie LOCKED. **STABLE** = zdolność do zmiany bez utraty tożsamości; mechanizm uczenia się trwały, **model i reguły prowizoryczne**.  
 > **Intencja:** metoda **rzemieślniczego uczenia się** — obserwuj, buduj, wdrażaj, słuchaj oporu, poprawiaj, powtarzaj. **Brak wersji końcowej** — tylko kolejna iteracja.  
 > **Implementacja techniczna:** [COS v1.0](cos-v1.md) · [Critique Protocol](../protocol/critique-protocol-v1.md) · kernel Cursor: [`.cursor/rules/core.mdc`](../../.cursor/rules/core.mdc)

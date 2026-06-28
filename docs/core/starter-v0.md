@@ -1,8 +1,8 @@
 # COS · kernel + project module
 
-> **Universal kernel:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc) (~150 words, any project)  
-> **WARSZAWASZA module:** [`.cursor/rules/warszawasza.mdc`](../.cursor/rules/warszawasza.mdc) (this repo only)  
-> **Full BABCIA OS (on demand):** [`babcia-os-v1.md`](../identity/babcia-os-v1.md)
+> **Universal kernel:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc)  
+> **WARSZAWASZA module:** [`.cursor/rules/warszawasza.mdc`](../.cursor/rules/warszawasza.mdc)  
+> **Origin archive (historical name):** [`babcia-os-v1.md`](../identity/babcia-os-v1.md)
 
 ---
 
