@@ -1845,3 +1845,48 @@ export function traceArtifactCopy(lang: Lang): TraceArtifactCopy {
   if (lang === "pl" || lang === "it") return TRACE_ARTIFACT[lang];
   return TRACE_ARTIFACT.en;
 }
+
+/** Human-facing trace export — no WARSTWA / FOP headers. */
+export type TraceResidentCopy = {
+  cityDefault: string;
+  statusReceived: string;
+  statusAwaitingField: string;
+  statusUnverified: string;
+  findWaterShade: string;
+  reportObservation: string;
+  technicalData: string;
+  minutesAgo: string;
+  hoursAgo: string;
+  justNow: string;
+};
+
+export const TRACE_RESIDENT: Record<"pl" | "en", TraceResidentCopy> = {
+  pl: {
+    cityDefault: "Warszawa",
+    statusReceived: "✓ Zgłoszenie odebrane",
+    statusAwaitingField: "⚠ Część danych czeka na potwierdzenie w terenie",
+    statusUnverified: "Status: niezweryfikowane",
+    findWaterShade: "Znajdź wodę i cień",
+    reportObservation: "Zgłoś obserwację",
+    technicalData: "Dane techniczne",
+    minutesAgo: "{n} min temu",
+    hoursAgo: "{n} godz. temu",
+    justNow: "przed chwilą",
+  },
+  en: {
+    cityDefault: "Warsaw",
+    statusReceived: "✓ Report received",
+    statusAwaitingField: "⚠ Some data awaits field confirmation",
+    statusUnverified: "Status: unverified",
+    findWaterShade: "Find water and shade",
+    reportObservation: "Report an observation",
+    technicalData: "Technical data",
+    minutesAgo: "{n} min ago",
+    hoursAgo: "{n} h ago",
+    justNow: "just now",
+  },
+};
+
+export function traceResidentCopy(lang: Lang): TraceResidentCopy {
+  return lang === "pl" ? TRACE_RESIDENT.pl : TRACE_RESIDENT.en;
+}
