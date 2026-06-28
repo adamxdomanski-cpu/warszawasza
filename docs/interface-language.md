@@ -33,12 +33,12 @@ Colour is one implementation detail — not the brand.
 
 | Token | Means | Layer |
 |-------|-------|-------|
-| **Ground** | Canvas, calm | Identity |
+| **Ground** | Canvas, calm (BASE) | Identity |
 | **Surface** | Layer, panel | Identity |
 | **Text** | Primary reading | Identity |
 | **Muted** | Secondary hint | Identity |
-| **Decision** | Where the user commits | Identity |
-| **Interaction** | Affordance, next step | Identity |
+| **Decision** | Alert, commit (DECISION) | Identity |
+| **Interaction** | Action affordance (INTERACTION) | Identity |
 | **Structure** | Shape of the system | Identity |
 | **Water** | Water resource (WATER) | Signal |
 | **Nature** | Environment / green | Signal |

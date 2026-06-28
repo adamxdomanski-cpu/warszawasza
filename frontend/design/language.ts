@@ -3,7 +3,7 @@
  * @see docs/interface-language.md
  */
 
-/** Stable — rhythm, chrome, tone */
+/** Stable — rhythm, chrome, tone (BASE = Ground + Structure + typography rhythm) */
 export type IdentityMeaning =
   | "Ground"
   | "Surface"
@@ -12,6 +12,9 @@ export type IdentityMeaning =
   | "Decision"
   | "Interaction"
   | "Structure";
+
+/** Core field meanings referenced in .cursorrules */
+export type CoreFieldMeaning = "BASE" | "INTERACTION" | "DECISION" | "WATER";
 
 /** Facts — at most MAX_ACTIVE_SIGNALS on one screen */
 export type SignalMeaning =
