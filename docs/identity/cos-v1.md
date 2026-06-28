@@ -182,13 +182,17 @@ Implementacja w repozytorium: [`.cursor/rules/miejski-operator.mdc`](../../.curs
 
 ## Relacja BABCIA OS ↔ COS
 
-| | BABCIA OS | COS |
-|---|-----------|-----|
-| **Czym jest** | zachowanie ludzkiego sposobu decyzji **przed** zapisem w modelu i technologii | architektura systemowa · separacja warstw |
-| **Mechanika** | oś pochodzenia znaczenia + oś walidacji (nie władza) | CORE STABLE + KNOWLEDGE / WORKFLOW / EXECUTION |
-| **AI** | AI → Model → Człowiek | EXECUTION · wektor technologiczny |
-| **Intuicja** | hipoteza · skraca drogę do dobrej hipotezy · zmniejsza opór (aksjomat 3) | interpretacja przez CZŁOWIEKA w WORKFLOW |
-| **Pokora** | aksjomat 4 · meta-własność procesu — nie etap workflow | falsyfikacja · STABLE axioms |
+BABCIA OS (5 warstw) mapuje się na COS (CORE + 3 warstwy implementacji):
+
+| BABCIA OS | COS |
+|-----------|-----|
+| **AXIOMS** | CORE · STABLE |
+| **CORE** | podział SYSTEM / CZŁOWIEK |
+| **FUNCTIONS** | pięć pytań weryfikacji |
+| **WORKFLOW** | WORKFLOW · cykl poznawczy |
+| **ADAPTERS & ARTIFACTS** | KNOWLEDGE + EXECUTION |
+
+Kanoniczny szablon filozoficzny: [`babcia-os-v1.md`](babcia-os-v1.md) · **FINAL ARCHITECTURE v1.0**
 
 ---
 
