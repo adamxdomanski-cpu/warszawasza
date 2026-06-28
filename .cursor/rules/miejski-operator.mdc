@@ -10,6 +10,6 @@ globs: ["docs/identity/**", "docs/protocol/**"]
 
 **Identity:** [`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)  
 **Personas (adapters):** [`docs/personas.md`](../../docs/personas.md)  
-**BABCIA OS / COS:** [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md) · [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md)
+**Origin archive (genesis — personal, not methodology):** [`babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md)
 
 Do not duplicate core or project rules here. Field UI depth: [`warszawasza-field.mdc`](warszawasza-field.mdc).
