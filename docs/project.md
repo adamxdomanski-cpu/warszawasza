@@ -6,13 +6,27 @@
 
 **Success:** narzędzie znika — zostaje miasto.
 
+**Not a news portal.** WARSZAWASZA does not compete for attention — it helps direct attention where it is needed. No feeds, clickbait, “hot topics”, political debate, marketing CTAs, or artificial engagement loops.
+
 Field test: [warszawasza.online/field/heat](/field/heat) — 10 seconds: what’s happening today, what you can do.
 
 ---
 
 ## Purpose
 
-WARSZAWASZA applies an agnostic observation framework to support **observation, understanding, and action** in the **public urban environment**. Warsaw is the **first deployment** and daily field lab (Dzielna → Mokotów → reality).
+WARSZAWASZA is a **reality interface** for the public urban environment — not an information portal fighting for clicks. Warsaw is the **first deployment** and daily field lab (Dzielna → Mokotów → reality).
+
+---
+
+## Three levels of information
+
+| Level | Role | Examples | When |
+|-------|------|----------|------|
+| **1 · Orientation** | Act now | 39°C · water 250 m · metro +8 min · library open until 20:00 | First screen, ≤10 s |
+| **2 · Context** | What changed | Alert since morning · wind from 17:00 · route closed | One line below orientation |
+| **3 · Depth** | Why / who / history | Studio, values, climate plan, traces | On demand (rollout) — never blocks level 1 |
+
+Level 1 is not “content”. It is **orientation**.
 
 ---
 
