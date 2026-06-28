@@ -18,5 +18,5 @@ export const TOKEN_CSS: Record<SemanticToken, string> = {
   Transport: "--color-sapphire",
   Warning: "--color-accent",
   Verified: "--color-citrus",
-  DayFact: "--color-accent",
+  DayFact: "--color-warsaw-heat",
 };

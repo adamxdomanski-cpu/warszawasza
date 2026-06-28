@@ -14,6 +14,10 @@
   --color-citrus: #b8e62e;
   --color-citrus-dim: rgba(184, 230, 46, 0.55);
   --color-citrus-glow: rgba(184, 230, 46, 0.42);
+  /* Warsaw heat signal — orange (PKiN / alert sun), not brand accent */
+  --color-warsaw-heat: #ff8c1a;
+  --color-warsaw-heat-deep: #ff5a00;
+  --color-warsaw-heat-critical: #e40045;
   --color-graphite: rgba(190, 190, 188, 0.62);
   --color-ink: rgba(248, 248, 246, 0.94);
   /* FIRA structural layer — local signals about system topology (not locale tint) */
@@ -1179,5 +1183,89 @@
   .signal-control.signal-detected,
   .signal-control.signal-recovering {
     animation: none !important;
+  }
+
+  .heat-signal,
+  .heat-field-ambient {
+    animation: none !important;
+  }
+
+  .heat-signal {
+    color: var(--color-warsaw-heat-deep) !important;
+    transform: none !important;
+  }
+}
+
+/* —— Field heat: Warsaw orange signal (DayFact), breathes toward red when extreme —— */
+.heat-field-ambient {
+  opacity: 0.42;
+  background: radial-gradient(
+    circle at 50% -10%,
+    rgba(255, 140, 26, 0.17),
+    transparent 58%
+  );
+}
+
+.heat-signal {
+  display: inline-block;
+  color: var(--color-warsaw-heat);
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .heat-field-ambient {
+    animation: heat-ambient-breathe 5.5s ease-in-out infinite;
+  }
+
+  .heat-signal {
+    animation: heat-signal-breathe 3.6s ease-in-out infinite;
+  }
+
+  .heat-signal[data-severity="extreme"] {
+    animation-duration: 2.6s;
+  }
+
+  .heat-signal[data-severity="high"] {
+    animation-duration: 3.8s;
+  }
+
+  .heat-signal[data-severity="moderate"] {
+    animation: heat-signal-cool 4.8s ease-in-out infinite;
+  }
+}
+
+@keyframes heat-signal-breathe {
+  0%,
+  100% {
+    color: var(--color-warsaw-heat);
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    color: var(--color-warsaw-heat-critical);
+    transform: scale(1.045);
+    filter: brightness(1.15);
+  }
+}
+
+@keyframes heat-signal-cool {
+  0%,
+  100% {
+    color: var(--color-citrus);
+    transform: scale(1);
+  }
+  50% {
+    color: var(--color-warsaw-heat);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes heat-ambient-breathe {
+  0%,
+  100% {
+    opacity: 0.38;
+  }
+  50% {
+    opacity: 0.55;
   }
 }
