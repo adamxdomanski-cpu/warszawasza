@@ -1,0 +1,13 @@
+---
+description: COS Core Starter v1.0 — .cursorrules only; philosophy in /docs
+alwaysApply: true
+---
+
+# COS Core Starter v1.0
+
+Rules: [`.cursorrules`](../.cursorrules) (6 rules — do not expand here)  
+Guide: [`docs/core/starter-v0.md`](../../docs/core/starter-v0.md)
+
+Path-specific: `warszawasza-field.mdc` · `fira-protocol.mdc` · `lucy-cognitive-interface.mdc`
+
+Write code. Do not philosophize unless the user asks for methodology docs.

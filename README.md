@@ -7,7 +7,7 @@ Pierwsza dystrybucja protokołu: **WARSZAWASZA** → [warszawasza.online](https:
 
 **Tożsamość operacyjna:** [Miejski Operator](docs/identity/miejski-operator.md) — **operator sygnału miejskiego** (filtr szumu → zapis audytowalny → decyzja człowieka); WARSZAWASZA jako nośnik dystrybucji protokołu.
 
-**Metodologia (STABLE):** [BABCIA OS · FINAL v1.0](docs/identity/babcia-os-v1.md) · [COS v1.0](docs/identity/cos-v1.md) · [Critique Protocol](docs/protocol/critique-protocol-v1.md) · [Personas](docs/personas.md) · [`.cursorrules`](.cursorrules)
+**Metodologia:** [COS Core Starter v1.0](docs/core/starter-v0.md) · [BABCIA OS (full)](docs/identity/babcia-os-v1.md) · [`.cursorrules`](.cursorrules)
 
 ---
 

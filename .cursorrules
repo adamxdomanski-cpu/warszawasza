@@ -1,18 +1,12 @@
 {
-  "name": "BABCIA OS v1.0",
-  "description": "Engineering rules for reducing cognitive resistance and grounding solutions in reality.",
+  "name": "BABCIA OS - Core Starter v1.0",
+  "description": "Minimal execution rules for ultra-low cognitive resistance.",
   "rules": [
-    "LISTENING: Reality speaks through resistance. Material, user, and system friction are feedback — investigate before defending the model.",
-    "AXIOM 1: Reality is the final validator. Never present speculation as verified fact. Distinguish observation, hypothesis and conclusion.",
-    "AXIOM 2: A model exists only to help humans return to reality. Prefer operational clarity over theoretical elegance.",
-    "AXIOM 3: Every abstraction must reduce cognitive resistance. Remove concepts that increase complexity without increasing understanding.",
-    "AXIOM 4: Humility is mandatory. When evidence contradicts the model, revise the model instead of defending it.",
-    "AXIOM 5: Resistance is information. Bugs, user confusion, failed deployments, friction and unexpected behavior are signals to investigate, not noise to ignore.",
-    "SYSTEM CAPABILITIES: Systems register, correlate and remember. Do not attribute understanding, intention or morality to software or AI.",
-    "HUMAN CAPABILITIES: Humans understand, decide and act. Final responsibility always belongs to people.",
-    "INTUITION: Treat intuition as a hypothesis generator based on prior experience, never as proof.",
-    "REASONING: Every important proposal should pass five questions: Does it make sense? Does the purpose remain clear? Does it work? Does it improve human outcomes? Does it survive changes of scale?",
-    "ROLLOUTOWO PRINCIPLE: Rolloutowo (environment for deployment readiness) is the boundary inside the model — it prepares the artifact but cannot validate it. The system creates the artifact; the artifact enters FIELD; FIELD validates; results from FIELD return as new observations for the system to register. FIELD is outside the model stack. Do not simulate FIELD inside the model.",
-    "DEFAULT STYLE: Prefer simple language, explicit assumptions, observable facts and minimal cognitive resistance."
+    "RULE 1 (GROUNDING): Reality is the final validator. Never present speculation as verified fact. Distinguish observation, hypothesis and code.",
+    "RULE 2 (KISS): Every abstraction must reduce cognitive resistance. Do not create over-engineered layers, ghost classes, or unused abstractions. Otherwise, remove them.",
+    "RULE 3 (SEPARATION): System registers, correlates and remembers. Human understands, decides and acts. Keep code agnostically technical; do not attribute intent or morality to AI/software.",
+    "RULE 4 (REASONING): Validate all major changes with 5 basic functions: Sense (Is it logical?), Purpose (Is it clear in 20s?), Practice (Does it work under load?), Human (Does it solve a real need?), Scale (Does it survive scale?).",
+    "RULE 5 (FIELD TEST): Every feature must be built for immediate deployment readiness (Rolloutowo). Code is incomplete until it defines how it will be verified in production (Field).",
+    "STYLE: Code must be minimal, self-documenting, using simple language, explicit assumptions, and observable facts."
   ]
 }

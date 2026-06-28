@@ -1,6 +1,6 @@
 ---
 description: Warszawasza is an interactive narrative observation system, not a store
-alwaysApply: true
+alwaysApply: false
 globs: ["frontend/**"]
 ---
 

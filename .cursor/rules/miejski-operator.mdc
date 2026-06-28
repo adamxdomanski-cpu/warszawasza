@@ -1,6 +1,6 @@
 ---
-description: BABCIA OS v1.0 — canonical rules in .cursorrules; personas are adapters
-alwaysApply: true
+description: BABCIA OS bridge — see starter.mdc and .cursorrules
+alwaysApply: false
 ---
 
 # BABCIA OS · Cursor bridge

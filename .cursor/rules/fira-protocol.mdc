@@ -1,6 +1,7 @@
 ---
 description: FIRA is a Civic Observation Protocol — four layers, not a website
-alwaysApply: true
+alwaysApply: false
+globs: ["fira/**", "backend/**", "backend/sql/**"]
 ---
 
 # FIRA Observation Protocol (FOP)
