@@ -289,6 +289,10 @@ Dobry model **nie wymazuje danych** — **nie stawia oporu** intencji. Jak spodn
 
 **Jutro:** `warszawasza.online` → pięć pytań + opór poznawczy w polu.
 
+Dobry projekt oszczędza człowiekowi wysiłku, nie odbierając mu sprawczości.
+
+System rejestruje. Człowiek rozumie. System koreluje. Człowiek decyduje. System pamięta. Człowiek działa.
+
 ```
         👦 Oluś
            │
