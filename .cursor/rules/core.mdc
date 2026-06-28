@@ -1,20 +1,16 @@
 ---
-description: Minimal adaptive kernel — methodology only
+description: Craft heuristic — one filter, four checks (any repo)
 alwaysApply: true
 ---
 
-# Core
+# Heuristic
 
-**Filter:** Does this help a person make a better decision with less effort? If no — remove it.
+**Filter:** Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?  
+Jeśli nie — usuń.
 
-**Meta-rule:** Rules are provisional. Reality is the only authority. Repeated friction → improve process before adding rules. Update methodology only when the same friction repeats in the field.
+1. **W polu wszystko wyjdzie** — rzeczywistość decyduje, nie warsztat.
+2. **Najpierw uszyj spodnie** — produkt, nie opis produktu.
+3. **Beton musi mieć proporcje** — obserwacja, nie domysł o umyśle użytkownika.
+4. **Słuchaj z pokorą** — nie zrozumiał w 10 s → popraw stronę/kod.
 
-1. Separate observations from hypotheses and conclusions.
-2. Simplest model that explains the observation.
-3. Minimum necessary effort — no self-inflicted noise.
-4. Revise the model when reality contradicts it.
-5. Humans decide; systems register traces — no inferred psychology.
-6. Deployment prepares; **Field** validates.
-7. Loop: reality → observation → friction? → improve → (repeat?) update → continue.
-
-Project scope: `docs/project.md` — not here.
+WARSZAWASZA scope: `docs/project.md` · jutro: `/field/heat`

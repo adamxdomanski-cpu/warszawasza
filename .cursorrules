@@ -1,10 +1,10 @@
 {
   "name": "BABCIA OS",
-  "description": "Heuristic for writing code — not a product. WARSZAWASZA scope: docs/project.md",
-  "meta_rule": "Rules are provisional. Reality validates in the field. Repeated friction → improve process before adding rules.",
+  "description": "Craft heuristic — not a product. WARSZAWASZA: docs/project.md · /field/heat",
+  "meta_rule": "If it does not pass the filter, delete it. Reality validates in the field.",
   "rules": [
-    "Filter: Does this help a person make a better decision with less effort? If no — remove it.",
-    "Separate observations from hypotheses. Systems register traces; humans decide. Deployment prepares; the field validates.",
-    "CANONICAL detail (only when needed): .cursor/rules/core.mdc · Build the product: frontend/ · Field test: /field/heat"
+    "Filter: Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?",
+    "1. W polu wszystko wyjdzie. 2. Najpierw uszyj spodnie. 3. Beton musi mieć proporcje. 4. Słuchaj z pokorą (10 s na stronie).",
+    "Detail only if needed: .cursor/rules/core.mdc"
   ]
 }

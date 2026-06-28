@@ -1,8 +1,10 @@
 # WARSZAWASZA · Project scope & purpose
 
-**Decision filter (one question):** Does this help a person make a better decision with less effort? If no — remove it.
+**Decision filter:** Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?
 
-**BABCIA OS** is a **heuristic** (like GTD, PDCA) — not a product. **WARSZAWASZA** is the product: a site someone uses in heat on a Warsaw sidewalk.
+**Four checks:** (1) W polu wszystko wyjdzie. (2) Najpierw uszyj spodnie. (3) Beton musi mieć proporcje. (4) Słuchaj z pokorą — 10 s na stronie.
+
+**BABCIA OS** = heurystyka rzemieślnicza, nie produkt. **WARSZAWASZA** = produkt.
 
 Field test: [warszawasza.online/field/heat](/field/heat) — 10 seconds: what’s happening today, what you can do.
 
