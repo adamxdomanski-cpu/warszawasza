@@ -22,7 +22,7 @@ Apply **core.mdc** first. This file adds repo context only.
 
 **Primary field UI:** `frontend/app/field/heat` → `/field/heat`
 
-**UI / design:** [`docs/design-system.md`](../../docs/design-system.md) · `frontend/design/tokens.ts` (when editing `frontend/` — see `design-system.mdc`)
+**UI / language:** [`docs/interface-language.md`](../../docs/interface-language.md) · `frontend/design/language.ts` (`interface-language.mdc` on `frontend/`)
 
 **Layout:** protocol in `fira/`, UI in `frontend/`, API in `backend/`. Core must not import from frontend.
 
