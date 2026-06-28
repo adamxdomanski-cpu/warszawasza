@@ -1,5 +1,5 @@
 ---
-description: WARSZAWASZA project module — five functions, Rolloutowo, FOP, comms
+description: Project scope — loads only when editing repo paths
 alwaysApply: false
 globs:
   - "frontend/**"
@@ -12,52 +12,18 @@ globs:
   - "warszawasza/**"
 ---
 
-# WARSZAWASZA · project module
+# Project module
 
-Load with **core.mdc** only when paths match. **Purpose & scope:** [`docs/project.md`](../../docs/project.md) · **CORE + adapters:** [`docs/identity/core-and-adapters-v1.md`](../../docs/identity/core-and-adapters-v1.md)
+Apply **core.mdc** first. This file adds repo context only.
 
-## Reasoning · five functions
+**Scope & purpose:** [`docs/project.md`](../../docs/project.md)
 
-Filter major proposals through:
+**Decision filter (residents):** Does this make it even slightly easier to understand the city and decide better? If not — do not build or remove.
 
-1. **SENS** — Logical? Model simpler than reality?
-2. **CEL** — Purpose clear? (UI: ~20s heuristic when relevant)
-3. **DZIAŁANIE** — Works under load? Verification defined?
-4. **CZŁOWIEK** — Improves life? Real need?
-5. **SKALA** — Survives growth?
+**Primary field UI:** `frontend/app/field/heat` → `/field/heat`
 
-Adapters (personas) are optional — [`docs/personas.md`](../../docs/personas.md).  
-Full protocol: [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md)
+**Layout:** protocol in `fira/`, UI in `frontend/`, API in `backend/`. Core must not import from frontend.
 
-## Rolloutowo · Field
+**Depth (on demand only):** `fira-protocol.mdc`, `warszawasza-field.mdc`, `docs/protocol/`
 
-**Rolloutowo** = environment for deployment readiness — the model’s boundary before **Field**.
-
-True validation occurs exclusively outside the model, in **Field**.
-Work is incomplete until field validation is defined.
-
-FIELD returns results as new **observations** (practice spiral in **core.mdc**).
-
-Optional intuition (docs only): breathing cycle — [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md)
-
-## Architecture (this repo)
-
-- **Product:** FIRA Observation Protocol (`fira/`) — civic observation language, not a website.
-- **Distribution:** WARSZAWASZA (`frontend/`) — first carrier; culture layer is replaceable.
-- **Dependency:** core must not import from frontend. Spec: `fira/PROTOCOL.md`
-- Depth by path: `fira-protocol.mdc`, `warszawasza-field.mdc`
-
-## Communication
-
-**CZŁOWIEK block first:** what happened → why it matters → what we propose.  
-**SYSTEM block below:** full technical log (fold / separate section).
-
-Epistemic rigor: observation → hypothesis → conclusion. Do not overclaim.  
-Template: [`docs/protocol/trace-alert-comms-v1.md`](../../docs/protocol/trace-alert-comms-v1.md)
-
-## Workflow defaults
-
-- Observation before interpretation; **less noise** over more data.
-- Operational log: observable state in LOG; rationale in DECISION — [`docs/protocol/log-format-v1.md`](../../docs/protocol/log-format-v1.md)
-- Decision trajectory (facts only): [`docs/protocol/decision-trajectory-v1.md`](../../docs/protocol/decision-trajectory-v1.md)
-- Default task: write minimal, verifiable code — not methodology essays unless asked.
+Default task: minimal, verifiable code — not methodology essays unless asked.

@@ -2,9 +2,9 @@
 
 **Filter:** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
 
-**Praktyka (spirala):** Zobacz → Zrozum → Pomóż → Sprawdź → Ucz się. Każdy obrót zostawia doświadczenie; następny nie musi wyglądać tak samo. Działa także bez technologii — technologia jest wsparciem. Szczegóły: [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc).
+**Development principles:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc) (always applied in Cursor).
 
-**Success:** narzędzie znika — zostaje miasto. Geneza osobista: [`babcia-os-v1.md`](identity/babcia-os-v1.md) (nie metodologia).
+**Success:** narzędzie znika — zostaje miasto.
 
 Field test: [warszawasza.online/field/heat](/field/heat) — 10 seconds: what’s happening today, what you can do.
 

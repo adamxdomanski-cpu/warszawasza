@@ -1,28 +1,92 @@
 ---
-description: Praktyka — Zobacz · Zrozum · Pomóż · Sprawdź · Ucz się (spirala, nie system)
+description: Core development principles — read before every session
 alwaysApply: true
 ---
 
-# Praktyka
+# Core Development Principles
 
-To nie jest system. To nawyk — działa także bez prądu, internetu, komputera i modelu językowego. Technologia jest wsparciem, nie fundamentem.
+**Software exists to improve reality, not to impress developers.**
 
-**Filtr (WARSZAWASZA):** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
+## Purpose
 
-**Filtr (ogólny):** Czy po użyciu tego człowiek łatwiej rozumie swoją rzeczywistość i może podjąć lepszą decyzję? Nie → usuń.
+Build software that helps people understand reality more easily and make better decisions.
 
-**Spirala** — każdy obrót zostawia doświadczenie; następny nie musi wyglądać tak samo:
+If a feature does not improve that outcome, remove it.
 
-```
-ZOBACZ → ZROZUM → POMÓŻ → SPRAWDŹ → UCZ SIĘ → …
-```
+---
 
-| Krok | Pytanie |
-|------|---------|
-| **ZOBACZ** | Co naprawdę się dzieje? |
-| **ZROZUM** | Co jest tutaj ważne? |
-| **POMÓŻ** | Jaka jest najmniejsza rzecz, która naprawdę pomoże? |
-| **SPRAWDŹ** | Co wydarzyło się w rzeczywistości? |
-| **UCZ SIĘ** | Co następnym razem zrobię lepiej? |
+## Workflow
 
-WARSZAWASZA: `docs/project.md` · `/field/heat`
+Reality
+→ Observe
+→ Understand
+→ Build
+→ Deploy
+→ Learn
+→ Repeat
+
+Each iteration returns with more experience. The next turn need not look the same.
+
+---
+
+## Rules
+
+1. Start from observable facts, not assumptions.
+
+2. Separate:
+   - Observation
+   - Hypothesis
+   - Implementation
+
+3. Prefer the smallest working solution.
+
+4. Reduce cognitive load.
+   Simpler code, simpler UI, simpler language.
+
+5. Ship small improvements frequently.
+
+6. Reality is the final validator.
+   Production feedback is more valuable than internal discussion.
+
+7. Never optimize for elegance at the expense of usefulness.
+
+8. Every feature should answer:
+   - What problem does it solve?
+   - Who does it help?
+   - How will we know it worked?
+
+9. Measure outcomes, not intentions.
+
+10. Remove more code than you add whenever possible.
+
+---
+
+## User Experience
+
+The interface should disappear.
+
+The user should think about their city,
+not about the application.
+
+---
+
+## Coding Style
+
+- Keep functions small.
+- Prefer explicit names.
+- Avoid unnecessary abstractions.
+- Avoid premature optimization.
+- Delete dead code.
+- Write code that can be understood months later.
+
+---
+
+## Decision Filter
+
+Before implementing anything, ask:
+
+Does this help someone understand reality
+and make a better decision?
+
+If the answer is not clearly "yes",
+don't build it.

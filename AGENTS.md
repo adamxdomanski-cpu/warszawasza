@@ -25,14 +25,11 @@ cd frontend && npm run build
 
 ## Cursor
 
-Stack: **AXIOMS → CORE RULES → PROJECT MODULE → TASK → ARTIFACT**
-
 | Layer | File | When |
 |-------|------|------|
-| Kernel | `.cursor/rules/core.mdc` | always (`alwaysApply: true`) |
-| Pointer | `.cursorrules` | points at core + warszawasza |
-| WARSZAWASZA | `.cursor/rules/warszawasza.mdc` | globs: `frontend/`, `fira/`, `backend/`, `docs/`, … |
-| Depth | `warszawasza-field.mdc`, `fira-protocol.mdc` | narrower globs |
-| On demand | `docs/core/cursor-rules-full.json`, `docs/identity/babcia-os-v1.md` | methodology review only |
+| Principles | `.cursor/rules/core.mdc` | always (`alwaysApply: true`) |
+| Pointer | `.cursorrules` | one-line anchor + link to core |
+| Project | `.cursor/rules/warszawasza.mdc` | globs: `frontend/`, `fira/`, `backend/`, … |
+| Depth | `fira-protocol.mdc`, `warszawasza-field.mdc` | narrower globs, on demand |
 
-Rolloutowo, five functions, and personas live in **warszawasza.mdc** or `/docs` — not in core.
+Historical methodology lives in `docs/` only — not in core rules.

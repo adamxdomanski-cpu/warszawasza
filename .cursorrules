@@ -1,11 +1,9 @@
 {
-  "name": "practice",
-  "description": "Spiral habit: See · Understand · Help · Check · Learn. WARSZAWASZA: docs/project.md · /field/heat",
+  "name": "core-development-principles",
+  "description": "Software exists to improve reality, not to impress developers.",
   "rules": [
-    "Not a system — a practice. Works without power, internet, or AI; technology is support only.",
-    "Filter (Warsaw): After adding this, is it even slightly easier for a resident to understand their city and make a better decision? If not — do not build or remove it.",
-    "Spiral: See (what really happens?) → Understand (what matters?) → Help (smallest thing that truly helps?) → Check (what happened in reality?) → Learn (what to do better next time?) → repeat.",
-    "Each turn leaves experience; the next turn need not be the same — not a closed loop.",
-    "Detail: .cursor/rules/core.mdc · Genesis (personal): docs/identity/babcia-os-v1.md"
+    "Software exists to improve reality, not to impress developers.",
+    "Full principles: .cursor/rules/core.mdc (always applied).",
+    "Project scope when editing this repo: docs/project.md"
   ]
 }
