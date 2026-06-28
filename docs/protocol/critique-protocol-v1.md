@@ -8,7 +8,9 @@
 
 ## Nadrzędny aksjomat
 
-**Każda wiedza zaczyna się i kończy w rzeczywistości.**
+**Rzeczywistość przemawia przez opór.** **Opór jest informacją** — materiał, miasto, użytkownik, bug, tarcie UX.
+
+**Każda wiedza zaczyna się i kończy w rzeczywistości.** Jeżeli rzeczywistość przeczy modelowi — zmienia się model.
 
 ### Cztery aksjomaty (STABLE)
 

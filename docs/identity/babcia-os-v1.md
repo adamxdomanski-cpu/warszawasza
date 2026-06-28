@@ -6,7 +6,36 @@
 
 ---
 
-## Stos (interfejs myślenia i działania)
+## Jedno zdanie (słuchanie)
+
+**Rzeczywistość przemawia przez opór.** *(Reality speaks through resistance.)*
+
+Nie mówi, jak projektować. Mówi, **jak słuchać świata**, zanim zacznie się go opisywać. Beton od taty, materiał od mamy, Ursus dziadka, pytania Babci, intuicja, pokora, kod i miasto — to różne formy **spotkania z oporem rzeczywistości**.
+
+Opór przestaje być przeszkodą. Staje się **kanałem informacji zwrotnej**. Dlatego *w polu wszystko wyjdzie* — bo rzeczywistość **zawsze odpowiada oporem**.
+
+---
+
+## Stos (sześć warstw)
+
+```
+AXIOMS
+    │
+    ▼
+CAPABILITIES
+    │
+    ▼
+FUNCTIONS
+    │
+    ▼
+WORKFLOW
+    │
+    ▼
+ADAPTERS
+    │
+    ▼
+ARTIFACTS
+```
 
 ```
 ===================================================================
@@ -20,7 +49,7 @@
                                  │
                                  ▼
                     ┌─────────────────────────┐
-                    │          CORE           │
+                    │      CAPABILITIES       │  zdolności aktorów
                     └────────────┬────────────┘
                                  │
                                  ▼
@@ -35,11 +64,18 @@
                                  │
                                  ▼
                     ┌─────────────────────────┐
-                    │   ADAPTERS & ARTIFACTS  │  wymienne
+                    │        ADAPTERS         │  wymienne
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │       ARTIFACTS         │  wymienne
                     └─────────────────────────┘
 
 ===================================================================
 ```
+
+**CAPABILITIES** — nie „rdzeń systemu”, lecz **zdolności dwóch aktorów** (SYSTEM i CZŁOWIEK). Język zrozumiały dla filozofa i architekta oprogramowania.
 
 ---
 
@@ -47,31 +83,34 @@
 
 | # | PL | EN |
 |---|----|----|
+| **0** | **Opór jest informacją.** Materiał, beton, miasto, użytkownik, bug, tarcie UX — kanały zwrotne, nie szum do ignorowania. | Resistance is information. |
 | **1** | **Rzeczywistość jest ostatecznym walidatorem.** *(Każda wiedza zaczyna się i kończy w rzeczywistości.)* | Reality is the final validator. |
-| **2** | **Model jest zapisem, który umożliwia powrót do rzeczywistości.** Kończy się tam, gdzie zaczyna się życie. | A model is a record that enables a return to reality. |
-| **3** | **Każda abstrakcja musi zmniejszać opór poznawczy.** W przeciwnym razie należy ją usunąć. | Every abstraction must reduce cognitive resistance. Otherwise remove it. |
-| **4** | **Pokora** = gotowość do zmiany modelu **na każdym etapie**, gdy rzeczywistość dostarczy lepszego wyjaśnienia. | Humility = willingness to change the model at any stage when reality provides a better explanation. |
+| **2** | **Model umożliwia powrót do rzeczywistości.** Kończy się tam, gdzie zaczyna się życie. | A model enables return to reality. |
+| **3** | **Każda abstrakcja musi zmniejszać opór poznawczy.** W przeciwnym razie usuń ją. | Every abstraction must reduce cognitive resistance. |
+| **4** | **Pokora** = gotowość do zmiany modelu **na każdym etapie**, gdy rzeczywistość dostarczy lepszego wyjaśnienia. | Humility at any stage when reality provides a better explanation. |
 
-Aksjomat 4 **nie jest krokiem** workflow — jest **własnością całego układu** (HUMILITY · ENFORCED_GLOBAL). Rygor przy ostrzeniu nożyc, przy pierwszej hipotezie, w trakcie rozumowania — **zanim** pęknie wylewka lub rozpruje się szew.
+**Słuchanie (meta):** *Rzeczywistość przemawia przez opór* — aksjomat 0 wyjaśnia **dlaczego** walidacja działa i **skąd** bierze się informacja zwrotna.
+
+Aksjomat 4 **nie jest krokiem** workflow — własność całego układu. Pokora **przed** pierwszym cięciem, nie dopiero po porażce.
 
 ---
 
-## II. CORE (podział kompetencji)
+## II. CAPABILITIES (zdolności aktorów)
 
-| | Łańcuch | Zakres |
-|---|---------|--------|
-| **SYSTEM** | Rejestruje → Koreluje → Pamięta | bezrefleksyjny log, przetwarzanie danych, retencja |
-| **CZŁOWIEK** | Rozumie → Decyduje → Działa | intencjonalność, sens, moralność, fizyczny czyn |
+| Aktor | Łańcuch | Zakres |
+|-------|---------|--------|
+| **SYSTEM** | Rejestruje → Koreluje → Pamięta | bezrefleksyjny log, przetwarzanie, retencja |
+| **CZŁOWIEK** | Rozumie → Decyduje → Działa | intencja, sens, moralność, fizyczny czyn |
 
 Nie przypisuj maszynie rozumu, intencji ani woli.
 
-### Wektor AI (w ADAPTERS — nie w CORE)
+### Wektor AI (ADAPTERS — nie CAPABILITIES)
 
 ```
 AI  →  Model  →  Człowiek
 ```
 
-AI = najniższa warstwa techniczna (korelacja, filtr szumu). Jedynym ujściem łańcucha jest **ludzkie działanie**. Łańcuch nie zapętla się w maszynie.
+AI = adapter technologiczny (korelacja, filtr szumu). Jedynym ujściem jest **ludzkie działanie**.
 
 ---
 
@@ -79,107 +118,91 @@ AI = najniższa warstwa techniczna (korelacja, filtr szumu). Jedynym ujściem ł
 
 | Funkcja | Pytanie | Test |
 |---------|---------|------|
-| **SENS** | Czy to ma sens? | abstrakcja kontra surowy fakt |
+| **SENS** | Czy to ma sens? | abstrakcja kontra fakt |
 | **CEL** | Czy wiem, po co to jest? | pierwsze 20 s → intencja |
-| **DZIAŁANIE** | Czy to działa? | praktyka operacyjna · stabilność pod obciążeniem |
-| **CZŁOWIEK** | Co stanie się z człowiekiem, jeśli model odniesie sukces? | długofalowy skutek ludzki i społeczny |
+| **DZIAŁANIE** | Czy to działa? | praktyka pod obciążeniem |
+| **CZŁOWIEK** | Co stanie się z człowiekiem, jeśli model odniesie sukces? | skutek ludzki |
 | **SKALA** | A co, jeśli zmienimy skalę? | czas, przestrzeń, natężenie |
 
-> W WARSZAWASZA **DZIAŁANIE** może używać sformułowania konsekwencji (*„Co stanie się z pracą przy weryfikacji?”*) — adapter krytyki, nie nowa funkcja.
-
-Ewolucja = **więcej adapterów**, nie więcej pytań. Pełny protokół Failure: [`critique-protocol-v1.md`](../protocol/critique-protocol-v1.md).
+Ewolucja = więcej **adapterów**, nie więcej pytań. Failure: [`critique-protocol-v1.md`](../protocol/critique-protocol-v1.md).
 
 ---
 
-## IV. WORKFLOW (czysty cykl poznawczy)
+## IV. WORKFLOW (cykl poznawczy)
 
-Nad całością obiegu nieustannie unosi się **aksjomat 4** (pokora wobec rzeczywistości).
+Nad obiegiem: **pokora** (aksjomat 4). Każdy etap może spotkać **opór** (aksjomat 0) — to sygnał, nie porażka procesu.
 
 ```
-         [ RZECZYWISTOŚĆ ] ──> punkt wyjścia · surowy fakt · opór materii
+         [ RZECZYWISTOŚĆ ] ──> opór materii · surowy fakt
                  │
                  ▼
-          Doświadczenie    ──> baza logów z wcześniejszych kontaktów
+          Doświadczenie
                  │
                  ▼
-           [ INTUICJA ]    ──> mechanizm kompresji (redukcja oporu: „Szukaj tu”)
+           [ INTUICJA ]    ──> kompresja doświadczenia · „Szukaj tu”
                  │
                  ▼
-           [ HIPOTEZA ]    ──> operacyjne sformułowanie przypuszczenia
+           [ HIPOTEZA ]
                  │
                  ▼
-            Rozumowanie    ──> rygorystyczny test przez 5 FUNCTIONS
+            Rozumowanie    ──> 5 FUNCTIONS
                  │
                  ▼
-              Decyzja      ──> epistemiczny kolaps · redukcja niepewności
+              Decyzja
                  │
                  ▼
-             Działanie     ──> kod, szew, wylewka · fizyczny czyn
+             Działanie
                  │
                  ▼
-         [ RZECZYWISTOŚĆ ] ──> w polu wszystko wyjdzie · test prawdy
+         [ RZECZYWISTOŚĆ ] ──> opór jako odpowiedź · test prawdy
 ```
 
-### Intuicja
+**Intuicja:** hipoteza, nie werdykt. Skraca drogę do dobrej hipotezy (aksjomat 3). *„Sprawdź tutaj”*, nie *„To jest prawda”*.
 
-- **Nie** ostatni sędzia — **hipoteza** (*„Sprawdź tutaj”*, nie *„To jest prawda”*).
-- **Nie** poetycka zagadka — **ultra-szybki algorytm kompresji** doświadczenia: skraca drogę do trafnej hipotezy (aksjomat 3).
-- **Nie** zwalnia z myślenia — wskazuje, **gdzie zacząć myśleć**.
-- Dobra intuicja **najczęściej** wynika z bogatego doświadczenia; błędna — z uprzedzeń i złudzeń poznawczych.
-
-**Przykład (krawiec):** „Tutaj materiał puści.” / „Tutaj nie wolno ciąć.” — bez wzoru na naprężenia. Jeśli szew pęka — rzeczywistość falsyfikuje; mistrz poprawia model, nie broni ego.
+**Krawiec:** materiał puści / nie wolno ciąć — bez wzoru. Pęknięty szew = opór jako informacja; mistrz poprawia model.
 
 ---
 
-## V. ADAPTERS & ARTIFACTS (wymienne)
+## V. ADAPTERS (wymienne łączniki)
 
-| Typ | Przykłady | Rola |
-|-----|----------|------|
-| **Adaptery ludzkie** | Oluś, Tomek, Babcia, Dziadek, Orzeł · mieszkaniec · kierowca · urbanista | mapowanie doświadczenia na 5 FUNCTIONS |
-| **Adaptery technologiczne** | Cursor, Claude, Jira, Linear, GitHub, SQL, Python | EXECUTION · rejestracja, korelacja, pamięć |
-| **Artefakty** | warszawasza.online, dokumentacja, skrypty, raporty | wyniki działania — utylizowalne, jeśli łamią aksjomat 3 |
+| Typ | Przykłady |
+|-----|-----------|
+| **Ludzkie** | persony w [`personas.md`](../personas.md) · mieszkaniec · kierowca · urbanista |
+| **Technologiczne** | Cursor, Claude, Jira, SQL, Python, AI |
 
-Zmiana adaptera **nie narusza** AXIOMS, CORE, FUNCTIONS, WORKFLOW.
+Mapują doświadczenie na FUNCTIONS. Zmiana adaptera **nie narusza** AXIOMS, CAPABILITIES, FUNCTIONS, WORKFLOW.
 
-**Reguły AI (stable):** [`.cursorrules`](../../.cursorrules) — tylko reguły wykonania, bez person i technologii.
-
-**Persony (adapter):** [`docs/personas.md`](../personas.md)
-
-Most Cursor: [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc)
+**Reguły AI (stable):** [`.cursorrules`](../../.cursorrules)
 
 ---
 
-## Dwie osie (pochodzenie znaczenia · walidacja)
+## VI. ARTIFACTS (wyniki działania)
 
-Uzupełnienie stosu — **nie** łańcuch władzy, **tak** — łańcuch pochodzenia:
-
-```
-  [ POCHODZENIE ]                    [ WALIDACJA ]
-  Pokolenia → Doświadczenie          Technologia → Model
-       → Człowiek → Model                  → Człowiek → Rzeczywistość
-            → Technologia
-```
-
-Technologia może dostarczyć **nową informację** (wzorzec w danych), ale **nie zmienia pochodzenia sensu**.
+warszawasza.online · dokumentacja · skrypty · raporty · kod — **utylizowalne**, jeśli zwiększają opór bez zrozumienia (aksjomat 3).
 
 ---
 
-## Manifest (WIEDZA · ZNACZENIE · ROZWAŻNOŚĆ)
+## Dwie osie (pochodzenie · walidacja)
 
 ```
-===================================================================
-                            BABCIA OS
-===================================================================
+  Pokolenia → Doświadczenie → Człowiek → Model → Technologia   (pochodzenie sensu)
+  Technologia → Model → Człowiek → Rzeczywistość               (walidacja)
+```
 
+Technologia może dostarczyć informację — **nie zmienia pochodzenia sensu**.
+
+---
+
+## Manifest
+
+```
   WIEDZA      → System potrafi ją zachować.
   ZNACZENIE   → Człowiek potrafi je nadać.
   ROZWAŻNOŚĆ  → Doświadczenie podpowiada, kiedy skorzystać.
 
-  Nad procesem: POKORA WOBEC RZECZYWISTOŚCI (aksjomat 4)
+  Nad procesem: POKORA · SŁUCHANIE: RZECZYWISTOŚĆ PRZEMAWIA PRZEZ OPÓR
 
-  Rzeczywistość pozostaje ostatecznym walidatorem.
   Jeżeli rzeczywistość przeczy modelowi — zmienia się model.
-===================================================================
 ```
 
 ---
@@ -188,11 +211,12 @@ Technologia może dostarczyć **nową informację** (wzorzec w danych), ale **ni
 
 | BABCIA OS | COS |
 |-----------|-----|
-| AXIOMS | CORE (STABLE) |
-| CORE | podział SYSTEM / CZŁOWIEK |
-| FUNCTIONS | pięć pytań weryfikacji |
-| WORKFLOW | 8-etapowa pętla + cykl poznawczy |
-| ADAPTERS & ARTIFACTS | KNOWLEDGE + EXECUTION |
+| AXIOMS | aksjomaty STABLE |
+| CAPABILITIES | podział SYSTEM / CZŁOWIEK |
+| FUNCTIONS | pięć pytań |
+| WORKFLOW | pętla procesowa |
+| ADAPTERS | KNOWLEDGE + EXECUTION (narzędzia, persony) |
+| ARTIFACTS | artefakty w KNOWLEDGE / EXECUTION |
 
 ---
 

@@ -6,20 +6,21 @@
 
 ---
 
-## Nadrzędny aksjomat (STABLE)
+## Nadrzędne aksjomaty (STABLE)
+
+**Rzeczywistość przemawia przez opór.** *(Reality speaks through resistance.)*
 
 **Każda wiedza zaczyna się i kończy w rzeczywistości.**
 
-### Cztery aksjomaty CORE (STABLE)
-
 | # | Aksjomat |
 |---|----------|
+| **0** | **Opór jest informacją** — materiał, miasto, użytkownik, bug, tarcie to kanały zwrotne. |
 | **1** | Rzeczywistość jest ostatecznym walidatorem. |
 | **2** | Model umożliwia powrót do rzeczywistości. |
 | **3** | Każda abstrakcja musi zmniejszać opór poznawczy. |
-| **4** | Pokora = gotowość do zmiany modelu na każdym etapie, gdy rzeczywistość dostarczy lepszego wyjaśnienia. |
+| **4** | Pokora = gotowość do zmiany modelu na każdym etapie procesu. |
 
-Beton od taty, szycie od mamy, praktyka dziadka, pytania Babci, modele, AI i kod — wszystko to jest **pośrodku**. Ani początkiem. Ani końcem.
+Kanoniczny stos 6 warstw: [`babcia-os-v1.md`](babcia-os-v1.md) · AXIOMS → **CAPABILITIES** → FUNCTIONS → WORKFLOW → ADAPTERS → ARTIFACTS.
 
 ---
 
@@ -32,7 +33,7 @@ Beton od taty, szycie od mamy, praktyka dziadka, pytania Babci, modele, AI i kod
 ===================================================================
 
                             ┌─────────┐
-                            │  CORE   │  ← STABLE · bez person i oprogramowania
+                            │ STABLE  │  ← AXIOMS + CAPABILITIES + FUNCTIONS
                             └────┬────┘
                                  │
          ┌───────────────────────┼───────────────────────┐
@@ -46,18 +47,18 @@ Beton od taty, szycie od mamy, praktyka dziadka, pytania Babci, modele, AI i kod
 
 | Warstwa | Rola | Wymienność |
 |---------|------|------------|
-| **CORE** | epistemologia, pięć funkcji, podział SYSTEM/CZŁOWIEK | **nie** — STABLE, falsyfikowalny |
+| **STABLE** | AXIOMS, CAPABILITIES (SYSTEM/CZŁOWIEK), FUNCTIONS | **nie** — falsyfikowalny |
 | **KNOWLEDGE** | ślady, logi, zapisy strukturalne | agnostyczna technologicznie |
 | **WORKFLOW** | przepływ zadań i uczenia | mapowanie na Jira/Linear/GitHub |
 | **EXECUTION** | adaptery ludzkie i technologiczne | **całkowicie** wymienna |
 
 ---
 
-## 1. CORE (rdzeń epistemiczny)
+## 1. STABLE · CAPABILITIES (zdolności aktorów)
 
-Nienaruszalna, stała matematyczno-logiczna struktura. **Całkowicie niezależna** od person i oprogramowania.
+Stały podział kompetencji — **nie rdzeń systemu**, lecz zdolności dwóch aktorów. Niezależny od person i oprogramowania.
 
-### A. Podział kompetencji procesowych
+### A. CAPABILITIES
 
 | | Łańcuch | Zakres |
 |---|---------|--------|
@@ -66,7 +67,7 @@ Nienaruszalna, stała matematyczno-logiczna struktura. **Całkowicie niezależna
 
 Nie przypisuj maszynie rozumu, intencji ani moralności.
 
-### B. Pięć funkcji weryfikacji (matryca pytań)
+### B. FUNCTIONS (filtry weryfikacji)
 
 | Funkcja | Pytanie | Test |
 |---------|---------|------|
@@ -90,7 +91,7 @@ Warstwa przechowywania śladów i logów strukturalnych. Agnostyczna technologic
 
 Model jest zapisem, który umożliwia powrót do rzeczywistości. **Model kończy się tam, gdzie zaczyna się życie.**
 
-Rule 0 = **aksjomat 3** w CORE.
+Rule 0 = **aksjomat 3**.
 
 ### Przykładowe implementacje (wymienne)
 
@@ -122,10 +123,10 @@ Dynamiczny przepływ zadań. COS przetwarza sygnały na czyny. Ten sam schemat m
 |------|-----|-----|
 | **Rejestracja** | SYSTEM | pasywny, masowy zapis faktów |
 | **Obserwacja** | CZŁOWIEK | wybór wycinka rejestracji istotnego dla celu |
-| **Interpretacja** | CZŁOWIEK | filtry pięciu funkcji CORE + mapowanie perspektyw |
+| **Interpretacja** | CZŁOWIEK | filtry pięciu FUNCTIONS + mapowanie perspektyw |
 | **Decyzja** | CZŁOWIEK | kolaps epistemiczny — jedna droga, odcięcie niepewności |
 | **Działanie** | CZŁOWIEK | krok fizyczny lub programistyczny w rzeczywistości |
-| **Walidacja** | RZECZYWISTOŚĆ | *W polu wszystko wyjdzie* — zderzenie skutku z faktem |
+| **Walidacja** | RZECZYWISTOŚĆ | opór jako informacja zwrotna — zderzenie skutku z faktem |
 | **Historia** | SYSTEM | wnioski z walidacji jako nowy ślad |
 | **Nowa obserwacja** | — | kolejny cykl na zaktualizowanych danych |
 
@@ -133,11 +134,11 @@ Dynamiczny przepływ zadań. COS przetwarza sygnały na czyny. Ten sam schemat m
 
 ## 4. EXECUTION (wykonanie i adaptery)
 
-Wymienne wtyczki technologiczne i ludzkie. Zmiana narzędzia lub roli **nie narusza CORE**.
+Wymienne wtyczki. Zmiana narzędzia **nie narusza** warstwy STABLE.
 
 ### A. Adaptery ludzkie
 
-Dowolna rola wchodzi jako adapter mapujący doświadczenie na pięć funkcji CORE:
+Dowolna rola mapuje doświadczenie na pięć FUNCTIONS:
 
 | Przykład adaptera | Funkcje |
 |-------------------|---------|
@@ -146,7 +147,7 @@ Dowolna rola wchodzi jako adapter mapujący doświadczenie na pięć funkcji COR
 | Urzędnik / planista | SKALA |
 | Oluś, Tomek, Babcia, Dziadek, Orzeł | biblioteka perspektyw WARSZAWASZA |
 
-Wejście nowego użytkownika (np. osoby niewidomej) **nie wymaga przebudowy CORE** — mapujemy doświadczenie na CZŁOWIEK / DZIAŁANIE.
+Wejście nowego użytkownika **nie wymaga przebudowy CAPABILITIES** — nowy adapter.
 
 ### B. Adaptery technologiczne
 
@@ -172,7 +173,7 @@ Reguły AI (stable): [`.cursorrules`](../../.cursorrules) · persony: [`docs/per
 
 | Pytanie | Odpowiedź |
 |---------|-----------|
-| Nowy użytkownik wymaga przebudowy CORE? | **Nie** — nowy adapter |
+| Nowy użytkownik wymaga przebudowy STABLE? | **Nie** — nowy adapter |
 | Jira → Linear wymaga zmiany modelu? | **Nie** — ten sam 8-etapowy workflow |
 | Usunięcie skryptu Python niszczy metodologię? | **Nie** — kod to artefakt EXECUTION |
 
@@ -180,15 +181,16 @@ Reguły AI (stable): [`.cursorrules`](../../.cursorrules) · persony: [`docs/per
 
 ## Relacja BABCIA OS ↔ COS
 
-BABCIA OS (5 warstw) mapuje się na COS (CORE + 3 warstwy implementacji):
+BABCIA OS (6 warstw) ↔ COS:
 
 | BABCIA OS | COS |
 |-----------|-----|
-| **AXIOMS** | CORE · STABLE |
-| **CORE** | podział SYSTEM / CZŁOWIEK |
-| **FUNCTIONS** | pięć pytań weryfikacji |
-| **WORKFLOW** | WORKFLOW · cykl poznawczy |
-| **ADAPTERS & ARTIFACTS** | KNOWLEDGE + EXECUTION |
+| **AXIOMS** | STABLE · aksjomaty |
+| **CAPABILITIES** | STABLE · SYSTEM / CZŁOWIEK |
+| **FUNCTIONS** | STABLE · pięć pytań |
+| **WORKFLOW** | WORKFLOW |
+| **ADAPTERS** | KNOWLEDGE + EXECUTION (narzędzia, persony) |
+| **ARTIFACTS** | pliki, deploy, kod |
 
 Kanoniczny szablon filozoficzny: [`babcia-os-v1.md`](babcia-os-v1.md) · **FINAL ARCHITECTURE v1.0**
 
