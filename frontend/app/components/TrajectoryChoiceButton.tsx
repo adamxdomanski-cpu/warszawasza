@@ -11,6 +11,7 @@ type TrajectoryChoiceButtonProps = {
   hint: string;
   direction: SignalDirection;
   onCommit: (choice: TrajectoryChoice) => void;
+  onHesitate?: () => void;
 };
 
 /** Pointer down = hesitation (◐). Click = commit T/F trajectory. */
@@ -20,6 +21,7 @@ export default function TrajectoryChoiceButton({
   hint,
   direction,
   onCommit,
+  onHesitate,
 }: TrajectoryChoiceButtonProps) {
   const [hesitating, setHesitating] = useState(false);
 
@@ -32,7 +34,10 @@ export default function TrajectoryChoiceButton({
       className={`trajectory-choice flex min-h-[3.25rem] w-full touch-manipulation flex-col items-start gap-2.5 border border-accent/30 bg-field px-5 py-5 text-left sm:min-h-11 sm:py-4 ${
         hesitating ? "trajectory-hesitating" : ""
       }`}
-      onPointerDown={() => setHesitating(true)}
+      onPointerDown={() => {
+        setHesitating(true);
+        onHesitate?.();
+      }}
       onPointerLeave={endHesitation}
       onPointerCancel={endHesitation}
       onClick={() => {

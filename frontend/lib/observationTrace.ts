@@ -1,7 +1,18 @@
 import type { TrajectoryChoice } from "./artifactI18n";
 import { buildFopDocument, buildFopHumanLabels } from "./fopBridge";
 import type { CitizenTraceFields } from "./domain/traceContract";
+import {
+  formatTracePath,
+  suggestTraceHypotheses,
+  traceEventsForLog,
+} from "./interactionTrace";
+import type { InteractionEvent } from "./fira-core/interaction";
 import { COPY, PIPELINE_ORDER, traceArtifactCopy, type Lang } from "./i18n";
+import {
+  buildTraceStatusLines,
+  crisisEmergencyHint,
+  isCriticalHumanTrace,
+} from "./traceStatus";
 import { studioDiscoveryLine } from "./studioAnchor";
 
 export type ObservationTracePayload = {
@@ -13,6 +24,10 @@ export type ObservationTracePayload = {
   logLines: string[];
   createdAt: number;
   citizen?: CitizenTraceFields;
+  /** Interaction TRACE — ordered EVENT facts; see decision-trajectory-v1.md */
+  traceEvents?: InteractionEvent[];
+  /** @deprecated use traceEvents */
+  decisionEvents?: InteractionEvent[];
 };
 
 export const TRACE_REGISTRY_KEY = "warszawasza-field-traces";
@@ -55,12 +70,8 @@ function observationQuote(trace: ObservationTracePayload): string | null {
   return text || null;
 }
 
-function traceStatusLine(trace: ObservationTracePayload): string | null {
-  const copy = traceArtifactCopy(trace.lang);
-  const decision = trace.citizen?.traceDecision;
-  if (decision === "true") return copy.statusVerified;
-  if (decision === "false") return copy.statusUnverified;
-  return null;
+function traceStatusLines(trace: ObservationTracePayload): string[] {
+  return buildTraceStatusLines(trace).lines;
 }
 
 /** WARSTWA 1 — human trace: quote, title, status, narracja, short ID. */
@@ -79,8 +90,13 @@ export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
 
   lines.push(artifact.documentTitle, "");
 
-  const status = traceStatusLine(trace);
-  if (status) lines.push(status);
+  for (const status of traceStatusLines(trace)) {
+    lines.push(status);
+  }
+  if (isCriticalHumanTrace(trace)) {
+    const hint = crisisEmergencyHint(trace.lang);
+    if (hint) lines.push(hint);
+  }
 
   const place = trace.citizen?.place?.trim();
   const time = trace.citizen?.observedAt?.trim() || trace.clock;
@@ -103,15 +119,25 @@ export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
   return lines.join("\n");
 }
 
-/** WARSTWA 2 — timestamp log lines. */
+function resolveTraceEvents(trace: ObservationTracePayload): InteractionEvent[] {
+  return trace.traceEvents ?? trace.decisionEvents ?? [];
+}
+
+/** WARSTWA 2 — timestamp log lines + interaction TRACE (observation). */
 export function buildTraceLogLayer(trace: ObservationTracePayload): string {
   const artifact = traceArtifactCopy(trace.lang);
   const copy = COPY[trace.lang];
+  const events = resolveTraceEvents(trace);
+  const traceLines = events.length ? traceEventsForLog(events) : [];
+  const pathBlock =
+    events.length > 0 ? ["", "trace:", formatTracePath(events)] : [];
   return [
     artifact.layer2,
     "",
     copy.trace.logHeader,
     ...trace.logLines.map((line) => `  ${line}`),
+    ...traceLines,
+    ...pathBlock,
   ].join("\n");
 }
 
@@ -129,13 +155,30 @@ export function buildTraceFopLayer(trace: ObservationTracePayload): string {
   ].join("\n");
 }
 
+/** Optional hypothesis block — never mixed into observation facts without label. */
+export function buildTraceHypothesisLayer(trace: ObservationTracePayload): string {
+  const events = resolveTraceEvents(trace);
+  if (!events.length) return "";
+  const suggestions = suggestTraceHypotheses(events);
+  if (suggestions.length === 0) return "";
+  const lines = ["HYPOTHESIS (provisional — not verified):", ""];
+  for (const s of suggestions) {
+    lines.push(`Observation: ${s.observation}`);
+    lines.push(`Hypothesis: ${s.hypothesis}`);
+    lines.push("");
+  }
+  return lines.join("\n").trimEnd();
+}
+
 export function buildTraceDocument(trace: ObservationTracePayload): string {
+  const hypothesis = buildTraceHypothesisLayer(trace);
   return [
     buildTraceHumanLayer(trace),
     "",
     buildTraceLogLayer(trace),
     "",
     buildTraceFopLayer(trace),
+    ...(hypothesis ? ["", hypothesis] : []),
   ].join("\n");
 }
 

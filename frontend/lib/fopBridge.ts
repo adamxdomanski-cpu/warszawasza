@@ -11,6 +11,7 @@ import {
 import { traceArtifactCopy, type Lang } from "./i18n";
 import { PROCESS_CHAIN } from "./symbols";
 import type { ObservationTracePayload } from "./observationTrace";
+import { compactTracePath } from "./interactionTrace";
 import { SIGNAL_CHANNELS } from "./signalApi";
 import { studioFopRelation, studioPlaceSignal } from "./studioAnchor";
 
@@ -56,6 +57,10 @@ export function traceToObservation(
   if (trace.citizen?.relatedRefs) signal.related = trace.citizen.relatedRefs;
   if (trace.citizen?.traceDecision && trace.citizen.traceDecision !== "none") {
     signal.traceDecision = trace.citizen.traceDecision;
+  }
+  const events = trace.traceEvents ?? trace.decisionEvents;
+  if (events?.length) {
+    signal.trace_path = compactTracePath(events);
   }
 
   const ref =

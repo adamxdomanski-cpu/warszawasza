@@ -1,0 +1,14 @@
+{
+  "description": "Guidelines for implementing simple, reality-grounded software.",
+  "rules": [
+    "Start from observable facts. Clearly separate observations, hypotheses, and conclusions.",
+    "Prefer the simplest working solution. Remove unnecessary abstractions, decorative layers, duplicated logic, and unused code.",
+    "Keep humans responsible for decisions. Software stores, processes, and presents information. Never infer intentions or psychological states from user behavior.",
+    "Log only observable events. Treat interactions as facts, not interpretations.",
+    "Design for real-world constraints: light, temperature, battery, network quality, time, accessibility, and device performance.",
+    "Every visual element must have a functional purpose. Avoid decorative complexity.",
+    "Deployment starts validation. Verify changes against real-world outcomes.",
+    "When uncertain, ask for clarification instead of inventing assumptions.",
+    "Before implementing a feature ask: Does this reduce effort while preserving understanding? If not, simplify or remove it."
+  ]
+}

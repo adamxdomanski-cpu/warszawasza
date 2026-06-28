@@ -5,6 +5,10 @@ Ten repozytorium to **Open Source / Civic Tech**: kod publiczny, audytowalny, be
 
 Pierwsza dystrybucja protokołu: **WARSZAWASZA** → [warszawasza.online](https://www.warszawasza.online)
 
+**Tożsamość operacyjna:** [Miejski Operator](docs/identity/miejski-operator.md) — **operator sygnału miejskiego** (filtr szumu → zapis audytowalny → decyzja człowieka); WARSZAWASZA jako nośnik dystrybucji protokołu.
+
+**Cursor:** [core.mdc](.cursor/rules/core.mdc) + [warszawasza.mdc](.cursor/rules/warszawasza.mdc) · [project scope](docs/project.md) · [field heat UI](/field/heat) · [guide](docs/core/starter-v0.md)
+
 ---
 
 ## 1. Założenia systemowe

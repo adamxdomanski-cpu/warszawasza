@@ -1,0 +1,31 @@
+---
+description: Project scope — loads only when editing repo paths
+alwaysApply: false
+globs:
+  - "frontend/**"
+  - "fira/**"
+  - "backend/**"
+  - "docs/**"
+  - "infra/**"
+  - "scripts/**"
+  - "fira_flow/**"
+  - "warszawasza/**"
+---
+
+# Project module
+
+Apply **core.mdc** first. This file adds repo context only.
+
+**Scope & purpose:** [`docs/project.md`](../../docs/project.md) — **climate** (primary), ecology, transport, civic traces.
+
+**Decision filter (residents):** Does this make it even slightly easier to understand the city and decide better? If not — do not build or remove.
+
+**Primary field UI:** `frontend/app/field/heat` → `/field/heat`
+
+**UI / language:** [`docs/design-language.md`](../../docs/design-language.md) · `frontend/design/semantic-tokens.ts` · `tokens.ts` (`design-language.mdc`)
+
+**Layout:** protocol in `fira/`, UI in `frontend/`, API in `backend/`. Core must not import from frontend.
+
+**Depth (on demand only):** `fira-protocol.mdc`, `warszawasza-field.mdc`, `docs/protocol/`
+
+Default task: minimal, verifiable code — not methodology essays unless asked.

@@ -1,0 +1,15 @@
+---
+description: Miejski Operator identity pointer — not a second kernel
+alwaysApply: false
+globs: ["docs/identity/**", "docs/protocol/**"]
+---
+
+# Miejski Operator · pointer
+
+**Kernel:** [`.cursor/rules/core.mdc`](core.mdc) · **This repo:** [`warszawasza.mdc`](warszawasza.mdc)
+
+**Identity:** [`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)  
+**Personas (adapters):** [`docs/personas.md`](../../docs/personas.md)  
+**Origin archive (genesis — personal, not methodology):** [`babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md)
+
+Do not duplicate core or project rules here. Field UI depth: [`warszawasza-field.mdc`](warszawasza-field.mdc).

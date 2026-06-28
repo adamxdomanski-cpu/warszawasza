@@ -21,39 +21,40 @@
   --color-fira-structure-mid: rgba(248, 248, 246, 0.62);
   --color-fira-structure-bright: rgba(248, 248, 246, 0.88);
   --color-lang-active: var(--color-accent);
-  --color-lang-idle: rgba(190, 190, 188, 0.52);
+  /* Idle lang tints: solid hex, ≥4.5:1 on #030303 (WCAG AA) */
+  --color-lang-idle: #949492;
   --color-lang-hover: rgba(228, 0, 69, 0.68);
-  --color-lang-sep: rgba(190, 190, 188, 0.28);
-  --color-lang-pl-idle: rgba(228, 0, 69, 0.44);
+  --color-lang-sep: rgba(190, 190, 188, 0.45);
+  --color-lang-pl-idle: #e8557a;
   --color-lang-pl-active: var(--color-accent);
-  --color-lang-pl-hover: rgba(228, 0, 69, 0.72);
-  --color-lang-it-idle: rgba(120, 168, 220, 0.5);
-  --color-lang-it-active: rgba(120, 168, 220, 0.88);
-  --color-lang-it-hover: rgba(120, 168, 220, 0.68);
-  --color-lang-uk-idle: rgba(212, 180, 96, 0.48);
-  --color-lang-uk-active: rgba(212, 180, 96, 0.86);
-  --color-lang-uk-hover: rgba(212, 180, 96, 0.66);
-  --color-lang-bg-idle: rgba(96, 158, 132, 0.48);
-  --color-lang-bg-active: rgba(96, 158, 132, 0.86);
-  --color-lang-bg-hover: rgba(96, 158, 132, 0.66);
-  --color-lang-et-idle: rgba(110, 165, 175, 0.48);
-  --color-lang-et-active: rgba(110, 165, 175, 0.86);
-  --color-lang-et-hover: rgba(110, 165, 175, 0.66);
-  --color-lang-fi-idle: rgba(140, 175, 210, 0.48);
-  --color-lang-fi-active: rgba(140, 175, 210, 0.86);
-  --color-lang-fi-hover: rgba(140, 175, 210, 0.66);
-  --color-lang-lt-idle: rgba(180, 130, 110, 0.48);
-  --color-lang-lt-active: rgba(180, 130, 110, 0.86);
-  --color-lang-lt-hover: rgba(180, 130, 110, 0.66);
-  --color-lang-lv-idle: rgba(160, 140, 175, 0.48);
-  --color-lang-lv-active: rgba(160, 140, 175, 0.86);
-  --color-lang-lv-hover: rgba(160, 140, 175, 0.66);
-  --color-lang-hu-idle: rgba(184, 230, 46, 0.4);
-  --color-lang-hu-active: rgba(184, 230, 46, 0.76);
-  --color-lang-hu-hover: rgba(184, 230, 46, 0.58);
-  --color-lang-en-idle: rgba(190, 190, 188, 0.48);
-  --color-lang-en-active: rgba(248, 248, 246, 0.82);
-  --color-lang-en-hover: rgba(248, 248, 246, 0.62);
+  --color-lang-pl-hover: #ff5c85;
+  --color-lang-it-idle: #85b4ea;
+  --color-lang-it-active: #a8ccff;
+  --color-lang-it-hover: #9cc4f5;
+  --color-lang-uk-idle: #d0b060;
+  --color-lang-uk-active: #e8c878;
+  --color-lang-uk-hover: #ddbc68;
+  --color-lang-bg-idle: #6ebc9c;
+  --color-lang-bg-active: #88d4b4;
+  --color-lang-bg-hover: #7ac8a8;
+  --color-lang-et-idle: #80c4d0;
+  --color-lang-et-active: #98dce8;
+  --color-lang-et-hover: #8cd4e0;
+  --color-lang-fi-idle: #9ec4e8;
+  --color-lang-fi-active: #b8d8f8;
+  --color-lang-fi-hover: #acd0f0;
+  --color-lang-lt-idle: #d0a090;
+  --color-lang-lt-active: #e8b8a8;
+  --color-lang-lt-hover: #dcb0a0;
+  --color-lang-lv-idle: #c0a8d0;
+  --color-lang-lv-active: #d8c0e8;
+  --color-lang-lv-hover: #ccb4dc;
+  --color-lang-hu-idle: #b8e62e;
+  --color-lang-hu-active: #d0ff48;
+  --color-lang-hu-hover: #c8f038;
+  --color-lang-en-idle: #b4b4b2;
+  --color-lang-en-active: rgba(248, 248, 246, 0.94);
+  --color-lang-en-hover: #d0d0ce;
   --font-sans: var(--font-fira-sans), "Fira Sans", sans-serif;
   --font-mono: var(--font-fira-mono), "Fira Mono", monospace;
 }
@@ -596,7 +597,7 @@
   }
 
   .lang-nav--orient .lang-nav-btn {
-    color: rgba(17, 17, 17, 0.42);
+    color: #595959;
     background: transparent;
     border: 0;
     font: inherit;
@@ -618,7 +619,7 @@
   }
 
   .lang-nav--orient .lang-nav-sep {
-    color: rgba(17, 17, 17, 0.22);
+    color: #757575;
   }
 
   .orientation-screen__continue {

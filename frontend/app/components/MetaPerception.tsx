@@ -13,6 +13,7 @@ import {
 import { gridZone, pathLength, type AttentionPoint } from "../../lib/attention";
 import { useAttention } from "../../hooks/useAttention";
 import { studioDiscoveryLine } from "../../lib/studioAnchor";
+import { LANG_ACCESSIBLE_NAMES } from "../../lib/i18n";
 import "./meta-hud.css";
 import GrafenGraph from "./GrafenGraph";
 import TrajectoryGraph from "./TrajectoryGraph";
@@ -231,6 +232,8 @@ export default function MetaPerception() {
                 lang === code ? "lang-nav-btn--active" : ""
               }`}
               onClick={() => switchLang(code)}
+              aria-label={`${code.toUpperCase()}, ${LANG_ACCESSIBLE_NAMES[code]}`}
+              aria-current={lang === code ? "true" : undefined}
             >
               {code.toUpperCase()}
             </button>

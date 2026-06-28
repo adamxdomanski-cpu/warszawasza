@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useStructureAnchor } from "../../hooks/useStructureAnchor";
 import {
@@ -18,6 +19,7 @@ import SignalControl from "./SignalControl";
 import TrajectoryChoiceButton from "./TrajectoryChoiceButton";
 import WarszawaszaLogoLink from "./WarszawaszaLogoLink";
 import { persistTrajectory } from "./TrajectorySwitch";
+import { appendInteractionEvent } from "../../lib/interactionTrace";
 
 type ObservationGateProps = {
   onComplete: (choice: TrajectoryChoice, lang: Lang) => void;
@@ -77,6 +79,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
     if (orientExitDoneRef.current) return;
     orientExitDoneRef.current = true;
     markOrientSeen();
+    appendInteractionEvent("NEXT");
     setOrientExiting(false);
     setPhase("question");
   };
@@ -88,13 +91,27 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
   }, [orientExiting]);
 
   const selectTrajectory = (next: TrajectoryChoice) => {
+    appendInteractionEvent("SELECT", next === "true" ? "TRUE" : "FALSE");
     setChoice(next);
     setPhase("reveal");
     persistTrajectory(next);
   };
 
+  const returnToQuestion = () => {
+    appendInteractionEvent("BACK");
+    setChoice(null);
+    setPhase("question");
+  };
+
   const enterField = () => {
-    if (choice) onComplete(choice, lang);
+    if (choice) {
+      appendInteractionEvent("NEXT");
+      onComplete(choice, lang);
+    }
+  };
+
+  const onHesitate = () => {
+    appendInteractionEvent("PAUSE");
   };
 
   if (phase === "orient") {
@@ -123,6 +140,12 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             {copy.observationMark}
           </p>
           <LangNav lang={lang} onChange={setLang} />
+          <Link
+            href="/field/heat"
+            className="font-mono-field text-xs tracking-wide text-accent/70 underline-offset-2 hover:text-accent hover:underline"
+          >
+            39°C · woda i cień →
+          </Link>
         </header>
 
         {phase === "question" ? (
@@ -156,6 +179,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
                 hint={copy.falseHint}
                 direction="down"
                 onCommit={selectTrajectory}
+                onHesitate={onHesitate}
               />
               <TrajectoryChoiceButton
                 choice="true"
@@ -163,6 +187,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
                 hint={copy.trueHint}
                 direction="up-right"
                 onCommit={selectTrajectory}
+                onHesitate={onHesitate}
               />
             </div>
           </section>
@@ -190,9 +215,17 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             </div>
             <SignalControl
               type="button"
+              direction="left"
+              onClick={returnToQuestion}
+              className="mt-2 min-h-10 self-start font-mono-field text-xs tracking-wider text-accent/45 touch-manipulation"
+            >
+              ← T / F
+            </SignalControl>
+            <SignalControl
+              type="button"
               direction="right"
               onClick={enterField}
-              className="accent-signal context-link-target mt-6 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
+              className="accent-signal context-link-target mt-4 min-h-11 touch-manipulation self-start font-mono-field text-sm tracking-[0.12em] text-accent uppercase sm:text-base"
             >
               {copy.enterField}
             </SignalControl>

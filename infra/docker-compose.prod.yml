@@ -1,0 +1,50 @@
+# Production stack: Next.js + PostgreSQL (VPS)
+# Usage (from repo root):
+#   cp infra/.env.example infra/.env   # edit secrets
+#   docker compose -f infra/docker-compose.prod.yml up -d --build
+#
+# Nginx on the host proxies warszawasza.online → localhost:3000 (see infra/nginx/).
+
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: warszawasza_nextjs
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://warszawasza.online}
+      FLACON_FORGE_ADMIN_SECRET: ${FLACON_FORGE_ADMIN_SECRET}
+    ports:
+      - "${WEB_HOST_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    container_name: warszawasza_db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../backend/sql:/docker-entrypoint-initdb.d/migrations:ro
+      - ./db/init/00-run-migrations.sh:/docker-entrypoint-initdb.d/00-run-migrations.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  pgdata:

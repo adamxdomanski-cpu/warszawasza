@@ -23,6 +23,20 @@ export const LANGS: Lang[] = [
   "en",
 ];
 
+/** Full language names for accessible labels (must include visible ISO code). */
+export const LANG_ACCESSIBLE_NAMES: Record<Lang, string> = {
+  pl: "Polski, PL",
+  it: "Italiano, IT",
+  uk: "Українська, UK",
+  bg: "Български, BG",
+  et: "Eesti, ET",
+  fi: "Suomi, FI",
+  lt: "Lietuvių, LT",
+  lv: "Latviešu, LV",
+  hu: "Magyar, HU",
+  en: "English, EN",
+};
+
 type FlowKey = "signal" | "friction" | "adaptation" | "trajectory";
 
 export type PipelineKey =
@@ -1737,6 +1751,10 @@ export type TraceArtifactCopy = {
   separator: string;
   statusVerified: string;
   statusUnverified: string;
+  statusPipelineVerified: string;
+  statusTerrainUnverified: string;
+  statusTerrainVerified: string;
+  emergencyHint: string;
   tracePrefix: string;
   fopChainLabel: string;
   chainStages: string;
@@ -1757,6 +1775,12 @@ export const TRACE_ARTIFACT: Record<"pl" | "en" | "it", TraceArtifactCopy> = {
     separator: "────────────────",
     statusVerified: "STATUS ✓ Zweryfikowano",
     statusUnverified: "Status: NIEZWERYFIKOWANA — hipoteza oczekująca weryfikacji",
+    statusPipelineVerified: "POTOK TECHNICZNY: ✓ ZWERYFIKOWANY (INTEGRALNY)",
+    statusTerrainUnverified:
+      "STAN TERENOWY (WARSTWA 0): ⚠ NIEPOTWIERDZONY — nasłuch otwarty",
+    statusTerrainVerified: "STAN TERENOWY (WARSTWA 0): ✓ POTWIERDZONY",
+    emergencyHint:
+      "Pilność: w razie aktualnego zagrożenia zadzwoń 112 lub 999. Aplikacja nie zastępuje służb ratunkowych.",
     tracePrefix: "Ślad",
     fopChainLabel: "Łańcuch",
     chainStages: "OBS → SIG → PROC → FIL → PAM → WAL → WIE",
@@ -1775,6 +1799,12 @@ export const TRACE_ARTIFACT: Record<"pl" | "en" | "it", TraceArtifactCopy> = {
     separator: "────────────────",
     statusVerified: "STATUS ✓ Verified",
     statusUnverified: "Status: UNVERIFIED — hypothesis awaiting verification",
+    statusPipelineVerified: "TECHNICAL PIPELINE: ✓ VERIFIED (INTEGRITY OK)",
+    statusTerrainUnverified:
+      "FIELD STATE (LAYER 0): ⚠ UNCONFIRMED — open monitoring",
+    statusTerrainVerified: "FIELD STATE (LAYER 0): ✓ CONFIRMED",
+    emergencyHint:
+      "Urgent: if danger is ongoing, call 112 or 999. This app does not replace emergency services.",
     tracePrefix: "Trace",
     fopChainLabel: "Chain",
     chainStages: "OBS → SIG → PROC → FIL → MEM → VAL → KNO",
@@ -1793,6 +1823,12 @@ export const TRACE_ARTIFACT: Record<"pl" | "en" | "it", TraceArtifactCopy> = {
     separator: "────────────────",
     statusVerified: "STATUS ✓ Verificato",
     statusUnverified: "Stato: NON VERIFICATA — ipotesi in attesa di verifica",
+    statusPipelineVerified: "PIPELINE TECNICO: ✓ VERIFICATO (INTEGRITÀ OK)",
+    statusTerrainUnverified:
+      "STATO TERRITORIALE (LIVELLO 0): ⚠ NON CONFERMATO — monitoraggio aperto",
+    statusTerrainVerified: "STATO TERRITORIALE (LIVELLO 0): ✓ CONFERMATO",
+    emergencyHint:
+      "Urgenza: se il pericolo è attuale, chiama 112 o 999. L'app non sostituisce i servizi di emergenza.",
     tracePrefix: "Traccia",
     fopChainLabel: "Catena",
     chainStages: "OBS → SIG → PROC → FIL → MEM → VAL → KNO",
