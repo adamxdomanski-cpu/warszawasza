@@ -7,11 +7,18 @@ import {
   traceEventsForLog,
 } from "./interactionTrace";
 import type { InteractionEvent } from "./fira-core/interaction";
-import { COPY, PIPELINE_ORDER, traceArtifactCopy, type Lang } from "./i18n";
+import {
+  COPY,
+  PIPELINE_ORDER,
+  traceArtifactCopy,
+  traceResidentCopy,
+  type Lang,
+} from "./i18n";
 import {
   buildTraceStatusLines,
   crisisEmergencyHint,
   isCriticalHumanTrace,
+  isTerrainVerified,
 } from "./traceStatus";
 import { studioDiscoveryLine } from "./studioAnchor";
 
@@ -24,7 +31,6 @@ export type ObservationTracePayload = {
   logLines: string[];
   createdAt: number;
   citizen?: CitizenTraceFields;
-  /** Interaction TRACE — ordered EVENT facts; see decision-trajectory-v1.md */
   traceEvents?: InteractionEvent[];
   /** @deprecated use traceEvents */
   decisionEvents?: InteractionEvent[];
@@ -70,46 +76,61 @@ function observationQuote(trace: ObservationTracePayload): string | null {
   return text || null;
 }
 
-function traceStatusLines(trace: ObservationTracePayload): string[] {
-  return buildTraceStatusLines(trace).lines;
+function formatRelativeTime(trace: ObservationTracePayload): string {
+  const rc = traceResidentCopy(trace.lang);
+  const ms = Date.now() - trace.createdAt;
+  if (ms < 60_000) return rc.justNow;
+  const minutes = Math.floor(ms / 60_000);
+  if (minutes < 120) return rc.minutesAgo.replace("{n}", String(minutes));
+  const hours = Math.floor(minutes / 60);
+  return rc.hoursAgo.replace("{n}", String(hours));
 }
 
-/** WARSTWA 1 — human trace: quote, title, status, narracja, short ID. */
-export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
-  const copy = COPY[trace.lang];
-  const artifact = traceArtifactCopy(trace.lang);
-  const stageKey = PIPELINE_ORDER[trace.engineIndex] ?? "observation";
-  const stageLabel = copy.pipeline[stageKey];
+function buildResidentStatusLines(trace: ObservationTracePayload): string[] {
+  const rc = traceResidentCopy(trace.lang);
+  const decision = trace.citizen?.traceDecision;
+  const lines: string[] = [];
 
-  const lines: string[] = [artifact.layer1, ""];
+  if (decision === "true") lines.push(rc.statusReceived);
+  else if (decision === "false") lines.push(rc.statusUnverified);
+  else lines.push(rc.statusReceived);
 
-  const quote = observationQuote(trace);
-  if (quote) {
-    lines.push(`„${quote}"`, "");
-  }
+  if (!isTerrainVerified(trace)) lines.push(rc.statusAwaitingField);
 
-  lines.push(artifact.documentTitle, "");
-
-  for (const status of traceStatusLines(trace)) {
-    lines.push(status);
-  }
   if (isCriticalHumanTrace(trace)) {
     const hint = crisisEmergencyHint(trace.lang);
     if (hint) lines.push(hint);
   }
 
-  const place = trace.citizen?.place?.trim();
-  const time = trace.citizen?.observedAt?.trim() || trace.clock;
-  if (place) {
-    lines.push(`${place} · ${time}`);
-  } else if (time) {
-    lines.push(time);
+  return lines;
+}
+
+/** Resident-facing card — no WARSTWA / FOP / pipeline jargon. */
+export function buildTraceResidentLayer(
+  trace: ObservationTracePayload,
+  origin = "https://www.warszawasza.online",
+): string {
+  const rc = traceResidentCopy(trace.lang);
+  const place = trace.citizen?.place?.trim() || rc.cityDefault;
+  const quote = observationQuote(trace);
+  const lines: string[] = [];
+
+  if (quote) {
+    lines.push(`„${quote}"`, "");
   }
 
+  lines.push(place, formatRelativeTime(trace), "");
+
+  for (const status of buildResidentStatusLines(trace)) {
+    lines.push(status);
+  }
   lines.push(
-    `${stageLabel} · ${trace.clock} · ${trace.attentionCount} ${copy.trace.attentionUnits}`,
     "",
-    copy.trace.civicBridge,
+    `${rc.findWaterShade}:`,
+    `${origin}/field/heat`,
+    "",
+    `${rc.reportObservation}:`,
+    `${origin}/`,
     "",
     formatShortTraceLabel(trace.createdAt, trace.lang),
     "",
@@ -123,7 +144,43 @@ function resolveTraceEvents(trace: ObservationTracePayload): InteractionEvent[] 
   return trace.traceEvents ?? trace.decisionEvents ?? [];
 }
 
-/** WARSTWA 2 — timestamp log lines + interaction TRACE (observation). */
+/** Developer / archive block — LOG, FOP, hypotheses. */
+export function buildTraceTechnicalLayer(trace: ObservationTracePayload): string {
+  const artifact = traceArtifactCopy(trace.lang);
+  const rc = traceResidentCopy(trace.lang);
+  const copy = COPY[trace.lang];
+  const events = resolveTraceEvents(trace);
+  const traceLines = events.length ? traceEventsForLog(events) : [];
+  const pathBlock =
+    events.length > 0 ? ["", "trace:", formatTracePath(events)] : [];
+  const hypothesis = buildTraceHypothesisLayer(trace);
+
+  return [
+    artifact.separator,
+    "",
+    rc.technicalData,
+    "",
+    artifact.layer2,
+    "",
+    copy.trace.logHeader,
+    ...trace.logLines.map((line) => `  ${line}`),
+    ...traceLines,
+    ...pathBlock,
+    "",
+    artifact.layer3,
+    "",
+    ...buildFopHumanLabels(trace),
+    "",
+    buildFopDocument(trace),
+    ...(hypothesis ? ["", hypothesis] : []),
+  ].join("\n");
+}
+
+/** @deprecated use buildTraceResidentLayer */
+export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
+  return buildTraceResidentLayer(trace);
+}
+
 export function buildTraceLogLayer(trace: ObservationTracePayload): string {
   const artifact = traceArtifactCopy(trace.lang);
   const copy = COPY[trace.lang];
@@ -141,12 +198,9 @@ export function buildTraceLogLayer(trace: ObservationTracePayload): string {
   ].join("\n");
 }
 
-/** WARSTWA 3 — human FOP labels + parseable FOP/0.1 block. */
 export function buildTraceFopLayer(trace: ObservationTracePayload): string {
   const artifact = traceArtifactCopy(trace.lang);
   return [
-    artifact.separator,
-    "",
     artifact.layer3,
     "",
     ...buildFopHumanLabels(trace),
@@ -155,7 +209,6 @@ export function buildTraceFopLayer(trace: ObservationTracePayload): string {
   ].join("\n");
 }
 
-/** Optional hypothesis block — never mixed into observation facts without label. */
 export function buildTraceHypothesisLayer(trace: ObservationTracePayload): string {
   const events = resolveTraceEvents(trace);
   if (!events.length) return "";
@@ -170,16 +223,11 @@ export function buildTraceHypothesisLayer(trace: ObservationTracePayload): strin
   return lines.join("\n").trimEnd();
 }
 
+/** Clipboard / mailto: human first, diagnostics after separator. */
 export function buildTraceDocument(trace: ObservationTracePayload): string {
-  const hypothesis = buildTraceHypothesisLayer(trace);
-  return [
-    buildTraceHumanLayer(trace),
-    "",
-    buildTraceLogLayer(trace),
-    "",
-    buildTraceFopLayer(trace),
-    ...(hypothesis ? ["", hypothesis] : []),
-  ].join("\n");
+  return [buildTraceResidentLayer(trace), "", buildTraceTechnicalLayer(trace)].join(
+    "\n",
+  );
 }
 
 export function buildTraceShareUrl(
@@ -207,4 +255,41 @@ export function buildMailtoHref(trace: ObservationTracePayload): string {
   const body = encodeURIComponent(buildTraceDocument(trace));
   const subject = encodeURIComponent("WARSZAWASZA — ślad obserwacji");
   return `mailto:hello@warszawasza.online?subject=${subject}&body=${body}`;
+}
+
+/** Full legacy export with WARSTWA headers in layer 1 (dev / archive). */
+export function buildTraceDocumentLegacy(trace: ObservationTracePayload): string {
+  const artifact = traceArtifactCopy(trace.lang);
+  const copy = COPY[trace.lang];
+  const stageKey = PIPELINE_ORDER[trace.engineIndex] ?? "observation";
+  const stageLabel = copy.pipeline[stageKey];
+  const quote = observationQuote(trace);
+  const hypothesis = buildTraceHypothesisLayer(trace);
+
+  const header: string[] = [artifact.layer1, ""];
+  if (quote) header.push(`„${quote}"`, "");
+  header.push(artifact.documentTitle, "");
+  for (const status of buildTraceStatusLines(trace).lines) {
+    header.push(status);
+  }
+  const place = trace.citizen?.place?.trim();
+  const time = trace.citizen?.observedAt?.trim() || trace.clock;
+  if (place) header.push(`${place} · ${time}`);
+  else if (time) header.push(time);
+  header.push(
+    `${stageLabel} · ${trace.clock} · ${trace.attentionCount} ${copy.trace.attentionUnits}`,
+    "",
+    copy.trace.civicBridge,
+    "",
+    formatShortTraceLabel(trace.createdAt, trace.lang),
+  );
+
+  return [
+    header.join("\n"),
+    "",
+    buildTraceLogLayer(trace),
+    "",
+    buildTraceFopLayer(trace),
+    ...(hypothesis ? ["", hypothesis] : []),
+  ].join("\n");
 }
