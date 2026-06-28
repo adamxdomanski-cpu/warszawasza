@@ -237,6 +237,7 @@ WARSZAWASZA, FIRA, COP, AI = **implementacja**, nie rdzeń.
 | **v3.3** | Odbicia + medium; odbicie ≠ obiekt |
 | **v4** | **Projekcja**; pętla zamknięta; 4 prawa; jedno pytanie o wierność odbicia |
 | **v4.1** | Trzy aksjomaty powrotu: model · język · droga/zapis |
+| **v4.2** | Cztery głosy — brak jednomyślności = diagnostyka |
 
 ---
 
@@ -251,3 +252,30 @@ Każdy model musi umieć wrócić do rzeczywistości.
 Każda rzeczywistość potrzebuje własnego języka.
 
 Model nie jest miejscem, do którego dochodzimy. Jest drogą/zapisem, którą wracamy do rzeczywistości.
+
+---
+
+## Cztery głosy (skaner — nie komitet)
+
+Brak jednomyślności = **wentyl bezpieczeństwa**, nie paraliż. Rozbieżność to **mapa napięć**, nie błąd systemu.
+
+| Persona | Pytanie | Warstwa |
+|---------|---------|---------|
+| 👦 **Oluś** | Czy to ma sens? | logika / zrozumienie |
+| 👔 **Tomek** | Po co? | pierwsze 20 s / komunikacja |
+| 🚜 **Dziadek** | Czy działa? | kod, infra, dowód |
+| 👵 **Babcia** | Czy służy ludziom? | ciało, relacja, potrzeba |
+
+Przykład rozbieżności: Oluś ✔ Dziadek ✔ · Tomek ✘ Babcia ✘ → architektura i build OK; **napraw produkt i ludzki sens**, nie rdzeń.
+
+To nie głosowanie nad release. To **trójwymiarowy skaner** przed produkcją.
+
+```
+        👦 Oluś — „Czy to ma sens?”
+               │
+    👔 Tomek ─┼─ 🚜 Dziadek
+    „Po co?”   │   „Czy działa?”
+               │
+           👵 Babcia
+      „Czy służy ludziom?”
+```
