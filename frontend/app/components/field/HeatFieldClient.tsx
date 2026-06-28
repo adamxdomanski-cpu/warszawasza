@@ -109,16 +109,14 @@ export default function HeatFieldClient() {
             type="button"
             direction="right"
             onClick={onCta}
-            className="min-h-12 w-full border border-accent/35 bg-field px-4 py-3 text-left font-mono-field text-sm tracking-wide text-accent touch-manipulation"
+            className="min-h-12 w-full border border-accent/35 bg-field px-4 py-3 text-left text-sm leading-snug text-ink touch-manipulation"
           >
             {copy.ctaWaterShade}
           </SignalControl>
         </header>
 
         <section aria-label={copy.layer2Title}>
-          <h2 className="mb-4 font-mono-field text-xs tracking-[0.2em] text-accent/55 uppercase">
-            {copy.layer2Title}
-          </h2>
+          <h2 className="mb-4 text-base font-normal text-ink/90">{copy.layer2Title}</h2>
           <div className="flex flex-col gap-2">
             {visiblePoints.map((point) => {
               const labels = copy.pointLabels[point.id];
@@ -136,7 +134,7 @@ export default function HeatFieldClient() {
                   />
                   <span className="flex flex-col gap-0.5">
                     <span className="text-sm leading-snug">{labels.name}</span>
-                    <span className="font-mono-field text-xs text-accent/65">
+                    <span className="text-xs text-accent/65">
                       {ok ? labels.statusOk : labels.statusFail} · {labels.action}
                     </span>
                   </span>
@@ -144,12 +142,12 @@ export default function HeatFieldClient() {
               );
             })}
           </div>
-          <div className="mt-4 flex flex-wrap gap-3">
+          <div className="mt-4 flex flex-wrap gap-4">
             <SignalControl
               type="button"
               direction="left"
               onClick={onBack}
-              className="min-h-10 font-mono-field text-xs text-accent/50 touch-manipulation"
+              className="min-h-10 text-sm text-accent/55 touch-manipulation"
             >
               {copy.back}
             </SignalControl>
@@ -157,35 +155,43 @@ export default function HeatFieldClient() {
               type="button"
               direction="down"
               onClick={onShadeOnly}
-              className="min-h-10 font-mono-field text-xs text-accent/50 touch-manipulation"
+              className="min-h-10 text-sm text-accent/75 touch-manipulation"
             >
-              SELECT(ZNAJDZ_CIEN)
+              {copy.findShade}
             </SignalControl>
-          </div>
-
-          <div className="mt-6 rounded border border-accent/15 bg-field/60 p-3 font-mono-field text-xs leading-relaxed text-accent/45">
-            <div className="mb-1 text-accent/60">{copy.traceTitle}</div>
-            <pre className="m-0 whitespace-pre-wrap" key={traceTick}>
-              {events.length ? formatTracePath(events) : "—"}
-            </pre>
           </div>
         </section>
 
-        <details className="rounded border border-accent/15 bg-field/40 p-4">
-          <summary className="cursor-pointer font-mono-field text-xs tracking-widest text-accent/45 uppercase">
-            {copy.layer3Title}
+        <details className="mt-2 border-t border-accent/10 pt-4">
+          <summary className="cursor-pointer text-sm text-accent/45 touch-manipulation">
+            ▼ {copy.technicalData}
           </summary>
-          <div className="mt-4 space-y-3 font-mono-field text-xs leading-relaxed text-accent/40">
-            <p className="m-0">{copy.fopLine}</p>
-            <p className="m-0 italic text-accent/35">{copy.hypothesisHeat}</p>
-            <p className="m-0">· {copy.knowledgeLink}</p>
-            <p className="m-0">· {copy.paperLink}</p>
-            <p className="m-0 text-accent/30">
-              Observation: temp={HEAT_TEMP_C}°C · deployment=warsaw · adapter=web
-            </p>
+          <div className="mt-4 space-y-4 text-xs leading-relaxed text-accent/40">
+            <div>
+              <p className="m-0 mb-1 font-mono-field text-accent/50">{copy.whyContext}</p>
+              <p className="m-0 italic text-accent/45">{copy.hypothesisHeat}</p>
+              <p className="mt-2 m-0">· {copy.knowledgeLink}</p>
+              <p className="m-0">· {copy.paperLink}</p>
+            </div>
+
+            <div className="rounded border border-accent/10 bg-field/60 p-3 font-mono-field">
+              <div className="mb-1 text-accent/55">{copy.traceTitle}</div>
+              <pre className="m-0 whitespace-pre-wrap text-accent/45" key={traceTick}>
+                {events.length ? formatTracePath(events) : "—"}
+              </pre>
+              <p className="mt-2 mb-0 text-accent/35">{copy.devEventCodes}</p>
+            </div>
+
+            <div className="space-y-1 font-mono-field text-accent/35">
+              <p className="m-0">{copy.layer3Title}</p>
+              <p className="m-0">{copy.fopLine}</p>
+              <p className="m-0">
+                Observation: temp={HEAT_TEMP_C}°C · deployment=warsaw · adapter=web
+              </p>
+            </div>
           </div>
         </details>
       </main>
     </div>
   );
-}
+};

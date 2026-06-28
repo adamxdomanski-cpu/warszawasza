@@ -49,7 +49,11 @@ type HeatCopy = {
   knowledgeLink: string;
   paperLink: string;
   back: string;
+  findShade: string;
+  technicalData: string;
+  whyContext: string;
   hypothesisHeat: string;
+  devEventCodes: string;
 };
 
 const COPY: Partial<Record<Lang, HeatCopy>> = {
@@ -63,7 +67,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
       "W domu: czy potrzebujesz trzeciej spłuczki, czy wystarczy jedna?",
     ],
     ctaWaterShade: "📍 Pokaż najbliższą darmową wodę i cień",
-    layer2Title: "Mokotów · fakty terenowe",
+    layer2Title: "W pobliżu",
     districtLabel: "Mokotów",
     pointLabels: {
       hydrant_pulawska: {
@@ -91,8 +95,13 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     knowledgeLink: "Miejski Plan Adaptacji do zmian klimatycznych dla m.st. Warszawy do roku 2030",
     paperLink: "Szulczewska et al. — wskaźnik powierzchni biologicznie czynnej w strukturze Warszawy",
     back: "← Wstecz",
+    findShade: "Znajdź cień",
+    technicalData: "Dane techniczne",
+    whyContext: "Dlaczego to pokazujemy?",
     hypothesisHeat:
       "Hipoteza (provisional): ekstremalne ciepło zwiększa zapotrzebowanie na wodę i cień w przestrzeni publicznej.",
+    devEventCodes:
+      "Kody zdarzeń (dev): SELECT(ZNAJDZ_WODE_I_CIEN), SELECT(ZNAJDZ_CIEN), SELECT(HYDRANT_PULAWSKA), …",
   },
   en: {
     statusLine: "WARSAW · 28 JUNE 2026 · 16:30",
@@ -104,7 +113,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
       "At home: do you need a third flush, or is one enough?",
     ],
     ctaWaterShade: "📍 Show nearest free water and shade",
-    layer2Title: "Mokotów · field facts",
+    layer2Title: "Nearby",
     districtLabel: "Mokotów",
     pointLabels: {
       hydrant_pulawska: {
@@ -132,8 +141,13 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     knowledgeLink: "Warsaw climate adaptation plan to 2030",
     paperLink: "Szulczewska et al. — biologically active area index in Warsaw",
     back: "← Back",
+    findShade: "Find shade",
+    technicalData: "Technical data",
+    whyContext: "Why we show this",
     hypothesisHeat:
       "Hypothesis (provisional): extreme heat increases demand for water and shade in public space.",
+    devEventCodes:
+      "Event codes (dev): SELECT(ZNAJDZ_WODE_I_CIEN), SELECT(ZNAJDZ_CIEN), SELECT(HYDRANT_PULAWSKA), …",
   },
   uk: {
     statusLine: "ВАРШАВА · 28 ЧЕРВНЯ 2026 · 16:30",
@@ -173,8 +187,13 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     knowledgeLink: "План адаптації Варшави до 2030",
     paperLink: "Szulczewska et al. — біологічно активна площа",
     back: "← Назад",
+    findShade: "Знайти тінь",
+    technicalData: "Технічні дані",
+    whyContext: "Чому ми це показуємо",
     hypothesisHeat:
       "Гіпотеза (provisional): екстремальна спека збільшує потребу у воді та тіні.",
+    devEventCodes:
+      "Коди подій (dev): SELECT(ZNAJDZ_WODE_I_CIEN), SELECT(ZNAJDZ_CIEN), …",
   },
 };
 
