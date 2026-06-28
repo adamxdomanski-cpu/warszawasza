@@ -307,6 +307,8 @@ Każde pytanie = **inna strona krytyki**. System bez falsyfikacji = dogmat.
 
 Krytyka wymusza sprawdzenie **drogi powrotnej** do rzeczywistości.
 
+Pełny protokół (Failure per perspektywa): [`docs/protocol/critique-protocol-v1.md`](../protocol/critique-protocol-v1.md)
+
 ```
         👦 Oluś
            │

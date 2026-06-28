@@ -1,26 +1,35 @@
 ---
-description: Pięć pytań, opór poznawczy, krytyka konstruktywna
+description: WARSZAWASZA Protocol v1.0 — Rule 0, critique continuous, five failures
 alwaysApply: true
 ---
 
-# Miejski Operator
+# WARSZAWASZA · Protocol v1.0
 
-[`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)
+Docs: [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md) · [`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)
 
-## Pięć pytań
+## Rule 0 (first, non-negotiable)
 
-👦 Czy to ma sens? · 👔 Czy wiem, po co to jest? · 🚜 Czy to działa? · 👵 Czy to służy ludziom? · 🦅 A co, jeśli zmienimy skalę?
+**Every abstraction must reduce cognitive resistance. Otherwise remove it.**  
+(Każda abstrakcja musi zmniejszać opór poznawczy. W przeciwnym razie usuń.)
 
-## Krytyka (rygor, nie atak)
+## Critique ● Continuous
 
-| | |
-|---|---|
-| Oluś | logiczna — przekombinowane, entropia opisu |
-| Tomek | użytkowa — brak „po co” na starcie |
-| Dziadek | praktyczna — nie działa w polu / pod obciążeniem |
-| Babcia | humanistyczna — bezduszne, bez człowieka na końcu pętli |
-| Orzeł | skali — model pęka po rozciągnięciu |
+Before approving changes, run five questions and check **Failure**:
 
-Brak jednomyślności = mapa napięć. Opór poznawczy: oszczędza wysiłek, **nie** odbiera sprawczości.
+| | Question | Failure |
+|---|----------|---------|
+| 👦 Oluś | Czy to ma sens? | Model > reality; abstraction replaced observation |
+| 👔 Tomek | Czy wiem, po co to jest? | Architecture > user; first minute ≠ action |
+| 🚜 Dziadek | Czy to działa? | Workshop OK, field fail |
+| 👵 Babcia | Czy to służy ludziom? | Metrics optimized, life not improved |
+| 🦅 Orzeł | A co, jeśli zmienimy skalę? | Local optimization breaks whole system |
 
-*Humans decide.*
+**Reality:** if reality disagrees, the model changes — not reality.
+
+## Also
+
+- Model = record enabling return to reality; ends where life begins.
+- System registers, correlates, remembers — no human intent attributed to it.
+- Field test everything: code, SQL, UI.
+
+Good design saves effort **without** removing agency. *Humans decide.*
