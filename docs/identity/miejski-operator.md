@@ -238,6 +238,7 @@ WARSZAWASZA, FIRA, COP, AI = **implementacja**, nie rdzeń.
 | **v4** | **Projekcja**; pętla zamknięta; 4 prawa; jedno pytanie o wierność odbicia |
 | **v4.1** | Trzy aksjomaty powrotu: model · język · droga/zapis |
 | **v4.2** | Cztery głosy — brak jednomyślności = diagnostyka |
+| **v4.3** | **Pięć pytań** + Orzeł: *A co, jeśli zmienimy skalę?* — STOP |
 
 ---
 
