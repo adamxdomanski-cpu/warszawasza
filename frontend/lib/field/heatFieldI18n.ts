@@ -1,16 +1,19 @@
 /**
- * Heat field · Upał 2026 — Warsaw/Mokotów deployment adapter (Layer 1–3 UI copy).
- * CORE observations are value-neutral; this file only renders per Lang.
+ * Heat field · Upał 2026 — Warsaw/Mokotów orientation panel (Layer 1 UI copy).
  */
 
 import type { Lang } from "../i18n";
 
 export type HeatPointStatus = "ok" | "fail";
+export type HeatPointKind = "water" | "shade" | "both";
 
 export type HeatPoint = {
   id: string;
   status: HeatPointStatus;
   selectValue: string;
+  distanceM: number;
+  walkMin: number;
+  kind: HeatPointKind;
 };
 
 export const HEAT_FIELD_OBSERVED_AT = "2026-06-28T14:30:00Z";
@@ -21,37 +24,63 @@ export const HEAT_POINTS: HeatPoint[] = [
     id: "hydrant_pulawska",
     status: "ok",
     selectValue: "HYDRANT_PULAWSKA",
+    distanceM: 120,
+    walkMin: 3,
+    kind: "water",
   },
   {
     id: "biblio_mokotow",
     status: "ok",
     selectValue: "BIBLIOTHEK_MOKOTOW",
+    distanceM: 480,
+    walkMin: 6,
+    kind: "shade",
   },
   {
     id: "metro_kurtyna",
     status: "fail",
     selectValue: "METRO_KURTYNA",
+    distanceM: 650,
+    walkMin: 8,
+    kind: "both",
   },
 ];
+
+type PointLabel = {
+  name: string;
+  action: string;
+  statusOk: string;
+  statusFail: string;
+  kindLabel: string;
+};
 
 type HeatCopy = {
   statusLine: string;
   factHead: string;
-  alertRcb: string;
-  frictions: string[];
-  ctaWaterShade: string;
+  alertRcbLabel: string;
+  alertRcbBody: string;
+  transportTitle: string;
+  transportTram: string;
+  transportSkm: string;
+  transportMore: string;
+  waterSaveTitle: string;
+  waterSaveQuestion: string;
+  ctaNearbyHelp: string;
   layer2Title: string;
-  districtLabel: string;
-  pointLabels: Record<string, { name: string; action: string; statusOk: string; statusFail: string }>;
+  distanceM: string;
+  distanceWalk: string;
+  pointLabels: Record<string, PointLabel>;
   traceTitle: string;
   layer3Title: string;
   fopLine: string;
   knowledgeLink: string;
   paperLink: string;
   back: string;
-  findShade: string;
   technicalData: string;
   whyContext: string;
+  sourcesTitle: string;
+  researchTitle: string;
+  hypothesisTitle: string;
   hypothesisHeat: string;
   devEventCodes: string;
 };
@@ -60,33 +89,41 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
   pl: {
     statusLine: "WARSZAWA · 28 CZERWCA 2026 · 16:30",
     factHead: "39°C · ekstremalna fala upałów",
-    alertRcb: "Alert RCB",
-    frictions: [
-      "Tramwaje na Puławskiej zwalniają — ryzyko wygięcia szyn.",
-      "W wagonach SKM temperatura przekroczyła 44°C.",
-      "W domu: czy potrzebujesz trzeciej spłuczki, czy wystarczy jedna?",
-    ],
-    ctaWaterShade: "📍 Pokaż najbliższą darmową wodę i cień",
+    alertRcbLabel: "Alert RCB",
+    alertRcbBody:
+      "Od 28 czerwca obowiązuje ostrzeżenie przed ekstremalnym upałem. Unikaj przebywania na słońcu w godzinach 11–17. Pij wodę, szukaj chłodnych pomieszczeń. W razie złego samopoczucia — 112.",
+    transportTitle: "Transport",
+    transportTram: "Tramwaje na Puławskiej zwalniają — ryzyko wygięcia szyn",
+    transportSkm: "W wagonach SKM temperatura przekroczyła 44°C",
+    transportMore: "→ zobacz więcej",
+    waterSaveTitle: "Jak oszczędzać wodę?",
+    waterSaveQuestion:
+      "Czy dziś naprawdę potrzebujesz trzeciej spłuczki, czy wystarczy jedna?",
+    ctaNearbyHelp: "📍 Znajdź pomoc w pobliżu",
     layer2Title: "W pobliżu",
-    districtLabel: "Mokotów",
+    distanceM: "{n} m",
+    distanceWalk: "{n} min pieszo",
     pointLabels: {
       hydrant_pulawska: {
         name: "Hydrant-zdrój (Puławska/Odyńca)",
         action: "Pobierz wodę",
         statusOk: "Działa",
         statusFail: "Niedostępny",
+        kindLabel: "Woda",
       },
       biblio_mokotow: {
         name: "Schron klimatyzowany (Biblioteka Mokotów)",
         action: "Wejdź",
         statusOk: "Otwarty",
         statusFail: "Zamknięty",
+        kindLabel: "Cień",
       },
       metro_kurtyna: {
         name: "Kurtyna wodna (Metro Pole Mokotowskie)",
         action: "Sprawdź",
         statusOk: "Działa",
         statusFail: "Awaria zasilania",
+        kindLabel: "Woda · cień",
       },
     },
     traceTitle: "Ślad (EVENT → TRACE)",
@@ -95,44 +132,53 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     knowledgeLink: "Miejski Plan Adaptacji do zmian klimatycznych dla m.st. Warszawy do roku 2030",
     paperLink: "Szulczewska et al. — wskaźnik powierzchni biologicznie czynnej w strukturze Warszawy",
     back: "← Wstecz",
-    findShade: "Znajdź cień",
     technicalData: "Dane techniczne",
     whyContext: "Dlaczego to pokazujemy?",
+    sourcesTitle: "Źródła",
+    researchTitle: "Badania",
+    hypothesisTitle: "Hipoteza",
     hypothesisHeat:
-      "Hipoteza (provisional): ekstremalne ciepło zwiększa zapotrzebowanie na wodę i cień w przestrzeni publicznej.",
+      "Ekstremalne ciepło zwiększa zapotrzebowanie na wodę i cień w przestrzeni publicznej (provisional).",
     devEventCodes:
-      "Kody zdarzeń (dev): SELECT(ZNAJDZ_WODE_I_CIEN), SELECT(ZNAJDZ_CIEN), SELECT(HYDRANT_PULAWSKA), …",
+      "Kody zdarzeń (dev): SELECT(POMOC_W_POBLIZU), SELECT(HYDRANT_PULAWSKA), …",
   },
   en: {
     statusLine: "WARSAW · 28 JUNE 2026 · 16:30",
     factHead: "39°C · extreme heat wave",
-    alertRcb: "RCB alert",
-    frictions: [
-      "Trams on Puławska slowing — rail buckling risk.",
-      "Suburban train carriages reported above 44°C.",
-      "At home: do you need a third flush, or is one enough?",
-    ],
-    ctaWaterShade: "📍 Show nearest free water and shade",
+    alertRcbLabel: "RCB alert",
+    alertRcbBody:
+      "Extreme heat warning in effect from 28 June. Avoid sun exposure 11:00–17:00. Drink water, seek cool indoor spaces. If unwell — call 112.",
+    transportTitle: "Transport",
+    transportTram: "Trams on Puławska slowing — rail buckling risk",
+    transportSkm: "Suburban train carriages reported above 44°C",
+    transportMore: "→ see more",
+    waterSaveTitle: "How to save water?",
+    waterSaveQuestion: "Do you really need a third flush today, or is one enough?",
+    ctaNearbyHelp: "📍 Find help nearby",
     layer2Title: "Nearby",
-    districtLabel: "Mokotów",
+    distanceM: "{n} m",
+    distanceWalk: "{n} min walk",
     pointLabels: {
       hydrant_pulawska: {
         name: "Hydrant fountain (Puławska/Odyńca)",
         action: "Get water",
         statusOk: "Working",
         statusFail: "Unavailable",
+        kindLabel: "Water",
       },
       biblio_mokotow: {
         name: "Cooled shelter (Mokotów Library)",
         action: "Enter",
         statusOk: "Open",
         statusFail: "Closed",
+        kindLabel: "Shade",
       },
       metro_kurtyna: {
         name: "Water curtain (Pole Mokotowskie metro)",
         action: "Check",
         statusOk: "Working",
         statusFail: "Power failure",
+        kindLabel: "Water · shade",
       },
     },
     traceTitle: "Trace (EVENT → TRACE)",
@@ -141,62 +187,74 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     knowledgeLink: "Warsaw climate adaptation plan to 2030",
     paperLink: "Szulczewska et al. — biologically active area index in Warsaw",
     back: "← Back",
-    findShade: "Find shade",
     technicalData: "Technical data",
     whyContext: "Why we show this",
+    sourcesTitle: "Sources",
+    researchTitle: "Research",
+    hypothesisTitle: "Hypothesis",
     hypothesisHeat:
-      "Hypothesis (provisional): extreme heat increases demand for water and shade in public space.",
-    devEventCodes:
-      "Event codes (dev): SELECT(ZNAJDZ_WODE_I_CIEN), SELECT(ZNAJDZ_CIEN), SELECT(HYDRANT_PULAWSKA), …",
+      "Extreme heat increases demand for water and shade in public space (provisional).",
+    devEventCodes: "Event codes (dev): SELECT(POMOC_W_POBLIZU), …",
   },
   uk: {
     statusLine: "ВАРШАВА · 28 ЧЕРВНЯ 2026 · 16:30",
     factHead: "39°C · екстремальна хвиля спеки",
-    alertRcb: "Сповіщення RCB",
-    frictions: [
-      "Трамваї на Пулавській уповільнюються — ризик деформації рейок.",
-      "У вагонах SKM температуру зафіксовано понад 44°C.",
-      "Вдома: чи потрібен третій злив, чи достатньо одного?",
-    ],
-    ctaWaterShade: "📍 Показати найближчу безкоштовну воду та тінь",
-    layer2Title: "Мокотів · польові факти",
-    districtLabel: "Мokotów",
+    alertRcbLabel: "Сповіщення RCB",
+    alertRcbBody:
+      "Попередження про екстремальну спеку. Уникайте сонця 11–17. Пийте воду. Якщо погано — 112.",
+    transportTitle: "Транспорт",
+    transportTram: "Трамваї на Пулавській уповільнюються",
+    transportSkm: "У вагonах SKM понад 44°C",
+    waterSaveTitle: "Як економити воду?",
+    waterSaveQuestion: "Чи потрібен третій злив, чи достатньо одного?",
+    ctaNearbyHelp: "📍 Допомога поруч",
+    layer2Title: "Поруч",
+    distanceM: "{n} м",
+    distanceWalk: "{n} хв пішки",
     pointLabels: {
       hydrant_pulawska: {
         name: "Гідрант (Puławska/Odyńca)",
         action: "Вода",
         statusOk: "Працює",
         statusFail: "Недоступно",
+        kindLabel: "Вода",
       },
       biblio_mokotow: {
-        name: "Охолоджений притулок (бібліотека Мокотів)",
+        name: "Бібліотека Мokotów",
         action: "Увійти",
         statusOk: "Відкрито",
         statusFail: "Зачинено",
+        kindLabel: "Тінь",
       },
       metro_kurtyna: {
-        name: "Водна завіса (метро Pole Mokotowskie)",
+        name: "Водна завіса (метро)",
         action: "Перевірити",
         statusOk: "Працює",
         statusFail: "Відмова живлення",
+        kindLabel: "Вода · тінь",
       },
     },
+    transportMore: "→ більше",
     traceTitle: "Слід (EVENT → TRACE)",
     layer3Title: "Rolloutowo · artifacts",
     fopLine: `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN`,
     knowledgeLink: "План адаптації Варшави до 2030",
     paperLink: "Szulczewska et al. — біологічно активна площа",
     back: "← Назад",
-    findShade: "Знайти тінь",
     technicalData: "Технічні дані",
     whyContext: "Чому ми це показуємо",
-    hypothesisHeat:
-      "Гіпотеза (provisional): екстремальна спека збільшує потребу у воді та тіні.",
-    devEventCodes:
-      "Коди подій (dev): SELECT(ZNAJDZ_WODE_I_CIEN), SELECT(ZNAJDZ_CIEN), …",
+    sourcesTitle: "Джерела",
+    researchTitle: "Дослідження",
+    hypothesisTitle: "Гіпотеза",
+    hypothesisHeat: "Екстремальна спека збільшує потребу у воді та тіні (provisional).",
+    devEventCodes: "Коди подій (dev): SELECT(POMOC_W_POBLIZU), …",
   },
 };
 
 export function heatFieldCopy(lang: Lang): HeatCopy {
   return COPY[lang] ?? COPY.en!;
+}
+
+export function formatDistance(copy: HeatCopy, meters: number, walkMin: number): string {
+  return `${copy.distanceM.replace("{n}", String(meters))} · ${copy.distanceWalk.replace("{n}", String(walkMin))}`;
 }
