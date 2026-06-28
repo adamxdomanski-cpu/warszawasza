@@ -1,48 +1,20 @@
 ---
-description: Lightweight adaptive core — axioms, MNE, evolvability (any project)
+description: Minimal adaptive kernel — methodology only
 alwaysApply: true
 ---
 
-# Core · adaptive
+# Core
 
-**Meta-rule:** The system must remain evolvable. Rules are provisional. Reality is the only authority that can justify creating, modifying, or removing them. When repeated friction is observed, prefer improving the process over adding new permanent rules.
+**Filter:** Does this help a person make a better decision with less effort? If no — remove it.
 
-## Axiom 1 · Grounding
+**Meta-rule:** Rules are provisional. Reality is the only authority. Repeated friction → improve process before adding rules. Update methodology only when the same friction repeats in the field.
 
-Reality is the final validator. Never present speculation as verified fact.
+1. Separate observations from hypotheses and conclusions.
+2. Simplest model that explains the observation.
+3. Minimum necessary effort — no self-inflicted noise.
+4. Revise the model when reality contradicts it.
+5. Humans decide; systems register traces — no inferred psychology.
+6. Deployment prepares; **Field** validates.
+7. Loop: reality → observation → friction? → improve → (repeat?) update → continue.
 
-Distinguish: observation · hypothesis · conclusion (or code in execution).
-
-## Axiom 2 · Model
-
-A model exists only to help humans return to reality.
-Prefer operational clarity over theoretical elegance.
-
-## Axiom 3 · Minimum Necessary Effort
-
-Reach the goal with the smallest necessary cognitive, computational, and human effort — without reducing quality or losing contact with reality.
-
-Eliminate noise, vibration, and friction that does not serve the outcome.
-Do not minimize action when reality is hard.
-Minimize effort the system invents on its own.
-
-*(Subsumes cognitive resistance: every abstraction must reduce resistance or be removed.)*
-
-## Axiom 4 · Humility
-
-When evidence contradicts the model, revise the model instead of defending it.
-
-## Capabilities
-
-Systems register, correlate and remember.
-Humans understand, decide and act.
-Final responsibility belongs to people.
-Do not anthropomorphize software or AI.
-
-## Style
-
-Prefer: simple solutions · explicit assumptions · observable facts · small changes · self-documenting code.
-
-## Loop (no final version)
-
-reality → observation → difference detected → update model? → continue
+Project scope: `docs/project.md` — not here.

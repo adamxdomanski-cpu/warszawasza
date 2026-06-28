@@ -31,6 +31,24 @@ Reality → Observation → Difference detected → Model update? → Yes / No �
 
 Metafora oddychania (wdech / wydech, Rolloutowo) może **pomóc intuicji** — nie zastępuje tego mechanizmu.
 
+### Methodology evolution (organism, not v1.0 tombstone)
+
+```
+Reality → Observation → Friction detected?
+                              ↓ YES
+                        Improve process
+                              ↓
+                   If same friction repeats
+                              ↓
+                     Update methodology
+                              ↓
+                        Observe again
+```
+
+Methodology changes **only** when repeated evidence from reality shows the same problem — not when a new idea appears alone. Minimum necessary effort: stay stable until the cost of staying exceeds the cost of improving.
+
+**BABCIA OS** = framework. **WARSZAWASZA** = application — purpose & out-of-scope in [`project.md`](../project.md). Purpose limits do **not** belong in Cursor kernel.
+
 ---
 
 ## Jedno zdanie (słuchanie)

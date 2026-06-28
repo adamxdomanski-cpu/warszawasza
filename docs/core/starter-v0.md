@@ -34,6 +34,10 @@ ARTIFACT        → code / docs output
 
 ---
 
+## Project scope (WARSZAWASZA only)
+
+Purpose, in-scope, out-of-scope: [`docs/project.md`](../project.md) — **not** in kernel.
+
 ## What's in warszawasza module
 
 - Five functions · Rolloutowo · Field loop

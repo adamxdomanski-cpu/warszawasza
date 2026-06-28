@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useStructureAnchor } from "../../hooks/useStructureAnchor";
 import {
@@ -18,10 +19,7 @@ import SignalControl from "./SignalControl";
 import TrajectoryChoiceButton from "./TrajectoryChoiceButton";
 import WarszawaszaLogoLink from "./WarszawaszaLogoLink";
 import { persistTrajectory } from "./TrajectorySwitch";
-import {
-  appendDecisionEvent,
-  type DecisionEventType,
-} from "../../lib/decisionTrajectory";
+import { appendInteractionEvent } from "../../lib/interactionTrace";
 
 type ObservationGateProps = {
   onComplete: (choice: TrajectoryChoice, lang: Lang) => void;
@@ -81,7 +79,7 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
     if (orientExitDoneRef.current) return;
     orientExitDoneRef.current = true;
     markOrientSeen();
-    appendDecisionEvent("NEXT");
+    appendInteractionEvent("NEXT");
     setOrientExiting(false);
     setPhase("question");
   };
@@ -93,29 +91,27 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
   }, [orientExiting]);
 
   const selectTrajectory = (next: TrajectoryChoice) => {
-    const event: DecisionEventType =
-      next === "true" ? "ANSWER_TRUE" : "ANSWER_FALSE";
-    appendDecisionEvent(event);
+    appendInteractionEvent("SELECT", next === "true" ? "TRUE" : "FALSE");
     setChoice(next);
     setPhase("reveal");
     persistTrajectory(next);
   };
 
   const returnToQuestion = () => {
-    appendDecisionEvent("BACK");
+    appendInteractionEvent("BACK");
     setChoice(null);
     setPhase("question");
   };
 
   const enterField = () => {
     if (choice) {
-      appendDecisionEvent("NEXT");
+      appendInteractionEvent("NEXT");
       onComplete(choice, lang);
     }
   };
 
   const onHesitate = () => {
-    appendDecisionEvent("PAUSE");
+    appendInteractionEvent("PAUSE");
   };
 
   if (phase === "orient") {
@@ -144,6 +140,12 @@ export default function ObservationGate({ onComplete }: ObservationGateProps) {
             {copy.observationMark}
           </p>
           <LangNav lang={lang} onChange={setLang} />
+          <Link
+            href="/field/heat"
+            className="font-mono-field text-xs tracking-wide text-accent/70 underline-offset-2 hover:text-accent hover:underline"
+          >
+            39°C · woda i cień →
+          </Link>
         </header>
 
         {phase === "question" ? (

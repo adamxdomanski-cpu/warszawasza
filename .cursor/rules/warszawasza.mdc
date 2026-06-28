@@ -14,7 +14,7 @@ globs:
 
 # WARSZAWASZA · project module
 
-Load with **core.mdc** only when paths match. Philosophy and full stack: `/docs` — do not duplicate into every reply.
+Load with **core.mdc** only when paths match. **Purpose & scope:** [`docs/project.md`](../../docs/project.md) · **CORE + adapters:** [`docs/identity/core-and-adapters-v1.md`](../../docs/identity/core-and-adapters-v1.md)
 
 ## Reasoning · five functions
 

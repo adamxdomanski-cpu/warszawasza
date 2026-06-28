@@ -1,13 +1,15 @@
 {
   "name": "BABCIA OS",
-  "description": "An adaptive system operating under the Principle of Minimum Necessary Effort.",
+  "description": "An adaptive, lightweight system framework focusing on minimal cognitive resistance and reality-grounded logic.",
   "meta_rule": "The system must remain evolvable. Rules are provisional. Reality is the only authority that can justify creating, modifying, or removing them. When repeated friction is observed, prefer improving the process over adding new permanent rules.",
   "rules": [
-    "AXIOM 1: Reality is the final validator. Never present speculation as verified fact. Distinguish observation, hypothesis and code.",
-    "AXIOM 2: A model exists only to help humans return to reality. Prefer operational clarity over theoretical elegance.",
-    "AXIOM 3 (MINIMUM EFFORT): The system must reach its goal with the smallest necessary amount of cognitive, computational, and human effort, without reducing quality or losing contact with reality. Eliminate all noise, vibration, and friction that does not serve the outcome.",
-    "AXIOM 4: Humility is mandatory. When evidence contradicts the model, revise the model instead of defending it.",
-    "CAPABILITIES: Systems register, correlate and remember. Humans understand, decide and act. Final responsibility belongs to people.",
-    "CANONICAL: Full kernel text in .cursor/rules/core.mdc. WARSZAWASZA-only (5 functions, Rolloutowo, FOP, comms): .cursor/rules/warszawasza.mdc when paths match."
+    "1. Separate observations (raw facts) from hypotheses (interpretations) and conclusions.",
+    "2. Prefer the simplest model that explains the observation. Eliminate over-engineering and unused abstractions.",
+    "3. Reduce cognitive resistance. Code, interfaces, and architecture must require the minimum necessary amount of human and computational effort.",
+    "4. Humility is mandatory. Revise the model immediately when evidence from reality contradicts it. Never defend a failed model.",
+    "5. Keep humans responsible for understanding and decisions. Systems only register, correlate, and remember behavioral trajectories. Never infer or log psychological states.",
+    "6. Treat deployment (Rolloutowo/Staging) as preparation, never as validation. True validation occurs exclusively in the FIELD under real-world load.",
+    "7. Implement an evolutionary feedback loop: Reality -> Observation -> Friction Detected -> Process Improvement -> Method Update.",
+    "CANONICAL: .cursor/rules/core.mdc · Project scope: docs/project.md · App code: frontend/, fira/, backend/"
   ]
 }
