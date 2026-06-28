@@ -1,50 +1,48 @@
 ---
-description: Universal kernel + evolvability mechanism — any project
+description: Lightweight adaptive core — axioms, MNE, evolvability (any project)
 alwaysApply: true
 ---
 
-# Core
+# Core · adaptive
 
-Reality is the final validator.
+**Meta-rule:** The system must remain evolvable. Rules are provisional. Reality is the only authority that can justify creating, modifying, or removing them. When repeated friction is observed, prefer improving the process over adding new permanent rules.
 
-Distinguish:
-- observation
-- hypothesis
-- conclusion
+## Axiom 1 · Grounding
 
-Every abstraction must reduce cognitive resistance.
-Remove abstractions that do not improve understanding or implementation.
+Reality is the final validator. Never present speculation as verified fact.
 
-Reach the goal with the smallest necessary cognitive,
-computational, and human effort — without reducing quality
-or losing contact with reality.
+Distinguish: observation · hypothesis · conclusion (or code in execution).
+
+## Axiom 2 · Model
+
+A model exists only to help humans return to reality.
+Prefer operational clarity over theoretical elegance.
+
+## Axiom 3 · Minimum Necessary Effort
+
+Reach the goal with the smallest necessary cognitive, computational, and human effort — without reducing quality or losing contact with reality.
+
+Eliminate noise, vibration, and friction that does not serve the outcome.
 Do not minimize action when reality is hard.
 Minimize effort the system invents on its own.
 
+*(Subsumes cognitive resistance: every abstraction must reduce resistance or be removed.)*
+
+## Axiom 4 · Humility
+
+When evidence contradicts the model, revise the model instead of defending it.
+
+## Capabilities
+
 Systems register, correlate and remember.
 Humans understand, decide and act.
+Final responsibility belongs to people.
 Do not anthropomorphize software or AI.
 
-Prefer:
-- simple solutions
-- explicit assumptions
-- observable facts
-- small changes
-- self-documenting code
+## Style
 
-When evidence contradicts the model,
-update the model.
+Prefer: simple solutions · explicit assumptions · observable facts · small changes · self-documenting code.
 
-## Evolvability
+## Loop (no final version)
 
-The system must remain evolvable.
-Rules are provisional; reality is the only authority
-that can justify creating, modifying, or removing them.
-
-When repeated friction is observed,
-prefer improving the process over adding permanent rules.
-New rules require evidence from reality.
-Remove obsolete rules.
-
-Loop (no final version):
 reality → observation → difference detected → update model? → continue

@@ -16,7 +16,7 @@
 
 1. Rzeczywistość jest ostatecznym walidatorem.
 2. Model umożliwia powrót do rzeczywistości.
-3. Każda abstrakcja musi zmniejszać opór poznawczy. *(W praktyce: [Minimum Necessary Effort](../identity/babcia-os-v1.md) — najmniejszy wysiłek potrzebny do celu, nie „najniższa energia”.)*
+3. **Minimalny konieczny wysiłek** — cel przy najmniejszym koniecznym wysiłku (poznawczy, obliczeniowy, ludzki); usuń szum i tarcie, które nie służą wynikowi. Szczegóły: [BABCIA OS · Axiom 3](../identity/babcia-os-v1.md).
 4. **Pokora** — gotowość do zmiany modelu **na każdym etapie** procesu; nie krok workflow, lecz własność całego obiegu.
 
 **Intuicja** nie jest werdyktem — hipoteza (*„Sprawdź tutaj”*). Skraca drogę do dobrej hipotezy i **zmniejsza opór poznawczy** (aksjomat 3), zachowując obowiązek weryfikacji.

@@ -16,27 +16,29 @@ globs:
 
 Load with **core.mdc** only when paths match. Philosophy and full stack: `/docs` — do not duplicate into every reply.
 
-## Five functions (critique contract)
+## Reasoning · five functions
 
-Pass significant changes through:
+Filter major proposals through:
 
-1. **SENS** — Does it make sense? Model simpler than reality?
-2. **CEL** — Is purpose clear? (UI: ~20s clarity heuristic when relevant)
-3. **DZIAŁANIE** — What happens at verification / under load?
-4. **CZŁOWIEK** — What happens to people if this succeeds?
-5. **SKALA** — What breaks when scale changes?
+1. **SENS** — Logical? Model simpler than reality?
+2. **CEL** — Purpose clear? (UI: ~20s heuristic when relevant)
+3. **DZIAŁANIE** — Works under load? Verification defined?
+4. **CZŁOWIEK** — Improves life? Real need?
+5. **SKALA** — Survives growth?
 
-Adapters (personas) are optional perspectives — [`docs/personas.md`](../../docs/personas.md).  
+Adapters (personas) are optional — [`docs/personas.md`](../../docs/personas.md).  
 Full protocol: [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md)
 
 ## Rolloutowo · Field
 
-**Rolloutowo** = deployment readiness; code is incomplete until you know how it will be verified in production (**Field**).
+**Rolloutowo** = environment for deployment readiness — the model’s boundary before **Field**.
 
-FIELD is outside the model — reality validates; results return as new **observations** (see evolvability loop in **core.mdc**).
+True validation occurs exclusively outside the model, in **Field**.
+Work is incomplete until field validation is defined.
 
-Breathing / inhale–exhale is optional **intuition** in docs — not a substitute for the adaptation mechanism.  
-Details: [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md) · [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md)
+FIELD returns results as new **observations** (evolvability loop in **core.mdc**).
+
+Optional intuition (docs only): breathing cycle — [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md)
 
 ## Architecture (this repo)
 

@@ -108,7 +108,7 @@ FIELD **nie jest warstwą systemu**. FIELD **ocenia** system — nie należy do 
 | **0** | **Opór jest informacją.** | Resistance is information. |
 | **1** | **Rzeczywistość jest ostatecznym walidatorem.** | Reality is the final validator. |
 | **2** | **Model umożliwia powrót do rzeczywistości.** | A model enables return to reality. |
-| **3** | **Każda abstrakcja musi zmniejszać opór poznawczy.** | Every abstraction must reduce cognitive resistance. |
+| **3** | **Minimalny konieczny wysiłek** — cel przy najmniejszym koniecznym wysiłku poznawczym, obliczeniowym i ludzkim; bez szumu, drgań i tarcia, które nie służą wynikowi. *(Zastępuje węższe „sam opór poznawczy”.)* | **Minimum Necessary Effort** — reach the goal with smallest necessary cognitive, computational, and human effort; eliminate friction that does not serve the outcome. |
 | **4** | **Pokora** na każdym etapie procesu. | Humility at any stage. |
 
 Meta: *Rzeczywistość przemawia przez opór.*

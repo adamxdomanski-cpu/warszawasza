@@ -24,14 +24,13 @@ ARTIFACT        → code / docs output
 
 ## What's in core (never project-specific)
 
-- Reality validates · observation / hypothesis / conclusion
-- Reduce cognitive resistance · remove useless abstractions
-- **Minimum necessary effort:** reach the goal with least cognitive/computational/human cost; no self-inflicted friction
-- System vs human · no anthropomorphizing AI
-- Simple, explicit, observable, small diffs
-- Update the model when evidence contradicts it
-- **Evolvability:** rules are provisional; friction → improve process before adding rules; new rules need Field evidence; remove obsolete rules
-- Loop: reality → observation → difference → update? → continue (no “final version”)
+- **Axiom 1:** Reality validates · observation / hypothesis / conclusion
+- **Axiom 2:** Model serves return to reality · operational clarity
+- **Axiom 3:** Minimum Necessary Effort (cognitive + computational + human) — not zero energy
+- **Axiom 4:** Humility · revise model when evidence contradicts
+- Capabilities · system vs human · no anthropomorphizing AI
+- **Meta-rule:** evolvability · provisional rules · friction → improve process first
+- Loop: reality → observation → difference → update? → continue
 
 ---
 
