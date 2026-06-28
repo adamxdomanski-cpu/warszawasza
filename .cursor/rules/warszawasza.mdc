@@ -36,7 +36,7 @@ Full protocol: [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/cri
 True validation occurs exclusively outside the model, in **Field**.
 Work is incomplete until field validation is defined.
 
-FIELD returns results as new **observations** (evolvability loop in **core.mdc**).
+FIELD returns results as new **observations** (practice spiral in **core.mdc**).
 
 Optional intuition (docs only): breathing cycle — [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md)
 

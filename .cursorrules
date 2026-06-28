@@ -1,11 +1,11 @@
 {
-  "name": "craft-discipline",
-  "description": "See · Understand · Help. WARSZAWASZA: docs/project.md · /field/heat",
+  "name": "practice",
+  "description": "Spiral habit: See · Understand · Help · Check · Learn. WARSZAWASZA: docs/project.md · /field/heat",
   "rules": [
-    "Filter: After using this, does the human understand their reality more easily and make a better decision? If not — remove it.",
-    "Steps: See (raw facts, trajectories) → Understand (observation vs hypothesis) → Help (small change that works in the field).",
-    "Loop: Reality → Observation → Small change → Re-observation. Reality has the last word.",
-    "Evolve from what human and reality teach together — never replace human judgment or infer psychology.",
-    "Genesis (personal, not docs): docs/identity/babcia-os-v1.md · Detail: .cursor/rules/core.mdc"
+    "Not a system — a practice. Works without power, internet, or AI; technology is support only.",
+    "Filter (Warsaw): After adding this, is it even slightly easier for a resident to understand their city and make a better decision? If not — do not build or remove it.",
+    "Spiral: See (what really happens?) → Understand (what matters?) → Help (smallest thing that truly helps?) → Check (what happened in reality?) → Learn (what to do better next time?) → repeat.",
+    "Each turn leaves experience; the next turn need not be the same — not a closed loop.",
+    "Detail: .cursor/rules/core.mdc · Genesis (personal): docs/identity/babcia-os-v1.md"
   ]
 }

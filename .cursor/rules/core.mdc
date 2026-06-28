@@ -1,23 +1,28 @@
 ---
-description: Zobacz · Zrozum · Pomóż — way of working, not a framework
+description: Praktyka — Zobacz · Zrozum · Pomóż · Sprawdź · Ucz się (spirala, nie system)
 alwaysApply: true
 ---
 
-# Craft discipline
+# Praktyka
 
-**Filter:** Czy po użyciu tego człowiek **łatwiej rozumie swoją rzeczywistość i może podjąć lepszą decyzję**?  
-Nie → usuń.
+To nie jest system. To nawyk — działa także bez prądu, internetu, komputera i modelu językowego. Technologia jest wsparciem, nie fundamentem.
 
-**ZOBACZ → ZROZUM → POMÓŻ**
+**Filtr (WARSZAWASZA):** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
 
-**Pętla:** Rzeczywistość → Obserwacja → Mała zmiana → Ponowna obserwacja.
+**Filtr (ogólny):** Czy po użyciu tego człowiek łatwiej rozumie swoją rzeczywistość i może podjąć lepszą decyzję? Nie → usuń.
 
-**Ewolucja:** system ewoluuje dzięki temu, czego **człowiek i rzeczywistość** uczą go razem — nie zastępuje ani jednego.
+**Spirala** — każdy obrót zostawia doświadczenie; następny nie musi wyglądać tak samo:
 
-1. Zobacz.  
-2. Zrozum.  
-3. Pomóż.  
-4. Małe zmiany są lepsze niż wielkie teorie.  
-5. Rzeczywistość ma ostatnie słowo.
+```
+ZOBACZ → ZROZUM → POMÓŻ → SPRAWDŹ → UCZ SIĘ → …
+```
+
+| Krok | Pytanie |
+|------|---------|
+| **ZOBACZ** | Co naprawdę się dzieje? |
+| **ZROZUM** | Co jest tutaj ważne? |
+| **POMÓŻ** | Jaka jest najmniejsza rzecz, która naprawdę pomoże? |
+| **SPRAWDŹ** | Co wydarzyło się w rzeczywistości? |
+| **UCZ SIĘ** | Co następnym razem zrobię lepiej? |
 
 WARSZAWASZA: `docs/project.md` · `/field/heat`

@@ -1,8 +1,8 @@
 # WARSZAWASZA · Project scope & purpose
 
-**Filter:** Czy po użyciu tego człowiek łatwiej rozumie swoją rzeczywistość **i może podjąć lepszą decyzję**? Nie → usuń.
+**Filter:** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
 
-**Zobacz → Zrozum → Pomóż.** Pętla: rzeczywistość → obserwacja → mała zmiana → ponowna obserwacja. System ewoluuje dzięki temu, czego człowiek i rzeczywistość uczą go razem.
+**Praktyka (spirala):** Zobacz → Zrozum → Pomóż → Sprawdź → Ucz się. Każdy obrót zostawia doświadczenie; następny nie musi wyglądać tak samo. Działa także bez technologii — technologia jest wsparciem. Szczegóły: [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc).
 
 **Success:** narzędzie znika — zostaje miasto. Geneza osobista: [`babcia-os-v1.md`](identity/babcia-os-v1.md) (nie metodologia).
 
