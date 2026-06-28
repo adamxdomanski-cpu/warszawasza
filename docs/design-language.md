@@ -20,6 +20,23 @@ Design for: **light** (glare, night) · **temperature** (device, weather) · **n
 
 Not mood. Not decoration. If it carries no information → remove.
 
+**Motion** follows **urgency** (normal → warning → critical), never aesthetics alone. No strobe. Cycle ~4–6 s. `prefers-reduced-motion`: static colours only.
+
+---
+
+## Warsaw experience palette (not municipal MSI)
+
+| Token | Means |
+|-------|--------|
+| Asphalt graphite | canvas `#030303` |
+| Ivory | reading text |
+| Warm amber | heat signal |
+| Burgundy | critical alert |
+| Deep green | shade / trees |
+| Blue | water |
+
+Colours of **experience**, not institution.
+
 ---
 
 ## Identity ≠ signal

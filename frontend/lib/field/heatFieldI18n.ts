@@ -56,7 +56,8 @@ type PointLabel = {
 
 type HeatCopy = {
   statusLine: string;
-  factHead: string;
+  factTemp: string;
+  factSubtitle: string;
   alertRcbLabel: string;
   alertRcbBody: string;
   transportTitle: string;
@@ -88,7 +89,8 @@ type HeatCopy = {
 const COPY: Partial<Record<Lang, HeatCopy>> = {
   pl: {
     statusLine: "WARSZAWA · 28 CZERWCA 2026 · 16:30",
-    factHead: "39°C · ekstremalna fala upałów",
+    factTemp: "39°C",
+    factSubtitle: "ekstremalna fala upałów",
     alertRcbLabel: "Alert RCB",
     alertRcbBody:
       "Od 28 czerwca obowiązuje ostrzeżenie przed ekstremalnym upałem. Unikaj przebywania na słońcu w godzinach 11–17. Pij wodę, szukaj chłodnych pomieszczeń. W razie złego samopoczucia — 112.",
@@ -144,7 +146,8 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
   },
   en: {
     statusLine: "WARSAW · 28 JUNE 2026 · 16:30",
-    factHead: "39°C · extreme heat wave",
+    factTemp: "39°C",
+    factSubtitle: "extreme heat wave",
     alertRcbLabel: "RCB alert",
     alertRcbBody:
       "Extreme heat warning in effect from 28 June. Avoid sun exposure 11:00–17:00. Drink water, seek cool indoor spaces. If unwell — call 112.",
@@ -198,7 +201,8 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
   },
   uk: {
     statusLine: "ВАРШАВА · 28 ЧЕРВНЯ 2026 · 16:30",
-    factHead: "39°C · екстремальна хвиля спеки",
+    factTemp: "39°C",
+    factSubtitle: "екстремальна хвиля спеки",
     alertRcbLabel: "Сповіщення RCB",
     alertRcbBody:
       "Попередження про екстремальну спеку. Уникайте сонця 11–17. Пийте воду. Якщо погано — 112.",
@@ -257,4 +261,16 @@ export function heatFieldCopy(lang: Lang): HeatCopy {
 
 export function formatDistance(copy: HeatCopy, meters: number, walkMin: number): string {
   return `${copy.distanceM.replace("{n}", String(meters))} · ${copy.distanceWalk.replace("{n}", String(walkMin))}`;
+}
+
+/** Official RCB tier for this deployment; drives critical urgency when level 3+. */
+export const HEAT_RCB_CRITICAL = false;
+
+export type HeatUrgency = "normal" | "warning" | "critical";
+
+/** Urgency drives motion — meaning, not decoration. */
+export function heatUrgency(tempC: number, rcbCritical = HEAT_RCB_CRITICAL): HeatUrgency {
+  if (tempC >= 42 || rcbCritical) return "critical";
+  if (tempC >= 35) return "warning";
+  return "normal";
 }
