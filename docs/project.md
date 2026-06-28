@@ -18,9 +18,9 @@ WARSZAWASZA applies an agnostic observation framework to support **observation, 
 
 ## In scope (civic tech)
 
-- **Weather & heat:** extreme heat, hydration, shade (e.g. 39°C, RCB alerts, public water points).
+- **Climate (primary):** extreme heat and cold, heat alerts, hydration, shade, adaptation to weather that affects daily decisions (e.g. 39°C, RCB alerts, public water points, climate plan context). First deployment: [`/field/heat`](/field/heat).
+- **Ecology & environment:** heat islands, green space, trees, biological surface — when tied to observable civic action (complements climate; not a substitute for it).
 - **Public transport & accessibility:** delays, friction, passenger safety (observable facts).
-- **Ecology & environment:** heat islands, green space, biological surface (when tied to civic action).
 - **Civic participation:** citizen traces, micro-observations, local action mapping.
 
 ---

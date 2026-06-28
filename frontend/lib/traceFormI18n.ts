@@ -23,6 +23,7 @@ export type TraceFormCopy = {
 };
 
 const SECTOR_LABELS_PL: Record<string, string> = {
+  "core-climate": "Klimat",
   "core-security": "Bezpieczeństwo",
   "core-infrastructure": "Infrastruktura",
   "core-ecology": "Ekologia",
@@ -30,6 +31,7 @@ const SECTOR_LABELS_PL: Record<string, string> = {
 };
 
 const SECTOR_LABELS_EN: Record<string, string> = {
+  "core-climate": "Climate",
   "core-security": "Security",
   "core-infrastructure": "Infrastructure",
   "core-ecology": "Ecology",
@@ -37,6 +39,7 @@ const SECTOR_LABELS_EN: Record<string, string> = {
 };
 
 const SECTOR_LABELS_IT: Record<string, string> = {
+  "core-climate": "Clima",
   "core-security": "Sicurezza",
   "core-infrastructure": "Infrastruttura",
   "core-ecology": "Ecologia",

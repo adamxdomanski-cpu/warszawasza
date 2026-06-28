@@ -16,7 +16,7 @@ globs:
 
 Apply **core.mdc** first. This file adds repo context only.
 
-**Scope & purpose:** [`docs/project.md`](../../docs/project.md)
+**Scope & purpose:** [`docs/project.md`](../../docs/project.md) — **climate** (primary), ecology, transport, civic traces.
 
 **Decision filter (residents):** Does this make it even slightly easier to understand the city and decide better? If not — do not build or remove.
 

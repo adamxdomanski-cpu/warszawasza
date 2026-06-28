@@ -9,6 +9,7 @@ export type SectorDef = {
 };
 
 export const SECTOR_REGISTRY: SectorDef[] = [
+  { subjectKey: "core-climate", nodeId: "node-core-4" },
   { subjectKey: "core-security", nodeId: "node-core-0" },
   { subjectKey: "core-infrastructure", nodeId: "node-core-1" },
   { subjectKey: "core-ecology", nodeId: "node-core-2" },
