@@ -194,7 +194,7 @@ BABCIA OS (6 warstw) ↔ COS:
 | **ARTIFACTS** | build · release · deliverable |
 | **FIELD** | **poza STABLE/COS** — walidator zewnętrzny (rzeczywistość operacyjna) |
 
-Kanoniczny szablon filozoficzny: [`babcia-os-v1.md`](babcia-os-v1.md) · **FINAL ARCHITECTURE v1.0**
+Kanoniczny szablon filozoficzny: [`babcia-os-v1.md`](babcia-os-v1.md) · **STABLE adaptive architecture** · kernel: [`.cursor/rules/core.mdc`](../../.cursor/rules/core.mdc)
 
 ---
 

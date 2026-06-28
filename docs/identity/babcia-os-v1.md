@@ -1,8 +1,35 @@
-# BABCIA OS · VERSION 1.0 (FINAL ARCHITECTURE)
+# BABCIA OS · STABLE (adaptive architecture)
 
-> **Status:** STABLE — nie LOCKED. **STABLE** = mechanizm uczenia się jest stabilny (przyjmuje korekty z FIELD bez utraty struktury), nie że model jest skończony.  
-> **Intencja:** metoda **rzemieślniczego uczenia się** — obserwuj, buduj, wdrażaj, słuchaj oporu, poprawiaj, powtarzaj.  
-> **Implementacja techniczna:** [COS v1.0](cos-v1.md) · [Critique Protocol](../protocol/critique-protocol-v1.md)
+> **Status:** STABLE — nie LOCKED. **STABLE** = zdolność do zmiany bez utraty tożsamości; mechanizm uczenia się trwały, **model i reguły prowizoryczne**.  
+> **Intencja:** metoda **rzemieślniczego uczenia się** — obserwuj, buduj, wdrażaj, słuchaj oporu, poprawiaj, powtarzaj. **Brak wersji końcowej** — tylko kolejna iteracja.  
+> **Implementacja techniczna:** [COS v1.0](cos-v1.md) · [Critique Protocol](../protocol/critique-protocol-v1.md) · kernel Cursor: [`.cursor/rules/core.mdc`](../../.cursor/rules/core.mdc)
+
+---
+
+## System adaptacyjny (nie zbiór reguł)
+
+**BABCIA OS is an adaptive system. Rules are provisional. Reality is the only authority that can justify creating, modifying, or removing them.**
+
+Organizm „żyje” przez **pamięć**, **sprzężenie zwrotne** i **adaptację** — nie przez liczbę instrukcji.
+
+| Właściwość | W modelu |
+|------------|----------|
+| Pamięć | SYSTEM rejestruje, koreluje, pamięta |
+| Sprzężenie zwrotne | FIELD zwraca wynik jako nową obserwację |
+| Adaptacja | różnica wykryta → aktualizacja modelu? → kontynuacja |
+
+```
+Reality → Observation → Difference detected → Model update? → Yes / No → Continue
+```
+
+**Metazasada ewolucji** (w kernelu Cursor, uniwersalna):
+
+- System musi pozostać ewoluowalny.
+- Powtarzający się opór → najpierw popraw **proces**, dopiero potem nowe stałe reguły.
+- Nowa reguła wymaga **dowodu z rzeczywistości**.
+- Przestarzałe reguły usuwać.
+
+Metafora oddychania (wdech / wydech, Rolloutowo) może **pomóc intuicji** — nie zastępuje tego mechanizmu.
 
 ---
 

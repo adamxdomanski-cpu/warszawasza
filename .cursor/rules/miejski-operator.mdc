@@ -1,14 +1,15 @@
 ---
-description: BABCIA OS bridge — see starter.mdc and .cursorrules
+description: Miejski Operator identity pointer — not a second kernel
 alwaysApply: false
+globs: ["docs/identity/**", "docs/protocol/**"]
 ---
 
-# BABCIA OS · Cursor bridge
+# Miejski Operator · pointer
 
-**Engineering rules (stable):** [`.cursorrules`](../.cursorrules) — axioms and execution only; no personas or tools.
+**Kernel:** [`.cursor/rules/core.mdc`](core.mdc) · **This repo:** [`warszawasza.mdc`](warszawasza.mdc)
 
-**Human adapters (replaceable):** [`docs/personas.md`](../../docs/personas.md)
+**Identity:** [`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)  
+**Personas (adapters):** [`docs/personas.md`](../../docs/personas.md)  
+**BABCIA OS / COS:** [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md) · [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md)
 
-**Philosophy & architecture:** [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md) · [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md)
-
-Do not duplicate `.cursorrules` here. WARSZAWASZA-specific field protocol: [`warszawasza-field.mdc`](warszawasza-field.mdc).
+Do not duplicate core or project rules here. Field UI depth: [`warszawasza-field.mdc`](warszawasza-field.mdc).

@@ -1,0 +1,60 @@
+---
+description: WARSZAWASZA project module — five functions, Rolloutowo, FOP, comms
+alwaysApply: false
+globs:
+  - "frontend/**"
+  - "fira/**"
+  - "backend/**"
+  - "docs/**"
+  - "infra/**"
+  - "scripts/**"
+  - "fira_flow/**"
+  - "warszawasza/**"
+---
+
+# WARSZAWASZA · project module
+
+Load with **core.mdc** only when paths match. Philosophy and full stack: `/docs` — do not duplicate into every reply.
+
+## Five functions (critique contract)
+
+Pass significant changes through:
+
+1. **SENS** — Does it make sense? Model simpler than reality?
+2. **CEL** — Is purpose clear? (UI: ~20s clarity heuristic when relevant)
+3. **DZIAŁANIE** — What happens at verification / under load?
+4. **CZŁOWIEK** — What happens to people if this succeeds?
+5. **SKALA** — What breaks when scale changes?
+
+Adapters (personas) are optional perspectives — [`docs/personas.md`](../../docs/personas.md).  
+Full protocol: [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md)
+
+## Rolloutowo · Field
+
+**Rolloutowo** = deployment readiness; code is incomplete until you know how it will be verified in production (**Field**).
+
+FIELD is outside the model — reality validates; results return as new **observations** (see evolvability loop in **core.mdc**).
+
+Breathing / inhale–exhale is optional **intuition** in docs — not a substitute for the adaptation mechanism.  
+Details: [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md) · [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md)
+
+## Architecture (this repo)
+
+- **Product:** FIRA Observation Protocol (`fira/`) — civic observation language, not a website.
+- **Distribution:** WARSZAWASZA (`frontend/`) — first carrier; culture layer is replaceable.
+- **Dependency:** core must not import from frontend. Spec: `fira/PROTOCOL.md`
+- Depth by path: `fira-protocol.mdc`, `warszawasza-field.mdc`
+
+## Communication
+
+**CZŁOWIEK block first:** what happened → why it matters → what we propose.  
+**SYSTEM block below:** full technical log (fold / separate section).
+
+Epistemic rigor: observation → hypothesis → conclusion. Do not overclaim.  
+Template: [`docs/protocol/trace-alert-comms-v1.md`](../../docs/protocol/trace-alert-comms-v1.md)
+
+## Workflow defaults
+
+- Observation before interpretation; **less noise** over more data.
+- Operational log: observable state in LOG; rationale in DECISION — [`docs/protocol/log-format-v1.md`](../../docs/protocol/log-format-v1.md)
+- Default task: write minimal, verifiable code — not methodology essays unless asked.

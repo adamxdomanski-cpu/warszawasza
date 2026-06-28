@@ -1,12 +1,7 @@
 {
-  "name": "BABCIA OS - Core Starter v1.0",
-  "description": "Minimal execution rules for ultra-low cognitive resistance.",
+  "name": "kernel pointer",
+  "description": "Canonical rules live in .cursor/rules/core.mdc (always). WARSZAWASZA module: .cursor/rules/warszawasza.mdc",
   "rules": [
-    "RULE 1 (GROUNDING): Reality is the final validator. Never present speculation as verified fact. Distinguish observation, hypothesis and code.",
-    "RULE 2 (KISS): Every abstraction must reduce cognitive resistance. Do not create over-engineered layers, ghost classes, or unused abstractions. Otherwise, remove them.",
-    "RULE 3 (SEPARATION): System registers, correlates and remembers. Human understands, decides and acts. Keep code agnostically technical; do not attribute intent or morality to AI/software.",
-    "RULE 4 (REASONING): Validate all major changes with 5 basic functions: Sense (Is it logical?), Purpose (Is it clear in 20s?), Practice (Does it work under load?), Human (Does it solve a real need?), Scale (Does it survive scale?).",
-    "RULE 5 (FIELD TEST): Every feature must be built for immediate deployment readiness (Rolloutowo). Code is incomplete until it defines how it will be verified in production (Field).",
-    "STYLE: Code must be minimal, self-documenting, using simple language, explicit assumptions, and observable facts."
+    "Apply .cursor/rules/core.mdc. For this repo, also apply .cursor/rules/warszawasza.mdc when paths match."
   ]
 }

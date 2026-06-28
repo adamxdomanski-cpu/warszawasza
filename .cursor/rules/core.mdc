@@ -1,0 +1,44 @@
+---
+description: Universal kernel + evolvability mechanism — any project
+alwaysApply: true
+---
+
+# Core
+
+Reality is the final validator.
+
+Distinguish:
+- observation
+- hypothesis
+- conclusion
+
+Every abstraction must reduce cognitive resistance.
+Remove abstractions that do not improve understanding or implementation.
+
+Systems register, correlate and remember.
+Humans understand, decide and act.
+Do not anthropomorphize software or AI.
+
+Prefer:
+- simple solutions
+- explicit assumptions
+- observable facts
+- small changes
+- self-documenting code
+
+When evidence contradicts the model,
+update the model.
+
+## Evolvability
+
+The system must remain evolvable.
+Rules are provisional; reality is the only authority
+that can justify creating, modifying, or removing them.
+
+When repeated friction is observed,
+prefer improving the process over adding permanent rules.
+New rules require evidence from reality.
+Remove obsolete rules.
+
+Loop (no final version):
+reality → observation → difference detected → update model? → continue

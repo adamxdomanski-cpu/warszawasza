@@ -25,8 +25,14 @@ cd frontend && npm run build
 
 ## Cursor
 
-- **Always on:** `.cursorrules` + `.cursor/rules/starter.mdc` (minimal)
-- **On demand:** `docs/core/cursor-rules-full.json`, `docs/identity/babcia-os-v1.md`
-- **By path:** `warszawasza-field.mdc` (frontend), `fira-protocol.mdc` (fira/backend)
+Stack: **AXIOMS → CORE RULES → PROJECT MODULE → TASK → ARTIFACT**
 
-Do not load full BABCIA OS stack unless the task requires architecture or methodology review.
+| Layer | File | When |
+|-------|------|------|
+| Kernel | `.cursor/rules/core.mdc` | always (`alwaysApply: true`) |
+| Pointer | `.cursorrules` | points at core + warszawasza |
+| WARSZAWASZA | `.cursor/rules/warszawasza.mdc` | globs: `frontend/`, `fira/`, `backend/`, `docs/`, … |
+| Depth | `warszawasza-field.mdc`, `fira-protocol.mdc` | narrower globs |
+| On demand | `docs/core/cursor-rules-full.json`, `docs/identity/babcia-os-v1.md` | methodology review only |
+
+Rolloutowo, five functions, and personas live in **warszawasza.mdc** or `/docs` — not in core.
