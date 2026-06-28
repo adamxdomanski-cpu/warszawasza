@@ -6,7 +6,9 @@
 
 ---
 
-## Two layers (lowest entropy)
+## Two layers (minimum necessary effort)
+
+Stack design: not “lowest energy” (dead equilibrium) — **smallest effort needed to reach the goal**, without losing contact with reality.
 
 ```
 AXIOMS          → docs (human)
@@ -24,6 +26,7 @@ ARTIFACT        → code / docs output
 
 - Reality validates · observation / hypothesis / conclusion
 - Reduce cognitive resistance · remove useless abstractions
+- **Minimum necessary effort:** reach the goal with least cognitive/computational/human cost; no self-inflicted friction
 - System vs human · no anthropomorphizing AI
 - Simple, explicit, observable, small diffs
 - Update the model when evidence contradicts it

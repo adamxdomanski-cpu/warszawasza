@@ -113,6 +113,20 @@ FIELD **nie jest warstwą systemu**. FIELD **ocenia** system — nie należy do 
 
 Meta: *Rzeczywistość przemawia przez opór.*
 
+### Minimum Necessary Effort (Axiom 3 w praktyce)
+
+Nie **najniższa energia** (w fizyce to może być stan martwy) — **najmniejszy wysiłek potrzebny do osiągnięcia celu**.
+
+> A good system reaches its goal with the smallest necessary amount of cognitive, computational, and human effort, without reducing quality or losing contact with reality.
+
+- **Nie** minimalizuj działania — minimalizuj **zbędny** wysiłek.
+- Gdy rzeczywistość jest trudna — poświęć tyle energii, ile trzeba.
+- System **nie powinien sam produkować** dodatkowego wysiłku (chaotyczny UI, procedury bez sensu, złożoność bez zysku).
+
+Dobrze zaprojektowany system zostawia człowiekowi energię na to, co ważne — zamiast zużywać ją na walkę z własnym narzędziem.
+
+Kernel Cursor: [`.cursor/rules/core.mdc`](../../.cursor/rules/core.mdc)
+
 ---
 
 ## II. CAPABILITIES

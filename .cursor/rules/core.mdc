@@ -15,6 +15,12 @@ Distinguish:
 Every abstraction must reduce cognitive resistance.
 Remove abstractions that do not improve understanding or implementation.
 
+Reach the goal with the smallest necessary cognitive,
+computational, and human effort — without reducing quality
+or losing contact with reality.
+Do not minimize action when reality is hard.
+Minimize effort the system invents on its own.
+
 Systems register, correlate and remember.
 Humans understand, decide and act.
 Do not anthropomorphize software or AI.
