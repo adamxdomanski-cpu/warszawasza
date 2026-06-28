@@ -276,6 +276,19 @@ Jedno pytanie Orła uruchamia resztę skali. Bez teorii systemów. Bez meta-pozi
 
 Użycie: strona, funkcja, koszulka, prawo, AI — **pięć pytań**, nie pięć dokumentów.
 
+### Opór poznawczy (kryterium operacyjne)
+
+**Opór poznawczy** = wysiłek i kroki, które człowiek musi wykonać, by z rejestracji przejść do **właściwej decyzji i działania**.
+
+| | |
+|---|---|
+| **Niski opór** (dobry krój) | droga sygnał → czyn krótka, czysta; język nie blokuje |
+| **Wysoki opór** (zły krój) | definicje, szum, ekrany — człowiek nie wie, po co i co dalej |
+
+Dobry model **nie wymazuje danych** — **nie stawia oporu** intencji. Jak spodnie: materiał pracuje z ciałem, nie krępuje ruchu.
+
+**Jutro:** `warszawasza.online` → pięć pytań + opór poznawczy w polu.
+
 ```
         👦 Oluś
            │
