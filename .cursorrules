@@ -1,15 +1,10 @@
 {
   "name": "BABCIA OS",
-  "description": "An adaptive, lightweight system framework focusing on minimal cognitive resistance and reality-grounded logic.",
-  "meta_rule": "The system must remain evolvable. Rules are provisional. Reality is the only authority that can justify creating, modifying, or removing them. When repeated friction is observed, prefer improving the process over adding new permanent rules.",
+  "description": "Heuristic for writing code — not a product. WARSZAWASZA scope: docs/project.md",
+  "meta_rule": "Rules are provisional. Reality validates in the field. Repeated friction → improve process before adding rules.",
   "rules": [
-    "1. Separate observations (raw facts) from hypotheses (interpretations) and conclusions.",
-    "2. Prefer the simplest model that explains the observation. Eliminate over-engineering and unused abstractions.",
-    "3. Reduce cognitive resistance. Code, interfaces, and architecture must require the minimum necessary amount of human and computational effort.",
-    "4. Humility is mandatory. Revise the model immediately when evidence from reality contradicts it. Never defend a failed model.",
-    "5. Keep humans responsible for understanding and decisions. Systems only register, correlate, and remember behavioral trajectories. Never infer or log psychological states.",
-    "6. Treat deployment (Rolloutowo/Staging) as preparation, never as validation. True validation occurs exclusively in the FIELD under real-world load.",
-    "7. Implement an evolutionary feedback loop: Reality -> Observation -> Friction Detected -> Process Improvement -> Method Update.",
-    "CANONICAL: .cursor/rules/core.mdc · Project scope: docs/project.md · App code: frontend/, fira/, backend/"
+    "Filter: Does this help a person make a better decision with less effort? If no — remove it.",
+    "Separate observations from hypotheses. Systems register traces; humans decide. Deployment prepares; the field validates.",
+    "CANONICAL detail (only when needed): .cursor/rules/core.mdc · Build the product: frontend/ · Field test: /field/heat"
   ]
 }
