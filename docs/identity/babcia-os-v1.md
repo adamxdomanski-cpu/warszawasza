@@ -27,29 +27,39 @@ FIELD **nie jest warstwą systemu**. FIELD **ocenia** system — nie należy do 
 ## Stos (siedem warstw modelu)
 
 ```
-                 BABCIA OS
+===================================================================
+                            BABCIA OS
+                 SIEDMIOPOZIOMOWY STOS SYSTEMOWY
+===================================================================
 
-    ┌──────────────────────────────┐
-    │           AXIOMS             │
-    ├──────────────────────────────┤
-    │        CAPABILITIES          │
-    ├──────────────────────────────┤
-    │         FUNCTIONS            │
-    ├──────────────────────────────┤
-    │         WORKFLOW             │
-    ├──────────────────────────────┤
-    │         ADAPTERS             │
-    ├──────────────────────────────┤
-    │        ROLLOUTOWO            │  ← granica modelu
-    ├──────────────────────────────┤
-    │         ARTIFACTS            │
-    └──────────────────────────────┘
-                 │
-                 ▼
-═══════════════════════════════════════════
-        FIELD / RZECZYWISTOŚĆ
-     (walidator · poza modelem)
-═══════════════════════════════════════════
+    ┌─────────────────────────────────────────────────────────┐
+    │                         AXIOMS                          │
+    │                   (Zasady nadrzędne)                    │
+    ├─────────────────────────────────────────────────────────┤
+    │                      CAPABILITIES                       │
+    │              (Podział ról: System / Człowiek)             │
+    ├─────────────────────────────────────────────────────────┤
+    │                        FUNCTIONS                        │
+    │                  (Filtry weryfikacji)                   │
+    ├─────────────────────────────────────────────────────────┤
+    │                        WORKFLOW                         │
+    │                   (Cykl procesowy)                      │
+    ├─────────────────────────────────────────────────────────┤
+    │                        ADAPTERS                         │
+    │               (Wymienne narzędzia i role)               │
+    ├─────────────────────────────────────────────────────────┤
+    │                       ROLLOUTOWO                        │
+    │          (Środowisko gotowości do wdrożenia)             │
+    ├─────────────────────────────────────────────────────────┤
+    │                        ARTIFACTS                        │
+    │               (Produkty końcowe systemu)                │
+    └────────────────────────────┬────────────────────────────┘
+                                 │
+                                 ▼  Wdrożenie / noszenie / użycie
+═══════════════════════════════════════════════════════════════════
+                      FIELD / RZECZYWISTOŚĆ
+                   (Ostateczny walidator · poza modelem)
+═══════════════════════════════════════════════════════════════════
 ```
 
 | Warstwa | Rola |
@@ -128,20 +138,40 @@ Deploy to nie koniec pracy — to moment, w którym serce bije szybciej: projekt
 
 ## VII. ARTIFACTS
 
-Gotowy zapis modelu — paczka produkcyjna, uszyte spodnie, wdrożony build — **jeszcze w granicach modelu**, ale przygotowany do FIELD.
+Gotowy zapis modelu — paczka produkcyjna, uszyte spodnie, build — ostatni produkt **wewnątrz** modelu, zrzucany na grunt FIELD.
 
-Utylizowalne, jeśli zwiększają opór bez zrozumienia (aksjomat 3).
+**Odpowiedzialność wykonawcza modelu** kończy się na wygenerowaniu artefaktu i jego przekazaniu do FIELD — **nie** kończy się praca systemu jako całości. System musi **przyjąć wynik z FIELD** jako nową obserwację i uczyć się dalej.
 
 ---
 
-## FIELD (poza modelem)
+## FIELD (poza modelem) · pętla uczenia
 
-**FIELD / Rzeczywistość operacyjna** — produkcja live, noszenie na ulicy, ruch pasażerów, beton który musi związać.
+**FIELD** — produkcja live, ulica, ruch pasażerów, beton który musi związać. **Ocenia** system; **nie należy** do stosu.
 
-| | W modelu | Poza modelem |
-|---|----------|----------------|
-| **ROLLOUTOWO** | tak — granica modelu | — |
-| **FIELD** | **nie** | tak — walidator |
+```
+      BABCIA OS
+           │
+           ▼
+       ARTIFACT
+           │
+           ▼
+══════════════════════
+FIELD / RZECZYWISTOŚĆ
+══════════════════════
+           │
+           ▼
+    NOWA OBSERWACJA  ──> (SYSTEM rejestruje) ──> BABCIA OS
+```
+
+| Krok | Co się dzieje |
+|------|----------------|
+| 1 | System tworzy **artefakt** |
+| 2 | Artefakt trafia do **FIELD** |
+| 3 | **FIELD** weryfikuje artefakt (opór = informacja) |
+| 4 | Wyniki wracają do systemu jako **nowa obserwacja** |
+| 5 | Pętla — bez symulowania FIELD wewnątrz modelu |
+
+To nie zamknięty system operacyjny pod kontrolą — **cykl uczenia** oparty na rzeczywistości.
 
 ---
 
@@ -169,7 +199,8 @@ W obu przypadkach ostateczny werdykt wydaje **FIELD** — rzeczywistość przema
   WIEDZA · ZNACZENIE · ROZWAŻNOŚĆ
   POKORA · SŁUCHANIE OPORU
 
-  Model kończy się na granicy ROLLOUTOWO → ARTIFACT → FIELD
+  Granica wykonawcza: ROLLOUTOWO → ARTIFACT → FIELD
+  Uczenie: wynik z FIELD wraca jako nowa obserwacja
   Jeżeli FIELD przeczy modelowi — zmienia się model.
 ```
 
