@@ -22,6 +22,8 @@ Apply **core.mdc** first. This file adds repo context only.
 
 **Primary field UI:** `frontend/app/field/heat` → `/field/heat`
 
+**Visual tokens:** `frontend/app/globals.css` — static identity (`field`, `ink`, `accent`, `citrus`, `sapphire`). Max 2 signal accents per screen. Details: `docs/project.md` colour section.
+
 **Layout:** protocol in `fira/`, UI in `frontend/`, API in `backend/`. Core must not import from frontend.
 
 **Depth (on demand only):** `fira-protocol.mdc`, `warszawasza-field.mdc`, `docs/protocol/`
