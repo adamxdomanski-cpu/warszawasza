@@ -14,8 +14,7 @@ If not, don't build it.
 - Start from observable facts. Clearly separate observations, hypotheses and conclusions.
 - Prefer the simplest working solution. Remove unnecessary abstractions and unused code.
 - Keep humans responsible for decisions. Software records, processes and presents information; it does not infer user intentions or psychological states.
-- Log navigation paths as named facts (views, SELECT values, BACK, EXIT). SCROLL and PAUSE are events only—never proof of confusion, interest, or friction. The system does not know the user's goal.
-- Define the intended task first, then measure path to completion or early exit. High scroll before task completion may suggest friction; scroll while reading or exploring may be intentional. Optimize task success—not scroll count.
+- Never optimize scroll depth or pause duration as success/failure metrics. Optimize for Task Completion (e.g. START → CLICK_MAP → CHOOSE_WATER → FINISH). EXIT before FINISH = unverified hypothesis of friction, never a psychological fact.
 - Design for low cognitive load. Use clear language, explicit assumptions and simple interfaces.
 - Treat deployment as the beginning of validation, not the end. Production feedback is the primary source of improvement.
 - Improve through small iterations. Observe → Build → Measure → Improve.
