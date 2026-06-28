@@ -1,10 +1,10 @@
 # WARSZAWASZA · Project scope & purpose
 
-**Filter:** Czy po użyciu tego człowiek **łatwiej rozumie swoją rzeczywistość**? Tak → zostaw. Nie → usuń.
+**Filter:** Czy po użyciu tego człowiek łatwiej rozumie swoją rzeczywistość **i może podjąć lepszą decyzję**? Nie → usuń.
 
-**Dyscyplina:** OBSERWUJ · UPRASZCZAJ · SPRAWDZAJ. Pętla: rzeczywistość → obserwacja → mała zmiana → ponowna obserwacja.
+**Zobacz → Zrozum → Pomóż.** Pętla: rzeczywistość → obserwacja → mała zmiana → ponowna obserwacja. System ewoluuje dzięki temu, czego człowiek i rzeczywistość uczą go razem.
 
-**Success:** narzędzie znika — zostaje cień, woda, miasto. Geneza (Babcia, Dzielna): osobista historia, nie metodologia — [`babcia-os-v1.md`](identity/babcia-os-v1.md).
+**Success:** narzędzie znika — zostaje miasto. Geneza osobista: [`babcia-os-v1.md`](identity/babcia-os-v1.md) (nie metodologia).
 
 Field test: [warszawasza.online/field/heat](/field/heat) — 10 seconds: what’s happening today, what you can do.
 
