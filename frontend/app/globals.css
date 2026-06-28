@@ -14,10 +14,12 @@
   --color-citrus: #b8e62e;
   --color-citrus-dim: rgba(184, 230, 46, 0.55);
   --color-citrus-glow: rgba(184, 230, 46, 0.42);
-  /* Warsaw heat signal — orange (PKiN / alert sun), not brand accent */
-  --color-warsaw-heat: #ff8c1a;
-  --color-warsaw-heat-deep: #ff5a00;
-  --color-warsaw-heat-critical: #e40045;
+  /* Warsaw experience palette — not municipal MSI (see docs/design-language.md) */
+  --color-warsaw-heat: #d4a054;
+  --color-warsaw-heat-deep: #b87828;
+  --color-warsaw-heat-critical: #9b2942;
+  --color-warsaw-shade: #3d6b4f;
+  --color-warsaw-water: #4a8fd4;
   --color-graphite: rgba(190, 190, 188, 0.62);
   --color-ink: rgba(248, 248, 246, 0.94);
   /* FIRA structural layer — local signals about system topology (not locale tint) */
@@ -1196,14 +1198,15 @@
   }
 }
 
-/* —— Field heat: Warsaw orange signal (DayFact), breathes toward red when extreme —— */
+/* —— Field heat: experience palette · urgency = motion (never decoration) —— */
 .heat-field-ambient {
-  opacity: 0.42;
+  opacity: 0.34;
   background: radial-gradient(
-    circle at 50% -10%,
-    rgba(255, 140, 26, 0.17),
-    transparent 58%
+    circle at 50% -12%,
+    color-mix(in srgb, var(--color-warsaw-heat) 22%, transparent),
+    transparent 62%
   );
+  transform-origin: 50% 0%;
 }
 
 .heat-signal {
@@ -1212,60 +1215,59 @@
   font-weight: 500;
 }
 
+/* normal: bursztyn, no motion */
+.heat-field-page[data-urgency="normal"] .heat-field-ambient {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .heat-field-ambient {
-    animation: heat-ambient-breathe 5.5s ease-in-out infinite;
+  /* warning: 39°C wave — ambient oddech ~5s, tekst tylko kolor (104% tylko tło) */
+  .heat-field-page[data-urgency="warning"] .heat-field-ambient {
+    animation: heat-ambient-breathe 5s ease-in-out infinite;
   }
 
-  .heat-signal {
-    animation: heat-signal-breathe 3.6s ease-in-out infinite;
+  .heat-field-page[data-urgency="warning"] .heat-signal {
+    animation: heat-color-warning 5s ease-in-out infinite;
   }
 
-  .heat-signal[data-severity="extreme"] {
-    animation-duration: 2.6s;
+  /* critical: burgund, odrobinę wyraźniej, nadal spokojnie (~4s) */
+  .heat-field-page[data-urgency="critical"] .heat-field-ambient {
+    animation: heat-ambient-breathe 4s ease-in-out infinite;
   }
 
-  .heat-signal[data-severity="high"] {
-    animation-duration: 3.8s;
-  }
-
-  .heat-signal[data-severity="moderate"] {
-    animation: heat-signal-cool 4.8s ease-in-out infinite;
-  }
-}
-
-@keyframes heat-signal-breathe {
-  0%,
-  100% {
-    color: var(--color-warsaw-heat);
-    transform: scale(1);
-    filter: brightness(1);
-  }
-  50% {
-    color: var(--color-warsaw-heat-critical);
-    transform: scale(1.045);
-    filter: brightness(1.15);
-  }
-}
-
-@keyframes heat-signal-cool {
-  0%,
-  100% {
-    color: var(--color-citrus);
-    transform: scale(1);
-  }
-  50% {
-    color: var(--color-warsaw-heat);
-    transform: scale(1.02);
+  .heat-field-page[data-urgency="critical"] .heat-signal {
+    animation: heat-color-critical 4s ease-in-out infinite;
   }
 }
 
 @keyframes heat-ambient-breathe {
   0%,
   100% {
-    opacity: 0.38;
+    opacity: 0.3;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.55;
+    opacity: 0.42;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes heat-color-warning {
+  0%,
+  100% {
+    color: var(--color-warsaw-heat);
+  }
+  50% {
+    color: var(--color-warsaw-heat-deep);
+  }
+}
+
+@keyframes heat-color-critical {
+  0%,
+  100% {
+    color: var(--color-warsaw-heat-deep);
+  }
+  50% {
+    color: var(--color-warsaw-heat-critical);
   }
 }

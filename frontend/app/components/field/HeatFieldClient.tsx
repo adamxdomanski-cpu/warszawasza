@@ -9,7 +9,8 @@ import {
   HEAT_TEMP_C,
   formatDistance,
   heatFieldCopy,
-  heatSeverity,
+  heatUrgency,
+  HEAT_RCB_CRITICAL,
 } from "../../../lib/field/heatFieldI18n";
 import type { Lang } from "../../../lib/i18n";
 import {
@@ -27,7 +28,7 @@ export default function HeatFieldClient() {
 
   const copy = heatFieldCopy(lang);
   const events = getInteractionTrace().events;
-  const severity = heatSeverity(HEAT_TEMP_C);
+  const urgency = heatUrgency(HEAT_TEMP_C, HEAT_RCB_CRITICAL);
 
   useEffect(() => {
     clearInteractionTrace();
@@ -57,7 +58,10 @@ export default function HeatFieldClient() {
   };
 
   return (
-    <div className="heat-field-page relative min-h-dvh bg-field text-ink">
+    <div
+      className="heat-field-page relative min-h-dvh bg-field text-ink"
+      data-urgency={urgency}
+    >
       <div className="heat-field-ambient pointer-events-none fixed inset-0 z-0" aria-hidden />
 
       <main className="relative z-10 mx-auto flex max-w-lg flex-col gap-6 p-5 pb-16 sm:gap-8 sm:p-8">
@@ -76,11 +80,7 @@ export default function HeatFieldClient() {
             {copy.statusLine}
           </p>
           <h1 className="m-0 text-2xl font-light leading-snug sm:text-3xl">
-            <span
-              className="heat-signal"
-              data-severity={severity}
-              aria-label={`${copy.factTemp} ${copy.factSubtitle}`}
-            >
+            <span className="heat-signal" aria-label={`${copy.factTemp} ${copy.factSubtitle}`}>
               {copy.factTemp}
             </span>
             <span className="text-ink/90"> · {copy.factSubtitle}</span>
@@ -148,7 +148,15 @@ export default function HeatFieldClient() {
                   className="flex min-h-11 w-full touch-manipulation items-start gap-3 border border-accent/20 bg-field/80 px-4 py-3 text-left"
                 >
                   <span
-                    className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${ok ? "bg-citrus" : "bg-accent"}`}
+                    className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${
+                      ok
+                        ? point.kind === "shade"
+                          ? "bg-[var(--color-warsaw-shade)]"
+                          : point.kind === "water"
+                            ? "bg-[var(--color-warsaw-water)]"
+                            : "bg-citrus"
+                        : "bg-[var(--color-warsaw-heat-critical)]"
+                    }`}
                     aria-hidden
                   />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">

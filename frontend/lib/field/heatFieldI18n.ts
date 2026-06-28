@@ -263,9 +263,14 @@ export function formatDistance(copy: HeatCopy, meters: number, walkMin: number):
   return `${copy.distanceM.replace("{n}", String(meters))} · ${copy.distanceWalk.replace("{n}", String(walkMin))}`;
 }
 
-/** Maps observed °C to signal severity for heat pulse (orange → red, or cooler → green). */
-export function heatSeverity(tempC: number): "extreme" | "high" | "moderate" {
-  if (tempC >= 38) return "extreme";
-  if (tempC >= 32) return "high";
-  return "moderate";
+/** Official RCB tier for this deployment; drives critical urgency when level 3+. */
+export const HEAT_RCB_CRITICAL = false;
+
+export type HeatUrgency = "normal" | "warning" | "critical";
+
+/** Urgency drives motion — meaning, not decoration. */
+export function heatUrgency(tempC: number, rcbCritical = HEAT_RCB_CRITICAL): HeatUrgency {
+  if (tempC >= 42 || rcbCritical) return "critical";
+  if (tempC >= 35) return "warning";
+  return "normal";
 }
