@@ -48,3 +48,28 @@ If reality disagrees, the model changes. Reality does not.
 - Przed zatwierdzeniem zmian: **pięć pytań** + sprawdź potencjalne **Failure** dla każdej perspektywy.
 
 *Critique Continuous · nie komitet · nie certyfikat*
+
+## Pętla operacyjna
+
+```
+Świat
+   │
+   ▼
+Obserwacje
+   │
+   ▼
+Korelacje (system)
+   │
+   ▼
+Krytyka (ludzie)
+   │
+   ▼
+Nowe reguły
+   │
+   ▼
+Lepsze obserwacje
+   │
+   └──► (z powrotem do Świata)
+```
+
+System **rejestruje i koreluje**. Ludzie **krytykują i decydują**. Reguły **zmniejszają opór**, nie odbierają sprawczości.
