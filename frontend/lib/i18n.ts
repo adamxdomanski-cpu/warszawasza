@@ -23,6 +23,20 @@ export const LANGS: Lang[] = [
   "en",
 ];
 
+/** Full language names for accessible labels (must include visible ISO code). */
+export const LANG_ACCESSIBLE_NAMES: Record<Lang, string> = {
+  pl: "Polski, PL",
+  it: "Italiano, IT",
+  uk: "Українська, UK",
+  bg: "Български, BG",
+  et: "Eesti, ET",
+  fi: "Suomi, FI",
+  lt: "Lietuvių, LT",
+  lv: "Latviešu, LV",
+  hu: "Magyar, HU",
+  en: "English, EN",
+};
+
 type FlowKey = "signal" | "friction" | "adaptation" | "trajectory";
 
 export type PipelineKey =

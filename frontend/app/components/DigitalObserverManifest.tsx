@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DIGITAL_OBSERVER_MANIFEST } from "../../lib/digitalObserverManifest";
+import { LANG_ACCESSIBLE_NAMES } from "../../lib/i18n";
 import { META_LANGS, type MetaLang } from "../../lib/metaI18n";
 import SignalControl from "./SignalControl";
 
@@ -53,6 +54,8 @@ export default function DigitalObserverManifest() {
                 lang === code ? "lang-nav-btn--active" : ""
               }`}
               onClick={() => setLang(code)}
+              aria-label={`${code.toUpperCase()}, ${LANG_ACCESSIBLE_NAMES[code]}`}
+              aria-current={lang === code ? "true" : undefined}
             >
               {code.toUpperCase()}
             </button>
