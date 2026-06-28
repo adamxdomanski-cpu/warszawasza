@@ -164,9 +164,7 @@ AI  →  Model  →  Człowiek
 
 AI może wykryć wzorzec w danych, ale **pochodzenie sensu** pozostaje po stronie człowieka, doświadczenia i rzeczywistości ([BABCIA OS](babcia-os-v1.md) · dwie osie).
 
-Konfiguracja AI (Cursor, Claude, ChatGPT): [`docs/protocol/cos-cursor-rules.json`](../protocol/cos-cursor-rules.json)
-
-Implementacja w repozytorium: [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc)
+Reguły AI (stable): [`.cursorrules`](../../.cursorrules) · persony: [`docs/personas.md`](../personas.md)
 
 ---
 

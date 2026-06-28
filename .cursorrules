@@ -1,7 +1,4 @@
 {
-  "_note": "Canonical AI rules moved to /.cursorrules. This file mirrors them for tooling that reads JSON only.",
-  "canonical": "../.cursorrules",
-  "personas": "../personas.md",
   "name": "BABCIA OS v1.0",
   "description": "Engineering rules for reducing cognitive resistance and grounding solutions in reality.",
   "rules": [

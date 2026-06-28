@@ -1,47 +1,14 @@
 ---
-description: WARSZAWASZA / COS v1.0 — Rule 0, five functions, tool-independent core
+description: BABCIA OS v1.0 — canonical rules in .cursorrules; personas are adapters
 alwaysApply: true
 ---
 
-# WARSZAWASZA · COS v1.0
+# BABCIA OS · Cursor bridge
 
-[`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md) · [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md) · [`docs/protocol/cos-cursor-rules.json`](../../docs/protocol/cos-cursor-rules.json)
+**Engineering rules (stable):** [`.cursorrules`](../.cursorrules) — axioms and execution only; no personas or tools.
 
-**Aksjomaty: STABLE** (nie LOCKED). Four axioms in [`cos-v1.md`](../../docs/identity/cos-v1.md). Humility (4) = meta-property of process, not a workflow step. Intuition shortens path to hypothesis + reduces cognitive resistance (3).
+**Human adapters (replaceable):** [`docs/personas.md`](../../docs/personas.md)
 
-## Rule 0
+**Philosophy & architecture:** [`docs/identity/babcia-os-v1.md`](../../docs/identity/babcia-os-v1.md) · [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md)
 
-**Every abstraction must reduce cognitive resistance. Otherwise remove it.**
-
-## CORE (stable — not tools or personas)
-
-| | Chain |
-|---|--------|
-| **SYSTEM** | Registers → Correlates → Remembers |
-| **HUMAN** | Understands → Decides → Acts |
-
-## Model funkcjonalny (kontrakt — nie rozwijaj liczby pytań)
-
-| Funkcja | Pytanie |
-|---------|---------|
-| SENS | Czy to ma sens? |
-| CEL | Czy wiem, po co? |
-| DZIAŁANIE | Co stanie się z pracą przy weryfikacji? |
-| CZŁOWIEK | Co stanie się z człowiekiem, jeśli model odniesie sukces? |
-| SKALA | A co, jeśli zmienimy skalę? |
-
-## Adaptery (biblioteka perspektyw — tu rośnie system)
-
-Ludzie odpowiadają na funkcje ze swojego doświadczenia. **Pytanie > osoba.**  
-Przykłady: Oluś, Tomek, Babcia, Dziadek, Orzeł — nie tożsame z funkcją, tylko implementacje.
-
-Przed merge: pięć funkcji + Failure per funkcja. Reality wins — **if reality disagrees, change the model**.
-
-- Brak „Layer X” / deploy bez merge + `curl` / testu w terenie.
-- System bez rozumu, intencji, moralności — tylko rejestr/korelacja/pamięć.
-- Kod = EXECUTION adapter only; methodology survives if Python/Cursor/Jira are replaced.
-- AI → Model → Human. AI correlates/filters; never decides.
-- Intuition = hypothesis (*check here*); reduces cognitive resistance, not a verdict.
-- Humility applies at every stage — before first cut, not only after failure.
-
-*Humans decide.*
+Do not duplicate `.cursorrules` here. WARSZAWASZA-specific field protocol: [`warszawasza-field.mdc`](warszawasza-field.mdc).

@@ -51,13 +51,11 @@
 
 ## 2. Kursor · reguły inżynieryjne
 
-Implementacja: [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc)
-
-- Rule 0: abstrakcja → mniejszy opór poznawczy, inaczej usuń
-- Model = zapis powrotu; kończy się, gdzie zaczyna się życie
-- System rejestruje/koreluje/pamięta — **bez** przypisywania rozumu, intencji, moralności
-- W polu wszystko wyjdzie — brak „Layer X” bez `curl` / merge / testu w terenie
-- Critique Continuous: 5 funkcji + Failure; brak jednomyślności = sygnał diagnostyczny
+| Plik | Rola |
+|------|------|
+| [`.cursorrules`](../../.cursorrules) | **stable** — axiomy i reguły wykonania dla AI |
+| [`docs/personas.md`](../personas.md) | **adapter** — persony WARSZAWASZA → pięć pytań |
+| [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc) | most — linki, bez duplikacji reguł |
 
 ## 3. Giraffira · szablon zgłoszenia
 

@@ -141,7 +141,11 @@ Nad całością obiegu nieustannie unosi się **aksjomat 4** (pokora wobec rzecz
 
 Zmiana adaptera **nie narusza** AXIOMS, CORE, FUNCTIONS, WORKFLOW.
 
-Konfiguracja AI: [`cos-cursor-rules.json`](../protocol/cos-cursor-rules.json) · [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc)
+**Reguły AI (stable):** [`.cursorrules`](../../.cursorrules) — tylko reguły wykonania, bez person i technologii.
+
+**Persony (adapter):** [`docs/personas.md`](../personas.md)
+
+Most Cursor: [`.cursor/rules/miejski-operator.mdc`](../../.cursor/rules/miejski-operator.mdc)
 
 ---
 
