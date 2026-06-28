@@ -1,12 +1,10 @@
 # WARSZAWASZA · Project scope & purpose
 
-**Decision filter:** Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?
+**Filter:** Czy po użyciu tego człowiek **łatwiej rozumie swoją rzeczywistość**? Tak → zostaw. Nie → usuń.
 
-**Four checks:** (1) W polu wszystko wyjdzie. (2) Najpierw uszyj spodnie. (3) Beton musi mieć proporcje. (4) Słuchaj z pokorą — 10 s na stronie.
+**Dyscyplina:** OBSERWUJ · UPRASZCZAJ · SPRAWDZAJ. Pętla: rzeczywistość → obserwacja → mała zmiana → ponowna obserwacja.
 
-**Success:** użytkownik nie myśli o WARSZAWASZA — łatwiej rozumie, co dzieje się dziś w mieście. Narzędzie ewoluuje **z** człowiekiem.
-
-**WARSZAWASZA** = produkt (strona, pole, dane). Heurystyka rzemieślnicza nie ma własnej nazwy w sesji — tylko pytania powyżej.
+**Success:** narzędzie znika — zostaje cień, woda, miasto. Geneza (Babcia, Dzielna): osobista historia, nie metodologia — [`babcia-os-v1.md`](identity/babcia-os-v1.md).
 
 Field test: [warszawasza.online/field/heat](/field/heat) — 10 seconds: what’s happening today, what you can do.
 

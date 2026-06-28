@@ -1,21 +1,19 @@
 ---
-description: Craft questions before each decision — universal, no product name
+description: One filter · Observe · Simplify · Test — no product brand
 alwaysApply: true
 ---
 
-# Craft heuristic
+# Craft discipline
 
-**Filter:** Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?
+**Filter:** Czy po użyciu tego człowiek **łatwiej rozumie swoją rzeczywistość**?  
+Tak → zostaw. Nie → usuń.
 
-**Before you decide:**
+**OBSERWUJ** — surowe fakty i ślady zachowań, bez psychologizowania.  
+**UPRASZCZAJ** — usuń każdą funkcję, słowo i linię, która nie zmniejsza oporu.  
+**SPRAWDZAJ** — mała zmiana w polu; mierz skutek fizyczny (czas, kliknięcia, czy znalazł wodę/cień).
 
-- Czy wiem, jaki problem rozwiązuję?
-- Czy zrobiłem już najmniejszą działającą wersję?
-- Czy sprawdziłem to z prawdziwym człowiekiem?
-- Czy rzeczywistość potwierdziła moje założenia?
+**Pętla:** Rzeczywistość → Obserwacja → Mała zmiana → Ponowna obserwacja.
 
-**Four checks:** W polu wszystko wyjdzie · Najpierw uszyj spodnie · Beton ma proporcje · Słuchaj z pokorą (10 s).
+System uczy się **skutków swoich działań w świecie** — nie optymalizuje człowieka.
 
-**Product goal (WARSZAWASZA):** narzędzie ma zniknąć z uwagi — człowiek myśli o mieście, nie o aplikacji. Ewoluuje **z** człowiekiem, nie ponad nim.
-
-Scope: `docs/project.md` · field: `/field/heat` · historical origin: `docs/identity/babcia-os-v1.md`
+WARSZAWASZA: `docs/project.md` · `/field/heat` · geneza (osobista): `docs/identity/babcia-os-v1.md`
