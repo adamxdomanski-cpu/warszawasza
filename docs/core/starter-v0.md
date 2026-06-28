@@ -43,7 +43,7 @@ Purpose, in-scope, out-of-scope: [`docs/project.md`](../project.md) — **not** 
 - Five functions · Rolloutowo · Field loop
 - CZŁOWIEK → SYSTEM comms
 - FOP / observation-first / less noise
-- Pointers to personas, critique protocol, BABCIA OS docs
+- Pointers to personas, critique protocol, origin archive (`babcia-os-v1.md`)
 
 ---
 
@@ -55,4 +55,4 @@ Legacy full rules: [`cursor-rules-full.json`](cursor-rules-full.json)
 
 ---
 
-*BABCIA OS is an adaptive system — mechanism in core, project knowledge in modules · `/docs` for depth*
+*craft heuristic in core · WARSZAWASZA in project.md · origin name archived*

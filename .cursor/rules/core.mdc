@@ -1,16 +1,21 @@
 ---
-description: Craft heuristic — one filter, four checks (any repo)
+description: Craft questions before each decision — universal, no product name
 alwaysApply: true
 ---
 
-# Heuristic
+# Craft heuristic
 
-**Filter:** Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?  
-Jeśli nie — usuń.
+**Filter:** Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?
 
-1. **W polu wszystko wyjdzie** — rzeczywistość decyduje, nie warsztat.
-2. **Najpierw uszyj spodnie** — produkt, nie opis produktu.
-3. **Beton musi mieć proporcje** — obserwacja, nie domysł o umyśle użytkownika.
-4. **Słuchaj z pokorą** — nie zrozumiał w 10 s → popraw stronę/kod.
+**Before you decide:**
 
-WARSZAWASZA scope: `docs/project.md` · jutro: `/field/heat`
+- Czy wiem, jaki problem rozwiązuję?
+- Czy zrobiłem już najmniejszą działającą wersję?
+- Czy sprawdziłem to z prawdziwym człowiekiem?
+- Czy rzeczywistość potwierdziła moje założenia?
+
+**Four checks:** W polu wszystko wyjdzie · Najpierw uszyj spodnie · Beton ma proporcje · Słuchaj z pokorą (10 s).
+
+**Product goal (WARSZAWASZA):** narzędzie ma zniknąć z uwagi — człowiek myśli o mieście, nie o aplikacji. Ewoluuje **z** człowiekiem, nie ponad nim.
+
+Scope: `docs/project.md` · field: `/field/heat` · historical origin: `docs/identity/babcia-os-v1.md`

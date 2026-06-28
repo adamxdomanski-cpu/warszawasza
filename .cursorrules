@@ -1,10 +1,11 @@
 {
-  "name": "BABCIA OS",
-  "description": "Craft heuristic — not a product. WARSZAWASZA: docs/project.md · /field/heat",
-  "meta_rule": "If it does not pass the filter, delete it. Reality validates in the field.",
+  "name": "craft-heuristic",
+  "description": "Rzemieślnicze pytania przed decyzją. Produkt: WARSZAWASZA — docs/project.md · /field/heat",
+  "meta_rule": "Narzędzie ma ewoluować z człowiekiem — proste, żeby nadążać. Rzeczywistość w polu wygrywa.",
   "rules": [
     "Filter: Czy to pomaga człowiekowi podjąć lepszą decyzję przy mniejszym wysiłku?",
-    "1. W polu wszystko wyjdzie. 2. Najpierw uszyj spodnie. 3. Beton musi mieć proporcje. 4. Słuchaj z pokorą (10 s na stronie).",
-    "Detail only if needed: .cursor/rules/core.mdc"
+    "Checks: W polu wszystko wyjdzie · Najpierw uszyj spodnie · Beton ma proporcje · 10 s — strona albo poprawka.",
+    "Questions: Znam problem? · Najmniejsza działająca wersja? · Prawdziwy człowiek? · Pole potwierdziło?",
+    "Detail: .cursor/rules/core.mdc · Origin name (archive): docs/identity/babcia-os-v1.md"
   ]
 }
