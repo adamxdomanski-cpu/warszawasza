@@ -6,7 +6,6 @@
     "Keep humans responsible for decisions. Software records, processes, and presents information; it does not infer user intentions or psychological states.",
     "Log only behavior trajectories (e.g., START, CLICK_MAP, FINISH, EXIT). Do not optimize metrics like scroll depth or pause duration as independent indicators of failure.",
     "Design for low cognitive load. Use clear language, explicit assumptions, and simple, non-vibrating interfaces.",
-    "Visual identity: keep a static brand palette (field/ink/accent in globals.css). Weather must not recolour the UI. Use at most two functional signal colours on one screen; every colour maps to a fact or status, never mood or decoration.",
     "Treat deployment as the beginning of validation, not the end. True validation occurs exclusively outside the model, under real-world load in the FIELD.",
     "Before implementing any feature ask: Does this help someone understand reality and make a better decision? If not, don't build it."
   ]

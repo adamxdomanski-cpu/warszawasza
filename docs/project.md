@@ -26,20 +26,7 @@ The interface disappears. The person and the city remain.
 
 **DNA is discovered**, not menu-tabbed — like finding a kamienica, a story, a face; rollout, not “Historia → click”.
 
-**Colour: WARSZAWASZA identity + day signals** — not “Warsaw paints the UI”. Warsaw has no single palette; the project can. **Identity stays constant** (recognisable every day). **Signals layer on top** (heat, wind, storm, snow) — like iOS: system chrome stable, battery red when needed. Weather must not replace brand.
-
-| Role (identity) | Token (code today) | Carries |
-|-----------------|-------------------|---------|
-| Tło / spokój | `field` `#030303` | canvas |
-| Treść | `ink` | primary text |
-| Decyzja / akcent | `accent` `#e40045` | commit, alert emphasis |
-| Interakcja / działa | `citrus` `#b8e62e` | OK, actionable |
-| Woda / chłód (semantic) | `sapphire` | water, cool facts |
-| Struktura | `fira-structure` | topology, not mood |
-
-Each colour answers **what information it carries** — not an emotion. City-inspired; not a copy of municipal branding. Day signals: small markers (▲ upał), not a full recolour.
-
-**Discipline:** stable identity tokens on every screen; **max two signal accent colours at once** on a single view. No flashing, no weather-as-theme.
+**Visual language:** semantic tokens first, colours second — [`design-system.md`](design-system.md) (not in `.cursorrules`).
 
 ---
 

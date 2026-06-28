@@ -1,0 +1,15 @@
+---
+description: Design system — load when editing UI (not core code rules)
+alwaysApply: false
+globs:
+  - "frontend/**"
+  - "docs/design-system.md"
+---
+
+# Design system (UI only)
+
+When changing UI, read [`docs/design-system.md`](../../docs/design-system.md) and [`frontend/design/tokens.ts`](../../frontend/design/tokens.ts).
+
+- **Identity** tokens are stable; **signal** tokens reflect facts.
+- Meaning before hex. Max **two active signal** tokens per screen.
+- Do not add colours without a semantic token. No weather-as-theme.
