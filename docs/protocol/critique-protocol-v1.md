@@ -1,34 +1,68 @@
 # WARSZAWASZA · CRITIQUE PROTOCOL v1.0
 
-> Ciągła krytyka konstruktywna — pytania i **Failure** (awaria), nie werdykt dobry/zły.  
+> Ciągła krytyka konstruktywna — **kontrakt** (pięć funkcji) + **adaptery** (ludzie).  
 > Powiązane: [`docs/identity/miejski-operator.md`](../identity/miejski-operator.md)
+
+## Model funkcjonalny (stały) · Interfejs ludzki (zmienny)
+
+**Lewa strona — ludzie:** zmieniają się (dziś Tomek, jutro ktoś inny). Role społeczne.  
+**Prawa strona — funkcje:** trwałe. Architektura. **Pytanie ważniejsze od osoby.**
+
+```
+┌──────────────────────────────┐
+│      INTERFEJS LUDZKI         │  ← biblioteka perspektyw (rośnie)
+│  Oluś · Tomek · Babcia · …    │
+└──────────────┬───────────────┘
+               │ adapter (tłumaczy perspektywę → kontrakt)
+               ▼
+┌──────────────────────────────┐
+│      MODEL FUNKCJONALNY       │  ← nie rozwijaj liczby pytań
+└──────────────────────────────┘
+
+1. SENS      — Czy to ma sens?
+2. CEL       — Czy wiem, po co?
+3. DZIAŁANIE — Czy to działa?
+4. CZŁOWIEK  — Czy to pomaga ludziom?
+5. SKALA     — A co, jeśli zmienimy skalę?
+```
+
+**Babcia** nie *jest* „człowiekiem” w modelu — jest **jedną z osób**, które odpowiadają na pytanie **CZŁOWIEK**.  
+Ewolucja systemu = **więcej perspektyw**, nie więcej pytań.
+
+Przykładowa biblioteka (adaptery): Oluś, Profesor, Tomek, Magda, Babcia, Dziadek, Czachor — każdy może odpowiadać na dowolną funkcję ze swojego doświadczenia.
 
 ```
 ===================================================================
                      CRITIQUE ● CONTINUOUS
+              (kontrakt · implementacje przez adaptery)
 ===================================================================
 
-👦 OLUŚ — LOGIC
+1. SENS
 Question:  Czy to ma sens?
 Failure:   Model stał się bardziej skomplikowany niż rzeczywistość.
            Abstrakcja zastąpiła obserwację.
+Example:   👦 Oluś (adapter)
 
-👔 TOMEK — PURPOSE
+2. CEL
 Question:  Czy wiem, po co to jest?
 Failure:   Architektura stała się ważniejsza od użytkownika.
            Pierwsza minuta nie prowadzi do działania.
+Example:   👔 Tomek (adapter)
 
-🚜 DZIADEK — PRACTICE
+3. DZIAŁANIE
 Question:  Czy to działa?
 Failure:   Model działa w warsztacie, ale pada w polu.
+Example:   🚜 Dziadek (adapter)
 
-👵 BABCIA — HUMAN
+4. CZŁOWIEK
 Question:  Czy to służy ludziom?
 Failure:   System optymalizuje metryki zamiast poprawiać życie.
+Example:   👵 Babcia (adapter)
 
-🦅 ORZEŁ — SCALE
+5. SKALA
 Question:  A co, jeśli zmienimy skalę?
 Failure:   Lokalna optymalizacja łamie cały system.
+Example:   🦅 Orzeł (adapter)
 
 ───────────────────────────────────────────────────────────────────
 REALITY — Final validator.

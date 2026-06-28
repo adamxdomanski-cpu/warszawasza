@@ -1,35 +1,31 @@
 ---
-description: WARSZAWASZA Protocol v1.0 — Rule 0, critique continuous, five failures
+description: WARSZAWASZA Protocol v1.0 — Rule 0, five functions, perspective library
 alwaysApply: true
 ---
 
 # WARSZAWASZA · Protocol v1.0
 
-Docs: [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md) · [`docs/identity/miejski-operator.md`](../../docs/identity/miejski-operator.md)
+[`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md)
 
-## Rule 0 (first, non-negotiable)
+## Rule 0
 
-**Every abstraction must reduce cognitive resistance. Otherwise remove it.**  
-(Każda abstrakcja musi zmniejszać opór poznawczy. W przeciwnym razie usuń.)
+**Every abstraction must reduce cognitive resistance. Otherwise remove it.**
 
-## Critique ● Continuous
+## Model funkcjonalny (kontrakt — nie rozwijaj liczby pytań)
 
-Before approving changes, run five questions and check **Failure**:
+| Funkcja | Pytanie |
+|---------|---------|
+| SENS | Czy to ma sens? |
+| CEL | Czy wiem, po co? |
+| DZIAŁANIE | Czy to działa? |
+| CZŁOWIEK | Czy to służy ludziom? |
+| SKALA | A co, jeśli zmienimy skalę? |
 
-| | Question | Failure |
-|---|----------|---------|
-| 👦 Oluś | Czy to ma sens? | Model > reality; abstraction replaced observation |
-| 👔 Tomek | Czy wiem, po co to jest? | Architecture > user; first minute ≠ action |
-| 🚜 Dziadek | Czy to działa? | Workshop OK, field fail |
-| 👵 Babcia | Czy to służy ludziom? | Metrics optimized, life not improved |
-| 🦅 Orzeł | A co, jeśli zmienimy skalę? | Local optimization breaks whole system |
+## Adaptery (biblioteka perspektyw — tu rośnie system)
 
-**Reality:** if reality disagrees, the model changes — not reality.
+Ludzie odpowiadają na funkcje ze swojego doświadczenia. **Pytanie > osoba.**  
+Przykłady: Oluś, Tomek, Babcia, Dziadek, Orzeł — nie tożsame z funkcją, tylko implementacje.
 
-## Also
+Przed merge: pięć funkcji + Failure per funkcja. Reality wins.
 
-- Model = record enabling return to reality; ends where life begins.
-- System registers, correlates, remembers — no human intent attributed to it.
-- Field test everything: code, SQL, UI.
-
-Good design saves effort **without** removing agency. *Humans decide.*
+*Humans decide.*
