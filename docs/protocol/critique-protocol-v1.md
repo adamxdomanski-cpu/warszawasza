@@ -7,11 +7,16 @@
 
 ## Nadrzędny aksjomat
 
-**Każda wiedza zaczyna się i kończy w rzeczywistości.** Jeżeli rzeczywistość przeczy modelowi — zmienia się model, nie rzeczywistość.
+**Każda wiedza zaczyna się i kończy w rzeczywistości.**
 
-**Pokora (STABLE):** Im większe doświadczenie, tym większa gotowość do poprawienia własnego modelu, gdy rzeczywistość pokaże błąd.
+### Cztery aksjomaty (STABLE)
 
-**Intuicja** nie jest werdyktem — jest hipotezą (*„Sprawdź tutaj”*). Dobra intuicja często wynika z bogatego doświadczenia; błędna — z uprzedzeń i złudzeń poznawczych.
+1. Rzeczywistość jest ostatecznym walidatorem.
+2. Model umożliwia powrót do rzeczywistości.
+3. Każda abstrakcja musi zmniejszać opór poznawczy.
+4. **Pokora** — gotowość do zmiany modelu **na każdym etapie** procesu; nie krok workflow, lecz własność całego obiegu.
+
+**Intuicja** nie jest werdyktem — hipoteza (*„Sprawdź tutaj”*). Skraca drogę do dobrej hipotezy i **zmniejsza opór poznawczy** (aksjomat 3), zachowując obowiązek weryfikacji.
 
 ## Model funkcjonalny (stały) · Interfejs ludzki (zmienny)
 

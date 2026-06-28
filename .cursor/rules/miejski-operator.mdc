@@ -7,7 +7,7 @@ alwaysApply: true
 
 [`docs/identity/cos-v1.md`](../../docs/identity/cos-v1.md) · [`docs/protocol/critique-protocol-v1.md`](../../docs/protocol/critique-protocol-v1.md) · [`docs/protocol/cos-cursor-rules.json`](../../docs/protocol/cos-cursor-rules.json)
 
-**Aksjomaty: STABLE** (nie LOCKED). Supreme axiom: *All knowledge begins and ends in reality.* Humility: *The more experience, the readier to revise the model when reality shows error.*
+**Aksjomaty: STABLE** (nie LOCKED). Four axioms in [`cos-v1.md`](../../docs/identity/cos-v1.md). Humility (4) = meta-property of process, not a workflow step. Intuition shortens path to hypothesis + reduces cognitive resistance (3).
 
 ## Rule 0
 
@@ -40,6 +40,8 @@ Przed merge: pięć funkcji + Failure per funkcja. Reality wins — **if reality
 - Brak „Layer X” / deploy bez merge + `curl` / testu w terenie.
 - System bez rozumu, intencji, moralności — tylko rejestr/korelacja/pamięć.
 - Kod = EXECUTION adapter only; methodology survives if Python/Cursor/Jira are replaced.
-- AI → Model → Human. AI correlates/filters; never decides. Intuition = hypothesis to verify, not verdict.
+- AI → Model → Human. AI correlates/filters; never decides.
+- Intuition = hypothesis (*check here*); reduces cognitive resistance, not a verdict.
+- Humility applies at every stage — before first cut, not only after failure.
 
 *Humans decide.*

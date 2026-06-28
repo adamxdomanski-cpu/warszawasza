@@ -19,11 +19,12 @@ To opisuje **intencję** projektu, nie implementację. Ważniejsze niż nazwa, A
 
 | # | Aksjomat |
 |---|----------|
-| **0** | **Każda wiedza zaczyna się i kończy w rzeczywistości.** |
-| **1** | Jeżeli rzeczywistość przeczy modelowi — **zmienia się model**. Nie rzeczywistość. |
-| **2** | **Im większe doświadczenie, tym większa gotowość do poprawienia własnego modelu**, gdy rzeczywistość pokaże błąd. *(Pokora)* |
+| **1** | **Rzeczywistość jest ostatecznym walidatorem.** *(Każda wiedza zaczyna się i kończy w rzeczywistości.)* |
+| **2** | **Model umożliwia powrót do rzeczywistości.** Model kończy się tam, gdzie zaczyna się życie. |
+| **3** | **Każda abstrakcja musi zmniejszać opór poznawczy.** W przeciwnym razie należy ją usunąć. |
+| **4** | **Pokora** oznacza gotowość do zmiany modelu **na każdym etapie procesu**, gdy rzeczywistość dostarczy lepszego wyjaśnienia. |
 
-Aksjomat 2 odróżnia **mistrza rzemiosła** od osoby, która jedynie długo wykonuje ten sam zawód.
+Aksjomat 4 nie jest krokiem workflow — jest **własnością całego procesu** (hipoteza, rozumowanie, decyzja, interpretacja wyniku). Najlepszy rzemieślnik jest pokorny **przed pierwszym cięciem materiału**, nie dopiero gdy spodnie się rozprują.
 
 ---
 
@@ -113,9 +114,15 @@ AI  →  Model  →  Człowiek
 
 ---
 
-## Łańcuch poznawczy (intuicja jako hipoteza)
+## Łańcuch poznawczy (workflow — czysty)
+
+Nad całym cyklem unosi się **pokora wobec rzeczywistości** (aksjomat 4) — nie jako etap, lecz jako własność procesu.
 
 ```
+        ┌─────────────────────────────────────┐
+        │   POKORA WOBEC RZECZYWISTOŚCI       │  ← aksjomat 4 (nad cyklem)
+        └─────────────────────────────────────┘
+
 Rzeczywistość
       ↓
 Doświadczenie
@@ -133,15 +140,21 @@ Działanie
 Rzeczywistość
 ```
 
+### Intuicja (między doświadczeniem a rozumowaniem)
+
 **Nie:** „Intuicja = skompresowane doświadczenie” (zawsze).
 
-**Tak:** **Dobra intuicja jest najczęściej skutkiem bogatego doświadczenia** — ale istnieją też intuicje błędne: uprzedzenia, złudzenia poznawcze, nadmierna pewność siebie.
+**Tak:** **Dobra intuicja jest najczęściej skutkiem bogatego doświadczenia** — ale istnieją intuicje błędne: uprzedzenia, złudzenia poznawcze, nadmierna pewność siebie.
 
 Intuicja **nie jest** ostatnim sędzią. Jest **hipotezą**, którą rozum i rzeczywistość sprawdzają.
 
 | Intuicja mówi | Intuicja nie mówi |
 |---------------|-------------------|
 | **„Sprawdź tutaj.”** | „To jest prawda.” |
+
+Intuicja sama w sobie **nie jest wartością**. Jej wartością jest **skrócenie drogi do dobrej hipotezy**. Nie konkuruje z rozumem — **zmniejsza opór poznawczy** (aksjomat 3). Jest mechanizmem kompresji doświadczenia: szybciej wskazuje kierunek, **zachowując obowiązek późniejszej weryfikacji**.
+
+Projekt nie przeciwstawia doświadczenia nauce, intuicji rozumowi ani technologii człowiekowi — każda ma **rolę i ograniczenia** w jednym obiegu od rzeczywistości z powrotem do rzeczywistości.
 
 ### Przykład: krawiec (mama)
 
@@ -155,18 +168,18 @@ To intuicja. Jeśli szew pęka przy pierwszym założeniu — **rzeczywistość*
 
 ---
 
-## Pokora (wspólna cecha rzemiosła)
+## Pokora (własność procesu, nie krok)
 
-Tata, mama, dziadek, Babcia — nie zakładali, że wiedzą wszystko. **Sprawdzali.**
+Tata, mama, dziadek, Babcia — nie zakładali, że wiedzą wszystko. **Sprawdzali** — i byli gotowi poprawić model **zanim** rzeczywistość je upokorzy.
 
 | Rzemiosło | Walidacja |
 |-----------|-----------|
 | Budowlaniec | czy beton związał |
-| Krawcowa | czy ubranie leży |
+| Krawcowa | czy ubranie leży — **przed** pierwszym cięciem i po |
 | Rolnik | jedzie w pole |
 | Babcia | obserwuje, co dzieje się z rodziną |
 
-To nie tylko doświadczenie — to **pokora wobec rzeczywistości**.
+To odróżnia **mistrza rzemiosła** od osoby, która jedynie długo wykonuje ten sam zawód.
 
 ---
 
@@ -186,9 +199,10 @@ To nie tylko doświadczenie — to **pokora wobec rzeczywistości**.
   ROZWAŻNOŚĆ
   → Doświadczenie podpowiada, kiedy z tej wiedzy skorzystać.
 
-  POKORA
-  → Im więcej doświadczenia, tym chętniej poprawiam model,
-    gdy rzeczywistość pokaże błąd.
+───────────────────────────────────────────────────────────────────
+
+  Nad całym procesem: POKORA WOBEC RZECZYWISTOŚCI
+  (gotowość zmiany modelu na każdym etapie — nie dopiero po porażce)
 
 ───────────────────────────────────────────────────────────────────
 
@@ -209,7 +223,8 @@ To nie tylko doświadczenie — to **pokora wobec rzeczywistości**.
 | Oś pochodzenia / walidacji | WORKFLOW + CORE |
 | AI → Model → Człowiek | EXECUTION → KNOWLEDGE → CORE (CZŁOWIEK) |
 | Pięć pytań | CORE · pięć funkcji weryfikacji |
-| WIEDZA / ZNACZENIE / ROZWAŻNOŚĆ / POKORA | SYSTEM / CZŁOWIEK / adaptery / aksjomat 2 |
+| WIEDZA / ZNACZENIE / ROZWAŻNOŚĆ | SYSTEM / CZŁOWIEK / adaptery |
+| Pokora (aksjomat 4) | meta-własność CORE + WORKFLOW — nie etap |
 
 WARSZAWASZA, Jira, Kursor, Python — warstwy **KNOWLEDGE** i **EXECUTION**. Nie rdzeń.
 

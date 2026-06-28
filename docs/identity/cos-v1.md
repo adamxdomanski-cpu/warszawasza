@@ -10,6 +10,15 @@
 
 **Każda wiedza zaczyna się i kończy w rzeczywistości.**
 
+### Cztery aksjomaty CORE (STABLE)
+
+| # | Aksjomat |
+|---|----------|
+| **1** | Rzeczywistość jest ostatecznym walidatorem. |
+| **2** | Model umożliwia powrót do rzeczywistości. |
+| **3** | Każda abstrakcja musi zmniejszać opór poznawczy. |
+| **4** | Pokora = gotowość do zmiany modelu na każdym etapie, gdy rzeczywistość dostarczy lepszego wyjaśnienia. |
+
 Beton od taty, szycie od mamy, praktyka dziadka, pytania Babci, modele, AI i kod — wszystko to jest **pośrodku**. Ani początkiem. Ani końcem.
 
 ---
@@ -77,13 +86,11 @@ Ewolucja systemu = **więcej perspektyw** (adapterów), **nie więcej pytań**.
 
 Warstwa przechowywania śladów i logów strukturalnych. Agnostyczna technologicznie.
 
-### Rule 0 (redukcja oporu)
-
-**Każda abstrakcja musi zmniejszać opór poznawczy. W przeciwnym razie należy ją usunąć.**
-
-### Kryterium prawdy
+### Kryterium prawdy (aksjomat 2)
 
 Model jest zapisem, który umożliwia powrót do rzeczywistości. **Model kończy się tam, gdzie zaczyna się życie.**
+
+Rule 0 = **aksjomat 3** w CORE.
 
 ### Przykładowe implementacje (wymienne)
 
@@ -180,8 +187,8 @@ Implementacja w repozytorium: [`.cursor/rules/miejski-operator.mdc`](../../.curs
 | **Czym jest** | zachowanie ludzkiego sposobu decyzji **przed** zapisem w modelu i technologii | architektura systemowa · separacja warstw |
 | **Mechanika** | oś pochodzenia znaczenia + oś walidacji (nie władza) | CORE STABLE + KNOWLEDGE / WORKFLOW / EXECUTION |
 | **AI** | AI → Model → Człowiek | EXECUTION · wektor technologiczny |
-| **Intuicja** | hipoteza („Sprawdź tutaj”) — nie werdykt | interpretacja przez CZŁOWIEKA w WORKFLOW |
-| **Pokora** | aksjomat 2: gotowość poprawy modelu | falsyfikacja · STABLE axioms |
+| **Intuicja** | hipoteza · skraca drogę do dobrej hipotezy · zmniejsza opór (aksjomat 3) | interpretacja przez CZŁOWIEKA w WORKFLOW |
+| **Pokora** | aksjomat 4 · meta-własność procesu — nie etap workflow | falsyfikacja · STABLE axioms |
 
 ---
 
