@@ -25,6 +25,26 @@ WARSZAWASZA applies an agnostic observation framework to support **observation, 
 
 ---
 
+## What we show (content)
+
+**Do not filter by category** (political vs not, marketing vs not, “noise” vs “signal”).
+
+**Filter by decision utility:** does this help someone take a **concrete decision in their current context**?
+
+| Keep (examples) | Drop (examples) |
+|-----------------|-----------------|
+| RCB heat alert, closed bridge, metro failure, forest entry ban | Hype headlines with no actionable fact |
+| Free museum entry *today* (time-bound, verifiable) | “Best museum in Poland!!!” (promotion without decision) |
+| Pollen level when user needs it | Generic dashboard clutter |
+
+Administrative and political **facts** that change what a resident can do are still **reality** — not “politics” to hide.
+
+The interface must not replace the world with an editorially cleaned version. It helps people **see**; they **decide**.
+
+*(Product behaviour limits — ads, dark patterns, profiling — stay under Out of scope below.)*
+
+---
+
 ## Out of scope (this product)
 
 - Financial prediction, algorithmic trading, stock speculation.
