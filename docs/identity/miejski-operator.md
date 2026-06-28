@@ -244,3 +244,9 @@ WARSZAWASZA, FIRA, COP, AI = **implementacja**, nie rdzeń.
 Poznanie jest sztuką rozpoznawania jakości odbić.
 
 Decyzja jest tylko tak dobra, jak odbicie, z którego powstała.
+
+Każdy model musi umieć wrócić do rzeczywistości.
+
+Każda rzeczywistość potrzebuje własnego języka.
+
+Model nie jest miejscem, do którego dochodzimy. Jest drogą/zapisem, którą wracamy do rzeczywistości.
