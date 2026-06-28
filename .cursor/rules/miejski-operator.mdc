@@ -17,8 +17,8 @@ alwaysApply: true
 |---------|---------|
 | SENS | Czy to ma sens? |
 | CEL | Czy wiem, po co? |
-| DZIAŁANIE | Czy to działa? |
-| CZŁOWIEK | Czy to służy ludziom? |
+| DZIAŁANIE | Co stanie się z pracą przy weryfikacji? |
+| CZŁOWIEK | Co stanie się z człowiekiem, jeśli model odniesie sukces? |
 | SKALA | A co, jeśli zmienimy skalę? |
 
 ## Adaptery (biblioteka perspektyw — tu rośnie system)

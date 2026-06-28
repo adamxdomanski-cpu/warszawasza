@@ -21,8 +21,8 @@
 
 1. SENS      — Czy to ma sens?
 2. CEL       — Czy wiem, po co?
-3. DZIAŁANIE — Czy to działa?
-4. CZŁOWIEK  — Czy to pomaga ludziom?
+3. DZIAŁANIE — Co stanie się z pracą, gdy przyjdzie moment weryfikacji?
+4. CZŁOWIEK  — Co stanie się z człowiekiem, jeśli ten model odniesie sukces?
 5. SKALA     — A co, jeśli zmienimy skalę?
 ```
 
@@ -50,14 +50,15 @@ Failure:   Architektura stała się ważniejsza od użytkownika.
 Example:   👔 Tomek (adapter)
 
 3. DZIAŁANIE
-Question:  Czy to działa?
-Failure:   Model działa w warsztacie, ale pada w polu.
-Example:   🚜 Dziadek (adapter)
+Question:  Co stanie się z pracą, gdy przyjdzie moment weryfikacji?
+Failure:   Model działa w warsztacie, ale pada w polu pod obciążeniem.
+           Wskaźnik zielony, taśma stoi — człowiek idzie w teren i wszystko wychodzi.
+Example:   🚜 Dziadek (adapter) — Ursus: sens dopiero w ziemi, nie na papierze.
 
 4. CZŁOWIEK
-Question:  Czy to służy ludziom?
-Failure:   System optymalizuje metryki zamiast poprawiać życie.
-Example:   👵 Babcia (adapter)
+Question:  Co stanie się z człowiekiem, jeśli ten model odniesie sukces?
+Failure:   Sukces na ekranie = porażka w życiu — samotność, odklejenie, obsługa abstrakcji zamiast więzi.
+Example:   👵 Babcia (adapter) — pokój pełen modeli, miasto puste; SQL ✓, człowiek ✗.
 
 5. SKALA
 Question:  A co, jeśli zmienimy skalę?

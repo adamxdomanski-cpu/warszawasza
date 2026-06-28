@@ -267,8 +267,8 @@ Brak jednomyślności = **wentyl bezpieczeństwa**. Rozbieżność = **mapa napi
 |---|---------|---------|
 | 👦 **Oluś** | Czy to ma sens? | logika |
 | 👔 **Tomek** | Czy wiem, po co to jest? | pierwsze 20 s |
-| 🚜 **Dziadek** | Czy to działa? | dowód, infra |
-| 👵 **Babcia** | Czy to służy ludziom? | ciało, relacja |
+| 🚜 **Dziadek** | Co stanie się z pracą przy weryfikacji? | skutek operacyjny · pole |
+| 👵 **Babcia** | Co stanie się z człowiekiem, jeśli model odniesie sukces? | skutek ludzki · więzi |
 | 🦅 **Orzeł** | A co, jeśli zmienimy skalę? | czas · przestrzeń · natężenie · budżet… |
 
 Jedno pytanie Orła uruchamia resztę skali. Bez teorii systemów. Bez meta-poziomu akademickiego.
@@ -302,8 +302,8 @@ Każde pytanie = **inna strona krytyki**. System bez falsyfikacji = dogmat.
 |---------|---------|---------------|
 | 👦 Oluś | **logiczna** | przekombinowane; wysoka entropia opisu; sztuczny opór poznawczy |
 | 👔 Tomek | **użytkowa** | po minucie nie wiem po co; hermetyczna architektura |
-| 🚜 Dziadek | **praktyczna** | nie działa pod obciążeniem; teoria nie wraca na twardy grunt |
-| 👵 Babcia | **humanistyczna** | bezduszne wykresy; ignoruje człowieka, emocje, prawo do błędu |
+| 🚜 Dziadek | **skutek operacyjny** | weryfikacja w polu — wskaźnik ✓, praca ✗ |
+| 👵 Babcia | **skutek ludzki** | sukces modelu → samotność, odklejenie od więzi |
 | 🦅 Orzeł | **skali** | model pęka po rozciągnięciu — nie „zły”, tylko **granica** |
 
 Krytyka wymusza sprawdzenie **drogi powrotnej** do rzeczywistości.
