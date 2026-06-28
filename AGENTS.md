@@ -27,8 +27,7 @@ cd frontend && npm run build
 
 | Layer | File | When |
 |-------|------|------|
-| Principles | `.cursor/rules/core.mdc` | always (`alwaysApply: true`) |
-| Pointer | `.cursorrules` | one-line anchor + link to core |
+| Principles | `.cursorrules` + `.cursor/rules/core.mdc` | same rules; core.mdc also `alwaysApply` |
 | Project | `.cursor/rules/warszawasza.mdc` | globs: `frontend/`, `fira/`, `backend/`, … |
 | Depth | `fira-protocol.mdc`, `warszawasza-field.mdc` | narrower globs, on demand |
 

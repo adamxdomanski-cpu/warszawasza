@@ -1,92 +1,21 @@
 ---
-description: Core development principles — read before every session
+description: Build simple software that helps people understand reality and make better decisions
 alwaysApply: true
 ---
 
-# Core Development Principles
+# Core filter
 
-**Software exists to improve reality, not to impress developers.**
+**Does this help someone understand reality and make a better decision?**
 
-## Purpose
-
-Build software that helps people understand reality more easily and make better decisions.
-
-If a feature does not improve that outcome, remove it.
+If not, don't build it.
 
 ---
 
-## Workflow
+- Start from observable facts. Clearly separate observations, hypotheses and conclusions.
+- Prefer the simplest working solution. Remove unnecessary abstractions and unused code.
+- Keep humans responsible for decisions. Software records, processes and presents information; it does not infer user intentions or psychological states.
+- Design for low cognitive load. Use clear language, explicit assumptions and simple interfaces.
+- Treat deployment as the beginning of validation, not the end. Production feedback is the primary source of improvement.
+- Improve through small iterations. Observe → Build → Measure → Improve.
 
-Reality
-→ Observe
-→ Understand
-→ Build
-→ Deploy
-→ Learn
-→ Repeat
-
-Each iteration returns with more experience. The next turn need not look the same.
-
----
-
-## Rules
-
-1. Start from observable facts, not assumptions.
-
-2. Separate:
-   - Observation
-   - Hypothesis
-   - Implementation
-
-3. Prefer the smallest working solution.
-
-4. Reduce cognitive load.
-   Simpler code, simpler UI, simpler language.
-
-5. Ship small improvements frequently.
-
-6. Reality is the final validator.
-   Production feedback is more valuable than internal discussion.
-
-7. Never optimize for elegance at the expense of usefulness.
-
-8. Every feature should answer:
-   - What problem does it solve?
-   - Who does it help?
-   - How will we know it worked?
-
-9. Measure outcomes, not intentions.
-
-10. Remove more code than you add whenever possible.
-
----
-
-## User Experience
-
-The interface should disappear.
-
-The user should think about their city,
-not about the application.
-
----
-
-## Coding Style
-
-- Keep functions small.
-- Prefer explicit names.
-- Avoid unnecessary abstractions.
-- Avoid premature optimization.
-- Delete dead code.
-- Write code that can be understood months later.
-
----
-
-## Decision Filter
-
-Before implementing anything, ask:
-
-Does this help someone understand reality
-and make a better decision?
-
-If the answer is not clearly "yes",
-don't build it.
+Project scope (this repo): `docs/project.md`

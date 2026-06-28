@@ -1,9 +1,12 @@
 {
-  "name": "core-development-principles",
-  "description": "Software exists to improve reality, not to impress developers.",
+  "description": "Build simple software that helps people understand reality and make better decisions.",
   "rules": [
-    "Software exists to improve reality, not to impress developers.",
-    "Full principles: .cursor/rules/core.mdc (always applied).",
-    "Project scope when editing this repo: docs/project.md"
+    "Start from observable facts. Clearly separate observations, hypotheses and conclusions.",
+    "Prefer the simplest working solution. Remove unnecessary abstractions and unused code.",
+    "Keep humans responsible for decisions. Software records, processes and presents information; it does not infer user intentions or psychological states.",
+    "Design for low cognitive load. Use clear language, explicit assumptions and simple interfaces.",
+    "Treat deployment as the beginning of validation, not the end. Production feedback is the primary source of improvement.",
+    "Improve through small iterations. Observe → Build → Measure → Improve.",
+    "Before implementing any feature ask: Does this help someone understand reality and make a better decision? If not, don't build it."
   ]
 }
