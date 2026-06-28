@@ -60,6 +60,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     frictions: [
       "Tramwaje na Puławskiej zwalniają — ryzyko wygięcia szyn.",
       "W wagonach SKM temperatura przekroczyła 44°C.",
+      "W domu: czy potrzebujesz trzeciej spłuczki, czy wystarczy jedna?",
     ],
     ctaWaterShade: "📍 Pokaż najbliższą darmową wodę i cień",
     layer2Title: "Mokotów · fakty terenowe",
@@ -100,6 +101,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     frictions: [
       "Trams on Puławska slowing — rail buckling risk.",
       "Suburban train carriages reported above 44°C.",
+      "At home: do you need a third flush, or is one enough?",
     ],
     ctaWaterShade: "📍 Show nearest free water and shade",
     layer2Title: "Mokotów · field facts",
@@ -140,6 +142,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     frictions: [
       "Трамваї на Пулавській уповільнюються — ризик деформації рейок.",
       "У вагонах SKM температуру зафіксовано понад 44°C.",
+      "Вдома: чи потрібен третій злив, чи достатньо одного?",
     ],
     ctaWaterShade: "📍 Показати найближчу безкоштовну воду та тінь",
     layer2Title: "Мокотів · польові факти",
