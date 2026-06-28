@@ -73,3 +73,23 @@ Lepsze obserwacje
 ```
 
 System **rejestruje i koreluje**. Ludzie **krytykują i decydują**. Reguły **zmniejszają opór**, nie odbierają sprawczości.
+
+---
+
+## Pięć kolapsów (nie mylić)
+
+| # | Rodzaj | Co pęka | Ocena |
+|---|--------|---------|--------|
+| 1 | **Fizyczny** | materiał, most, silnik — granica wytrzymałości | fakt |
+| 2 | **Poznawczy** | człowiek — za dużo ekranów/definicji; *„nie wiem, po co to jest”* (Tomek) | **awaria UX** |
+| 3 | **Decyzyjny** | wiele możliwości → jedna decyzja — redukcja przestrzeni | **potrzebny** |
+| 4 | **Modelu** | model ≠ rzeczywistość → falsyfikacja | **dobry** (uczysz się) |
+| 5 | **Kompresji** | wiele pojęć → prostsza forma (ZIP, origami, wykroj) | **dobry**, jeśli zachowana funkcja |
+
+> **Kolaps nie jest końcem struktury. Jest przejściem do prostszej reprezentacji tej samej rzeczywistości.**
+
+> **Dobry kolaps zachowuje funkcję. Zły kolaps zachowuje tylko formę.**
+
+Test: po kompresji da się **wrócić do rzeczywistości i podjąć decyzję**? Tak → udany kolaps (pięć pytań). Nie → utrata informacji, nie ZIP.
+
+W WARSZAWASZA: **kolaps ≠ katastrofa** — operacja redukcji (krytyka kolapsalna = szukanie, gdzie opis pęka, nie gdzie „ładnie brzmi”).
