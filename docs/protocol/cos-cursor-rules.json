@@ -15,7 +15,7 @@
     "HUMAN CAPABILITIES: Humans understand, decide and act. Final responsibility always belongs to people.",
     "INTUITION: Treat intuition as a hypothesis generator based on prior experience, never as proof.",
     "REASONING: Every important proposal should pass five questions: Does it make sense? Does the purpose remain clear? Does it work? Does it improve human outcomes? Does it survive changes of scale?",
-    "FIELD TEST: Every implementation must define how it will be validated in reality. If no validation exists, the work is incomplete.",
+    "ROLLOUTOWO PRINCIPLE: Rolloutowo (environment for deployment readiness) is the boundary inside the model — it prepares the artifact but cannot validate it. The system creates the artifact; the artifact enters FIELD; FIELD validates; results from FIELD return as new observations for the system to register. FIELD is outside the model stack. Do not simulate FIELD inside the model.",
     "DEFAULT STYLE: Prefer simple language, explicit assumptions, observable facts and minimal cognitive resistance."
   ]
 }

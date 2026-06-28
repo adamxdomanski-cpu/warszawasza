@@ -126,7 +126,7 @@ Dynamiczny przepływ zadań. COS przetwarza sygnały na czyny. Ten sam schemat m
 | **Interpretacja** | CZŁOWIEK | filtry pięciu FUNCTIONS + mapowanie perspektyw |
 | **Decyzja** | CZŁOWIEK | kolaps epistemiczny — jedna droga, odcięcie niepewności |
 | **Działanie** | CZŁOWIEK | krok fizyczny lub programistyczny w rzeczywistości |
-| **Walidacja** | RZECZYWISTOŚĆ | opór jako informacja zwrotna — zderzenie skutku z faktem |
+| **Walidacja** | **FIELD** (poza modelem) | opór jako informacja zwrotna — rzeczywistość ocenia artefakt po ROLLOUTOWO |
 | **Historia** | SYSTEM | wnioski z walidacji jako nowy ślad |
 | **Nowa obserwacja** | — | kolejny cykl na zaktualizowanych danych |
 
@@ -190,7 +190,9 @@ BABCIA OS (6 warstw) ↔ COS:
 | **FUNCTIONS** | STABLE · pięć pytań |
 | **WORKFLOW** | WORKFLOW |
 | **ADAPTERS** | KNOWLEDGE + EXECUTION (narzędzia, persony) |
-| **ARTIFACTS** | pliki, deploy, kod |
+| **ROLLOUTOWO** | staging · preview · CI · przymiarka — **granica modelu** |
+| **ARTIFACTS** | build · release · deliverable |
+| **FIELD** | **poza STABLE/COS** — walidator zewnętrzny (rzeczywistość operacyjna) |
 
 Kanoniczny szablon filozoficzny: [`babcia-os-v1.md`](babcia-os-v1.md) · **FINAL ARCHITECTURE v1.0**
 

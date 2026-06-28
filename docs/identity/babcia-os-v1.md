@@ -1,7 +1,7 @@
 # BABCIA OS · VERSION 1.0 (FINAL ARCHITECTURE)
 
-> **Status:** STABLE — nie LOCKED.  
-> **Intencja:** zachowanie ludzkiego sposobu dochodzenia do decyzji, **zanim** zostanie zapisany w modelach i technologii.  
+> **Status:** STABLE — nie LOCKED. **STABLE** = mechanizm uczenia się jest stabilny (przyjmuje korekty z FIELD bez utraty struktury), nie że model jest skończony.  
+> **Intencja:** metoda **rzemieślniczego uczenia się** — obserwuj, buduj, wdrażaj, słuchaj oporu, poprawiaj, powtarzaj.  
 > **Implementacja techniczna:** [COS v1.0](cos-v1.md) · [Critique Protocol](../protocol/critique-protocol-v1.md)
 
 ---
@@ -10,199 +10,167 @@
 
 **Rzeczywistość przemawia przez opór.** *(Reality speaks through resistance.)*
 
-Nie mówi, jak projektować. Mówi, **jak słuchać świata**, zanim zacznie się go opisywać. Beton od taty, materiał od mamy, Ursus dziadka, pytania Babci, intuicja, pokora, kod i miasto — to różne formy **spotkania z oporem rzeczywistości**.
-
-Opór przestaje być przeszkodą. Staje się **kanałem informacji zwrotnej**. Dlatego *w polu wszystko wyjdzie* — bo rzeczywistość **zawsze odpowiada oporem**.
+Opór = kanał informacji zwrotnej. *W polu wszystko wyjdzie* — bo rzeczywistość **zawsze odpowiada oporem**.
 
 ---
 
-## Stos (sześć warstw)
+## Granica modelu (nie kolaps — granica)
 
-```
-AXIOMS
-    │
-    ▼
-CAPABILITIES
-    │
-    ▼
-FUNCTIONS
-    │
-    ▼
-WORKFLOW
-    │
-    ▼
-ADAPTERS
-    │
-    ▼
-ARTIFACTS
-```
+**BABCIA OS jest modelem. FIELD jest rzeczywistością.**
 
-```
-===================================================================
-                            BABCIA OS
-                          VERSION 1.0
-===================================================================
+Model kończy się tam, gdzie zaczyna się życie. **ROLLOUTOWO** to **ostatni przystanek modelu** — ostatnie miejsce, w którym model jeszcze ma coś do powiedzenia. Za jego bramą mówi już wyłącznie **FIELD** (rzeczywistość operacyjna).
 
-                    ┌─────────────────────────┐
-                    │         AXIOMS          │  STABLE
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │      CAPABILITIES       │  zdolności aktorów
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │        FUNCTIONS        │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │        WORKFLOW         │  + pokora (globalna)
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │        ADAPTERS         │  wymienne
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │       ARTIFACTS         │  wymienne
-                    └─────────────────────────┘
-
-===================================================================
-```
-
-**CAPABILITIES** — nie „rdzeń systemu”, lecz **zdolności dwóch aktorów** (SYSTEM i CZŁOWIEK). Język zrozumiały dla filozofa i architekta oprogramowania.
+FIELD **nie jest warstwą systemu**. FIELD **ocenia** system — nie należy do stosu.
 
 ---
 
-## I. AXIOMS (nadrzędne ramy)
+## Stos (siedem warstw modelu)
+
+```
+                 BABCIA OS
+
+    ┌──────────────────────────────┐
+    │           AXIOMS             │
+    ├──────────────────────────────┤
+    │        CAPABILITIES          │
+    ├──────────────────────────────┤
+    │         FUNCTIONS            │
+    ├──────────────────────────────┤
+    │         WORKFLOW             │
+    ├──────────────────────────────┤
+    │         ADAPTERS             │
+    ├──────────────────────────────┤
+    │        ROLLOUTOWO            │  ← granica modelu
+    ├──────────────────────────────┤
+    │         ARTIFACTS            │
+    └──────────────────────────────┘
+                 │
+                 ▼
+═══════════════════════════════════════════
+        FIELD / RZECZYWISTOŚĆ
+     (walidator · poza modelem)
+═══════════════════════════════════════════
+```
+
+| Warstwa | Rola |
+|---------|------|
+| **AXIOMS** | nadrzędne zasady · rzeczywistość · opór |
+| **CAPABILITIES** | zdolności SYSTEM / CZŁOWIEK |
+| **FUNCTIONS** | pięć filtrów weryfikacji |
+| **WORKFLOW** | cykl poznawczy |
+| **ADAPTERS** | wymienne narzędzia i perspektywy ludzkie |
+| **ROLLOUTOWO** | środowisko gotowości do wdrożenia *(nazwa robocza)* |
+| **ARTIFACTS** | gotowy zapis · paczka · produkt końcowy modelu |
+
+---
+
+## I. AXIOMS
 
 | # | PL | EN |
 |---|----|----|
-| **0** | **Opór jest informacją.** Materiał, beton, miasto, użytkownik, bug, tarcie UX — kanały zwrotne, nie szum do ignorowania. | Resistance is information. |
-| **1** | **Rzeczywistość jest ostatecznym walidatorem.** *(Każda wiedza zaczyna się i kończy w rzeczywistości.)* | Reality is the final validator. |
-| **2** | **Model umożliwia powrót do rzeczywistości.** Kończy się tam, gdzie zaczyna się życie. | A model enables return to reality. |
-| **3** | **Każda abstrakcja musi zmniejszać opór poznawczy.** W przeciwnym razie usuń ją. | Every abstraction must reduce cognitive resistance. |
-| **4** | **Pokora** = gotowość do zmiany modelu **na każdym etapie**, gdy rzeczywistość dostarczy lepszego wyjaśnienia. | Humility at any stage when reality provides a better explanation. |
+| **0** | **Opór jest informacją.** | Resistance is information. |
+| **1** | **Rzeczywistość jest ostatecznym walidatorem.** | Reality is the final validator. |
+| **2** | **Model umożliwia powrót do rzeczywistości.** | A model enables return to reality. |
+| **3** | **Każda abstrakcja musi zmniejszać opór poznawczy.** | Every abstraction must reduce cognitive resistance. |
+| **4** | **Pokora** na każdym etapie procesu. | Humility at any stage. |
 
-**Słuchanie (meta):** *Rzeczywistość przemawia przez opór* — aksjomat 0 wyjaśnia **dlaczego** walidacja działa i **skąd** bierze się informacja zwrotna.
-
-Aksjomat 4 **nie jest krokiem** workflow — własność całego układu. Pokora **przed** pierwszym cięciem, nie dopiero po porażce.
+Meta: *Rzeczywistość przemawia przez opór.*
 
 ---
 
-## II. CAPABILITIES (zdolności aktorów)
+## II. CAPABILITIES
 
-| Aktor | Łańcuch | Zakres |
-|-------|---------|--------|
-| **SYSTEM** | Rejestruje → Koreluje → Pamięta | bezrefleksyjny log, przetwarzanie, retencja |
-| **CZŁOWIEK** | Rozumie → Decyduje → Działa | intencja, sens, moralność, fizyczny czyn |
+| Aktor | Łańcuch |
+|-------|---------|
+| **SYSTEM** | Rejestruje → Koreluje → Pamięta |
+| **CZŁOWIEK** | Rozumie → Decyduje → Działa |
 
-Nie przypisuj maszynie rozumu, intencji ani woli.
-
-### Wektor AI (ADAPTERS — nie CAPABILITIES)
-
-```
-AI  →  Model  →  Człowiek
-```
-
-AI = adapter technologiczny (korelacja, filtr szumu). Jedynym ujściem jest **ludzkie działanie**.
+AI (`ADAPTERS`): `AI → Model → Człowiek` — nie decyduje.
 
 ---
 
-## III. FUNCTIONS (filtry weryfikacji)
+## III. FUNCTIONS
 
-| Funkcja | Pytanie | Test |
-|---------|---------|------|
-| **SENS** | Czy to ma sens? | abstrakcja kontra fakt |
-| **CEL** | Czy wiem, po co to jest? | pierwsze 20 s → intencja |
-| **DZIAŁANIE** | Czy to działa? | praktyka pod obciążeniem |
-| **CZŁOWIEK** | Co stanie się z człowiekiem, jeśli model odniesie sukces? | skutek ludzki |
-| **SKALA** | A co, jeśli zmienimy skalę? | czas, przestrzeń, natężenie |
-
-Ewolucja = więcej **adapterów**, nie więcej pytań. Failure: [`critique-protocol-v1.md`](../protocol/critique-protocol-v1.md).
+SENS · CEL · DZIAŁANIE · CZŁOWIEK · SKALA — szczegóły: [`critique-protocol-v1.md`](../protocol/critique-protocol-v1.md) · persony: [`personas.md`](../personas.md).
 
 ---
 
-## IV. WORKFLOW (cykl poznawczy)
+## IV. WORKFLOW
 
-Nad obiegiem: **pokora** (aksjomat 4). Każdy etap może spotkać **opór** (aksjomat 0) — to sygnał, nie porażka procesu.
-
-```
-         [ RZECZYWISTOŚĆ ] ──> opór materii · surowy fakt
-                 │
-                 ▼
-          Doświadczenie
-                 │
-                 ▼
-           [ INTUICJA ]    ──> kompresja doświadczenia · „Szukaj tu”
-                 │
-                 ▼
-           [ HIPOTEZA ]
-                 │
-                 ▼
-            Rozumowanie    ──> 5 FUNCTIONS
-                 │
-                 ▼
-              Decyzja
-                 │
-                 ▼
-             Działanie
-                 │
-                 ▼
-         [ RZECZYWISTOŚĆ ] ──> opór jako odpowiedź · test prawdy
-```
-
-**Intuicja:** hipoteza, nie werdykt. Skraca drogę do dobrej hipotezy (aksjomat 3). *„Sprawdź tutaj”*, nie *„To jest prawda”*.
-
-**Krawiec:** materiał puści / nie wolno ciąć — bez wzoru. Pęknięty szew = opór jako informacja; mistrz poprawia model.
+Cykl poznawczy (intuicja = hipoteza · „Szukaj tu”). Nad obiegiem: pokora + słuchanie oporu.
 
 ---
 
-## V. ADAPTERS (wymienne łączniki)
+## V. ADAPTERS
 
-| Typ | Przykłady |
-|-----|-----------|
-| **Ludzkie** | persony w [`personas.md`](../personas.md) · mieszkaniec · kierowca · urbanista |
-| **Technologiczne** | Cursor, Claude, Jira, SQL, Python, AI |
+Persony, Jira, Cursor, AI — mapowanie na FUNCTIONS. Wymienne.
 
-Mapują doświadczenie na FUNCTIONS. Zmiana adaptera **nie narusza** AXIOMS, CAPABILITIES, FUNCTIONS, WORKFLOW.
-
-**Reguły AI (stable):** [`.cursorrules`](../../.cursorrules)
+Reguły AI: [`.cursorrules`](../../.cursorrules)
 
 ---
 
-## VI. ARTIFACTS (wyniki działania)
+## VI. ROLLOUTOWO
 
-warszawasza.online · dokumentacja · skrypty · raporty · kod — **utylizowalne**, jeśli zwiększają opór bez zrozumienia (aksjomat 3).
+**ROLLOUTOWO** *(nazwa robocza · wewnętrzna)*  
+**Środowisko gotowości do wdrożenia** · *Environment for deployment readiness*
+
+Ostatnia **śluza bezpieczeństwa modelu** przed FIELD:
+
+- staging, serwer testowy, lokalne testy obciążeniowe
+- pracownia krawiecka, **przymiarka** na człowieku
+- sprawdzenie, czy artefakt nie generuje potwornego oporu (poznawczego lub fizycznego)
+
+**ROLLOUTOWO ≠ werdykt.** Zielone światło na stagingu lub udana przymiarka w pracowni **nie jest** certyfikatem prawdy. To przygotowanie artefaktu do wejścia w FIELD.
+
+Deploy to nie koniec pracy — to moment, w którym serce bije szybciej: projekt opuszcza laboratorium i zderza się z żywym organizmem.
 
 ---
 
-## Dwie osie (pochodzenie · walidacja)
+## VII. ARTIFACTS
+
+Gotowy zapis modelu — paczka produkcyjna, uszyte spodnie, wdrożony build — **jeszcze w granicach modelu**, ale przygotowany do FIELD.
+
+Utylizowalne, jeśli zwiększają opór bez zrozumienia (aksjomat 3).
+
+---
+
+## FIELD (poza modelem)
+
+**FIELD / Rzeczywistość operacyjna** — produkcja live, noszenie na ulicy, ruch pasażerów, beton który musi związać.
+
+| | W modelu | Poza modelem |
+|---|----------|----------------|
+| **ROLLOUTOWO** | tak — granica modelu | — |
+| **FIELD** | **nie** | tak — walidator |
+
+---
+
+## Dwie równoległe drogi (analogia rzemiosła)
+
+**Droga kodu (WARSZAWASZA):**
 
 ```
-  Pokolenia → Doświadczenie → Człowiek → Model → Technologia   (pochodzenie sensu)
-  Technologia → Model → Człowiek → Rzeczywistość               (walidacja)
+Kod źródłowy → ROLLOUTOWO (staging) → ARTIFACT (paczka prod) → FIELD (live)
 ```
 
-Technologia może dostarczyć informację — **nie zmienia pochodzenia sensu**.
+**Droga materiału (krawiec):**
+
+```
+Kupon tkaniny → ROLLOUTOWO (pracownia / przymiarka) → ARTIFACT (spodnie) → FIELD (ulica · noszenie)
+```
+
+W obu przypadkach ostateczny werdykt wydaje **FIELD** — rzeczywistość przemawia przez opór.
 
 ---
 
 ## Manifest
 
 ```
-  WIEDZA      → System potrafi ją zachować.
-  ZNACZENIE   → Człowiek potrafi je nadać.
-  ROZWAŻNOŚĆ  → Doświadczenie podpowiada, kiedy skorzystać.
+  WIEDZA · ZNACZENIE · ROZWAŻNOŚĆ
+  POKORA · SŁUCHANIE OPORU
 
-  Nad procesem: POKORA · SŁUCHANIE: RZECZYWISTOŚĆ PRZEMAWIA PRZEZ OPÓR
-
-  Jeżeli rzeczywistość przeczy modelowi — zmienia się model.
+  Model kończy się na granicy ROLLOUTOWO → ARTIFACT → FIELD
+  Jeżeli FIELD przeczy modelowi — zmienia się model.
 ```
 
 ---
@@ -211,12 +179,12 @@ Technologia może dostarczyć informację — **nie zmienia pochodzenia sensu**.
 
 | BABCIA OS | COS |
 |-----------|-----|
-| AXIOMS | aksjomaty STABLE |
-| CAPABILITIES | podział SYSTEM / CZŁOWIEK |
-| FUNCTIONS | pięć pytań |
-| WORKFLOW | pętla procesowa |
-| ADAPTERS | KNOWLEDGE + EXECUTION (narzędzia, persony) |
-| ARTIFACTS | artefakty w KNOWLEDGE / EXECUTION |
+| AXIOMS · CAPABILITIES · FUNCTIONS | STABLE |
+| WORKFLOW | WORKFLOW |
+| ADAPTERS | KNOWLEDGE + EXECUTION (narzędzia) |
+| ROLLOUTOWO | staging · CI · preview · przymiarka |
+| ARTIFACTS | build · release · deliverable |
+| **FIELD** | **poza COS** — walidacja zewnętrzna |
 
 ---
 
