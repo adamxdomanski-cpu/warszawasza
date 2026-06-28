@@ -255,27 +255,32 @@ Model nie jest miejscem, do którego dochodzimy. Jest drogą/zapisem, którą wr
 
 ---
 
-## Cztery głosy (skaner — nie komitet)
+## Pięć pytań (interfejs myślenia — nie komitet)
 
-Brak jednomyślności = **wentyl bezpieczeństwa**, nie paraliż. Rozbieżność to **mapa napięć**, nie błąd systemu.
+Persony **walidują tu i teraz**. **Orzeł** nie ocenia dobry/zły — tylko **rozciąga skalę**, aż model pęknie.
 
-| Persona | Pytanie | Warstwa |
-|---------|---------|---------|
-| 👦 **Oluś** | Czy to ma sens? | logika / zrozumienie |
-| 👔 **Tomek** | Po co? | pierwsze 20 s / komunikacja |
-| 🚜 **Dziadek** | Czy działa? | kod, infra, dowód |
-| 👵 **Babcia** | Czy służy ludziom? | ciało, relacja, potrzeba |
+Brak jednomyślności = **wentyl bezpieczeństwa**. Rozbieżność = **mapa napięć**.
 
-Przykład rozbieżności: Oluś ✔ Dziadek ✔ · Tomek ✘ Babcia ✘ → architektura i build OK; **napraw produkt i ludzki sens**, nie rdzeń.
+| | Pytanie | Funkcja |
+|---|---------|---------|
+| 👦 **Oluś** | Czy to ma sens? | logika |
+| 👔 **Tomek** | Czy wiem, po co to jest? | pierwsze 20 s |
+| 🚜 **Dziadek** | Czy to działa? | dowód, infra |
+| 👵 **Babcia** | Czy to służy ludziom? | ciało, relacja |
+| 🦅 **Orzeł** | A co, jeśli zmienimy skalę? | czas · przestrzeń · natężenie · budżet… |
 
-To nie głosowanie nad release. To **trójwymiarowy skaner** przed produkcją.
+Jedno pytanie Orła uruchamia resztę skali. Bez teorii systemów. Bez meta-poziomu akademickiego.
+
+**Kryterium końcowe:** Model jest zapisem, który umożliwia powrót do rzeczywistości. **Model kończy się tam, gdzie zaczyna się życie.**
+
+Użycie: strona, funkcja, koszulka, prawo, AI — **pięć pytań**, nie pięć dokumentów.
 
 ```
-        👦 Oluś — „Czy to ma sens?”
-               │
-    👔 Tomek ─┼─ 🚜 Dziadek
-    „Po co?”   │   „Czy działa?”
-               │
-           👵 Babcia
-      „Czy służy ludziom?”
+        👦 Oluś
+           │
+   👔 Tomek ─┼─ 🚜 Dziadek
+           │
+        👵 Babcia
+           │
+        🦅 Orzeł  (skala — nad stołem, nie zamiast stołu)
 ```
