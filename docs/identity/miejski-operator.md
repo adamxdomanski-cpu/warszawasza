@@ -236,6 +236,7 @@ WARSZAWASZA, FIRA, COP, AI = **implementacja**, nie rdzeń.
 | **v3.2** | Aksjomat: **metoda też hipoteza**; `Observation > Method > Identity` |
 | **v3.3** | Odbicia + medium; odbicie ≠ obiekt |
 | **v4** | **Projekcja**; pętla zamknięta; 4 prawa; jedno pytanie o wierność odbicia |
+| **v4.1** | Trzy aksjomaty powrotu: model · język · droga/zapis |
 
 ---
 
