@@ -293,6 +293,20 @@ Dobry projekt oszczędza człowiekowi wysiłku, nie odbierając mu sprawczości.
 
 System rejestruje. Człowiek rozumie. System koreluje. Człowiek decyduje. System pamięta. Człowiek działa.
 
+### Krytyka konstruktywna (rygor, nie atak)
+
+Każde pytanie = **inna strona krytyki**. System bez falsyfikacji = dogmat.
+
+| Persona | Krytyka | Typowy zarzut |
+|---------|---------|---------------|
+| 👦 Oluś | **logiczna** | przekombinowane; wysoka entropia opisu; sztuczny opór poznawczy |
+| 👔 Tomek | **użytkowa** | po minucie nie wiem po co; hermetyczna architektura |
+| 🚜 Dziadek | **praktyczna** | nie działa pod obciążeniem; teoria nie wraca na twardy grunt |
+| 👵 Babcia | **humanistyczna** | bezduszne wykresy; ignoruje człowieka, emocje, prawo do błędu |
+| 🦅 Orzeł | **skali** | model pęka po rozciągnięciu — nie „zły”, tylko **granica** |
+
+Krytyka wymusza sprawdzenie **drogi powrotnej** do rzeczywistości.
+
 ```
         👦 Oluś
            │
