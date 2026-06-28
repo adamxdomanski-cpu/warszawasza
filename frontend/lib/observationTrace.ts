@@ -21,6 +21,7 @@ import {
   isTerrainVerified,
 } from "./traceStatus";
 import { studioDiscoveryLine } from "./studioAnchor";
+import { formatJourneyBlock, journeyLayerTitle } from "./traceJourney";
 
 export type ObservationTracePayload = {
   lang: Lang;
@@ -144,7 +145,22 @@ function resolveTraceEvents(trace: ObservationTracePayload): InteractionEvent[] 
   return trace.traceEvents ?? trace.decisionEvents ?? [];
 }
 
-/** Developer / archive block — LOG, FOP, hypotheses. */
+/** Level 1 — Citizen export (clipboard / mailto default). No telemetry. */
+export function buildTraceCitizenLayer(
+  trace: ObservationTracePayload,
+  origin = "https://www.warszawasza.online",
+): string {
+  return buildTraceResidentLayer(trace, origin);
+}
+
+/** Level 2 — Operator journey (human steps, collapsed by default in UI). */
+export function buildTraceJourneyLayer(trace: ObservationTracePayload): string {
+  const events = resolveTraceEvents(trace);
+  if (!events.length) return "";
+  return formatJourneyBlock(events, trace.lang);
+}
+
+/** Level 3 — Developer telemetry only. Never mix with citizen UI. */
 export function buildTraceTechnicalLayer(trace: ObservationTracePayload): string {
   const artifact = traceArtifactCopy(trace.lang);
   const rc = traceResidentCopy(trace.lang);
@@ -223,11 +239,28 @@ export function buildTraceHypothesisLayer(trace: ObservationTracePayload): strin
   return lines.join("\n").trimEnd();
 }
 
-/** Clipboard / mailto: human first, diagnostics after separator. */
+/** Clipboard / mailto: citizen layer only. */
 export function buildTraceDocument(trace: ObservationTracePayload): string {
-  return [buildTraceResidentLayer(trace), "", buildTraceTechnicalLayer(trace)].join(
-    "\n",
-  );
+  return buildTraceCitizenLayer(trace);
+}
+
+/** Full archive — all three layers with section markers (dev / explicit export). */
+export function buildTraceArchiveDocument(
+  trace: ObservationTracePayload,
+  origin = "https://www.warszawasza.online",
+): string {
+  const artifact = traceArtifactCopy(trace.lang);
+  const rc = traceResidentCopy(trace.lang);
+  const journey = buildTraceJourneyLayer(trace);
+  const technical = buildTraceTechnicalLayer(trace);
+  const parts = [buildTraceCitizenLayer(trace, origin)];
+
+  if (journey) {
+    parts.push("", artifact.separator, "", `▼ ${journeyLayerTitle(trace.lang)}`, "", journey);
+  }
+
+  parts.push("", artifact.separator, "", rc.technicalData, "", technical);
+  return parts.join("\n");
 }
 
 export function buildTraceShareUrl(

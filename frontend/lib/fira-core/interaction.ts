@@ -4,6 +4,7 @@ export const INTERACTION_EVENT_KINDS = [
   "START",
   "SELECT",
   "CHANGE",
+  "RECORD",
   "NEXT",
   "BACK",
   "PAUSE",

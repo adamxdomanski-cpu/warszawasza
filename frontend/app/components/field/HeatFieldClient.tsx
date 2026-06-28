@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import LangNav from "../LangNav";
 import SignalControl from "../SignalControl";
+import FieldVoiceReport from "./FieldVoiceReport";
 import {
   HEAT_POINTS,
   HEAT_TEMP_C,
@@ -19,12 +20,14 @@ import {
   formatTracePath,
   getInteractionTrace,
 } from "../../../lib/interactionTrace";
+import { formatJourneyBlock } from "../../../lib/traceJourney";
 
 export default function HeatFieldClient() {
   const [lang, setLang] = useState<Lang>("pl");
   const [helpOpen, setHelpOpen] = useState(false);
   const [traceTick, setTraceTick] = useState(0);
   const nearbyRef = useRef<HTMLElement>(null);
+  const voiceRef = useRef<HTMLElement>(null);
 
   const copy = heatFieldCopy(lang);
   const events = getInteractionTrace().events;
@@ -41,6 +44,14 @@ export default function HeatFieldClient() {
   }, [lang]);
 
   const bump = () => setTraceTick((t) => t + 1);
+
+  const onVoiceCta = () => {
+    appendInteractionEvent("NEXT");
+    bump();
+    window.requestAnimationFrame(() => {
+      voiceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   const onCta = () => {
     appendInteractionEvent("SELECT", "POMOC_W_POBLIZU");
@@ -120,15 +131,33 @@ export default function HeatFieldClient() {
             </p>
           </details>
 
-          <SignalControl
-            type="button"
-            direction="right"
-            onClick={onCta}
-            className="min-h-12 w-full border border-accent/35 bg-field px-4 py-3 text-left text-sm leading-snug text-ink touch-manipulation"
-          >
-            {copy.ctaNearbyHelp}
-          </SignalControl>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <SignalControl
+              type="button"
+              direction="right"
+              onClick={onVoiceCta}
+              className="min-h-14 border-2 border-accent/50 bg-field px-4 py-3 text-left text-base font-medium leading-snug text-ink touch-manipulation"
+            >
+              {copy.ctaVoiceReport}
+            </SignalControl>
+            <SignalControl
+              type="button"
+              direction="right"
+              onClick={onCta}
+              className="min-h-14 border border-accent/35 bg-field px-4 py-3 text-left text-sm leading-snug text-ink touch-manipulation"
+            >
+              {copy.ctaNearbyHelp}
+            </SignalControl>
+          </div>
         </header>
+
+        <section ref={voiceRef} aria-label={copy.ctaVoiceReport}>
+          <FieldVoiceReport
+            lang={lang}
+            copy={copy}
+            onFindHelp={onCta}
+          />
+        </section>
 
         <section
           ref={nearbyRef}
@@ -182,6 +211,17 @@ export default function HeatFieldClient() {
             ▼ {copy.technicalData}
           </summary>
           <div className="mt-4 space-y-4 text-xs leading-relaxed text-accent/40">
+            {events.length > 0 && (
+              <details className="rounded border border-accent/10 bg-field/40 p-3">
+                <summary className="cursor-pointer text-sm text-accent/60 touch-manipulation">
+                  ▼ {lang === "pl" ? "Jak przebiegało zgłoszenie?" : "How was this processed?"}
+                </summary>
+                <pre className="mt-3 mb-0 whitespace-pre-wrap text-sm text-accent/65" key={traceTick}>
+                  {formatJourneyBlock(events, lang).replace(/^▼[^\n]*\n\n/, "")}
+                </pre>
+              </details>
+            )}
+
             <details className="rounded border border-accent/10 bg-field/40 p-3">
               <summary className="cursor-pointer text-accent/55 touch-manipulation">
                 {copy.whyContext}
