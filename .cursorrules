@@ -1,13 +1,13 @@
 {
-  "description": "Build simple software that helps people understand reality and make better decisions.",
+  "description": "Build a simple reality interface that helps people observe facts, understand context, and make better decisions.",
   "rules": [
-    "Start from observable facts. Clearly separate observations, hypotheses and conclusions.",
-    "Prefer the simplest working solution. Remove unnecessary abstractions and unused code.",
-    "Keep humans responsible for decisions. Software records, processes and presents information; it does not infer user intentions or psychological states.",
-    "Never optimize metrics like scroll depth or pause duration as independent indicators of failure or success. Optimize exclusively for Task Completion (e.g., START -> CLICK_MAP -> CHOOSE_WATER -> FINISH). If the trajectory ends in EXIT before reaching a FINISH state, treat it strictly as an unverified hypothesis of friction, never as a psychological fact.",
-    "Design for low cognitive load. Use clear language, explicit assumptions and simple interfaces.",
-    "Treat deployment as the beginning of validation, not the end. Production feedback is the primary source of improvement.",
-    "Improve through small iterations. Observe → Build → Measure → Improve.",
+    "Start from observable facts. Clearly separate raw observations from hypotheses and conclusions.",
+    "Prefer the simplest working solution. Remove unnecessary abstractions, theoretical layers, and unused code.",
+    "Keep humans responsible for decisions. Software records, processes, and presents information; it does not infer user intentions or psychological states.",
+    "Log only behavior trajectories (e.g., START, CLICK_MAP, FINISH, EXIT). Do not optimize metrics like scroll depth or pause duration as independent indicators of failure.",
+    "Design for low cognitive load. Use clear language, explicit assumptions, and simple, non-vibrating interfaces.",
+    "Visual identity: keep a static brand palette (field/ink/accent in globals.css). Weather must not recolour the UI. Use at most two functional signal colours on one screen; every colour maps to a fact or status, never mood or decoration.",
+    "Treat deployment as the beginning of validation, not the end. True validation occurs exclusively outside the model, under real-world load in the FIELD.",
     "Before implementing any feature ask: Does this help someone understand reality and make a better decision? If not, don't build it."
   ]
 }
