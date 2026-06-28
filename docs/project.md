@@ -41,21 +41,23 @@ Level 1 is not “content”. It is **orientation**.
 
 ## What we show (content)
 
-**Do not filter by category** (political vs not, marketing vs not, “noise” vs “signal”).
+**Reject attention competition**, not observable reality.
 
-**Filter by decision utility:** does this help someone take a **concrete decision in their current context**?
+| Reject (attention / noise) | Keep (orientation) |
+|----------------------------|-------------------|
+| Feeds, infinite scroll | One fact, one next step |
+| Clickbait headlines | Plain observable statements |
+| “Hot topics”, debate, opinion loops | Facts that change what you can do today |
+| Marketing CTAs, conversion design | Time-bound useful facts (e.g. free entry *today*) |
+| Engagement metrics as product goal | RCB alert, closed bridge, metro delay |
 
-| Keep (examples) | Drop (examples) |
-|-----------------|-----------------|
-| RCB heat alert, closed bridge, metro failure, forest entry ban | Hype headlines with no actionable fact |
-| Free museum entry *today* (time-bound, verifiable) | “Best museum in Poland!!!” (promotion without decision) |
-| Pollen level when user needs it | Generic dashboard clutter |
+**Filter:** does this help someone take a **concrete decision in their current context**?
 
-Administrative and political **facts** that change what a resident can do are still **reality** — not “politics” to hide.
+Administrative **facts** (alert, closure, delay) stay — **political theatre** and **promotional noise** go.
 
-The interface must not replace the world with an editorially cleaned version. It helps people **see**; they **decide**.
+The interface helps people **see**; they **decide**. It does not replace the world with an editorial feed.
 
-*(Product behaviour limits — ads, dark patterns, profiling — stay under Out of scope below.)*
+*(Ads, dark patterns, profiling — Out of scope below.)*
 
 ---
 
