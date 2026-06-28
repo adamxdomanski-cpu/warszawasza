@@ -14,21 +14,39 @@ Field test: [warszawasza.online/field/heat](/field/heat) — 10 seconds: what’
 
 ## Purpose
 
-WARSZAWASZA is a **reality interface** for the public urban environment — not an information portal fighting for clicks. Warsaw is the **first deployment** and daily field lab (Dzielna → Mokotów → reality).
+WARSZAWASZA is a **reality interface** — not a website, not a news portal. Warsaw is the **first deployment** and daily field lab (Dzielna → Mokotów → reality).
+
+**Describe the human, not the system.** The product succeeds when someone can:
+
+- **Łatwiej znaleźć** — what matters here, now  
+- **Łatwiej zrozumieć** — what it means for them  
+- **Łatwiej zdecydować** — one concrete next step  
+
+The interface disappears. The person and the city remain.
+
+**Color and motion come from the city**, not from a graphic theme: heat → warm tones, storm → cool, autumn → amber, snow → near-monochrome. When nothing important changes, the UI almost stands still. When reality shifts, the surface may shift subtly — not decoration, **signal**.
+
+**DNA is discovered**, not menu-tabbed — like finding a kamienica, a story, a face; rollout, not “Historia → click”.
 
 ---
 
 ## Three levels of information
 
-| Level | Role | Examples | When |
-|-------|------|----------|------|
-| **1 · Orientation** | Act now | 39°C · water 250 m · metro +8 min · library open until 20:00 | First screen, ≤10 s |
-| **2 · Context** | What changed | Alert since morning · wind from 17:00 · route closed | One line below orientation |
-| **3 · Depth** | Why / who / history | Studio, values, climate plan, traces | On demand (rollout) — never blocks level 1 |
+| Level | Human question | Examples | When |
+|-------|----------------|----------|------|
+| **1 · Find & decide** | Co robię teraz? | 39°C · water 250 m · metro +8 min | First screen, ≤10 s |
+| **2 · Understand context** | Co się zmieniło? | Alert since morning · wind from 17:00 | One line below |
+| **3 · Discover depth** | Skąd to / kim jesteśmy? | Studio, values, traces | On demand — never blocks level 1 |
 
-Level 1 is not “content”. It is **orientation**.
+Level 1 is not “content”. It is **a decision in the city**.
 
 ---
+
+## Design discipline (project — not Cursor rules)
+
+Zobacz · Zrozum · Pomóż · Sprawdź · Powtórz.
+
+Show facts. Do not fight for attention. Do not guess the human. Let reality lead the next change.
 
 ## In scope (civic tech)
 
