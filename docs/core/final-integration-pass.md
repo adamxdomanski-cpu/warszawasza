@@ -1,87 +1,152 @@
-# WARSZAWASZA · Integration Pass · Cold Start Validation
+# WARSZAWASZA · Final integration pass
 
-**Goal:** Prepare the smallest possible product state for a real cold-start test.  
-**Do not** redesign, add concepts, or new architecture.
-
-Everything supports one question:
-
-> Can a person who has never seen WARSZAWASZA understand what to do within 10 seconds?
+**Use this file as the single Cursor task.** It says **what to build**, not product philosophy.  
+Human context: [WARSZAWASZA w dwóch minutach](../WARSZAWASZA-w-dwoch-minutach.md).
 
 ---
 
-## 1. Cold start
+## Copy-paste for Cursor
 
-Visitor knows nothing: no WARSZAWASZA, FOP, civic-tech, Warsaw, prior discussions.  
-The interface must explain itself.
+```
+@docs/core/final-integration-pass.md
 
-## 2. Primary actions (above the fold)
+Implement the next iteration of WARSZAWASZA as a reality interface.
 
-Only two primary actions visible first:
+GOAL: Reduce the energy required to understand the city and leave an observation.
+Smallest possible working version. Do not redesign architecture.
 
-- 📍 Find help nearby
-- 🎤 Tell us what you see
+See sections 1–5 below. Check "Current status" — implement only gaps.
+Run: cd frontend && npm run build
+```
 
-Everything else is secondary (collapsed or below).
+---
 
-## 3. Voice first
+## Current status (branch `cursor/cold-start-prep-f727`)
 
-Preferred field flow:
+| Requirement | Status | Notes |
+|-------------|--------|--------|
+| `/` cold start, two CTAs above fold | ✅ | `ColdStartClient.tsx` |
+| Voice on `/field/heat` | ✅ | `FieldVoiceReport.tsx`, lean header CTA |
+| Record → review → send | ✅ | STT optional, typing fallback |
+| After send: two choices only | ✅ | 📍 nearby · say again |
+| Trace L1/L2/L3 builders | ✅ | `observationTrace.ts`, `traceJourney.ts` |
+| L1/L2/L3 in post-send UI on field | ⚠️ | Clipboard = L1 only; L2/L3 not in sent panel |
+| L1 citizen copy (Grandma test) | ⚠️ | `buildTraceCitizenLayer` still heat-specific links |
+| Technical block on `/field/heat` | ⚠️ | Collapsed `details` — hide from field test or `?dev=1` |
+| Cold-start field test | ⏳ | Link + one question — not run yet |
 
-`START → Record → (optional transcription) → Review → Send → ✓ Report received → two choices`
+---
 
-Typing remains secondary.
+## 1. Three audience layers
 
-## 4. Three audience layers
+Split observation export into three progressive layers.
 
-| Layer | Default | Content |
-|-------|---------|---------|
-| Citizen | visible | received, verification, next actions |
-| Journey | collapsed | human steps only |
-| Technical | collapsed | trace, FOP, telemetry, hypotheses |
+### LEVEL 1 — Citizen (default)
 
-Never expose technical details by default.
+Visible immediately. Show only:
 
-## 5. Navigation
+- ✓ Observation received
+- Verification status (plain language)
+- Primary action buttons
+- Relevant links
 
-`/` and `/field/heat` share the same interaction model.  
-After every completed task, only:
+Nothing else.
 
-- Find help nearby
+**Code:** `buildTraceCitizenLayer()` · post-send UI · mailto body.
+
+### LEVEL 2 — Journey (collapsed by default)
+
+Title: **▼ How was this observation processed?**
+
+Human trajectory only, e.g.:
+
+```
+START → Location selected → Confirmation → Sent → Completed
+```
+
+No internal codes (`SELECT`, event IDs).
+
+**Code:** `buildTraceJourneyLayer()` · `formatJourneyBlock()` in `traceJourney.ts`.
+
+### LEVEL 3 — Technical (collapsed by default)
+
+Developer artifacts only: trace, pipeline, FOP, telemetry, hypotheses, debug.
+
+**Never mix with Level 1.**
+
+**Code:** `buildTraceTechnicalLayer()` · legacy studio `LeaveTraceControl.tsx` · `/field/heat` technical `details` (dev-only target).
+
+---
+
+## 2. Field input
+
+Voice reporting is **primary** on `/field/heat` (and `/`).
+
+Primary CTA: **🎤 Tell us what you see** (intent-matched copy per lang).
+
+Flow:
+
+```
+Record → optional transcription → Review → Send
+```
+
+Voice preferred. Typing optional.
+
+**Code:** `FieldVoiceReport.tsx` · `HeatFieldClient.tsx` · `ColdStartClient.tsx`.
+
+---
+
+## 3. Navigation
+
+Shallow. After every completed action, only:
+
+- Find nearby help (deployment-specific: e.g. water/shade, not generic “help”)
 - Leave another observation
 
-Legacy studio UI: `/?legacy=1`
+No dead ends. Legacy studio: `/?legacy=1`.
 
-## 6. Validation metric
+---
 
-Optimise **task completion** only — not scroll depth, pause, or click count.
+## 4. Design
 
-`START → VOICE → SEND → COMPLETE`
+Outdoor / stress use:
 
-## 7. Cold start test protocol
+- High contrast
+- Large typography, touch targets ≥ 44px
+- Minimal animation; functional motion only
+- Heat urgency: slow breathing on signal (CSS `data-urgency`)
 
-1. Send **only the link** (e.g. `https://www.warszawasza.online/` or `/field/heat`).
-2. One instruction: *„Otwórz stronę i zrób to, co według Ciebie ma sens.”*
-3. After ~10 seconds, **one question:**  
-   **„Jak myślisz, do czego służy ta strona?”**
+No decorative animation.
 
-**Pass** (architecture works):
+---
 
-- „Mogę znaleźć pomoc.”
-- „Mogę zgłosić / powiedzieć, co widzę.”
-- „Do zgłaszania i szukania informacji.”
+## 5. Validation
 
-**Fail** (first screen, not tester):
+Success = **task completion**, not scroll depth.
 
-- „Strona o Warszawie…”
-- „Nie wiem.”
-- „Jakiś projekt?”
+```
+START → RECORD → SEND → COMPLETE
+```
 
-→ Change **one thing**, test again.
+### Cold-start protocol
 
-**Reality is the first and last reviewer** — not only at the end of the test; heat, stolen bike, fallen tree are where you start.
+1. Send **only** `https://www.warszawasza.online/` or `/field/heat`.
+2. *„Otwórz stronę i zrób to, co według ciebie ma sens.”*
+3. After ~10 s, once: **„Jak myślisz, do czego służy ta strona?”**
 
-**Hypothesis under test:** Do two primary actions suffice to explain WARSZAWASZA?  
-(not whether a specific label is perfect)
+**Pass:** help + tell what you see. **Fail:** “strona o Warszawie”, “nie wiem”. → **One change**, retest.
+
+---
+
+## Distribution (what to build when)
+
+| Stage | When | Why |
+|-------|------|-----|
+| **Web** | **Now** | Link → click → done. No install, account, or store. Lowest friction in crisis. |
+| **PWA** | After field test passes | Icon, cache, faster reopen; still one codebase. |
+| **Native** | Only if reality requires it | Long offline, background record, deep OS integration, field services app. |
+
+Do **not** build native app before web + PWA prove the interface in reality.
 
 ---
 
@@ -93,19 +158,10 @@ Optimise **task completion** only — not scroll depth, pause, or click count.
 | Field / heat | `HeatFieldClient.tsx`, `FieldVoiceReport.tsx` |
 | Trace layers | `observationTrace.ts`, `traceJourney.ts` |
 | Copy / langs | `heatFieldI18n.ts`, `coldStartI18n.ts` |
+| Studio / L3 dev | `LeaveTraceControl.tsx`, `/?legacy=1` |
 
 ## Build check
 
 ```bash
 cd frontend && npm run build
-```
-
----
-
-## Cursor task (copy-paste)
-
-```
-@docs/core/final-integration-pass.md
-Prepare WARSZAWASZA for cold-start validation. Smallest diff only.
-Do not redesign. One hypothesis: two actions above the fold + voice-first completion.
 ```
