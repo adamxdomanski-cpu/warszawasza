@@ -1850,64 +1850,180 @@ export function traceArtifactCopy(lang: Lang): TraceArtifactCopy {
 export type TraceResidentCopy = {
   cityDefault: string;
   statusReceived: string;
+  statusLabel: string;
   statusAwaitingField: string;
   statusUnverified: string;
+  reportDescriptionLabel: string;
+  heatGuidance: string;
+  showNearbyPlaces: string;
   findWaterShade: string;
   reportObservation: string;
   technicalData: string;
+  technicalDetails: string;
+  traceIdLabel: string;
+  pipelineLabel: string;
+  telemetryLabel: string;
+  eventLogLabel: string;
   minutesAgo: string;
   hoursAgo: string;
   justNow: string;
+  sendByEmailOptional: string;
+  savedConfirmation: string;
+  emailNotConfigured: string;
+  traceReferencePrefix: string;
+  resetConfirm: string;
+  draftRestorePrompt: string;
+  draftRestoreAction: string;
+  draftDismissAction: string;
 };
 
 export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
   pl: {
     cityDefault: "Warszawa",
     statusReceived: "✓ Zgłoszenie odebrane",
-    statusAwaitingField: "⚠ Część danych czeka na potwierdzenie w terenie",
-    statusUnverified: "Status: niezweryfikowane",
+    statusLabel: "Stan:",
+    statusAwaitingField: "Oczekuje na potwierdzenie.",
+    statusUnverified: "Niezweryfikowane.",
+    reportDescriptionLabel: "Opis zgłoszenia:",
+    heatGuidance:
+      "Jeżeli przebywasz na zewnątrz podczas upału,\nznajdź wodę i cień.",
+    showNearbyPlaces: "📍 Pokaż najbliższe miejsca",
     findWaterShade: "Znajdź wodę i cień",
     reportObservation: "Zgłoś obserwację",
     technicalData: "Dane techniczne",
+    technicalDetails: "Pełne szczegóły (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetria",
+    eventLogLabel: "Log zdarzeń",
     minutesAgo: "{n} min temu",
     hoursAgo: "{n} godz. temu",
     justNow: "przed chwilą",
+    sendByEmailOptional: "Otwórz e-mail (opcjonalnie)",
+    savedConfirmation: "Zapisano na tym urządzeniu.",
+    emailNotConfigured:
+      "Automatyczna kopia e-mail będzie dostępna w kolejnej wersji.",
+    traceReferencePrefix: "Ślad",
+    resetConfirm: "Porzucić wpisany tekst i zacząć od nowa?",
+    draftRestorePrompt: "Znaleźliśmy niewysłane zgłoszenie. Przywrócić?",
+    draftRestoreAction: "Przywróć",
+    draftDismissAction: "Porzuć",
   },
   en: {
     cityDefault: "Warsaw",
-    statusReceived: "✓ Report received",
-    statusAwaitingField: "⚠ Some data awaits field confirmation",
-    statusUnverified: "Status: unverified",
+    statusReceived: "✓ Observation received",
+    statusLabel: "Status:",
+    statusAwaitingField: "Awaiting confirmation.",
+    statusUnverified: "Unverified.",
+    reportDescriptionLabel: "Report description:",
+    heatGuidance: "If you are outside in the heat,\nfind water and shade.",
+    showNearbyPlaces: "📍 Show nearest places",
     findWaterShade: "Find water and shade",
     reportObservation: "Report an observation",
     technicalData: "Technical data",
+    technicalDetails: "Full details (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetry",
+    eventLogLabel: "Event log",
     minutesAgo: "{n} min ago",
     hoursAgo: "{n} h ago",
     justNow: "just now",
+    sendByEmailOptional: "Open email (optional)",
+    savedConfirmation: "Saved on this device.",
+    emailNotConfigured: "Automatic email copy will be available in a future version.",
+    traceReferencePrefix: "Trace",
+    resetConfirm: "Discard your text and start over?",
+    draftRestorePrompt: "We found an unfinished report. Restore it?",
+    draftRestoreAction: "Restore",
+    draftDismissAction: "Discard",
   },
   it: {
     cityDefault: "Varsavia",
     statusReceived: "✓ Segnalazione ricevuta",
-    statusAwaitingField: "⚠ Alcuni dati attendono conferma sul campo",
-    statusUnverified: "Stato: non verificato",
+    statusLabel: "Stato:",
+    statusAwaitingField: "In attesa di conferma.",
+    statusUnverified: "Non verificato.",
+    reportDescriptionLabel: "Descrizione della segnalazione:",
+    heatGuidance: "Se sei all'aperto con il caldo,\ntrova acqua e ombra.",
+    showNearbyPlaces: "📍 Mostra i posti più vicini",
     findWaterShade: "Trova acqua e ombra",
     reportObservation: "Segnala un'osservazione",
     technicalData: "Dati tecnici",
+    technicalDetails: "Dettagli completi (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetria",
+    eventLogLabel: "Log eventi",
     minutesAgo: "{n} min fa",
     hoursAgo: "{n} h fa",
     justNow: "proprio ora",
+    sendByEmailOptional: "Apri e-mail (opzionale)",
+    savedConfirmation: "Salvato su questo dispositivo.",
+    emailNotConfigured: "La copia e-mail automatica sarà disponibile in una versione successiva.",
+    traceReferencePrefix: "Traccia",
+    resetConfirm: "Scartare il testo e ricominciare?",
+    draftRestorePrompt: "Abbiamo trovato una segnalazione non inviata. Ripristinare?",
+    draftRestoreAction: "Ripristina",
+    draftDismissAction: "Scarta",
   },
   uk: {
     cityDefault: "Варшава",
-    statusReceived: "✓ Звернення прийнято",
-    statusAwaitingField: "⚠ Частина даних очікує підтвердження в полі",
-    statusUnverified: "Статус: не перевірено",
+    statusReceived: "✓ Слід отримано",
+    statusLabel: "Статус:",
+    statusAwaitingField: "Очікує підтвердження.",
+    statusUnverified: "Не перевірено.",
+    reportDescriptionLabel: "Опис звернення:",
+    heatGuidance: "Якщо ви на вулиці в спеку,\nзнайдіть воду та тінь.",
+    showNearbyPlaces: "📍 Показати найближчі місця",
     findWaterShade: "Знайти воду та тінь",
     reportObservation: "Повідомити спостереження",
     technicalData: "Технічні дані",
+    technicalDetails: "Повні деталі (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Телеметрія",
+    eventLogLabel: "Журнал подій",
     minutesAgo: "{n} хв тому",
     hoursAgo: "{n} год тому",
     justNow: "щойно",
+    sendByEmailOptional: "Відкрити e-mail (за бажанням)",
+    savedConfirmation: "Збережено на цьому пристрої.",
+    emailNotConfigured: "Автоматична копія e-mail буде доступна в наступній версії.",
+    traceReferencePrefix: "Слід",
+    resetConfirm: "Скасувати текст і почати спочатку?",
+    draftRestorePrompt: "Ми знайшли незавершене звернення. Відновити?",
+    draftRestoreAction: "Відновити",
+    draftDismissAction: "Відкинути",
+  },
+  hu: {
+    cityDefault: "Varsó",
+    statusReceived: "✓ Nyom rögzítve",
+    statusLabel: "Állapot:",
+    statusAwaitingField: "Megerősítésre vár.",
+    statusUnverified: "Ellenőrizetlen.",
+    reportDescriptionLabel: "Bejelentés leírása:",
+    heatGuidance: "Ha a hőségben kint vagy,\nkeress vizet és árnyékot.",
+    showNearbyPlaces: "📍 Legközelebbi helyek",
+    findWaterShade: "Víz és árnyék",
+    reportObservation: "Megfigyelés jelentése",
+    technicalData: "Műszaki adatok",
+    technicalDetails: "Teljes részletek (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetria",
+    eventLogLabel: "Eseménynapló",
+    minutesAgo: "{n} perce",
+    hoursAgo: "{n} órája",
+    justNow: "épp most",
+    sendByEmailOptional: "E-mail megnyitása (opcionális)",
+    savedConfirmation: "Elmentve ezen az eszközön.",
+    emailNotConfigured: "Az automatikus e-mail másolat egy későbbi verzióban érhető el.",
+    traceReferencePrefix: "Nyom",
+    resetConfirm: "Elveti a szöveget és újrakezdi?",
+    draftRestorePrompt: "Befejezetlen bejelentést találtunk. Visszaállítja?",
+    draftRestoreAction: "Visszaállítás",
+    draftDismissAction: "Elvetés",
   },
 };
 

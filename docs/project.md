@@ -1,10 +1,18 @@
 # WARSZAWASZA · Project scope & purpose
 
+**Pierwsza kartka (wszyscy):** [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md)
+
 **Filter:** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
 
-**Development principles:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc) (always applied in Cursor).
+**Grammar filter:** Czy obecna **struktura** (📍 pomoc · 🎤 obserwacja · kontekst od systemu) obsłuży tę sytuację bez nowego ekranu? Tak → nic nie dodawaj. Nie → wzmocnij strukturę, nie doklejaj scenariusza.
 
-**Success:** narzędzie znika — zostaje miasto.
+**Dictionary filter:** Czy to tylko nowe **miejsca / dane wdrożenia** (hydranty, AED, schronienia)? Tak → rozszerz słownik. **Rozwijaj słownik częściej niż gramatykę.** See [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md#interfejs-o-stalej-strukturze).
+
+**Meaning filter:** Czy nowy tekst w UI wyraża **tę samą intencję** we wszystkich językach (nie dosłowne tłumaczenie)? **Jedno znaczenie. Wiele języków.**
+
+**Action filter (every new feature):** (1) Czy **skraca drogę do działania**? (2) Czy **zwiększa orientację w rzeczywistości**? Oba **nie** → nie trafia do produktu.
+
+**Success:** narzędzie znika — zostaje miasto. **Najlepszy interfejs nie zatrzymuje człowieka przy ekranie** — mówi: *Już wiesz. Idź.*
 
 **Not a news portal.** WARSZAWASZA does not compete for attention — it helps direct attention where it is needed. No feeds, clickbait, “hot topics”, political debate, marketing CTAs, or artificial engagement loops.
 

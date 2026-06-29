@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # COP v1.0 Rigor Validator — Civic Observation Protocol syntax scanner
 # Scans PR diff (added lines only) for decorative noise vs FIRA constitution.
+#
+# Two tiers (see docs/core/field-first-release-appendix.md):
+#   - Strict: components / logic / JSX — FIRA symbols only (symbols.ts)
+#   - Exempt: field deployment copy + i18n — meaningful UI glyphs (mic/pin CTAs)
 set -euo pipefail
 
 BASE_REF="${COP_BASE_REF:-origin/main}"
@@ -40,6 +44,16 @@ report_reject() {
   VIOLATIONS=$((VIOLATIONS + 1))
 }
 
+# Field / i18n copy — 🎤 📍 are deployment grammar (docs/project.md), not decorative noise.
+cop_copy_exempt() {
+  case "$1" in
+    frontend/lib/field/*|frontend/lib/i18n.ts|frontend/app/layout.tsx|frontend/lib/traceViewModel.ts)
+      return 0
+      ;;
+  esac
+  return 1
+}
+
 for file in "${CHANGED[@]}"; do
   [[ -f "$file" ]] || continue
 
@@ -49,6 +63,12 @@ for file in "${CHANGED[@]}"; do
 
     content="${line#+}"
 
+    # Skip comment-only additions
+    trimmed="${content#"${content%%[![:space:]]*}"}"
+    if [[ "$trimmed" == //* ]] || [[ "$trimmed" == \** ]] || [[ "$trimmed" == \*/* ]]; then
+      continue
+    fi
+
     # 1. Dekoracyjne animacje pętlowe (Zasada 6 — ruch ze stanu silnika, nie ozdoba)
     if echo "$content" | grep -qE 'animation[^;{]*infinite|infinite[^;{]*animation'; then
       report_reject "Wykryto nieautoryzowaną animację pętlową w: ${file}" \
@@ -57,10 +77,12 @@ for file in "${CHANGED[@]}"; do
     fi
 
     # 2. Emotikony / obce glify graficzne (poza kanonicznym alfabetem FIRA)
-    if echo "$content" | grep -P '[\x{1F300}-\x{1F6FF}\x{1F900}-\x{1F9FF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}]' >/dev/null 2>&1; then
-      report_reject "Wykryto dekoracyjny szum wizualny (emotikony/ikony) w: ${file}" \
-        "Dopuszczalny jest wyłącznie kanoniczny alfabet FIRA (symbols.ts)."
-      echo "  └─ ${content}"
+    if ! cop_copy_exempt "$file"; then
+      if echo "$content" | grep -P '[\x{1F300}-\x{1F6FF}\x{1F900}-\x{1F9FF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}]' >/dev/null 2>&1; then
+        report_reject "Wykryto dekoracyjny szum wizualny (emotikony/ikony) w: ${file}" \
+          "Dopuszczalny jest wyłącznie kanoniczny alfabet FIRA (symbols.ts)."
+        echo "  └─ ${content}"
+      fi
     fi
 
     # 3. Antywzorzec: autonomiczny index.html poza Next.js

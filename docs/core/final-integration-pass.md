@@ -1,136 +1,70 @@
-# WARSZAWASZA — Final Integration Pass
+# WARSZAWASZA · Final integration pass — Chapter 1
 
-Single integration task for Cursor. Describes **what to build**, not project philosophy.
+**Concrete build list.** No philosophy. Implement gaps only.
+
+Human context: [WARSZAWASZA-jedna-kartka.md](../WARSZAWASZA-jedna-kartka.md).
 
 ---
 
-## Reality interface (primary)
+## Current status
 
-Implement the next iteration of WARSZAWASZA as a **reality interface**.
+| Requirement | Status | Notes |
+|-------------|--------|--------|
+| Draft autosave (localStorage) | ✅ | `voiceDraft.ts` — cleared on SEND only |
+| Draft restore prompt | ✅ | `FieldVoiceReport.tsx` |
+| Clear submission screen | ✅ | `CitizenTrace.tsx` — ref, status, saved, email note |
+| Safe reset — submit another only | ✅ | No auto-clear after SEND |
+| Three layers L1/L2/L3 | ✅ | `CitizenTrace` + collapsed L2/L3 |
+| Two primary CTAs on `/` | ✅ | `ColdStartClient.tsx` |
+| Email honesty (no auto-send) | ✅ | Explicit copy + optional mailto |
+| Field test | ⏳ | Link + two questions |
 
-### GOAL
+---
 
-Reduce the energy required to understand the city and leave an observation.
+## 1. Draft protection
 
-### 1. THREE AUDIENCE LAYERS
+- Autosave while recording/reviewing → `localStorage`
+- On return: *We found an unfinished report. Restore it?*
+- Draft removed **only** after successful SEND
 
-Split the observation export into three progressive layers.
+## 2. Clear submission state
 
-**LEVEL 1 — Citizen (default)**
-
-Visible immediately. Show only:
+After SEND:
 
 - ✓ Observation received
-- Verification status
-- Primary action buttons
-- Relevant links
+- Reference: Trace #…
+- Status: awaiting field verification
+- Saved on this device
+- Email: future version (honest) + optional mailto
 
-Nothing else. Default clipboard and mailto use this layer only.
+## 3. Safe reset
 
-**LEVEL 2 — Journey**
+After SEND → **[ Submit another observation ]** only then new form.
 
-Collapsed by default. Title: `▼ How was this observation processed?` (PL: `▼ Jak przebiegało zgłoszenie?`)
+## 4. Three layers
 
-Human-readable trajectory, e.g.:
+- **L1:** status · location · time · next action · delivery clarity
+- **L2:** process (collapsed, human language)
+- **L3:** technical (collapsed, FOP/JSON nested)
 
-```
-START
-↓
-Location selected
-↓
-Confirmation
-↓
-Sent
-↓
-Completed
-```
+## 5. Validation
 
-No internal codes.
-
-**LEVEL 3 — Technical**
-
-Collapsed by default. Developer artifacts only: trace, pipeline, FOP, telemetry, hypotheses, debug.
-
-Never mix this layer with citizen-facing content. Hypotheses never appear in Level 1.
-
-**Code:** `frontend/lib/observationTrace.ts`, `frontend/lib/traceJourney.ts`, `LeaveTraceControl.tsx`
-
-### 2. FIELD INPUT
-
-Add voice reporting as a **primary** interaction on `/field/heat`. Place it next to the map.
-
-Primary CTA: **🎤 Tell us what you see** / **🎤 Powiedz, co widzisz**
-
-Flow: Record → optional transcription → Review → Send
-
-Voice is preferred; typing remains optional.
-
-**Code:** `frontend/app/components/field/FieldVoiceReport.tsx`, `HeatFieldClient.tsx`
-
-Trace path on success: `START → RECORD → SEND → COMPLETE`
-
-### 3. NAVIGATION
-
-Shallow navigation. After every completed action, two choices only:
-
-- Find nearby help → `/field/heat`
-- Leave another observation → `/`
-
-Avoid dead ends.
-
-### 4. DESIGN
-
-Outdoor conditions: high contrast, large typography, minimal animation, functional motion only. Heat indicators may use slow breathing animation. No decorative animation.
-
-### 5. VALIDATION
-
-Success = task completion, not scroll depth.
-
-Example completion path: START → RECORD → SEND → COMPLETE
-
-Implement the **smallest possible working version**.
+Success = task complete + user confidence report was received + time to understanding.
 
 ---
 
-## Build pass (secondary)
+## Code map
 
-When features above are done, finish without changing philosophy:
+| Area | Files |
+|------|--------|
+| Draft | `lib/field/voiceDraft.ts` |
+| Voice flow | `FieldVoiceReport.tsx` |
+| Confirmation UI | `CitizenTrace.tsx`, `TraceReceiptPanel.tsx` |
+| View model | `lib/traceViewModel.ts` |
+| Copy | `lib/i18n.ts` (`TRACE_RESIDENT`) |
+
+## Build check
 
 ```bash
-cd frontend
-npm install
-npm run build
+cd frontend && npm run build
 ```
-
-Optional hygiene (only if scripts exist): lint, typecheck, remove unused imports.
-
-**Do not** rewrite working code. **Do not** invent features beyond this document.
-
-### Output when done
-
-```markdown
-## Summary
-- Files modified
-- Problems fixed
-- Remaining issues (if any)
-
-## Validation
-✅ Build
-```
-
----
-
-## Persona reference (context only)
-
-**Miejski Operator** — creator and analyst of the city; Warsaw as a system of rhythms, structures, and dependencies. Communicates clearly, avoids jargon, designs for low information entropy. Not a rule for the agent — context for copy and UX decisions.
-
----
-
-## Key URLs
-
-| Action | URL |
-|--------|-----|
-| Field / heat | https://www.warszawasza.online/field/heat |
-| Leave observation | https://www.warszawasza.online/ |
-
-Closing line: *Tak wygląda moja Warszawa. A Wasza?*

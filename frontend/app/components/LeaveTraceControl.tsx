@@ -11,19 +11,16 @@ import {
   type CitizenTraceFields,
 } from "../../lib/domain/traceContract";
 import type { Lang } from "../../lib/i18n";
-import { COPY, traceResidentCopy } from "../../lib/i18n";
+import { COPY } from "../../lib/i18n";
 import { knowledgeGraph } from "../../lib/knowledge/KnowledgeGraph";
 import {
-  buildMailtoHref,
-  buildTraceCitizenLayer,
   buildTraceDocument,
-  buildTraceJourneyLayer,
-  buildTraceTechnicalLayer,
   getTraceRegistryCount,
+  isHeatDeployment,
   registerTrace,
   type ObservationTracePayload,
 } from "../../lib/observationTrace";
-import { journeyLayerTitle } from "../../lib/traceJourney";
+import TraceReceiptPanel from "./field/TraceReceiptPanel";
 import {
   appendInteractionEvent,
   getInteractionTrace,
@@ -33,12 +30,13 @@ import SignalControl from "./SignalControl";
 
 function heatFieldAnotherLabel(lang: Lang): string {
   const labels: Partial<Record<Lang, string>> = {
-    pl: "Zostaw kolejną obserwację",
-    it: "Lascia un'altra osservazione",
-    uk: "Залишити ще одне спостереження",
-    hu: "Új megfigyelés",
+    pl: "Wyślij kolejne zgłoszenie",
+    en: "Submit another observation",
+    it: "Invia un'altra segnalazione",
+    uk: "Надіслати ще одне звернення",
+    hu: "Új bejelentés",
   };
-  return labels[lang] ?? "Leave another observation";
+  return labels[lang] ?? "Submit another observation";
 }
 
 function heatFieldMailtoLabel(lang: Lang): string {
@@ -168,74 +166,26 @@ export default function LeaveTraceControl({
   ]);
 
   const residentNav = {
-    findHelp: traceResidentCopy(lang).findWaterShade,
     another: heatFieldAnotherLabel(lang),
-    journeyTitle: journeyLayerTitle(lang),
-    technicalTitle: traceResidentCopy(lang).technicalData,
     mailto: heatFieldMailtoLabel(lang),
   };
 
   if (sentPayload) {
-    const journey = buildTraceJourneyLayer(sentPayload);
-    const technical = buildTraceTechnicalLayer(sentPayload);
     return (
       <div className={`space-y-4 ${className}`}>
-        <div className="border border-accent bg-field p-4 sm:p-5">
-          <pre className="m-0 whitespace-pre-wrap font-sans text-sm leading-relaxed text-ink">
-            {buildTraceCitizenLayer(sentPayload)}
-          </pre>
-        </div>
-
-        {journey && (
-          <details className="border border-accent/20 bg-field/80 px-4 py-3">
-            <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
-              ▼ {residentNav.journeyTitle}
-            </summary>
-            <pre className="mt-3 mb-0 whitespace-pre-wrap text-sm leading-relaxed text-accent/75">
-              {journey.replace(/^▼[^\n]*\n\n/, "")}
-            </pre>
-          </details>
-        )}
-
-        <details className="border border-accent/15 bg-field/60 px-4 py-3">
-          <summary className="cursor-pointer text-sm text-accent/50 touch-manipulation">
-            ▼ {residentNav.technicalTitle}
-          </summary>
-          <pre className="mt-3 mb-0 whitespace-pre-wrap font-mono-field text-xs leading-relaxed text-accent/45">
-            {technical}
-          </pre>
-        </details>
-
-        <div className="flex flex-col gap-2">
-          <a
-            href="/field/heat"
-            className="inline-flex min-h-11 items-center border border-accent/35 px-3 py-2 font-mono-field text-xs tracking-wide text-ink touch-manipulation sm:text-sm"
-          >
-            📍 {residentNav.findHelp}
-          </a>
-          <button
-            type="button"
-            onClick={() => {
-              setSentPayload(null);
-              setFields(EMPTY_CITIZEN_TRACE);
-              setStarted(false);
-            }}
-            className="inline-flex min-h-11 items-center border border-accent/25 px-3 py-2 font-mono-field text-xs tracking-wide text-accent/75 touch-manipulation sm:text-sm"
-          >
-            {residentNav.another}
-          </button>
-          <a
-            href={buildMailtoHref(sentPayload)}
-            className="font-mono-field text-[10px] tracking-wide text-accent/40 underline sm:text-[11px]"
-          >
-            {residentNav.mailto}
-          </a>
-        </div>
-        {flash && (
-          <div className="font-mono-field text-[10px] tracking-wide text-accent/70 sm:text-[11px]">
-            {flash}
-          </div>
-        )}
+        <TraceReceiptPanel
+          trace={sentPayload}
+          lang={lang}
+          presentation={{ heatContext: isHeatDeployment(sentPayload) }}
+          flash={flash}
+          findHelpHref="/field/heat#nearby"
+          onAnother={() => {
+            setSentPayload(null);
+            setFields(EMPTY_CITIZEN_TRACE);
+            setStarted(false);
+          }}
+          anotherLabel={residentNav.another}
+        />
       </div>
     );
   }
@@ -318,6 +268,7 @@ export default function LeaveTraceControl({
 
         <label className="block space-y-1">
           <span className="font-mono-field text-xs tracking-wide text-accent/55">{formCopy.subject}</span>
+          <p className="m-0 text-xs text-accent/45">{formCopy.subjectOptionalHint}</p>
           <select
             name="wzs-subject"
             id="wzs-subject"

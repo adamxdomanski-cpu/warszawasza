@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import LangNav from "../LangNav";
 import SignalControl from "../SignalControl";
-import FieldVoiceReport from "./FieldVoiceReport";
+import FieldBrandFooter from "./FieldBrandFooter";
+import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
 import {
   HEAT_POINTS,
   HEAT_TEMP_C,
@@ -13,8 +13,10 @@ import {
   heatUrgency,
   HEAT_RCB_CRITICAL,
 } from "../../../lib/field/heatFieldI18n";
+import { voiceFlowCopy } from "../../../lib/field/voiceFlowI18n";
+import type { ColdStartCopy } from "../../../lib/field/coldStartI18n";
 import type { Lang } from "../../../lib/i18n";
-import { LANGS } from "../../../lib/i18n";
+import { initialFieldLang } from "../../../lib/field/initialFieldLang";
 import {
   appendInteractionEvent,
   clearInteractionTrace,
@@ -23,21 +25,17 @@ import {
 } from "../../../lib/interactionTrace";
 import { formatJourneyBlock, journeyLayerTitle } from "../../../lib/traceJourney";
 
-function initialFieldLang(): Lang {
-  if (typeof window === "undefined") return "pl";
-  const nav = navigator.language.toLowerCase();
-  const hit = LANGS.find((code) => nav === code || nav.startsWith(`${code}-`));
-  return hit ?? "pl";
-}
-
 export default function HeatFieldClient() {
   const [lang, setLang] = useState<Lang>(() => initialFieldLang());
   const [helpOpen, setHelpOpen] = useState(false);
   const [traceTick, setTraceTick] = useState(0);
+  const [devPanelOpen, setDevPanelOpen] = useState(false);
   const nearbyRef = useRef<HTMLElement>(null);
-  const voiceRef = useRef<HTMLElement>(null);
+  const voicePanelRef = useRef<HTMLElement>(null);
+  const voiceRef = useRef<FieldVoiceReportHandle>(null);
 
   const copy = heatFieldCopy(lang);
+  const voiceCopy = { ...copy, ...voiceFlowCopy(lang) } as ColdStartCopy;
   const events = getInteractionTrace().events;
   const urgency = heatUrgency(HEAT_TEMP_C, HEAT_RCB_CRITICAL);
 
@@ -56,8 +54,9 @@ export default function HeatFieldClient() {
   const onVoiceCta = () => {
     appendInteractionEvent("NEXT");
     bump();
+    voiceRef.current?.startRecording();
     window.requestAnimationFrame(() => {
-      voiceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      voicePanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   };
 
@@ -83,68 +82,24 @@ export default function HeatFieldClient() {
     >
       <div className="heat-field-ambient pointer-events-none fixed inset-0 z-0" aria-hidden />
 
-      <main className="relative z-10 mx-auto flex max-w-lg flex-col gap-6 p-5 pb-16 sm:gap-8 sm:p-8">
+      <main className="relative z-10 mx-auto flex min-h-dvh max-w-lg flex-col gap-6 p-5 pb-10 sm:gap-8 sm:p-8">
         <header className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <Link
-              href="/"
-              className="font-mono-field text-xs tracking-widest text-accent/70 uppercase"
-            >
-              WARSZAWASZA
-            </Link>
+          <div className="flex justify-end">
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
           </div>
 
-          <p className="m-0 font-mono-field text-sm tracking-wide text-accent/80">
-            {copy.statusLine}
-          </p>
-          <h1 className="m-0 text-2xl font-light leading-snug sm:text-3xl">
-            <span className="heat-signal" aria-label={`${copy.factTemp} ${copy.factSubtitle}`}>
+          <h1 className="m-0">
+            <span className="heat-signal text-3xl font-light sm:text-4xl" aria-label={copy.factTemp}>
               {copy.factTemp}
             </span>
-            <span className="text-ink/90"> · {copy.factSubtitle}</span>
           </h1>
 
-          <details className="rounded border border-accent/20 bg-field/80 px-4 py-3">
-            <summary className="cursor-pointer text-sm font-medium text-accent touch-manipulation">
-              {copy.alertRcbLabel}
-            </summary>
-            <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/75">
-              {copy.alertRcbBody}
-            </p>
-          </details>
-
-          <div className="rounded border border-accent/20 bg-field/80 px-4 py-3">
-            <p className="m-0 mb-2 text-sm font-medium text-ink/90">{copy.transportTitle}</p>
-            <ul className="m-0 list-none space-y-1.5 pl-0 text-sm text-accent/75">
-              <li>⚠ {copy.transportTram}</li>
-              <li>⚠ {copy.transportSkm}</li>
-            </ul>
-            <details className="mt-2">
-              <summary className="cursor-pointer text-xs text-accent/50 touch-manipulation">
-                {copy.transportMore}
-              </summary>
-              <p className="mt-2 mb-0 text-xs leading-relaxed text-accent/45">
-                {copy.transportTram}. {copy.transportSkm}.
-              </p>
-            </details>
-          </div>
-
-          <details className="rounded border border-accent/15 bg-field/60 px-4 py-3">
-            <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
-              {copy.waterSaveTitle}
-            </summary>
-            <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/65">
-              {copy.waterSaveQuestion}
-            </p>
-          </details>
-
-          <div className="grid gap-2 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <SignalControl
               type="button"
               direction="right"
               onClick={onVoiceCta}
-              className="min-h-14 border-2 border-accent/50 bg-field px-4 py-3 text-left text-base font-medium leading-snug text-ink touch-manipulation"
+              className="min-h-[4.25rem] border-2 border-accent/55 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaVoiceReport}
             </SignalControl>
@@ -152,22 +107,57 @@ export default function HeatFieldClient() {
               type="button"
               direction="right"
               onClick={onCta}
-              className="min-h-14 border border-accent/35 bg-field px-4 py-3 text-left text-sm leading-snug text-ink touch-manipulation"
+              className="min-h-[4.25rem] border-2 border-accent/40 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaNearbyHelp}
             </SignalControl>
           </div>
+
+          <details className="rounded border border-accent/15 bg-field/60 px-4 py-3">
+            <summary className="cursor-pointer text-sm text-accent/55 touch-manipulation">
+              {copy.moreContextLabel}
+            </summary>
+            <div className="mt-3 space-y-3">
+              <p className="m-0 font-mono-field text-xs tracking-wide text-accent/55">
+                {copy.statusLine}
+              </p>
+              <p className="m-0 text-sm text-accent/70">{copy.factSubtitle}</p>
+
+              {copy.microHintLabel && copy.microHintBody && (
+                <aside className="rounded border border-accent/12 bg-field/50 px-3 py-2.5 text-sm leading-relaxed text-accent/70">
+                  <p className="m-0 font-medium text-accent/80">{copy.microHintLabel}</p>
+                  <p className="mt-1.5 mb-0">{copy.microHintBody}</p>
+                </aside>
+              )}
+
+              <details className="rounded border border-accent/20 bg-field/80 px-4 py-3">
+                <summary className="cursor-pointer text-sm font-medium text-accent touch-manipulation">
+                  {copy.alertRcbLabel}
+                </summary>
+                <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/75">
+                  {copy.alertRcbBody}
+                </p>
+              </details>
+
+              <div className="rounded border border-accent/20 bg-field/80 px-4 py-3">
+                <p className="m-0 mb-2 text-sm font-medium text-ink/90">{copy.transportTitle}</p>
+                <ul className="m-0 list-none space-y-1.5 pl-0 text-sm text-accent/75">
+                  <li>! {copy.transportTram}</li>
+                  <li>! {copy.transportSkm}</li>
+                </ul>
+              </div>
+
+              <p className="m-0 text-sm leading-relaxed text-accent/65">{copy.waterSaveQuestion}</p>
+            </div>
+          </details>
         </header>
 
-        <section ref={voiceRef} aria-label={copy.ctaVoiceReport}>
-          <FieldVoiceReport
-            lang={lang}
-            copy={copy}
-            onFindHelp={onCta}
-          />
+        <section ref={voicePanelRef} aria-label={copy.ctaVoiceReport}>
+          <FieldVoiceReport ref={voiceRef} lang={lang} copy={voiceCopy} onFindHelp={onCta} lean heatContext />
         </section>
 
         <section
+          id="nearby"
           ref={nearbyRef}
           aria-label={copy.layer2Title}
           className={helpOpen ? "opacity-100" : "opacity-100"}
@@ -214,10 +204,14 @@ export default function HeatFieldClient() {
           </div>
         </section>
 
-        <details className="mt-2 border-t border-accent/10 pt-4">
+        <details
+          className="mt-2 border-t border-accent/10 pt-4"
+          onToggle={(event) => setDevPanelOpen(event.currentTarget.open)}
+        >
           <summary className="cursor-pointer text-sm text-accent/45 touch-manipulation">
             ▼ {copy.technicalData}
           </summary>
+          {devPanelOpen && (
           <div className="mt-4 space-y-4 text-xs leading-relaxed text-accent/40">
             {events.length > 0 && (
               <details className="rounded border border-accent/10 bg-field/40 p-3">
@@ -268,8 +262,11 @@ export default function HeatFieldClient() {
               </p>
             </div>
           </div>
+          )}
         </details>
+
+        <FieldBrandFooter />
       </main>
     </div>
   );
-};
+}

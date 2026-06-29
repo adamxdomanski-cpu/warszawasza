@@ -1,185 +1,104 @@
 /**
- * Human-readable journey steps for operator layer — no event codes.
+ * Layer 2 — operator process narrative. No event codes, no citizen quote (L1 owns that).
  */
 
 import type { InteractionEvent } from "./fira-core/interaction";
 import type { Lang } from "./i18n";
 import { pickLangCopy } from "./localeMap";
 
-type JourneyCopy = {
+type OperatorCopy = {
   title: string;
-  start: string;
-  recordStart: string;
-  recordStop: string;
-  locationSelected: string;
-  helpNearby: string;
-  pointSelected: string;
-  confirmed: string;
-  rejected: string;
-  review: string;
-  sent: string;
-  completed: string;
-  next: string;
-  typed: string;
+  stepReceived: string;
+  stepLocated: string;
+  stepListening: string;
   startOver: string;
   copied: string;
 };
 
-const COPY: Partial<Record<Lang, JourneyCopy>> = {
+const COPY: Partial<Record<Lang, OperatorCopy>> = {
   pl: {
-    title: "Jak przebiegało zgłoszenie?",
-    start: "Start",
-    recordStart: "Nagrywanie rozpoczęte",
-    recordStop: "Nagrywanie zakończone",
-    locationSelected: "Wybrano lokalizację",
-    helpNearby: "Szukasz pomocy w pobliżu",
-    pointSelected: "Wybrano punkt na mapie",
-    confirmed: "Potwierdzono",
-    rejected: "Odrzucono",
-    review: "Przegląd przed wysłaniem",
-    sent: "Wysłano",
-    completed: "Zakończono",
-    next: "Dalej",
-    typed: "Wpisano tekst",
+    title: "Jak przetwarzamy to zgłoszenie?",
+    stepReceived: "Odebraliśmy zgłoszenie z kanału obywatelskiego.",
+    stepLocated: "Zlokalizowaliśmy obszar i przypisaliśmy punkt odniesienia.",
+    stepListening: "Uruchomiliśmy nasłuch i czekamy na potwierdzenie z terenu.",
     startOver: "Od nowa",
     copied: "Skopiowano potwierdzenie",
   },
   en: {
-    title: "How was this observation processed?",
-    start: "Start",
-    recordStart: "Recording started",
-    recordStop: "Recording stopped",
-    locationSelected: "Location selected",
-    helpNearby: "Finding help nearby",
-    pointSelected: "Map point selected",
-    confirmed: "Confirmed",
-    rejected: "Rejected",
-    review: "Review before send",
-    sent: "Sent",
-    completed: "Completed",
-    next: "Next",
-    typed: "Text entered",
+    title: "How we process this report",
+    stepReceived: "We received the report from the citizen channel.",
+    stepLocated: "We located the area and assigned a reference point.",
+    stepListening: "Listening is active — awaiting field confirmation.",
     startOver: "Start over",
     copied: "Confirmation copied",
   },
   it: {
-    title: "Come è stata elaborata la segnalazione?",
-    start: "Inizio",
-    recordStart: "Registrazione avviata",
-    recordStop: "Registrazione terminata",
-    locationSelected: "Località selezionata",
-    helpNearby: "Cerca aiuto nelle vicinanze",
-    pointSelected: "Punto sulla mappa selezionato",
-    confirmed: "Confermato",
-    rejected: "Rifiutato",
-    review: "Revisione prima dell'invio",
-    sent: "Inviato",
-    completed: "Completato",
-    next: "Avanti",
-    typed: "Testo inserito",
+    title: "Come elaboriamo questa segnalazione",
+    stepReceived: "Abbiamo ricevuto la segnalazione dal canale cittadino.",
+    stepLocated: "Abbiamo localizzato l'area e assegnato un punto di riferimento.",
+    stepListening: "Ascolto attivo — in attesa di conferma sul campo.",
     startOver: "Ricomincia",
     copied: "Conferma copiata",
   },
   uk: {
-    title: "Як оброблялося звернення?",
-    start: "Початок",
-    recordStart: "Запис розпочато",
-    recordStop: "Запис завершено",
-    locationSelected: "Локацію обрано",
-    helpNearby: "Шукаєте допомогу поруч",
-    pointSelected: "Обрано точку на мапі",
-    confirmed: "Підтверджено",
-    rejected: "Відхилено",
-    review: "Перевірка перед відправкою",
-    sent: "Надіслано",
-    completed: "Завершено",
-    next: "Далі",
-    typed: "Текст введено",
+    title: "Як ми обробляємо це звернення",
+    stepReceived: "Ми отримали звернення з громадянського каналу.",
+    stepLocated: "Ми локалізували зону та призначили опорну точку.",
+    stepListening: "Слухання активне — очікуємо підтвердження з поля.",
     startOver: "Спочатку",
     copied: "Підтвердження скопійовано",
   },
   hu: {
-    title: "Hogyan dolgoztuk fel a bejelentést?",
-    start: "Kezdet",
-    recordStart: "Felvétel elindítva",
-    recordStop: "Felvétel leállítva",
-    locationSelected: "Hely kiválasztva",
-    helpNearby: "Segítség keresése a közelben",
-    pointSelected: "Térképpont kiválasztva",
-    confirmed: "Megerősítve",
-    rejected: "Elutasítva",
-    review: "Ellenőrzés küldés előtt",
-    sent: "Elküldve",
-    completed: "Befejezve",
-    next: "Tovább",
-    typed: "Szöveg megadva",
+    title: "Hogyan dolgozzuk fel ezt a bejelentést",
+    stepReceived: "Fogadtuk a bejelentést a polgári csatornán.",
+    stepLocated: "Lokalizáltuk a területet és hozzárendeltünk referenciapontot.",
+    stepListening: "Figyelés aktív — terepi megerősítésre várunk.",
     startOver: "Újrakezdés",
     copied: "Megerősítés másolva",
   },
 };
 
-function journeyCopy(lang: Lang): JourneyCopy {
+function operatorCopy(lang: Lang): OperatorCopy {
   return pickLangCopy(COPY, lang, COPY.en!);
 }
 
-function labelSelect(value: string, jc: JourneyCopy): string {
-  if (value === "MOKOTOW") return jc.locationSelected;
-  if (value === "POMOC_W_POBLIZU") return jc.helpNearby;
-  if (value === "TRUE") return jc.confirmed;
-  if (value === "FALSE") return jc.rejected;
-  if (value.startsWith("HYDRANT_") || value.startsWith("BIBLIOTHEK_") || value.startsWith("METRO_")) {
-    return jc.pointSelected;
-  }
-  return jc.locationSelected;
+/** L2 — fixed operator steps; no SELECT codes or duplicate quote. */
+export function formatProcessNarrative(lang: Lang, _events?: InteractionEvent[]): string {
+  const oc = operatorCopy(lang);
+  return [oc.stepReceived, oc.stepLocated, oc.stepListening].join("\n");
 }
 
-/** Map one interaction event to a human step; null = skip in journey. */
-export function journeyStepLabel(event: InteractionEvent, lang: Lang): string | null {
-  const jc = journeyCopy(lang);
-  switch (event.event) {
-    case "START":
-      return jc.start;
-    case "RECORD":
-      return event.value === "stop" ? jc.recordStop : jc.recordStart;
-    case "SELECT":
-      return event.value ? labelSelect(event.value, jc) : jc.locationSelected;
-    case "CHANGE":
-      return event.value?.trim() ? jc.review : jc.typed;
-    case "NEXT":
-      return jc.next;
-    case "COMPLETE":
-      return jc.completed;
-    default:
-      return null;
-  }
-}
+export type OperatorStepState = "done" | "active";
 
-/** Ordered human steps for operator / journey export. */
-export function buildJourneySteps(events: InteractionEvent[], lang: Lang): string[] {
-  const steps: string[] = [];
-  for (const e of events) {
-    const label = journeyStepLabel(e, lang);
-    if (label && steps[steps.length - 1] !== label) {
-      steps.push(label);
-    }
-  }
-  return steps;
+export function getOperatorSteps(
+  lang: Lang,
+): { text: string; state: OperatorStepState }[] {
+  const oc = operatorCopy(lang);
+  return [
+    { text: oc.stepReceived, state: "done" },
+    { text: oc.stepLocated, state: "done" },
+    { text: oc.stepListening, state: "active" },
+  ];
 }
 
 export function journeyLayerTitle(lang: Lang): string {
-  return journeyCopy(lang).title;
+  return operatorCopy(lang).title;
 }
 
-export function journeyUiCopy(lang: Lang): Pick<JourneyCopy, "startOver" | "copied"> {
-  const jc = journeyCopy(lang);
-  return { startOver: jc.startOver, copied: jc.copied };
+export function journeyUiCopy(lang: Lang): Pick<OperatorCopy, "startOver" | "copied"> {
+  const oc = operatorCopy(lang);
+  return { startOver: oc.startOver, copied: oc.copied };
 }
 
-/** Plain-text journey block for export / UI. */
+/** @deprecated */
 export function formatJourneyBlock(events: InteractionEvent[], lang: Lang): string {
-  const jc = journeyCopy(lang);
-  const steps = buildJourneySteps(events, lang);
-  if (steps.length === 0) return "";
-  const lines = [`▼ ${jc.title}`, "", ...steps.flatMap((s, i) => (i === 0 ? [s] : ["↓", s]))];
-  return lines.join("\n");
+  return formatProcessNarrative(lang, events);
 }
+
+export type ProcessNarrativeInput = {
+  lang: Lang;
+  quote?: string;
+  place?: string;
+  events: InteractionEvent[];
+  awaitingField?: boolean;
+};

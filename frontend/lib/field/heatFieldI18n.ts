@@ -82,6 +82,7 @@ export type HeatCopy = {
   voiceSentBody: string;
   ctaAnotherObservation: string;
   voiceUnsupported: string;
+  voiceMicDenied: string;
   layer2Title: string;
   distanceM: string;
   distanceWalk: string;
@@ -99,6 +100,10 @@ export type HeatCopy = {
   hypothesisTitle: string;
   hypothesisHeat: string;
   devEventCodes: string;
+  moreContextLabel: string;
+  /** Optional curated micro-decision (deployment-specific, not temp-generated). */
+  microHintLabel?: string;
+  microHintBody?: string;
 };
 
 const COPY: Partial<Record<Lang, HeatCopy>> = {
@@ -116,8 +121,8 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     waterSaveTitle: "Jak oszczędzać wodę?",
     waterSaveQuestion:
       "Czy dziś naprawdę potrzebujesz trzeciej spłuczki, czy wystarczy jedna?",
-    ctaNearbyHelp: "📍 Znajdź pomoc w pobliżu",
-    ctaVoiceReport: "🎤 Powiedz, co widzisz",
+    ctaNearbyHelp: "📍 Znajdź wodę i cień",
+    ctaVoiceReport: "🎤 Nagraj obserwację",
     voiceStart: "Rozpocznij nagrywanie",
     voiceRecording: "Nagrywanie…",
     voiceStop: "Zakończ",
@@ -127,10 +132,11 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     voiceSend: "Wyślij",
     voiceOrType: "lub wpisz tekst",
     voiceTranscribePlaceholder: "Opcjonalnie: popraw transkrypcję…",
-    voiceSentTitle: "✓ Zgłoszenie odebrane",
-    voiceSentBody: "Dziękujemy. Możesz wrócić do rzeczywistości.",
-    ctaAnotherObservation: "Zostaw kolejną obserwację",
+    voiceSentTitle: "✓ Odebrane",
+    voiceSentBody: "Dziękujemy.",
+    ctaAnotherObservation: "Wyślij kolejne zgłoszenie",
     voiceUnsupported: "Nagrywanie niedostępne w tej przeglądarce — wpisz tekst poniżej.",
+    voiceMicDenied: "Brak dostępu do mikrofonu — wpisz tekst poniżej.",
     layer2Title: "W pobliżu",
     distanceM: "{n} m",
     distanceWalk: "{n} min pieszo",
@@ -172,6 +178,10 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
       "Ekstremalne ciepło zwiększa zapotrzebowanie na wodę i cień w przestrzeni publicznej (provisional).",
     devEventCodes:
       "Kody zdarzeń (dev): SELECT(POMOC_W_POBLIZU), SELECT(HYDRANT_PULAWSKA), …",
+    moreContextLabel: "Więcej kontekstu",
+    microHintLabel: "💡 Wskazówka na dziś",
+    microHintBody:
+      "Jeśli masz kwiaty na balkonie, warto je schować przed popołudniowym upałem.",
   },
   en: {
     statusLine: "WARSAW · 28 JUNE 2026 · 16:30",
@@ -186,8 +196,8 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     transportMore: "→ see more",
     waterSaveTitle: "How to save water?",
     waterSaveQuestion: "Do you really need a third flush today, or is one enough?",
-    ctaNearbyHelp: "📍 Find help nearby",
-    ctaVoiceReport: "🎤 Tell us what you see",
+    ctaNearbyHelp: "📍 Find water and shade",
+    ctaVoiceReport: "🎤 Record an observation",
     voiceStart: "Start recording",
     voiceRecording: "Recording…",
     voiceStop: "Stop",
@@ -197,10 +207,11 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     voiceSend: "Send",
     voiceOrType: "or type instead",
     voiceTranscribePlaceholder: "Optional: edit transcription…",
-    voiceSentTitle: "✓ Report received",
-    voiceSentBody: "Thank you. You can return to reality.",
-    ctaAnotherObservation: "Leave another observation",
+    voiceSentTitle: "✓ Received",
+    voiceSentBody: "Thank you.",
+    ctaAnotherObservation: "Submit another observation",
     voiceUnsupported: "Recording unavailable in this browser — type below instead.",
+    voiceMicDenied: "Microphone access blocked — type your report below.",
     layer2Title: "Nearby",
     distanceM: "{n} m",
     distanceWalk: "{n} min walk",
@@ -241,6 +252,10 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     hypothesisHeat:
       "Extreme heat increases demand for water and shade in public space (provisional).",
     devEventCodes: "Event codes (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "More context",
+    microHintLabel: "💡 Hint for today",
+    microHintBody:
+      "If you have plants on the balcony, consider moving them in before the afternoon heat.",
   },
   uk: {
     statusLine: "ВАРШАВА · 28 ЧЕРВНЯ 2026 · 16:30",
@@ -254,8 +269,8 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     transportSkm: "У вагonах SKM понад 44°C",
     waterSaveTitle: "Як економити воду?",
     waterSaveQuestion: "Чи потрібен третій злив, чи достатньо одного?",
-    ctaNearbyHelp: "📍 Допомога поруч",
-    ctaVoiceReport: "🎤 Розкажіть, що бачите",
+    ctaNearbyHelp: "📍 Вода та тінь поруч",
+    ctaVoiceReport: "🎤 Запишіть спостереження",
     voiceStart: "Почати запис",
     voiceRecording: "Запис…",
     voiceStop: "Зупинити",
@@ -265,10 +280,11 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     voiceSend: "Надіслати",
     voiceOrType: "або введіть текст",
     voiceTranscribePlaceholder: "За бажанням: виправте текст…",
-    voiceSentTitle: "✓ Звернення прийнято",
-    voiceSentBody: "Дякуємо. Можете повернутися до реальності.",
-    ctaAnotherObservation: "Залишити ще одне спостереження",
+    voiceSentTitle: "✓ Отримано",
+    voiceSentBody: "Дякуємо.",
+    ctaAnotherObservation: "Скажіть ще раз",
     voiceUnsupported: "Запис недоступний — введіть текст нижче.",
+    voiceMicDenied: "Немає доступу до мікрофона — введіть текст нижче.",
     layer2Title: "Поруч",
     distanceM: "{n} м",
     distanceWalk: "{n} хв пішки",
@@ -309,14 +325,20 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Гіпотеза",
     hypothesisHeat: "Екстремальна спека збільшує потребу у воді та тіні (provisional).",
     devEventCodes: "Коди подій (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Більше контексту",
   },
 };
 
 export function heatFieldCopy(lang: Lang): HeatCopy {
   const merged: Partial<Record<Lang, HeatCopy>> = { ...COPY, ...HEAT_FIELD_EXTRA };
-  const resolved = merged[lang];
-  if (resolved) return resolved;
-  return merged.en!;
+  const en = merged.en!;
+  const resolved = merged[lang] ?? en;
+  return {
+    ...resolved,
+    microHintLabel: resolved.microHintLabel ?? en.microHintLabel,
+    microHintBody: resolved.microHintBody ?? en.microHintBody,
+    voiceMicDenied: resolved.voiceMicDenied ?? en.voiceMicDenied,
+  };
 }
 
 export function formatDistance(copy: HeatCopy, meters: number, walkMin: number): string {

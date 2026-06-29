@@ -8,6 +8,8 @@
 
 **warszawasza** — FIRA Observation Protocol; primary UI in `frontend/` (Next.js), API/engine in `backend/`.
 
+**Pierwsza kartka (każdy nowy człowiek):** [`docs/WARSZAWASZA-w-dwoch-minutach.md`](docs/WARSZAWASZA-w-dwoch-minutach.md)
+
 **COS Core Starter v1.0:** [`docs/core/starter-v0.md`](docs/core/starter-v0.md) · [`.cursorrules`](.cursorrules)
 
 ## Dev (from repo root)
@@ -27,7 +29,15 @@ python3 -m py_compile backend/api/main.py backend/engine/engine.py
 cd frontend && npm run build
 ```
 
-**Field / heat:** `/field/heat` — primary CTA **🎤 Powiedz, co widzisz** (voice); trace clipboard = citizen layer only; journey and technical are collapsed (`frontend/lib/observationTrace.ts`, `docs/core/final-integration-pass.md`).
+**Cold start (default `/`):** dwa CTA + głos — `ColdStartClient.tsx`; stary UI: `/?legacy=1`.  
+**Field / heat:** `/field/heat` — 🎤 Nagraj obserwację + 📍 Znajdź wodę i cień; kontekst w *Więcej kontekstu*.
+
+## Proces zespołu (nie kod)
+
+**Reguła:** nie dodajemy funkcji przed obserwacją z terenu.  
+Jedna kartka: [`docs/core/field-first-release.md`](docs/core/field-first-release.md)
+
+Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/final-integration-pass.md).
 
 ## Cursor
 

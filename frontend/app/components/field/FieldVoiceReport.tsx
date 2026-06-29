@@ -1,29 +1,58 @@
 "use client";
 
-import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { HeatCopy } from "../../../lib/field/heatFieldI18n";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import type { ColdStartCopy } from "../../../lib/field/coldStartI18n";
+import { clearVoiceDraft, loadVoiceDraft, saveVoiceDraft } from "../../../lib/field/voiceDraft";
+import {
+  canUseAudioRecording,
+  createAudioRecorder,
+  pickAudioMimeType,
+} from "../../../lib/field/mediaRecorderSupport";
 import type { Lang } from "../../../lib/i18n";
+import { traceResidentCopy } from "../../../lib/i18n";
 import { speechRecognitionLocale, localeDateTime } from "../../../lib/localeMap";
+import {
+  formatPlaceFromGeo,
+  readCurrentPosition,
+  voiceGeoCopy,
+  type GeoPoint,
+} from "../../../lib/field/voiceGeoCopy";
 import { journeyUiCopy } from "../../../lib/traceJourney";
 import {
   appendInteractionEvent,
+  clearInteractionTrace,
   getInteractionTrace,
 } from "../../../lib/interactionTrace";
 import {
-  buildTraceCitizenLayer,
   registerTrace,
   type ObservationTracePayload,
 } from "../../../lib/observationTrace";
+import TraceReceiptPanel, { copyCitizenTraceText } from "./TraceReceiptPanel";
 import SignalControl from "../SignalControl";
 
 type VoicePhase = "idle" | "recording" | "review" | "sent";
+type SttStatus = "idle" | "pending" | "ok" | "failed";
+
+export type FieldVoiceReportHandle = {
+  startRecording: () => void;
+};
 
 type FieldVoiceReportProps = {
   lang: Lang;
-  copy: HeatCopy;
+  copy: ColdStartCopy;
   onSent?: () => void;
   onFindHelp?: () => void;
+  /** Header CTAs already label voice — hide duplicate chrome until recording. */
+  lean?: boolean;
+  /** Heat deployment — show orientation CTA, not interpretation. */
+  heatContext?: boolean;
 };
 
 function formatTimer(seconds: number): string {
@@ -32,285 +61,545 @@ function formatTimer(seconds: number): string {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-export default function FieldVoiceReport({
-  lang,
-  copy,
-  onSent,
-  onFindHelp,
-}: FieldVoiceReportProps) {
-  const [phase, setPhase] = useState<VoicePhase>("idle");
-  const [seconds, setSeconds] = useState(0);
-  const [text, setText] = useState("");
-  const [canRecord, setCanRecord] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [flash, setFlash] = useState<string | null>(null);
+function audioOnlyLabel(lang: Lang): string {
+  return lang === "pl" ? "[nagranie głosowe]" : "[voice recording]";
+}
 
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<BlobPart[]>([]);
-  const timerRef = useRef<number | null>(null);
-  const recognitionRef = useRef<{ stop: () => void } | null>(null);
-  const ui = journeyUiCopy(lang);
+const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProps>(
+  function FieldVoiceReport({ lang, copy, onSent, onFindHelp, lean = false, heatContext = false }, ref) {
+    const [phase, setPhase] = useState<VoicePhase>("idle");
+    const [seconds, setSeconds] = useState(0);
+    const [text, setText] = useState("");
+    const [canRecord, setCanRecord] = useState(() => canUseAudioRecording());
+    const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [hasAudioBlob, setHasAudioBlob] = useState(false);
+    const [flash, setFlash] = useState<string | null>(null);
+    const [micFallback, setMicFallback] = useState(false);
+    const [sttStatus, setSttStatus] = useState<SttStatus>("idle");
+    const [geo, setGeo] = useState<GeoPoint | null>(null);
+    const [geoBusy, setGeoBusy] = useState(false);
+    const [geoError, setGeoError] = useState<string | null>(null);
+    const [sentPayload, setSentPayload] = useState<ObservationTracePayload | null>(null);
+    const [pendingDraft, setPendingDraft] = useState<ReturnType<typeof loadVoiceDraft>>(null);
+    const [sending, setSending] = useState(false);
 
-  useEffect(() => {
-    setCanRecord(
-      typeof window !== "undefined" &&
-        typeof MediaRecorder !== "undefined" &&
-        !!navigator.mediaDevices?.getUserMedia,
-    );
-  }, []);
+    const geoCopy = voiceGeoCopy(lang);
+    const rc = traceResidentCopy(lang);
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) window.clearInterval(timerRef.current);
-      if (audioUrl) URL.revokeObjectURL(audioUrl);
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+    const chunksRef = useRef<BlobPart[]>([]);
+    const audioMimeRef = useRef<string>("audio/webm");
+    const timerRef = useRef<number | null>(null);
+    const recognitionRef = useRef<{ stop: () => void } | null>(null);
+    const sttStartedRef = useRef(false);
+    const ui = journeyUiCopy(lang);
+
+    useEffect(() => {
+      setCanRecord(canUseAudioRecording());
+      const draft = loadVoiceDraft();
+      if (draft?.text.trim()) setPendingDraft(draft);
+    }, []);
+
+    useEffect(() => {
+      if (phase !== "review" && phase !== "recording") return;
+      saveVoiceDraft({
+        text,
+        lang,
+        heatContext,
+        ...(geo ? { geo: { lat: geo.lat, lon: geo.lng, accuracy: geo.accuracyM } } : {}),
+      });
+    }, [text, phase, lang, heatContext, geo]);
+
+    useEffect(() => {
+      return () => {
+        if (timerRef.current) window.clearInterval(timerRef.current);
+        if (audioUrl) URL.revokeObjectURL(audioUrl);
+        recognitionRef.current?.stop();
+      };
+    }, [audioUrl]);
+
+    const stopTranscription = useCallback(() => {
       recognitionRef.current?.stop();
-    };
-  }, [audioUrl]);
+      recognitionRef.current = null;
+    }, []);
 
-  const startTranscription = useCallback(() => {
-    if (typeof window === "undefined") return;
-    const W = window as Window & {
-      SpeechRecognition?: new () => SpeechRecognitionInstance;
-      webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
-    };
-    const SR = W.SpeechRecognition ?? W.webkitSpeechRecognition;
-    if (!SR) return;
-
-    const rec = new SR();
-    rec.lang = speechRecognitionLocale(lang);
-    rec.continuous = true;
-    rec.interimResults = true;
-    rec.onresult = (event: SpeechRecognitionEventLike) => {
-      let transcript = "";
-      for (let i = 0; i < event.results.length; i += 1) {
-        transcript += event.results[i][0].transcript;
+    const startTranscription = useCallback(() => {
+      if (typeof window === "undefined") return;
+      const W = window as Window & {
+        SpeechRecognition?: new () => SpeechRecognitionInstance;
+        webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
+      };
+      const SR = W.SpeechRecognition ?? W.webkitSpeechRecognition;
+      if (!SR) {
+        setSttStatus("failed");
+        return;
       }
-      setText((prev) => (prev.trim() ? prev : transcript.trim()));
-    };
-    rec.start();
-    recognitionRef.current = rec;
-  }, [lang]);
 
-  const stopTranscription = useCallback(() => {
-    recognitionRef.current?.stop();
-    recognitionRef.current = null;
-  }, []);
+      try {
+        setSttStatus("pending");
+        const rec = new SR();
+        rec.lang = speechRecognitionLocale(lang);
+        rec.continuous = true;
+        rec.interimResults = true;
+        rec.onerror = () => {
+          setSttStatus((prev) => (prev === "ok" ? "ok" : "failed"));
+        };
+        rec.onresult = (event: SpeechRecognitionEventLike) => {
+          let transcript = "";
+          for (let i = 0; i < event.results.length; i += 1) {
+            transcript += event.results[i][0].transcript;
+          }
+          const trimmed = transcript.trim();
+          if (trimmed) {
+            setText((prev) => (prev.trim() ? prev : trimmed));
+            setSttStatus("ok");
+          }
+        };
+        rec.start();
+        recognitionRef.current = rec;
+      } catch {
+        setSttStatus("failed");
+      }
+    }, [lang]);
 
-  const startRecording = useCallback(async () => {
-    if (!canRecord) {
+    const startRecording = useCallback(async () => {
+      setMicFallback(false);
+      setSttStatus("idle");
+      sttStartedRef.current = false;
+      stopTranscription();
+
+      const recordingCapable = canUseAudioRecording();
+      setCanRecord(recordingCapable);
+
+      if (!recordingCapable) {
+        setPhase("review");
+        setMicFallback(true);
+        appendInteractionEvent("RECORD", "manual");
+        return;
+      }
+
+      let stream: MediaStream | null = null;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const picked = pickAudioMimeType();
+        audioMimeRef.current = picked?.split(";")[0] ?? "audio/webm";
+        const recorder = createAudioRecorder(stream);
+        chunksRef.current = [];
+        recorder.ondataavailable = (e) => {
+          if (e.data.size > 0) chunksRef.current.push(e.data);
+        };
+        recorder.onstop = () => {
+          stream?.getTracks().forEach((t) => t.stop());
+          const blob = new Blob(chunksRef.current, { type: audioMimeRef.current });
+          if (blob.size > 0) {
+            setHasAudioBlob(true);
+            setAudioUrl((prev) => {
+              if (prev) URL.revokeObjectURL(prev);
+              return URL.createObjectURL(blob);
+            });
+          }
+        };
+        mediaRecorderRef.current = recorder;
+        recorder.start();
+        appendInteractionEvent("RECORD", "start");
+        setSeconds(0);
+        setPhase("recording");
+        timerRef.current = window.setInterval(() => setSeconds((s) => s + 1), 1000);
+      } catch {
+        stream?.getTracks().forEach((t) => t.stop());
+        setPhase("review");
+        setMicFallback(true);
+        appendInteractionEvent("RECORD", "denied");
+      }
+    }, [stopTranscription]);
+
+    useImperativeHandle(ref, () => ({ startRecording: () => void startRecording() }), [
+      startRecording,
+    ]);
+
+    const stopRecording = useCallback(() => {
+      if (timerRef.current) {
+        window.clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      mediaRecorderRef.current?.stop();
+      appendInteractionEvent("RECORD", "stop");
       setPhase("review");
-      appendInteractionEvent("RECORD", "manual");
-      return;
-    }
+    }, []);
 
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-      chunksRef.current = [];
-      recorder.ondataavailable = (e) => {
-        if (e.data.size > 0) chunksRef.current.push(e.data);
-      };
-      recorder.onstop = () => {
-        stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
-        setAudioUrl((prev) => {
-          if (prev) URL.revokeObjectURL(prev);
-          return URL.createObjectURL(blob);
-        });
-      };
-      mediaRecorderRef.current = recorder;
-      recorder.start();
-      appendInteractionEvent("RECORD", "start");
+    useEffect(() => {
+      if (phase !== "review" || sttStartedRef.current || !hasAudioBlob) return;
+      sttStartedRef.current = true;
       startTranscription();
+    }, [phase, hasAudioBlob, startTranscription]);
+
+    const attachLocation = useCallback(async () => {
+      setGeoBusy(true);
+      setGeoError(null);
+      try {
+        const point = await readCurrentPosition();
+        setGeo(point);
+        appendInteractionEvent("SELECT", "GEO");
+      } catch {
+        setGeoError(geoCopy.failed);
+      } finally {
+        setGeoBusy(false);
+      }
+    }, [geoCopy.failed]);
+
+    const sendReport = useCallback(async () => {
+      if (sending) return;
+
+      const trimmed = text.trim();
+      const canSendNow = Boolean(trimmed || hasAudioBlob);
+      if (!canSendNow) return;
+
+      setSending(true);
+      try {
+        appendInteractionEvent("CHANGE", trimmed || "voice");
+        appendInteractionEvent("COMPLETE");
+
+        const traceEvents = getInteractionTrace().events;
+        const place = geo
+          ? formatPlaceFromGeo(geo)
+          : lang === "pl"
+            ? "Miejsce nieznane (bez GPS)"
+            : "Unknown place (no GPS)";
+
+        const payload: ObservationTracePayload = {
+          lang,
+          trajectory: null,
+          engineIndex: 0,
+          attentionCount: 0,
+          clock: localeDateTime(lang),
+          logLines: heatContext ? ["field/heat"] : ["field/voice"],
+          createdAt: Date.now(),
+          traceEvents,
+          citizen: {
+            place,
+            observedAt: new Date().toISOString(),
+            subject: geo ? "field_voice_geo" : heatContext ? "field_heat" : "field_voice",
+            relatedRefs: trimmed || audioOnlyLabel(lang),
+            traceDecision: "none",
+          },
+        };
+
+        registerTrace(payload);
+        setSentPayload(payload);
+        clearVoiceDraft();
+        setPendingDraft(null);
+
+        try {
+          await navigator.clipboard.writeText(
+            copyCitizenTraceText(payload, { heatContext: heatContext || undefined }),
+          );
+          setFlash(ui.copied);
+        } catch {
+          /* clipboard optional */
+        }
+
+        setPhase("sent");
+        onSent?.();
+        window.setTimeout(() => setFlash(null), 2400);
+      } finally {
+        setSending(false);
+      }
+    }, [geo, hasAudioBlob, heatContext, lang, onSent, sending, text, ui.copied]);
+
+    const startAnotherReport = useCallback(() => {
+      clearVoiceDraft();
+      setPendingDraft(null);
+      setSentPayload(null);
+      setPhase("idle");
+      setText("");
       setSeconds(0);
-      setPhase("recording");
-      timerRef.current = window.setInterval(() => setSeconds((s) => s + 1), 1000);
-    } catch {
+      setGeo(null);
+      setGeoError(null);
+      setHasAudioBlob(false);
+      setMicFallback(false);
+      setSttStatus("idle");
+      sttStartedRef.current = false;
+      stopTranscription();
+      if (audioUrl) URL.revokeObjectURL(audioUrl);
+      setAudioUrl(null);
+      clearInteractionTrace();
+      appendInteractionEvent("START");
+    }, [audioUrl, stopTranscription]);
+
+    const discardDraft = useCallback(() => {
+      clearVoiceDraft();
+      setPendingDraft(null);
+    }, []);
+
+    const restoreDraft = useCallback(() => {
+      if (!pendingDraft) return;
+      setText(pendingDraft.text);
+      if (pendingDraft.geo) {
+        setGeo({
+          lat: pendingDraft.geo.lat,
+          lng: pendingDraft.geo.lon,
+          accuracyM: pendingDraft.geo.accuracy,
+        });
+      }
       setPhase("review");
-      appendInteractionEvent("RECORD", "denied");
-    }
-  }, [canRecord, startTranscription]);
+      setPendingDraft(null);
+    }, [pendingDraft]);
 
-  const stopRecording = useCallback(() => {
-    if (timerRef.current) {
-      window.clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    stopTranscription();
-    mediaRecorderRef.current?.stop();
-    appendInteractionEvent("RECORD", "stop");
-    setPhase("review");
-  }, [stopTranscription]);
-
-  const sendReport = useCallback(async () => {
-    appendInteractionEvent("CHANGE", text.trim() || "voice");
-    appendInteractionEvent("COMPLETE");
-
-    const traceEvents = getInteractionTrace().events;
-    const payload: ObservationTracePayload = {
-      lang,
-      trajectory: null,
-      engineIndex: 0,
-      attentionCount: 0,
-      clock: localeDateTime(lang),
-      logLines: ["field/voice"],
-      createdAt: Date.now(),
-      traceEvents,
-      citizen: {
-        place: "Mokotów · Warszawa",
-        observedAt: new Date().toISOString(),
-        subject: "field_heat",
-        relatedRefs: text.trim() || copy.ctaVoiceReport,
-        traceDecision: "none",
-      },
+    const discardReview = () => {
+      if ((text.trim() || hasAudioBlob) && !window.confirm(rc.resetConfirm)) return;
+      clearVoiceDraft();
+      setPendingDraft(null);
+      setPhase("idle");
+      setText("");
+      setSeconds(0);
+      setGeo(null);
+      setGeoError(null);
+      setHasAudioBlob(false);
+      setMicFallback(false);
+      setSttStatus("idle");
+      sttStartedRef.current = false;
+      stopTranscription();
+      if (audioUrl) URL.revokeObjectURL(audioUrl);
+      setAudioUrl(null);
     };
 
-    registerTrace(payload);
+    const canSend = Boolean(text.trim() || hasAudioBlob) && !sending;
 
-    try {
-      await navigator.clipboard.writeText(buildTraceCitizenLayer(payload));
-      setFlash(ui.copied);
-    } catch {
-      /* clipboard optional */
+    const draftBanner =
+      pendingDraft && phase === "idle" ? (
+        <div className="space-y-2 py-2">
+          <p className="m-0 text-sm text-accent/80">{rc.draftRestorePrompt}</p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={restoreDraft}
+              className="min-h-11 touch-manipulation border-2 border-accent/45 px-4 py-2 text-sm font-medium text-ink"
+            >
+              {rc.draftRestoreAction}
+            </button>
+            <button
+              type="button"
+              onClick={discardDraft}
+              className="min-h-11 touch-manipulation border border-accent/25 px-4 py-2 text-sm text-accent/65"
+            >
+              {rc.draftDismissAction}
+            </button>
+          </div>
+        </div>
+      ) : null;
+
+    if (lean && phase === "idle" && !pendingDraft) {
+      return null;
     }
 
-    setPhase("sent");
-    onSent?.();
-    window.setTimeout(() => setFlash(null), 2400);
-  }, [copy.ctaVoiceReport, lang, onSent, text, ui.copied]);
+    if (lean && phase === "idle" && pendingDraft) {
+      return draftBanner;
+    }
 
-  const reset = () => {
-    setPhase("idle");
-    setText("");
-    setSeconds(0);
-    if (audioUrl) URL.revokeObjectURL(audioUrl);
-    setAudioUrl(null);
-  };
+    if (phase === "sent" && sentPayload) {
+      return (
+        <TraceReceiptPanel
+          trace={sentPayload}
+          lang={lang}
+          presentation={{ heatContext }}
+          flash={flash}
+          onFindHelp={onFindHelp}
+          onAnother={startAnotherReport}
+          anotherLabel={copy.ctaAnotherObservation}
+        />
+      );
+    }
 
-  if (phase === "sent") {
+    const panelClass = lean ? "px-0 py-2" : "px-0 py-3";
+
     return (
-      <section
-        aria-label={copy.voiceSentTitle}
-        className="rounded border-2 border-accent/40 bg-field px-4 py-5 sm:px-5"
-      >
-        <p className="m-0 text-lg font-medium text-ink">{copy.voiceSentTitle}</p>
-        <p className="mt-2 mb-5 text-sm text-accent/75">{copy.voiceSentBody}</p>
-        {flash && (
-          <p className="mb-3 text-xs text-accent/60">{flash}</p>
+      <section aria-label={copy.ctaVoiceReport} className={panelClass}>
+        {draftBanner}
+
+        {!lean && (
+          <h2 className="m-0 text-lg font-medium leading-snug text-ink sm:text-xl">
+            {copy.ctaVoiceReport}
+          </h2>
         )}
-        <div className="flex flex-col gap-2">
+
+        {!canRecord && phase === "idle" && !lean && (
+          <p className="mt-2 mb-0 text-sm text-accent/65">{copy.voiceUnsupported}</p>
+        )}
+
+        {phase === "idle" && !lean && (
           <SignalControl
             type="button"
             direction="right"
-            onClick={() => {
-              onFindHelp?.();
-            }}
-            className="min-h-12 w-full border border-accent/35 bg-field px-4 py-3 text-left text-sm text-ink touch-manipulation"
+            onClick={() => void startRecording()}
+            className="mt-4 min-h-14 w-full border-2 border-accent/45 bg-field px-4 py-4 text-left text-base font-medium text-ink touch-manipulation"
           >
-            {copy.ctaNearbyHelp}
+            {canRecord ? copy.voiceStart : copy.voiceOrType}
           </SignalControl>
-          <Link
-            href="/"
-            className="flex min-h-12 w-full items-center border border-accent/25 bg-field/80 px-4 py-3 text-sm text-accent/85 touch-manipulation"
-          >
-            {copy.ctaAnotherObservation}
-          </Link>
-        </div>
-      </section>
-    );
-  }
+        )}
 
-  return (
-    <section
-      aria-label={copy.ctaVoiceReport}
-      className="rounded border-2 border-accent/50 bg-field px-4 py-5 sm:px-5"
-    >
-      <h2 className="m-0 text-lg font-medium leading-snug text-ink sm:text-xl">
-        {copy.ctaVoiceReport}
-      </h2>
-
-      {!canRecord && phase === "idle" && (
-        <p className="mt-2 mb-0 text-sm text-accent/65">{copy.voiceUnsupported}</p>
-      )}
-
-      {phase === "idle" && (
-        <SignalControl
-          type="button"
-          direction="right"
-          onClick={() => void startRecording()}
-          className="mt-4 min-h-14 w-full border-2 border-accent/45 bg-field px-4 py-4 text-left text-base font-medium text-ink touch-manipulation"
-        >
-          {canRecord ? copy.voiceStart : copy.voiceOrType}
-        </SignalControl>
-      )}
-
-      {phase === "recording" && (
-        <div className="mt-4 space-y-3">
-          <p className="m-0 flex items-center gap-2 text-base text-ink">
-            <span className="inline-block h-3 w-3 animate-pulse rounded-full bg-[var(--color-warsaw-heat-critical)]" aria-hidden />
-            {copy.voiceRecording}
-            <span className="ml-auto font-mono-field tabular-nums text-accent/80">
-              {formatTimer(seconds)}
-            </span>
-          </p>
-          <SignalControl
-            type="button"
-            direction="right"
-            onClick={stopRecording}
-            className="min-h-12 w-full border border-accent/40 bg-field px-4 py-3 text-left text-sm text-ink touch-manipulation"
-          >
-            {copy.voiceStop}
-          </SignalControl>
-        </div>
-      )}
-
-      {phase === "review" && (
-        <div className="mt-4 space-y-3">
-          <p className="m-0 text-sm font-medium text-ink">{copy.voiceSaved}</p>
-          <p className="m-0 text-sm text-accent/75">{copy.voiceReviewPrompt}</p>
-          {audioUrl && (
-            <div className="flex flex-wrap gap-2">
-              <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
-                {copy.voicePlay}
-              </audio>
-            </div>
-          )}
-          <label className="block space-y-1">
-            <span className="text-xs text-accent/55">{copy.voiceOrType}</span>
-            <textarea
-              rows={3}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder={copy.voiceTranscribePlaceholder}
-              className="w-full min-h-20 touch-manipulation border border-accent/30 bg-field px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-            />
-          </label>
-          <div className="flex flex-col gap-2 sm:flex-row">
+        {phase === "recording" && (
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            <p className="m-0 flex items-center gap-2 text-base text-ink">
+              <span
+                className="inline-block h-3 w-3 animate-pulse rounded-full bg-[var(--color-warsaw-heat-critical)]"
+                aria-hidden
+              />
+              {copy.voiceRecording}
+              <span className="ml-auto font-mono-field tabular-nums text-accent/80">
+                {formatTimer(seconds)}
+              </span>
+            </p>
             <SignalControl
               type="button"
               direction="right"
-              onClick={() => void sendReport()}
-              className="min-h-12 flex-1 border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation"
+              onClick={stopRecording}
+              className="min-h-12 w-full border border-accent/40 bg-field px-4 py-3 text-left text-sm text-ink touch-manipulation"
             >
-              {copy.voiceSend}
+              {copy.voiceStop}
             </SignalControl>
+          </div>
+        )}
+
+        {phase === "review" && micFallback && (
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            <p className="m-0 text-base font-medium text-ink">{copy.voiceMicFallbackTitle}</p>
+            <p className="m-0 text-sm text-accent/70">{copy.voiceMicFallbackLead}</p>
+            <label className="block space-y-2">
+              <span className="text-sm text-ink">{copy.voiceTypeObservation}</span>
+              <textarea
+                rows={4}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder={copy.voiceDescriptionPlaceholder}
+                className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+              />
+            </label>
+            <div className="flex flex-col gap-2">
+              <SignalControl
+                type="button"
+                direction="right"
+                disabled={!text.trim() || sending}
+                onClick={() => void sendReport()}
+                className="min-h-12 w-full border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
+              >
+                {sending ? copy.voiceSending : copy.voiceSend}
+              </SignalControl>
+              <button
+                type="button"
+                onClick={() => void startRecording()}
+                className="min-h-12 border border-accent/30 px-4 py-3 text-sm text-ink touch-manipulation"
+              >
+                {copy.voiceMicRetry}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {phase === "review" && !micFallback && hasAudioBlob && (
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            <p className="m-0 text-base font-medium text-ink">{copy.voiceRecordingReady}</p>
+            {audioUrl && (
+              <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
+                {copy.voicePlay}
+              </audio>
+            )}
+            <SignalControl
+              type="button"
+              direction="right"
+              disabled={sending}
+              onClick={() => void sendReport()}
+              className="min-h-12 w-full border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
+            >
+              {sending ? copy.voiceSending : copy.voiceSend}
+            </SignalControl>
+            <details className="border border-accent/15 bg-field/40 px-3 py-2">
+              <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
+                {copy.voiceAddDescription}
+              </summary>
+              <div className="mt-3 space-y-3 pb-1">
+                {sttStatus === "pending" && (
+                  <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribePending}</p>
+                )}
+                {sttStatus === "failed" && (
+                  <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribeFailed}</p>
+                )}
+                <textarea
+                  rows={3}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder={copy.voiceDescriptionPlaceholder}
+                  className="w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+                />
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    disabled={geoBusy || !!geo}
+                    onClick={() => void attachLocation()}
+                    className="min-h-11 w-full touch-manipulation border border-accent/25 bg-field/80 px-4 py-2.5 text-left text-sm text-ink disabled:opacity-60"
+                  >
+                    {geo ? geoCopy.attached : geoCopy.attach}
+                  </button>
+                  {geo && (
+                    <p className="m-0 font-mono-field text-xs text-accent/55">
+                      {formatPlaceFromGeo(geo)}
+                    </p>
+                  )}
+                  {geoError && <p className="m-0 text-xs text-accent/55">{geoError}</p>}
+                </div>
+              </div>
+            </details>
             <button
               type="button"
-              onClick={reset}
-              className="min-h-12 border border-accent/20 px-4 py-3 text-sm text-accent/60 touch-manipulation"
+              onClick={discardReview}
+              className="min-h-11 text-sm text-accent/55 touch-manipulation"
             >
               {ui.startOver}
             </button>
           </div>
-        </div>
-      )}
+        )}
 
-      {phase === "idle" && (
-        <p className="mt-3 mb-0 text-xs text-accent/50">{copy.voiceOrType}</p>
-      )}
-    </section>
-  );
-}
+        {phase === "review" && !micFallback && !hasAudioBlob && (
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            <label className="block space-y-2">
+              <span className="text-sm text-ink">{copy.voiceTypeObservation}</span>
+              <textarea
+                rows={4}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder={copy.voiceDescriptionPlaceholder}
+                className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+              />
+            </label>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <SignalControl
+                type="button"
+                direction="right"
+                disabled={!canSend}
+                onClick={() => void sendReport()}
+                className="min-h-12 flex-1 border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
+              >
+                {sending ? copy.voiceSending : copy.voiceSend}
+              </SignalControl>
+              <button
+                type="button"
+                onClick={discardReview}
+                className="min-h-12 border border-accent/20 px-4 py-3 text-sm text-accent/60 touch-manipulation"
+              >
+                {ui.startOver}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {phase === "idle" && !lean && (
+          <p className="mt-3 mb-0 text-xs text-accent/50">{copy.voiceOrType}</p>
+        )}
+      </section>
+    );
+  },
+);
+
+export default FieldVoiceReport;
 
 type SpeechRecognitionResultItem = { transcript: string };
 type SpeechRecognitionResultList = ArrayLike<{ 0: SpeechRecognitionResultItem }>;
@@ -321,6 +610,7 @@ interface SpeechRecognitionInstance {
   continuous: boolean;
   interimResults: boolean;
   onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: ((event: unknown) => void) | null;
   start: () => void;
   stop: () => void;
 }
