@@ -3,9 +3,16 @@
 **Pierwsza kartka** — dla programisty, projektanta, testera, rodzica, wolontariusza.  
 Bez FOP, bez warstw, bez filozofii technologii.
 
-> **WARSZAWASZA** to interfejs rzeczywistości, który łączy dwa kierunki: **miasto pomaga Tobie**, a **Ty pomagasz miastu**.
+> **WARSZAWASZA** to interfejs rzeczywistości, który pomaga człowiekowi **odnaleźć pomoc** i **przekazać ważną obserwację**.
 
 Jeśli to jedno zdanie jest jasne, reszta dokumentacji będzie łatwiejsza.
+
+**W Warszawie** oznacza to:
+
+- **📍** Miasto pomaga Tobie.
+- **🎤** Ty pomagasz miastu.
+
+Ta sama logika działa w szkole (skradziony rower), na festiwalu, w lesie, na lotnisku — **Warszawa to pierwsze wdrożenie**, nie jedyna interpretacja.
 
 ---
 
