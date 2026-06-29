@@ -4,6 +4,8 @@
 
 **Filter:** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
 
+**Grammar filter:** Czy obecna **gramatyka** (📍 pomoc · 🎤 obserwacja · kontekst od systemu) obsłuży tę sytuację bez nowego ekranu? Tak → nic nie dodawaj. Nie → wzmocnij gramatykę, nie doklejaj scenariusza. See [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md#gramatyka-nie-scenariusze).
+
 **Development principles:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc) (always applied in Cursor).
 
 **Success:** narzędzie znika — zostaje miasto.

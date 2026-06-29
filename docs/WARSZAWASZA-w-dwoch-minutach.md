@@ -86,6 +86,45 @@ Mechanizm jest szerszy; zmienia się **sytuacja**, nie logika.
 
 ---
 
+## Gramatyka, nie scenariusze
+
+Scenariuszy może być nieskończenie wiele: upał, rower, Budapeszt, deskorolkarz, zagubione dziecko, awaria windy, zalana ulica, pożar, pies bez właściciela, zamknięty most, koncert, maraton…
+
+Dlatego **nie projektujesz scenariuszy**. Projektujesz **gramatykę**, nie zdania.
+
+| Źle (scenariusze) | Dobrze (gramatyka) |
+|-------------------|---------------------|
+| ekran dla roweru | 🎤 powiedz, co widzisz |
+| ekran dla upału | 📍 potrzebujesz pomocy? |
+| ekran dla Budapesztu | system dodaje kontekst |
+
+Język polski nie ma osobnego czasownika dla zgubionego roweru, upału, pożaru ani gradu. Ma **gramatykę**. WARSZAWASZA robi to samo — kilka elementów, z których składa się tysiące sytuacji.
+
+```
+Co się dzieje?          (sygnał — opcjonalnie, od systemu)
+        ↓
+🎤 Powiedz, co widzisz.
+        ↓
+📍 Potrzebujesz pomocy?
+        ↓
+System dodaje kontekst. (GPS, czas, język, trace)
+        ↓
+Działanie.
+```
+
+**Pytanie projektowe** — nie *„Jak obsłużyć ten scenariusz?”*, lecz:
+
+> **Czy obecna gramatyka potrafi obsłużyć ten scenariusz?**
+
+- **Tak** → nie dodajesz nic.
+- **Nie** → poprawiasz **gramatykę**, nie doklejasz kolejny ekran.
+
+Początkujący projekt rośnie przez dodawanie scenariuszy. Dojrzały — przez wzmacnianie kilku prostych reguł. Przykłady w tej kartce (upał, rower, Budapeszt, kwiaty na balkonie) to **zdania zbudowane z tej samej gramatyki**, nie osobne produkty.
+
+`/field/heat` to **wdrożenie pola** (konkretny sygnał + mapa Warszawy), nie nowy język. Wejście na `/` to ta sama gramatyka bez konkretnego sygnału.
+
+---
+
 ## 📍 Miasto pomaga Tobie
 
 Potrzebujesz czegoś **tu i teraz**.
@@ -288,7 +327,7 @@ Dwa pytania, które człowiek zadaje w trudnej chwili:
 | Link | Co to |
 |------|--------|
 | [warszawasza.online](https://www.warszawasza.online/) | Wejście (cold start) |
-| [warszawasza.online/field/heat](https://www.warszawasza.online/field/heat) | Scenariusz upału — ten sam interfejs |
+| [warszawasza.online/field/heat](https://www.warszawasza.online/field/heat) | Wdrożenie pola (upał 2026) — ta sama gramatyka, konkretny sygnał |
 
 Stary pełny UI studia: `/?legacy=1` (warsztat — warstwa **JAK**, nie test terenowy).
 
@@ -306,13 +345,14 @@ Stary pełny UI studia: `/?legacy=1` (warsztat — warstwa **JAK**, nie test ter
 
 ## Co warto zapamiętać
 
-Nie numer PR ani FOP — **dwa pytania** i **jedna zasada**:
+Nie numer PR ani FOP — **dwa pytania**, **dwie zasady** i **jedno pytanie filtra**:
 
 - **📍 Kto może mi pomóc?**
 - **🎤 Komu mogę powiedzieć, co się stało?**
 - **Człowiek przekazuje fakty. System dodaje kontekst.**
+- **Gramatyka, nie scenariusze** — *czy obecna gramatyka obsłuży tę sytuację?*
 
-Jeśli za rok ktoś pamięta te pytania i tę zasadę, a nie architekturę — WARSZAWASZA zrobiła swoje. Reszta to implementacja.
+Jeśli za rok ktoś pamięta te pytania i zasady, a nie architekturę — WARSZAWASZA zrobiła swoje. Reszta to implementacja.
 
 ---
 
