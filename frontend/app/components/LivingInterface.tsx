@@ -1,5 +1,7 @@
 "use client";
 
+/** LAB — studio UI (`/?legacy=1`). Nie rdzeń produktu 1.0. Zob. docs/core/product-vs-lab.md */
+
 import { useEffect, useRef, useState, useTransition } from "react";
 import { TRAJECTORY_KEY, type TrajectoryChoice } from "../../lib/artifactI18n";
 import { COPY, type Lang } from "../../lib/i18n";

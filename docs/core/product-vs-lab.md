@@ -1,0 +1,61 @@
+# Produkt vs laboratorium
+
+**Pytanie:** Co jest produktem, a co laboratorium?
+
+Eksperymenty zostają w repozytorium. **Domyślna ścieżka użytkownika** to tylko rdzeń.
+
+---
+
+## Rdzeń produktu (1.0)
+
+Rzeczy, które pomagają człowiekowi **tu i teraz**:
+
+| Działanie | Gdzie |
+|-----------|--------|
+| 🎤 Nagraj obserwację | `/`, `/field/heat` |
+| 📍 Znajdź wodę i cień | `/field/heat` |
+| Proste potwierdzenie zgłoszenia | po wysyłce / L1 |
+| Jeden kolejny krok | CTA, nie menu |
+
+**Kod (orientacja):** `frontend/app/components/field/*`, `frontend/lib/field/*`, `CitizenTrace`, `TraceReceiptPanel`, `traceViewModel` (L1).
+
+**Test jutro:** usuń z domyślnej ścieżki narrację „sygnały”, chmurę, Living Interface, animacje — czy użytkownik nadal znajdzie wodę, nagra obserwację i wyśle zgłoszenie? **Tak** → te elementy nie należą do rdzenia.
+
+---
+
+## Laboratorium (nie produkt 1.0)
+
+Wartościowe eksperymenty — **nie muszą być widoczne** dla użytkownika terenowego:
+
+| Obszar | Przykłady |
+|--------|-----------|
+| Narracja | „Miasto reaguje na sygnały.” |
+| Estetyka | chmura ambient, `LivingSignalText`, `SignalFieldEngine` |
+| Studio | `LivingInterface`, pipeline, `patternEngine`, pełny FOP jako scenariusz |
+| Analityka | klasyfikacja sygnałów, model świata, interference graph |
+
+**Wejście lab:** `/?legacy=1` · `SignalFieldProvider` · `fira/` · strony studia / deliberation / artefaktów.
+
+Nie wyrzucamy — oznaczamy i **nie rozwijamy** bez dowodu z terenu, że rdzeń tego wymaga.
+
+---
+
+## Ślad ≠ funkcja
+
+Nagranie: *„Widziałem dziś jajko.”*
+
+| Tak | Nie (bez obserwacji z pola) |
+|-----|------------------------------|
+| zapisać jako zwykły ślad (audio, opcjonalny tekst) | klasyfikować, analizować, reagować, budować model |
+
+Nie każdy ślad musi zamienić się w funkcję.
+
+---
+
+## Filtr decyzji
+
+> **Czy to pomaga człowiekowi podjąć lepszą decyzję?**
+
+Najpierw pytanie o **potrzebę**, potem o implementację.
+
+Powiązane: [`project.md`](../project.md) · [`field-first-release.md`](field-first-release.md)

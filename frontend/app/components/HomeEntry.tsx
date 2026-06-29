@@ -23,7 +23,7 @@ function HomeRouter() {
   return <ColdStartClient />;
 }
 
-/** Default `/` = cold start; full studio UI at `/?legacy=1`. */
+/** Default `/` = produkt (cold start). `/?legacy=1` = laboratorium — LivingInterface, nie test terenowy. */
 export default function HomeEntry() {
   return (
     <Suspense fallback={<ColdStartClient />}>
