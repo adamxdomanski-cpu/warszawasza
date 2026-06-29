@@ -34,8 +34,8 @@ cd frontend && npm run build
 
 ## Proces zespołu (nie kod)
 
-**Reguła:** nie dodajemy nowych funkcji przed zebraniem dowodów z pola.  
-Pełna tabela cyklu wydania, trzy źródła prawdy, rejestr (Obserwacja → Decyzja → Wynik): [`docs/core/field-first-release.md`](docs/core/field-first-release.md)
+**Reguła:** nie dodajemy funkcji przed obserwacją z terenu.  
+Proces (cztery pytania + rejestr): [`docs/core/field-first-release.md`](docs/core/field-first-release.md) · załącznik: [`field-first-release-appendix.md`](docs/core/field-first-release-appendix.md)
 
 Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/final-integration-pass.md).
 
