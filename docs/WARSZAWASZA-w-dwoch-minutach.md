@@ -153,21 +153,54 @@ Zmienia się tylko sytuacja.
 
 ---
 
+## Zasada pod stresem
+
+To **nie jest problem języka**. To **obciążenie poznawcze**, gdy serce bije szybciej.
+
+W takiej chwili człowiek **nie powinien** szukać nazwy ulicy, przepisywać adresu ani wypełniać formularza. Powinien móc zrobić **jedno**: powiedzieć, co widzi.
+
+**Człowiek przekazuje fakty. System dodaje kontekst.** Nie odwrotnie.
+
+| Człowiek mówi | System dodaje |
+|---------------|---------------|
+| „Chłopak spadł z deskorolki. Chyba złamał rękę.” | lokalizację (GPS → adres / punkt orientacyjny) |
+| „Leży na chodniku.” | czas |
+| (w swoim języku) | język oryginału + tłumaczenie dla operatora |
+| | identyfikator zgłoszenia |
+
+Docelowy przepływ — **jedno działanie człowieka** (mówi), reszta w tle:
+
+```
+🎤 Powiedz, co widzisz
+        ↓
+📍 Lokalizacja dodana automatycznie
+        ↓
+🌍 Tłumaczenie przygotowane automatycznie (oryginał zachowany)
+        ↓
+✓ Wyślij
+```
+
+System ma powiedzieć: *Prawdopodobna lokalizacja: Bartók Béla út 37, Budapeszt* — nie odwrotnie.
+
+---
+
 ## Obce miasto, obcy język (np. Budapeszt)
 
 Jesteś świadkiem wypadku. **Nie znasz węgierskiego.** Nie przeczytasz tablicy ulicy. **Stres** — nie masz siły na formularz.
 
-Co możesz zrobić **już dziś**:
+Co możesz zrobić **już dziś** (krok w stronę zasady powyżej):
 
 | Potrzeba | Co robi interfejs |
 |----------|-------------------|
 | Mówić po swojemu | Wybierz **`[ PL ]`** (lub swój język) — mówisz głosem, nie piszesz |
-| Nie znać ulicy | **`📍 Dołącz, gdzie jestem`** — jedno dotknięcie, współrzędne GPS (bez czytania tablic) |
+| Nie znać ulicy | **`📍 Dołącz, gdzie jestem`** — jedno dotknięcie, współrzędne GPS (bez czytania tablic); docelowo **automatycznie po nagraniu** |
 | Opisać zdarzenie | 🎤 *„Widzę wypadek deskorolkarza, potrzebuje pomocy”* |
 
 **📍 Znajdź pomoc w pobliżu** w wdrożeniu warszawskim wskazuje **konkretne punkty w Warszawie**. W Budapeszcie ten przycisk na razie **nie zna lokalnej mapy** — to kolejne wdrożenie, ten sam mechanizm.
 
-**Tłumaczenie dla służb** (węgierski operator czyta po polsku) — to warstwa **operatora / backendu**, nie ekranu w stresie. Ty wysyłasz **głos + GPS w swoim języku**; system przekazuje dalej. Na ekranie obywatela: **zero tłumaczenia na siłę**, tylko dwa kierunki.
+**Tłumaczenie dla służb** (operator widzi wersję lokalną, oryginał zachowany) — warstwa **systemu / operatora**, nie formularz w stresie. Ty wysyłasz **głos + GPS w swoim języku**; reszta dzieje się po stronie systemu. Na ekranie obywatela: **zero tłumaczenia na siłę**, tylko dwa kierunki.
+
+**Reverse geocoding** (współrzędne → „Bartók Béla út 37”) i **auto-GPS po nagraniu** — kolejne kroki implementacji; zasada jest już zapisana w trace (warstwa obywatela vs operatora).
 
 Uniwersalna definicja na okładce obejmuje ten przypadek: **pomoc + obserwacja** — bez wymogu znajomości języka kraju.
 
@@ -242,12 +275,13 @@ Stary pełny UI studia: `/?legacy=1` (warsztat — warstwa **JAK**, nie test ter
 
 ## Co warto zapamiętać
 
-Nie numer PR ani FOP — **dwa pytania**:
+Nie numer PR ani FOP — **dwa pytania** i **jedna zasada**:
 
 - **📍 Kto może mi pomóc?**
 - **🎤 Komu mogę powiedzieć, co się stało?**
+- **Człowiek przekazuje fakty. System dodaje kontekst.**
 
-Jeśli za rok ktoś pamięta te pytania, a nie architekturę — WARSZAWASZA zrobiła swoje. Reszta to implementacja.
+Jeśli za rok ktoś pamięta te pytania i tę zasadę, a nie architekturę — WARSZAWASZA zrobiła swoje. Reszta to implementacja.
 
 ---
 
