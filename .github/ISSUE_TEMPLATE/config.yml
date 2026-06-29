@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: WARSZAWASZA w dwóch minutach
+    url: https://github.com/adamxdomanski-cpu/warszawasza/blob/main/docs/WARSZAWASZA-w-dwoch-minutach.md
+    about: Kontekst produktu (PO CO) przed issue
+  - name: Final integration pass
+    url: https://github.com/adamxdomanski-cpu/warszawasza/blob/main/docs/core/final-integration-pass.md
+    about: Konkretne zadanie integracyjne dla Cursor / dev
