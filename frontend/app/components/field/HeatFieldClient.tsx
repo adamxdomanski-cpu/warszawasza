@@ -14,7 +14,7 @@ import {
   HEAT_RCB_CRITICAL,
 } from "../../../lib/field/heatFieldI18n";
 import type { Lang } from "../../../lib/i18n";
-import { LANGS } from "../../../lib/i18n";
+import { initialFieldLang } from "../../../lib/field/initialFieldLang";
 import {
   appendInteractionEvent,
   clearInteractionTrace,
@@ -22,13 +22,6 @@ import {
   getInteractionTrace,
 } from "../../../lib/interactionTrace";
 import { formatJourneyBlock, journeyLayerTitle } from "../../../lib/traceJourney";
-
-function initialFieldLang(): Lang {
-  if (typeof window === "undefined") return "pl";
-  const nav = navigator.language.toLowerCase();
-  const hit = LANGS.find((code) => nav === code || nav.startsWith(`${code}-`));
-  return hit ?? "pl";
-}
 
 export default function HeatFieldClient() {
   const [lang, setLang] = useState<Lang>(() => initialFieldLang());
@@ -105,40 +98,6 @@ export default function HeatFieldClient() {
             <span className="text-ink/90"> · {copy.factSubtitle}</span>
           </h1>
 
-          <details className="rounded border border-accent/20 bg-field/80 px-4 py-3">
-            <summary className="cursor-pointer text-sm font-medium text-accent touch-manipulation">
-              {copy.alertRcbLabel}
-            </summary>
-            <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/75">
-              {copy.alertRcbBody}
-            </p>
-          </details>
-
-          <div className="rounded border border-accent/20 bg-field/80 px-4 py-3">
-            <p className="m-0 mb-2 text-sm font-medium text-ink/90">{copy.transportTitle}</p>
-            <ul className="m-0 list-none space-y-1.5 pl-0 text-sm text-accent/75">
-              <li>⚠ {copy.transportTram}</li>
-              <li>⚠ {copy.transportSkm}</li>
-            </ul>
-            <details className="mt-2">
-              <summary className="cursor-pointer text-xs text-accent/50 touch-manipulation">
-                {copy.transportMore}
-              </summary>
-              <p className="mt-2 mb-0 text-xs leading-relaxed text-accent/45">
-                {copy.transportTram}. {copy.transportSkm}.
-              </p>
-            </details>
-          </div>
-
-          <details className="rounded border border-accent/15 bg-field/60 px-4 py-3">
-            <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
-              {copy.waterSaveTitle}
-            </summary>
-            <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/65">
-              {copy.waterSaveQuestion}
-            </p>
-          </details>
-
           <div className="grid gap-2 sm:grid-cols-2">
             <SignalControl
               type="button"
@@ -157,6 +116,32 @@ export default function HeatFieldClient() {
               {copy.ctaNearbyHelp}
             </SignalControl>
           </div>
+
+          <details className="rounded border border-accent/15 bg-field/60 px-4 py-3">
+            <summary className="cursor-pointer text-sm text-accent/55 touch-manipulation">
+              {copy.moreContextLabel}
+            </summary>
+            <div className="mt-3 space-y-3">
+              <details className="rounded border border-accent/20 bg-field/80 px-4 py-3">
+                <summary className="cursor-pointer text-sm font-medium text-accent touch-manipulation">
+                  {copy.alertRcbLabel}
+                </summary>
+                <p className="mt-3 mb-0 text-sm leading-relaxed text-accent/75">
+                  {copy.alertRcbBody}
+                </p>
+              </details>
+
+              <div className="rounded border border-accent/20 bg-field/80 px-4 py-3">
+                <p className="m-0 mb-2 text-sm font-medium text-ink/90">{copy.transportTitle}</p>
+                <ul className="m-0 list-none space-y-1.5 pl-0 text-sm text-accent/75">
+                  <li>⚠ {copy.transportTram}</li>
+                  <li>⚠ {copy.transportSkm}</li>
+                </ul>
+              </div>
+
+              <p className="m-0 text-sm leading-relaxed text-accent/65">{copy.waterSaveQuestion}</p>
+            </div>
+          </details>
         </header>
 
         <section ref={voiceRef} aria-label={copy.ctaVoiceReport}>
@@ -168,6 +153,7 @@ export default function HeatFieldClient() {
         </section>
 
         <section
+          id="nearby"
           ref={nearbyRef}
           aria-label={copy.layer2Title}
           className={helpOpen ? "opacity-100" : "opacity-100"}

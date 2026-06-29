@@ -1,12 +1,5 @@
-import LivingInterface from "./components/LivingInterface";
-import LucyAttention from "./components/LucyAttention";
-import SignalFieldProvider from "./components/SignalFieldProvider";
+import HomeEntry from "./components/HomeEntry";
 
 export default function Home() {
-  return (
-    <SignalFieldProvider>
-      <LucyAttention />
-      <LivingInterface />
-    </SignalFieldProvider>
-  );
+  return <HomeEntry />;
 }

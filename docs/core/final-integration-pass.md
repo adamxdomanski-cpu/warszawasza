@@ -1,136 +1,109 @@
-# WARSZAWASZA — Final Integration Pass
+# WARSZAWASZA · Integration Pass · Cold Start Validation
 
-Single integration task for Cursor. Describes **what to build**, not project philosophy.
+**Goal:** Prepare the smallest possible product state for a real cold-start test.  
+**Do not** redesign, add concepts, or new architecture.
 
----
+Everything supports one question:
 
-## Reality interface (primary)
-
-Implement the next iteration of WARSZAWASZA as a **reality interface**.
-
-### GOAL
-
-Reduce the energy required to understand the city and leave an observation.
-
-### 1. THREE AUDIENCE LAYERS
-
-Split the observation export into three progressive layers.
-
-**LEVEL 1 — Citizen (default)**
-
-Visible immediately. Show only:
-
-- ✓ Observation received
-- Verification status
-- Primary action buttons
-- Relevant links
-
-Nothing else. Default clipboard and mailto use this layer only.
-
-**LEVEL 2 — Journey**
-
-Collapsed by default. Title: `▼ How was this observation processed?` (PL: `▼ Jak przebiegało zgłoszenie?`)
-
-Human-readable trajectory, e.g.:
-
-```
-START
-↓
-Location selected
-↓
-Confirmation
-↓
-Sent
-↓
-Completed
-```
-
-No internal codes.
-
-**LEVEL 3 — Technical**
-
-Collapsed by default. Developer artifacts only: trace, pipeline, FOP, telemetry, hypotheses, debug.
-
-Never mix this layer with citizen-facing content. Hypotheses never appear in Level 1.
-
-**Code:** `frontend/lib/observationTrace.ts`, `frontend/lib/traceJourney.ts`, `LeaveTraceControl.tsx`
-
-### 2. FIELD INPUT
-
-Add voice reporting as a **primary** interaction on `/field/heat`. Place it next to the map.
-
-Primary CTA: **🎤 Tell us what you see** / **🎤 Powiedz, co widzisz**
-
-Flow: Record → optional transcription → Review → Send
-
-Voice is preferred; typing remains optional.
-
-**Code:** `frontend/app/components/field/FieldVoiceReport.tsx`, `HeatFieldClient.tsx`
-
-Trace path on success: `START → RECORD → SEND → COMPLETE`
-
-### 3. NAVIGATION
-
-Shallow navigation. After every completed action, two choices only:
-
-- Find nearby help → `/field/heat`
-- Leave another observation → `/`
-
-Avoid dead ends.
-
-### 4. DESIGN
-
-Outdoor conditions: high contrast, large typography, minimal animation, functional motion only. Heat indicators may use slow breathing animation. No decorative animation.
-
-### 5. VALIDATION
-
-Success = task completion, not scroll depth.
-
-Example completion path: START → RECORD → SEND → COMPLETE
-
-Implement the **smallest possible working version**.
+> Can a person who has never seen WARSZAWASZA understand what to do within 10 seconds?
 
 ---
 
-## Build pass (secondary)
+## 1. Cold start
 
-When features above are done, finish without changing philosophy:
+Visitor knows nothing: no WARSZAWASZA, FOP, civic-tech, Warsaw, prior discussions.  
+The interface must explain itself.
+
+## 2. Primary actions (above the fold)
+
+Only two primary actions visible first:
+
+- 📍 Find help nearby
+- 🎤 Tell us what you see
+
+Everything else is secondary (collapsed or below).
+
+## 3. Voice first
+
+Preferred field flow:
+
+`START → Record → (optional transcription) → Review → Send → ✓ Report received → two choices`
+
+Typing remains secondary.
+
+## 4. Three audience layers
+
+| Layer | Default | Content |
+|-------|---------|---------|
+| Citizen | visible | received, verification, next actions |
+| Journey | collapsed | human steps only |
+| Technical | collapsed | trace, FOP, telemetry, hypotheses |
+
+Never expose technical details by default.
+
+## 5. Navigation
+
+`/` and `/field/heat` share the same interaction model.  
+After every completed task, only:
+
+- Find help nearby
+- Leave another observation
+
+Legacy studio UI: `/?legacy=1`
+
+## 6. Validation metric
+
+Optimise **task completion** only — not scroll depth, pause, or click count.
+
+`START → VOICE → SEND → COMPLETE`
+
+## 7. Cold start test protocol
+
+1. Send **only the link** (e.g. `https://www.warszawasza.online/` or `/field/heat`).
+2. One instruction: *„Otwórz stronę i zrób to, co według Ciebie ma sens.”*
+3. After ~10 seconds, **one question:**  
+   **„Jak myślisz, do czego służy ta strona?”**
+
+**Pass** (architecture works):
+
+- „Mogę znaleźć pomoc.”
+- „Mogę zgłosić / powiedzieć, co widzę.”
+- „Do zgłaszania i szukania informacji.”
+
+**Fail** (first screen, not tester):
+
+- „Strona o Warszawie…”
+- „Nie wiem.”
+- „Jakiś projekt?”
+
+→ Change **one thing**, test again. Reality decides.
+
+**Hypothesis under test:** Do two primary actions suffice to explain WARSZAWASZA?  
+(not whether a specific label is perfect)
+
+---
+
+## Code map
+
+| Area | Files |
+|------|--------|
+| Cold start `/` | `ColdStartClient.tsx`, `HomeEntry.tsx` |
+| Field / heat | `HeatFieldClient.tsx`, `FieldVoiceReport.tsx` |
+| Trace layers | `observationTrace.ts`, `traceJourney.ts` |
+| Copy / langs | `heatFieldI18n.ts`, `coldStartI18n.ts` |
+
+## Build check
 
 ```bash
-cd frontend
-npm install
-npm run build
-```
-
-Optional hygiene (only if scripts exist): lint, typecheck, remove unused imports.
-
-**Do not** rewrite working code. **Do not** invent features beyond this document.
-
-### Output when done
-
-```markdown
-## Summary
-- Files modified
-- Problems fixed
-- Remaining issues (if any)
-
-## Validation
-✅ Build
+cd frontend && npm run build
 ```
 
 ---
 
-## Persona reference (context only)
+## Cursor task (copy-paste)
 
-**Miejski Operator** — creator and analyst of the city; Warsaw as a system of rhythms, structures, and dependencies. Communicates clearly, avoids jargon, designs for low information entropy. Not a rule for the agent — context for copy and UX decisions.
-
----
-
-## Key URLs
-
-| Action | URL |
-|--------|-----|
-| Field / heat | https://www.warszawasza.online/field/heat |
-| Leave observation | https://www.warszawasza.online/ |
-
-Closing line: *Tak wygląda moja Warszawa. A Wasza?*
+```
+@docs/core/final-integration-pass.md
+Prepare WARSZAWASZA for cold-start validation. Smallest diff only.
+Do not redesign. One hypothesis: two actions above the fold + voice-first completion.
+```

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { HeatCopy } from "../../../lib/field/heatFieldI18n";
+import type { ColdStartCopy } from "../../../lib/field/coldStartI18n";
 import type { Lang } from "../../../lib/i18n";
 import { speechRecognitionLocale, localeDateTime } from "../../../lib/localeMap";
 import { journeyUiCopy } from "../../../lib/traceJourney";
@@ -21,7 +21,7 @@ type VoicePhase = "idle" | "recording" | "review" | "sent";
 
 type FieldVoiceReportProps = {
   lang: Lang;
-  copy: HeatCopy;
+  copy: ColdStartCopy;
   onSent?: () => void;
   onFindHelp?: () => void;
 };

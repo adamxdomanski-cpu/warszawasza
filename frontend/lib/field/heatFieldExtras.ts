@@ -83,6 +83,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
     hypothesisHeat:
       "Il caldo estremo aumenta la domanda di acqua e ombra nello spazio pubblico (provvisorio).",
     devEventCodes: "Codici evento (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Altro contesto",
   },
   bg: {
     statusLine: "ВАРШАВА · 28 ЮНИ 2026 · 16:30",
@@ -151,6 +152,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Хипотеза",
     hypothesisHeat: "Екстремната жега увеличава нуждата от вода и сянка (provisional).",
     devEventCodes: "Кодове (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Повече контекст",
   },
   et: {
     statusLine: "VARSSAVI · 28. JUUNI 2026 · 16:30",
@@ -219,6 +221,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Hüpotees",
     hypothesisHeat: "Äärmuslik kuumus suurendab vajadust vee ja varju järele (provisional).",
     devEventCodes: "Sündmuskoodid (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Rohkem konteksti",
   },
   fi: {
     statusLine: "VARSOVA · 28. KESÄKUUTA 2026 · 16:30",
@@ -287,6 +290,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Hypoteesi",
     hypothesisHeat: "Äärimmäinen helle lisää veden ja varjon tarvetta (provisional).",
     devEventCodes: "Tapahtumakoodit (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Lisää kontekstia",
   },
   lt: {
     statusLine: "VARŠUVA · 2026-06-28 · 16:30",
@@ -355,6 +359,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Hipotezė",
     hypothesisHeat: "Ekstremalus karštis didina vandens ir šešėlio poreikį (provisional).",
     devEventCodes: "Įvykių kodai (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Daugiau konteksto",
   },
   lv: {
     statusLine: "VARŠAVA · 2026. G. 28. JŪNIJS · 16:30",
@@ -423,6 +428,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Hipotēze",
     hypothesisHeat: "Ekstremāls karstums palielina ūdens un ēnas vajadzību (provisional).",
     devEventCodes: "Notikumu kodi (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Vairāk konteksta",
   },
   hu: {
     statusLine: "VARSÓ · 2026. JÚNIUS 28. · 16:30",
@@ -491,6 +497,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Hipotézis",
     hypothesisHeat: "Az extrém hőség növeli a víz és árnyék iránti igényt (provisional).",
     devEventCodes: "Eseménykódok (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Több kontextus",
   },
 };
 

@@ -99,6 +99,7 @@ export type HeatCopy = {
   hypothesisTitle: string;
   hypothesisHeat: string;
   devEventCodes: string;
+  moreContextLabel: string;
 };
 
 const COPY: Partial<Record<Lang, HeatCopy>> = {
@@ -172,6 +173,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
       "Ekstremalne ciepło zwiększa zapotrzebowanie na wodę i cień w przestrzeni publicznej (provisional).",
     devEventCodes:
       "Kody zdarzeń (dev): SELECT(POMOC_W_POBLIZU), SELECT(HYDRANT_PULAWSKA), …",
+    moreContextLabel: "Więcej kontekstu",
   },
   en: {
     statusLine: "WARSAW · 28 JUNE 2026 · 16:30",
@@ -241,6 +243,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     hypothesisHeat:
       "Extreme heat increases demand for water and shade in public space (provisional).",
     devEventCodes: "Event codes (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "More context",
   },
   uk: {
     statusLine: "ВАРШАВА · 28 ЧЕРВНЯ 2026 · 16:30",
@@ -309,6 +312,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     hypothesisTitle: "Гіпотеза",
     hypothesisHeat: "Екстремальна спека збільшує потребу у воді та тіні (provisional).",
     devEventCodes: "Коди подій (dev): SELECT(POMOC_W_POBLIZU), …",
+    moreContextLabel: "Більше контексту",
   },
 };
 
