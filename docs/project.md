@@ -12,6 +12,8 @@
 
 **Action filter (every new feature):** (1) Czy **skraca drogę do działania**? (2) Czy **zwiększa orientację w rzeczywistości**? Oba **nie** → nie trafia do produktu.
 
+**Category filter (observation types):** Każda nowa kategoria musi wynikać z **powtarzających się obserwacji**, nie z pojedynczego pomysłu — 1 → ślad, ~10 → hipoteza, ~100 → kandydat, potem decyzja zespołu. [`product-vs-lab.md`](core/product-vs-lab.md#ewolucja-kategorii-nie-lista-kategorii).
+
 **Success:** narzędzie znika — zostaje miasto. **Najlepszy interfejs nie zatrzymuje człowieka przy ekranie** — mówi: *Już wiesz. Idź.*
 
 **Not a news portal.** WARSZAWASZA does not compete for attention — it helps direct attention where it is needed. No feeds, clickbait, “hot topics”, political debate, marketing CTAs, or artificial engagement loops.

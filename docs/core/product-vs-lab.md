@@ -59,7 +59,31 @@ Interfejs zostaje prosty: **🎤 Nagraj obserwację.** To mieszkańcy swoimi zg�
 
 ---
 
-## Kategorie są odkrywane, a nie projektowane
+## Ewolucja kategorii (nie lista kategorii)
+
+Chodzi nie o **kategorie**, lecz o **ewolucję kategorii** — subtelna, ale fundamentalna różnica.
+
+> **Każda nowa kategoria musi mieć źródło w powtarzających się obserwacjach, a nie w pojedynczym pomyśle projektowym.**
+
+Użytkownik słyszy tylko: **„Co widzisz?”** — nie *„Wybierz kategorię”*.  
+Miasto nie przychodzi z listą problemów; **mieszkańcy ją tworzą**. WARSZAWASZA **odkrywa słownik**, nie narzuca go od pierwszego dnia.
+
+| Etap | Co to znaczy |
+|------|----------------|
+| **1 zgłoszenie** | ślad (hulajnoga, jajko, zapach asfaltu — *ziarno danych*, nie kategoria) |
+| **~10 podobnych** | hipoteza w analizie |
+| **~100 podobnych** | kandydat na kategorię |
+| **Decyzja zespołu** | dopiero wtedy: czy warto kategorię wprowadzić (najpierw analiza, potem ewentualnie UI) |
+
+Po zebraniu tysięcy nagrań analiza może pokazać **motywy** (tylko w analizie, nie w formularzu):
+
+| Motyw (analiza) | Przykład liczby |
+|-----------------|-----------------|
+| Przeszkody na chodniku | 384 |
+| Brak cienia | 271 |
+| Niedziałające źródła wody | 146 |
+
+Dopiero wtedy pytanie: *czy warto stworzyć kategorię?* — nie wcześniej.
 
 > **Kategorie są odkrywane, a nie projektowane.**
 
@@ -68,29 +92,12 @@ Najpierw rzeczywistość → obserwacja → analiza → **dopiero na końcu** st
 **Nie** dodawać kategorii automatycznie w interfejsie. **Najpierw** w analizie zgromadzonych nagrań.
 
 ```
-🎤 Nagraj obserwację
-        │
-        ▼
-Surowe nagrania
-        │
-        ▼
-Analiza zgłoszeń
-        │
-        ▼
-Wzorce
-        │
-        ▼
-Decyzja: czy potrzebna nowa kategoria?
-        │
-        ▼
-(dopiero wtedy — UI / słownik obserwacji)
+🎤 Co widzisz?  →  surowe ślady  →  analiza  →  wzorce  →  decyzja o kategorii
 ```
 
-**Przykład hulajnoga:** pierwsze zgłoszenie *„hulajnoga na chodniku”* → nic w UI. Po miesiącu: 37× hulajnogi, 19× gałęzie, 12× worki → **dopiero wtedy** decyzja: kategoria *Przeszkody na chodniku* — bo wyłoniła się z danych, nie z biurka.
+**Przykład hulajnoga:** pierwsze zgłoszenie → tylko ślad. Setki podobnych motywów → kategoria *Przeszkody na chodniku* wyłoniła się z danych.
 
-Rola WARSZAWASZA: **usłyszeć** miasto i uporządkować — nie zakładać z góry 25 kategorii, z których 20 nigdy nie będzie użytych.
-
-*(To dotyczy **typów obserwacji** z nagrań. Słownik wdrożenia — hydranty, punkty wody — to dane terenu, nie menu kategorii dla użytkownika.)*
+*(Typy obserwacji z nagrań ≠ słownik wdrożenia — hydranty, punkty wody to dane terenu.)*
 
 ---
 
