@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # COP v1.0 Rigor Validator — Civic Observation Protocol syntax scanner
 # Scans PR diff (added lines only) for decorative noise vs FIRA constitution.
+#
+# Two tiers (see docs/core/field-first-release.md):
+#   - Strict: components / logic / JSX — FIRA symbols only (symbols.ts)
+#   - Exempt: field deployment copy + i18n — meaningful UI glyphs (mic/pin CTAs)
 set -euo pipefail
 
 BASE_REF="${COP_BASE_REF:-origin/main}"

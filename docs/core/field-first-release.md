@@ -20,6 +20,24 @@ Rdzeń sposobu pracy (jedno zdanie):
 
 ---
 
+## Trzy typy dowodów (nie mieszaj warstw)
+
+| Typ | Pytanie | Przykład | Działanie |
+|-----|---------|----------|-----------|
+| **UX** | Czy człowiek wiedział, co zrobić? | „Nie zauważyłem mikrofonu.” | Zmiana interfejsu |
+| **Performance** | Czy interfejs zareagował wystarczająco szybko? | INP = 211 ms | Optymalizacja techniczna |
+| **Poprawność** | Czy funkcja zadziałała zgodnie z oczekiwaniem? | STT nie zablokowało wysyłki | Poprawka funkcjonalna |
+
+**Nie myl:**
+
+- INP 211 ms ≠ użytkownik był zagubiony  
+- „Nie zauważyłem mikrofonu” ≠ problem z Reactem  
+- Brak wysłanego zgłoszenia ≠ trzeba zmieniać layout  
+
+Każdy problem ma **własną kategorię** i własny sposób rozwiązania.
+
+---
+
 ## Cykl wydania
 
 | Etap | Co robimy? | Czego nie robimy? |
@@ -82,47 +100,40 @@ To zachęca do projektowania zamiast opisu doświadczenia.
 2. Co zrobiłeś **jako pierwsze**?
 3. Czy był moment, w którym **nie wiedziałeś, co zrobić dalej**?
 
-Dopiero po kilku takich odpowiedziach decydujemy, czy potrzebna jest kolejna funkcja.
+Dopiero po kilku takich odpowiedziach decydujemy, czy potrzebna jest kolejna funkcja. Wynik testu → **jeden wiersz** w rejestrze (Typ = UX).
 
 ---
 
-## Rejestr wydań (jedna tabela, wypełniana po każdym cyklu)
+## Rejestr wydań — jedna tabela, jeden ślad na zmianę
 
-Nie osobny dokument — **ta sama tabela**, uzupełniana po obserwacji. Po roku: historia **dowodów**, nie implementacji.
+**Nie** pięć dokumentów na każdą poprawkę. **Tak:** każda zmiana zostawia **dokładnie jeden trwały wpis** w tej tabeli.
+
+| Typ zmiany | Gdzie zapisujesz |
+|------------|------------------|
+| UX | jeden wiersz (Typ = UX) |
+| Performance | jeden wiersz (Typ = Performance) |
+| Poprawność | jeden wiersz (Typ = Poprawność) |
 
 **Nie wpisuj:** „Zoptymalizowano JSON.”  
-**Wpisuj:** obserwacja → zmiana → wynik pomiaru.
+**Wpisuj:** źródło → obserwacja → zmiana → wynik.
 
-### Zachowanie użytkownika (test terenowy)
+| Release | Typ | Źródło | Obserwacja | Zmiana | Wynik |
+|---------|-----|--------|------------|--------|-------|
+| 1.0 | UX | — | — | cold start + głos | ⏳ test terenowy po deployu |
+| 1.1 | Performance | Chrome Profiler | INP ~211 ms przy L3 | Lazy render JSON/FOP | ⏳ zmierz po deployu |
+| 1.2 | UX | Tester #4 | „Nie zauważyłem mikrofonu” | Większe CTA głosu | … |
 
-| Release | Liczba testerów | Najczęstszy cytat | Jedna poprawka | Status |
-|---------|-----------------|-------------------|----------------|--------|
-| 1.0 | — | — | — | ⏳ oczekuje testu terenowego po deployu |
-| 1.1 | … | … | … | … |
+**Przykłady po pomiarze:**
 
-### Wydajność / INP (gdy profil wskaże problem)
+| Release | Typ | Źródło | Obserwacja | Zmiana | Wynik |
+|---------|-----|--------|------------|--------|-------|
+| 1.1 | Performance | Chrome Profiler | INP 211 ms przy L3 | Lazy render JSON/FOP | INP ↓ 68 ms |
+| 1.2 | UX | 5 testerów terenowych | 3/5 nie widziało 🎤 | Większe CTA | 5/5 zauważyło |
 
-| Release | Obserwacja | Zmiana | Wynik |
-|---------|------------|--------|-------|
-| 1.1 | INP ~211 ms przy rozwijaniu L3 | Lazy render JSON/FOP | ⏳ zmierz po deployu (INP ↓ do … ms) |
+Opis decyzji **nie**: „W wersji 1.1 dodaliśmy X.”  
+**Tak:** „Chrome Profiler: INP 211 ms przy L3 → lazy render → 68 ms.”
 
-Po deployu: **dwa pytania** — czy klik „Dane techniczne” jest natychmiast odczuwalne? Czy profil pokazuje spadek Input Delay? Jeśli tak → **zamknij temat**, nie szukaj kolejnych 10 ms.
-
-Cykl: **jedna obserwacja → jedna poprawka → jeden pomiar.**
-
-**Przykład wpisu behawioralnego** (format docelowy):
-
-| Release | Liczba testerów | Najczęstszy cytat | Jedna poprawka | Status |
-|---------|-----------------|-------------------|----------------|--------|
-| 1.0 | 8 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA głosu | ✅ |
-
-Opis decyzji **nie**:
-
-> „W wersji 1.1 dodaliśmy X.”
-
-**Tak:**
-
-> „Po ośmiu testach terenowych użytkownicy nie zauważali mikrofonu, więc zmieniliśmy pierwszy ekran.”
+Po deployu (Typ = Performance): czy klik L3 jest natychmiast odczuwalny? Czy profil pokazuje spadek Input Delay? Jeśli tak — **zamknij temat**, nie poluj na kolejne 10 ms bez nowego dowodu.
 
 ---
 
@@ -168,6 +179,19 @@ Od tego momentu największą wartością nie jest kolejny commit, lecz **pierwsz
 > **Nie rozwijamy produktu przez dodawanie funkcji. Rozwijamy go przez skracanie drogi między rzeczywistością a działaniem.**
 
 Za pół roku: otwórz rejestr wydań. Jeśli każda zmiana rzeczywiście skróciła tę drogę — projekt zachował kierunek.
+
+---
+
+## COP v1.0 — dwie warstwy reguł (CI)
+
+Walidator (`scripts/cop-validate.sh`) **nie osłabia** konstytucji — **rozdziela** ją:
+
+| Warstwa | Zakres | Emoji / glify |
+|---------|--------|----------------|
+| **Kod i dokumentacja techniczna** | komponenty, logika, JSX | tylko alfabet FIRA (`symbols.ts`) |
+| **UI użytkownika i tłumaczenia** | `frontend/lib/field/*`, `i18n.ts`, meta layout | symbole ze znaczeniem (🎤 📍 w copy terenowym) |
+
+Błąd CI „dekoracyjny szum wizualny” przy emoji w **copy** = wpisz w warstwę i18n albo rozszerz wyjątek świadomie — nie usuwaj reguły dla kodu.
 
 ---
 
