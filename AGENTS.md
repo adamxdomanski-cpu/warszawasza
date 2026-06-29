@@ -29,8 +29,9 @@ python3 -m py_compile backend/api/main.py backend/engine/engine.py
 cd frontend && npm run build
 ```
 
-**Cold start (default `/`):** dwa CTA + głos — `ColdStartClient.tsx`; stary UI: `/?legacy=1`.  
-**Field / heat:** `/field/heat` — 🎤 Nagraj obserwację + 📍 Znajdź wodę i cień; kontekst w *Więcej kontekstu*.
+**Cold start (default `/`):** rdzeń produktu — `ColdStartClient.tsx`.  
+**Field / heat:** `/field/heat` — 🎤 + 📍.  
+**Laboratorium (nie 1.0):** `/?legacy=1` — `LivingInterface`, sygnały, pipeline. Mapa: [`docs/core/product-vs-lab.md`](docs/core/product-vs-lab.md).
 
 ## Proces zespołu (nie kod)
 

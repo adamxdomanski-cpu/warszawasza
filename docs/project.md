@@ -6,7 +6,7 @@
 
 **Grammar filter:** Czy obecna **struktura** (📍 pomoc · 🎤 obserwacja · kontekst od systemu) obsłuży tę sytuację bez nowego ekranu? Tak → nic nie dodawaj. Nie → wzmocnij strukturę, nie doklejaj scenariusza.
 
-**Dictionary filter:** Czy to tylko nowe **miejsca / dane wdrożenia** (hydranty, AED, schronienia)? Tak → rozszerz słownik. **Rozwijaj słownik częściej niż gramatykę.** See [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md#interfejs-o-stalej-strukturze).
+**Dictionary filter:** Czy to tylko nowe **miejsca / dane wdrożenia** (hydranty, AED, schronienia)? Tak → rozszerz słownik. **Rozwijaj słownik częściej niż gramatykę.** Typy obserwacji z nagrań: **kategorie odkrywane w analizie**, nie w UI na starcie — [`product-vs-lab.md`](core/product-vs-lab.md#kategorie-są-odkrywane-a-nie-projektowane). See [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md#interfejs-o-stalej-strukturze).
 
 **Meaning filter:** Czy nowy tekst w UI wyraża **tę samą intencję** we wszystkich językach (nie dosłowne tłumaczenie)? **Jedno znaczenie. Wiele języków.**
 
