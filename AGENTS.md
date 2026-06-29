@@ -35,7 +35,7 @@ cd frontend && npm run build
 ## Proces zespołu (nie kod)
 
 **Reguła:** nie dodajemy funkcji przed obserwacją z terenu.  
-Proces (cztery pytania + rejestr): [`docs/core/field-first-release.md`](docs/core/field-first-release.md) · załącznik: [`field-first-release-appendix.md`](docs/core/field-first-release-appendix.md)
+Jedna kartka: [`docs/core/field-first-release.md`](docs/core/field-first-release.md)
 
 Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/final-integration-pass.md).
 

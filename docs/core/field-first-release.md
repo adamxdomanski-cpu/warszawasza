@@ -1,33 +1,38 @@
 # WARSZAWASZA · Proces terenowy
 
-**To nie jest reguła kodu.** To sposób podejmowania decyzji — tak samo lekki, jak interfejs.
+**To nie jest reguła kodu.** Sposób podejmowania decyzji — na jednej kartce.
 
 > **Nie dodajemy funkcji przed obserwacją z terenu.**
 
----
+```
+┌───────────────────────────────────────────────┐
+│              WARSZAWASZA PROCESS              │
+├───────────────────────────────────────────────┤
+│                                               │
+│ 1. Co się wydarzyło?                          │
+│ 2. Skąd to wiemy?                             │
+│ 3. Co zmieniamy?                              │
+│ 4. Czy pomiar potwierdził poprawę?            │
+│                                               │
+├───────────────────────────────────────────────┤
+│ Jedna obserwacja                             │
+│        ↓                                      │
+│ Jedna decyzja                                 │
+│        ↓                                      │
+│ Jeden pomiar                                  │
+└───────────────────────────────────────────────┘
+```
 
-## Cztery pytania (cała iteracja)
-
-| Krok | Pytanie |
-|------|---------|
-| **1. Obserwacja** | Co się wydarzyło? |
-| **2. Źródło prawdy** | Skąd to wiemy? |
-| **3. Decyzja** | Co zmieniamy? |
-| **4. Pomiar** | Czy było lepiej? |
-
-**Reguła:** jedna obserwacja → jedna decyzja → jeden pomiar.  
-Nie: jedna obserwacja → pięć poprawek.
-
-**Typ** w rejestrze = źródło prawdy: **Człowiek** · **System** · **Rzeczywistość**  
-(INP, cytaty, testy terenowe — to tylko przykłady odpowiedzi na te cztery pytania.)
-
-**Obserwacja ≠ decyzja.** Najpierw: *co naprawdę wiemy?* Potem: *co zmieniamy?*
+**Typ** w rejestrze: Człowiek · System · Rzeczywistość.  
+**Obserwacja ≠ decyzja** — najpierw: *co naprawdę wiemy?*
 
 ---
 
 ## Rejestr wydań
 
-Jeden wpis na zmianę. Kolumna **Pomiar** — nie „wynik”: pomiar da się zweryfikować, wynik brzmi jak interpretacja.
+Jeden wpis na zmianę.
+
+> **Wiersz jest zamknięty dopiero wtedy, gdy kolumna „Pomiar” zawiera wynik z rzeczywistego użycia, a nie przewidywany efekt zmiany.**
 
 | Release | Typ | Źródło | Obserwacja | Decyzja | Pomiar |
 |---------|-----|--------|------------|---------|--------|
@@ -35,31 +40,25 @@ Jeden wpis na zmianę. Kolumna **Pomiar** — nie „wynik”: pomiar da się zw
 | 1.1 | System | Chrome Profiler | INP = 211 ms | Lazy render JSON/FOP | ⏳ zmierz po deployu |
 | 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | … |
 
-**Po pomiarze (format docelowy):**
+**Zamknięte wiersze (przykład):**
 
 | Release | Typ | Źródło | Obserwacja | Decyzja | Pomiar |
 |---------|-----|--------|------------|---------|--------|
-| 1.1 | System | Chrome Profiler | INP = 211 ms | Lazy render JSON/FOP | INP = 63 ms |
+| 1.1 | System | Chrome Profiler | INP = 211 ms | Lazy render JSON/FOP | INP: 211 → 63 ms |
 | 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | 5/5 testerów zauważyło 🎤 |
 
-**Test jakości procesu:** za pół roku nowy członek czyta rejestr i rozumie, *dlaczego* każda zmiana — bez pytania autorów.
+❌ *powinno być szybciej* · ✅ *INP: 211 → 63 ms*
 
 ---
 
-## Rozdział 1 — zamknięty
+## Rozdział 1 — zamknięty (produkt i proces)
 
-Kod Rozdziału 1 jest gotowy. **Najcenniejszym dokumentem nie jest ten plik, lecz pierwszy prawdziwy wiersz rejestru** po testach z Tomkiem, Olusiem i resztą — wtedy proces przestaje być teorią.
+Kod gotowy. **Proces nie jest dalej projektowany** — następny krok to pierwszy prawdziwy wiersz rejestru po teście terenowym.
 
-> Nie rozwijamy produktu przez dodawanie funkcji. Skracamy drogę między rzeczywistością a działaniem.
+Sprzężenie zwrotne:
 
----
+**Rzeczywistość → Obserwacja → Decyzja → Pomiar → Rzeczywistość**
 
-## Utrzymanie tego dokumentu
+Pytanie projektu (nie procesu): **Czy to pomaga człowiekowi podjąć lepszą decyzję?**
 
-Przed dodaniem sekcji zapytaj:
-
-**Czy ta informacja jest potrzebna do podjęcia następnej decyzji?**
-
-Jeśli nie — nie usuwaj od razu; przenieś do [`field-first-release-appendix.md`](field-first-release-appendix.md).
-
-Powiązane: [`final-integration-pass.md`](final-integration-pass.md) · [`WARSZAWASZA-w-dwoch-minutach.md`](../WARSZAWASZA-w-dwoch-minutach.md)
+Archiwum szczegółów: [`field-first-release-appendix.md`](field-first-release-appendix.md) · checklist: [`final-integration-pass.md`](final-integration-pass.md)
