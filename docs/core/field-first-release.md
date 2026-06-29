@@ -18,23 +18,29 @@ Rdzeń sposobu pracy (jedno zdanie):
 
 **Wypuść małą zmianę. Obserwuj bez uprzedzeń. Popraw tylko to, co rzeczywistość rzeczywiście pokazała.**
 
+**Reguła operacyjna** (chroni przed feature creepem):
+
+> **Jedna obserwacja → jedna decyzja → jeden pomiar.**
+
+Nie: jedna obserwacja → pięć poprawek.
+
 ---
 
-## Trzy typy dowodów (nie mieszaj warstw)
+## Trzy źródła prawdy (nie mieszaj warstw)
 
-| Typ | Pytanie | Przykład | Działanie |
-|-----|---------|----------|-----------|
-| **UX** | Czy człowiek wiedział, co zrobić? | „Nie zauważyłem mikrofonu.” | Zmiana interfejsu |
-| **Performance** | Czy interfejs zareagował wystarczająco szybko? | INP = 211 ms | Optymalizacja techniczna |
-| **Poprawność** | Czy funkcja zadziałała zgodnie z oczekiwaniem? | STT nie zablokowało wysyłki | Poprawka funkcjonalna |
+| Źródło prawdy | Odpowiada na pytanie | Przykład |
+|---------------|----------------------|----------|
+| **Człowiek** | Czy interfejs był zrozumiały? | Cytat testera: „Nie zauważyłem mikrofonu.” |
+| **System** | Czy aplikacja działała sprawnie? | INP 211 ms, logi, profiler |
+| **Rzeczywistość** | Czy cel został osiągnięty? | Znalazł wodę, wysłał zgłoszenie, schował telefon |
 
-**Nie myl:**
+**Nie myl — żadne źródło nie zastępuje pozostałych:**
 
-- INP 211 ms ≠ użytkownik był zagubiony  
-- „Nie zauważyłem mikrofonu” ≠ problem z Reactem  
-- Brak wysłanego zgłoszenia ≠ trzeba zmieniać layout  
+- Chrome Profiler **nie powie**, czy interfejs jest intuicyjny.  
+- Cytat użytkownika **nie powie**, czy `JSON.stringify()` blokuje główny wątek.  
+- Oba razem **nie powiedzą**, czy człowiek rzeczywiście rozwiązał swój problem.
 
-Każdy problem ma **własną kategorię** i własny sposób rozwiązania.
+Potrzebne są **wszystkie trzy** źródła. Każda obserwacja ma własną kategorię i własny sposób odpowiedzi.
 
 ---
 
@@ -100,7 +106,7 @@ To zachęca do projektowania zamiast opisu doświadczenia.
 2. Co zrobiłeś **jako pierwsze**?
 3. Czy był moment, w którym **nie wiedziałeś, co zrobić dalej**?
 
-Dopiero po kilku takich odpowiedziach decydujemy, czy potrzebna jest kolejna funkcja. Wynik testu → **jeden wiersz** w rejestrze (Typ = UX).
+Dopiero po kilku takich odpowiedziach decydujemy, czy potrzebna jest kolejna funkcja. Wynik testu → **jeden wiersz** w rejestrze (Typ = Człowiek lub Rzeczywistość — zależnie od tego, co obserwowałeś).
 
 ---
 
@@ -108,32 +114,40 @@ Dopiero po kilku takich odpowiedziach decydujemy, czy potrzebna jest kolejna fun
 
 **Nie** pięć dokumentów na każdą poprawkę. **Tak:** każda zmiana zostawia **dokładnie jeden trwały wpis** w tej tabeli.
 
-| Typ zmiany | Gdzie zapisujesz |
-|------------|------------------|
-| UX | jeden wiersz (Typ = UX) |
-| Performance | jeden wiersz (Typ = Performance) |
-| Poprawność | jeden wiersz (Typ = Poprawność) |
+| Źródło prawdy (Typ) | Kiedy wpisujesz |
+|---------------------|-----------------|
+| Człowiek | cytat, test terenowy, zrozumiałość interfejsu |
+| System | profiler, INP, logi, awaria techniczna |
+| Rzeczywistość | cel osiągnięty / nie — woda, wysyłka, telefon w kieszeni |
+
+**Obserwacja** i **Decyzja** to dwa etapy — nie mieszaj ich w jednej kolumnie:
+
+| Etap | Przykład |
+|------|----------|
+| Obserwacja | „INP = 211 ms przy L3.” |
+| Decyzja | „Lazy mount JSON/FOP.” |
 
 **Nie wpisuj:** „Zoptymalizowano JSON.”  
-**Wpisuj:** źródło → obserwacja → zmiana → wynik.
+**Wpisuj:** źródło → obserwacja → decyzja → wynik.
 
-| Release | Typ | Źródło | Obserwacja | Zmiana | Wynik |
-|---------|-----|--------|------------|--------|-------|
-| 1.0 | UX | — | — | cold start + głos | ⏳ test terenowy po deployu |
-| 1.1 | Performance | Chrome Profiler | INP ~211 ms przy L3 | Lazy render JSON/FOP | ⏳ zmierz po deployu |
-| 1.2 | UX | Tester #4 | „Nie zauważyłem mikrofonu” | Większe CTA głosu | … |
+| Release | Typ | Źródło | Obserwacja | Decyzja | Wynik |
+|---------|-----|--------|------------|---------|-------|
+| 1.0 | Rzeczywistość | — | — | cold start + głos | ⏳ test terenowy po deployu |
+| 1.1 | System | Chrome Profiler | INP ~211 ms przy L3 | Lazy render JSON/FOP | ⏳ zmierz po deployu |
+| 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu” | Większe CTA głosu | … |
 
 **Przykłady po pomiarze:**
 
-| Release | Typ | Źródło | Obserwacja | Zmiana | Wynik |
-|---------|-----|--------|------------|--------|-------|
-| 1.1 | Performance | Chrome Profiler | INP 211 ms przy L3 | Lazy render JSON/FOP | INP ↓ 68 ms |
-| 1.2 | UX | 5 testerów terenowych | 3/5 nie widziało 🎤 | Większe CTA | 5/5 zauważyło |
+| Release | Typ | Źródło | Obserwacja | Decyzja | Wynik |
+|---------|-----|--------|------------|---------|-------|
+| 1.1 | System | Chrome Profiler | INP 211 ms przy L3 | Lazy render JSON/FOP | INP ↓ 68 ms |
+| 1.2 | Człowiek | 5 testerów terenowych | 3/5 nie widziało 🎤 | Większe CTA | 5/5 zauważyło |
+| 1.3 | Rzeczywistość | 8 sesji terenowych | 6/8 wysłało zgłoszenie | — | ✅ cel osiągnięty |
 
-Opis decyzji **nie**: „W wersji 1.1 dodaliśmy X.”  
-**Tak:** „Chrome Profiler: INP 211 ms przy L3 → lazy render → 68 ms.”
+Opis **nie**: „W wersji 1.1 dodaliśmy X.”  
+**Tak:** „Chrome Profiler: INP 211 ms przy L3 → decyzja: lazy render → wynik: 68 ms.”
 
-Po deployu (Typ = Performance): czy klik L3 jest natychmiast odczuwalny? Czy profil pokazuje spadek Input Delay? Jeśli tak — **zamknij temat**, nie poluj na kolejne 10 ms bez nowego dowodu.
+Po deployu (Typ = System): czy klik L3 jest natychmiast odczuwalny? Czy profil pokazuje spadek Input Delay? Jeśli tak — **zamknij temat**, nie poluj na kolejne 10 ms bez nowej obserwacji.
 
 ---
 
@@ -178,7 +192,7 @@ Od tego momentu największą wartością nie jest kolejny commit, lecz **pierwsz
 
 > **Nie rozwijamy produktu przez dodawanie funkcji. Rozwijamy go przez skracanie drogi między rzeczywistością a działaniem.**
 
-Za pół roku: otwórz rejestr wydań. Jeśli każda zmiana rzeczywiście skróciła tę drogę — projekt zachował kierunek.
+**Test jakości procesu (za pół roku):** nowy członek zespołu czyta rejestr wydań i **rozumie, dlaczego każda zmiana została wprowadzona** — bez pytania autorów projektu. Jeśli rejestr to umożliwia, jest nie tylko dokumentacją, lecz **pamięcią projektu**.
 
 ---
 
