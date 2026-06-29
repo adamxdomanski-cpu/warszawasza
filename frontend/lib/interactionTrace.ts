@@ -153,7 +153,7 @@ export function clearInteractionTrace(): void {
 
 export function formatEventLabel(e: InteractionEvent): string {
   if (
-    (e.event === "SELECT" || e.event === "CHANGE") &&
+    (e.event === "SELECT" || e.event === "CHANGE" || e.event === "RECORD") &&
     e.value !== undefined
   ) {
     return `${e.event}(${e.value})`;
@@ -171,7 +171,7 @@ export function formatTracePath(events: InteractionEvent[]): string {
 export function compactTracePath(events: InteractionEvent[]): string {
   return events
     .map((e) => {
-      if (e.event === "SELECT" || e.event === "CHANGE") {
+      if (e.event === "SELECT" || e.event === "CHANGE" || e.event === "RECORD") {
         const v = e.value?.replace(/\|/g, "_") ?? "";
         return `${e.event[0]}:${v}`;
       }

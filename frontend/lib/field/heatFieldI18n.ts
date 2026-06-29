@@ -3,6 +3,7 @@
  */
 
 import type { Lang } from "../i18n";
+import { HEAT_FIELD_EXTRA } from "./heatFieldExtras";
 
 export type HeatPointStatus = "ok" | "fail";
 export type HeatPointKind = "water" | "shade" | "both";
@@ -54,7 +55,7 @@ type PointLabel = {
   kindLabel: string;
 };
 
-type HeatCopy = {
+export type HeatCopy = {
   statusLine: string;
   factTemp: string;
   factSubtitle: string;
@@ -67,6 +68,20 @@ type HeatCopy = {
   waterSaveTitle: string;
   waterSaveQuestion: string;
   ctaNearbyHelp: string;
+  ctaVoiceReport: string;
+  voiceStart: string;
+  voiceRecording: string;
+  voiceStop: string;
+  voiceSaved: string;
+  voiceReviewPrompt: string;
+  voicePlay: string;
+  voiceSend: string;
+  voiceOrType: string;
+  voiceTranscribePlaceholder: string;
+  voiceSentTitle: string;
+  voiceSentBody: string;
+  ctaAnotherObservation: string;
+  voiceUnsupported: string;
   layer2Title: string;
   distanceM: string;
   distanceWalk: string;
@@ -102,6 +117,20 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     waterSaveQuestion:
       "Czy dziś naprawdę potrzebujesz trzeciej spłuczki, czy wystarczy jedna?",
     ctaNearbyHelp: "📍 Znajdź pomoc w pobliżu",
+    ctaVoiceReport: "🎤 Powiedz, co widzisz",
+    voiceStart: "Rozpocznij nagrywanie",
+    voiceRecording: "Nagrywanie…",
+    voiceStop: "Zakończ",
+    voiceSaved: "✓ Nagranie zapisane",
+    voiceReviewPrompt: "Czy wszystko się zgadza?",
+    voicePlay: "Odtwórz",
+    voiceSend: "Wyślij",
+    voiceOrType: "lub wpisz tekst",
+    voiceTranscribePlaceholder: "Opcjonalnie: popraw transkrypcję…",
+    voiceSentTitle: "✓ Zgłoszenie odebrane",
+    voiceSentBody: "Dziękujemy. Możesz wrócić do rzeczywistości.",
+    ctaAnotherObservation: "Zostaw kolejną obserwację",
+    voiceUnsupported: "Nagrywanie niedostępne w tej przeglądarce — wpisz tekst poniżej.",
     layer2Title: "W pobliżu",
     distanceM: "{n} m",
     distanceWalk: "{n} min pieszo",
@@ -158,6 +187,20 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     waterSaveTitle: "How to save water?",
     waterSaveQuestion: "Do you really need a third flush today, or is one enough?",
     ctaNearbyHelp: "📍 Find help nearby",
+    ctaVoiceReport: "🎤 Tell us what you see",
+    voiceStart: "Start recording",
+    voiceRecording: "Recording…",
+    voiceStop: "Stop",
+    voiceSaved: "✓ Recording saved",
+    voiceReviewPrompt: "Does everything look right?",
+    voicePlay: "Play back",
+    voiceSend: "Send",
+    voiceOrType: "or type instead",
+    voiceTranscribePlaceholder: "Optional: edit transcription…",
+    voiceSentTitle: "✓ Report received",
+    voiceSentBody: "Thank you. You can return to reality.",
+    ctaAnotherObservation: "Leave another observation",
+    voiceUnsupported: "Recording unavailable in this browser — type below instead.",
     layer2Title: "Nearby",
     distanceM: "{n} m",
     distanceWalk: "{n} min walk",
@@ -212,6 +255,20 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     waterSaveTitle: "Як економити воду?",
     waterSaveQuestion: "Чи потрібен третій злив, чи достатньо одного?",
     ctaNearbyHelp: "📍 Допомога поруч",
+    ctaVoiceReport: "🎤 Розкажіть, що бачите",
+    voiceStart: "Почати запис",
+    voiceRecording: "Запис…",
+    voiceStop: "Зупинити",
+    voiceSaved: "✓ Запис збережено",
+    voiceReviewPrompt: "Усе правильно?",
+    voicePlay: "Відтворити",
+    voiceSend: "Надіслати",
+    voiceOrType: "або введіть текст",
+    voiceTranscribePlaceholder: "За бажанням: виправте текст…",
+    voiceSentTitle: "✓ Звернення прийнято",
+    voiceSentBody: "Дякуємо. Можете повернутися до реальності.",
+    ctaAnotherObservation: "Залишити ще одне спостереження",
+    voiceUnsupported: "Запис недоступний — введіть текст нижче.",
     layer2Title: "Поруч",
     distanceM: "{n} м",
     distanceWalk: "{n} хв пішки",
@@ -256,7 +313,10 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
 };
 
 export function heatFieldCopy(lang: Lang): HeatCopy {
-  return COPY[lang] ?? COPY.en!;
+  const merged: Partial<Record<Lang, HeatCopy>> = { ...COPY, ...HEAT_FIELD_EXTRA };
+  const resolved = merged[lang];
+  if (resolved) return resolved;
+  return merged.en!;
 }
 
 export function formatDistance(copy: HeatCopy, meters: number, walkMin: number): string {

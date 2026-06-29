@@ -11,21 +11,44 @@ import {
   type CitizenTraceFields,
 } from "../../lib/domain/traceContract";
 import type { Lang } from "../../lib/i18n";
-import { COPY } from "../../lib/i18n";
+import { COPY, traceResidentCopy } from "../../lib/i18n";
 import { knowledgeGraph } from "../../lib/knowledge/KnowledgeGraph";
 import {
   buildMailtoHref,
+  buildTraceCitizenLayer,
   buildTraceDocument,
+  buildTraceJourneyLayer,
+  buildTraceTechnicalLayer,
   getTraceRegistryCount,
   registerTrace,
   type ObservationTracePayload,
 } from "../../lib/observationTrace";
+import { journeyLayerTitle } from "../../lib/traceJourney";
 import {
   appendInteractionEvent,
   getInteractionTrace,
 } from "../../lib/interactionTrace";
 import { TRACE_FORM_COPY, traceSubjectOptions } from "../../lib/traceFormI18n";
 import SignalControl from "./SignalControl";
+
+function heatFieldAnotherLabel(lang: Lang): string {
+  const labels: Partial<Record<Lang, string>> = {
+    pl: "Zostaw kolejną obserwację",
+    it: "Lascia un'altra osservazione",
+    uk: "Залишити ще одне спостереження",
+    hu: "Új megfigyelés",
+  };
+  return labels[lang] ?? "Leave another observation";
+}
+
+function heatFieldMailtoLabel(lang: Lang): string {
+  const labels: Partial<Record<Lang, string>> = {
+    pl: "Wyślij e-mailem (opcjonalnie)",
+    it: "Invia via e-mail (opzionale)",
+    uk: "Надіслати e-mail (за бажанням)",
+  };
+  return labels[lang] ?? "Send by email (optional)";
+}
 
 type LeaveTraceControlProps = {
   lang: Lang;
@@ -56,6 +79,7 @@ export default function LeaveTraceControl({
   const [flash, setFlash] = useState<string | null>(null);
   const [fields, setFields] = useState<CitizenTraceFields>(EMPTY_CITIZEN_TRACE);
   const [started, setStarted] = useState(false);
+  const [sentPayload, setSentPayload] = useState<ObservationTracePayload | null>(null);
 
   useEffect(() => {
     setRegistryCount(getTraceRegistryCount());
@@ -129,10 +153,8 @@ export default function LeaveTraceControl({
       setFlash(copy.trace.copyFailed);
     }
 
+    setSentPayload(payload);
     window.setTimeout(() => setFlash(null), 2400);
-    window.setTimeout(() => {
-      window.location.href = buildMailtoHref(payload);
-    }, 350);
   }, [
     lang,
     trajectory,
@@ -144,6 +166,79 @@ export default function LeaveTraceControl({
     copy.trace.copied,
     copy.trace.copyFailed,
   ]);
+
+  const residentNav = {
+    findHelp: traceResidentCopy(lang).findWaterShade,
+    another: heatFieldAnotherLabel(lang),
+    journeyTitle: journeyLayerTitle(lang),
+    technicalTitle: traceResidentCopy(lang).technicalData,
+    mailto: heatFieldMailtoLabel(lang),
+  };
+
+  if (sentPayload) {
+    const journey = buildTraceJourneyLayer(sentPayload);
+    const technical = buildTraceTechnicalLayer(sentPayload);
+    return (
+      <div className={`space-y-4 ${className}`}>
+        <div className="border border-accent bg-field p-4 sm:p-5">
+          <pre className="m-0 whitespace-pre-wrap font-sans text-sm leading-relaxed text-ink">
+            {buildTraceCitizenLayer(sentPayload)}
+          </pre>
+        </div>
+
+        {journey && (
+          <details className="border border-accent/20 bg-field/80 px-4 py-3">
+            <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
+              ▼ {residentNav.journeyTitle}
+            </summary>
+            <pre className="mt-3 mb-0 whitespace-pre-wrap text-sm leading-relaxed text-accent/75">
+              {journey.replace(/^▼[^\n]*\n\n/, "")}
+            </pre>
+          </details>
+        )}
+
+        <details className="border border-accent/15 bg-field/60 px-4 py-3">
+          <summary className="cursor-pointer text-sm text-accent/50 touch-manipulation">
+            ▼ {residentNav.technicalTitle}
+          </summary>
+          <pre className="mt-3 mb-0 whitespace-pre-wrap font-mono-field text-xs leading-relaxed text-accent/45">
+            {technical}
+          </pre>
+        </details>
+
+        <div className="flex flex-col gap-2">
+          <a
+            href="/field/heat"
+            className="inline-flex min-h-11 items-center border border-accent/35 px-3 py-2 font-mono-field text-xs tracking-wide text-ink touch-manipulation sm:text-sm"
+          >
+            📍 {residentNav.findHelp}
+          </a>
+          <button
+            type="button"
+            onClick={() => {
+              setSentPayload(null);
+              setFields(EMPTY_CITIZEN_TRACE);
+              setStarted(false);
+            }}
+            className="inline-flex min-h-11 items-center border border-accent/25 px-3 py-2 font-mono-field text-xs tracking-wide text-accent/75 touch-manipulation sm:text-sm"
+          >
+            {residentNav.another}
+          </button>
+          <a
+            href={buildMailtoHref(sentPayload)}
+            className="font-mono-field text-[10px] tracking-wide text-accent/40 underline sm:text-[11px]"
+          >
+            {residentNav.mailto}
+          </a>
+        </div>
+        {flash && (
+          <div className="font-mono-field text-[10px] tracking-wide text-accent/70 sm:text-[11px]">
+            {flash}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   const inputClass =
     "trace-field-input w-full min-h-11 touch-manipulation border border-accent bg-field px-3 py-2.5 font-mono-field text-sm text-ink placeholder:text-accent/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
