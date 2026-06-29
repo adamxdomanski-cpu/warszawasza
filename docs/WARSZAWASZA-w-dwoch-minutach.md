@@ -151,6 +151,37 @@ Masz **dwie potrzeby**:
 **To ten sam interfejs.**  
 Zmienia się tylko sytuacja.
 
+### Nie prognoza — decyzja
+
+Aplikacja pogodowa mówi: *Jutro 37°C.* — **fakt**. Koniec.
+
+Interfejs rzeczywistości może iść dalej — **pomóc podjąć jedną małą decyzję**:
+
+```
+SYGNAŁ          Jutro 37°C · bardzo gorąco
+     ↓
+KONTEKST        Może to dotknąć roślin, zwierząt, mieszkania
+     ↓
+MIKRODECYZJA    🌸 Jeśli masz kwiaty na balkonie — schowaj je dziś wieczorem
+```
+
+To **nie są lifehacki** ani portal porad. To **jedna rzecz**, która może się dziś przydać — albo dwie, nie pięćdziesiąt.
+
+Inne przykłady mikrodecyzji (gdy sygnał je uzasadnia):
+
+- 🚲 *Schowaj rower przed burzą.*
+- 🌬️ *Zamknij okna — za godzinę silny wiatr.*
+- 🧊 *Przygotuj wodę na drogę.*
+- 🐶 *Nie wychodź z psem między 13:00 a 16:00.*
+
+**Zasada:** wskazówki są **opcjonalne i kontekstowe** — nie zakładają, że każdy ma balkon, kwiaty ani psa. Formułuj warunkowo: *„Jeśli masz…”*. Nie generuj ich automatycznie **tylko z temperatury**; redaguj je przy wdrożeniu (sygnał + kontekst), tak jak resztę pola.
+
+Na `/field/heat` pod dwoma głównymi CTA może pojawić się np.:
+
+> **💡 Wskazówka na dziś:** Jeśli masz kwiaty na balkonie, warto je schować przed popołudniowym upałem.
+
+Główne działanie nadal: **📍 pomoc w pobliżu** i **🎤 obserwacja** — wskazówka jest dodatkiem, nie centrum ekranu.
+
 ---
 
 ## Zasada pod stresem

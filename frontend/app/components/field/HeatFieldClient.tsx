@@ -117,6 +117,16 @@ export default function HeatFieldClient() {
             </SignalControl>
           </div>
 
+          {copy.microHintLabel && copy.microHintBody && (
+            <aside
+              className="rounded border border-accent/12 bg-field/50 px-4 py-3 text-sm leading-relaxed text-accent/70"
+              aria-label={copy.microHintLabel}
+            >
+              <p className="m-0 font-medium text-accent/80">{copy.microHintLabel}</p>
+              <p className="mt-1.5 mb-0">{copy.microHintBody}</p>
+            </aside>
+          )}
+
           <details className="rounded border border-accent/15 bg-field/60 px-4 py-3">
             <summary className="cursor-pointer text-sm text-accent/55 touch-manipulation">
               {copy.moreContextLabel}

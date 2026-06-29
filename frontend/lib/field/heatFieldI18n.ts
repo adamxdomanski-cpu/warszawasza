@@ -100,6 +100,9 @@ export type HeatCopy = {
   hypothesisHeat: string;
   devEventCodes: string;
   moreContextLabel: string;
+  /** Optional curated micro-decision (deployment-specific, not temp-generated). */
+  microHintLabel?: string;
+  microHintBody?: string;
 };
 
 const COPY: Partial<Record<Lang, HeatCopy>> = {
@@ -174,6 +177,9 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     devEventCodes:
       "Kody zdarzeń (dev): SELECT(POMOC_W_POBLIZU), SELECT(HYDRANT_PULAWSKA), …",
     moreContextLabel: "Więcej kontekstu",
+    microHintLabel: "💡 Wskazówka na dziś",
+    microHintBody:
+      "Jeśli masz kwiaty na balkonie, warto je schować przed popołudniowym upałem.",
   },
   en: {
     statusLine: "WARSAW · 28 JUNE 2026 · 16:30",
@@ -244,6 +250,9 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
       "Extreme heat increases demand for water and shade in public space (provisional).",
     devEventCodes: "Event codes (dev): SELECT(POMOC_W_POBLIZU), …",
     moreContextLabel: "More context",
+    microHintLabel: "💡 Hint for today",
+    microHintBody:
+      "If you have plants on the balcony, consider moving them in before the afternoon heat.",
   },
   uk: {
     statusLine: "ВАРШАВА · 28 ЧЕРВНЯ 2026 · 16:30",
@@ -318,9 +327,13 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
 
 export function heatFieldCopy(lang: Lang): HeatCopy {
   const merged: Partial<Record<Lang, HeatCopy>> = { ...COPY, ...HEAT_FIELD_EXTRA };
-  const resolved = merged[lang];
-  if (resolved) return resolved;
-  return merged.en!;
+  const en = merged.en!;
+  const resolved = merged[lang] ?? en;
+  return {
+    ...resolved,
+    microHintLabel: resolved.microHintLabel ?? en.microHintLabel,
+    microHintBody: resolved.microHintBody ?? en.microHintBody,
+  };
 }
 
 export function formatDistance(copy: HeatCopy, meters: number, walkMin: number): string {
