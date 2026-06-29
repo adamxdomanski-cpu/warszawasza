@@ -81,6 +81,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const [geoError, setGeoError] = useState<string | null>(null);
     const [sentPayload, setSentPayload] = useState<ObservationTracePayload | null>(null);
     const [pendingDraft, setPendingDraft] = useState<ReturnType<typeof loadVoiceDraft>>(null);
+    const [sending, setSending] = useState(false);
 
     const geoCopy = voiceGeoCopy(lang);
     const rc = traceResidentCopy(lang);
@@ -247,56 +248,63 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     }, [geoCopy.failed]);
 
     const sendReport = useCallback(async () => {
+      if (sending) return;
+
       const trimmed = text.trim();
-      const canSend = Boolean(trimmed || hasAudioBlob);
-      if (!canSend) return;
+      const canSendNow = Boolean(trimmed || hasAudioBlob);
+      if (!canSendNow) return;
 
-      appendInteractionEvent("CHANGE", trimmed || "voice");
-      appendInteractionEvent("COMPLETE");
-
-      const traceEvents = getInteractionTrace().events;
-      const place = geo
-        ? formatPlaceFromGeo(geo)
-        : lang === "pl"
-          ? "Miejsce nieznane (bez GPS)"
-          : "Unknown place (no GPS)";
-
-      const payload: ObservationTracePayload = {
-        lang,
-        trajectory: null,
-        engineIndex: 0,
-        attentionCount: 0,
-        clock: localeDateTime(lang),
-        logLines: heatContext ? ["field/heat"] : ["field/voice"],
-        createdAt: Date.now(),
-        traceEvents,
-        citizen: {
-          place,
-          observedAt: new Date().toISOString(),
-          subject: geo ? "field_voice_geo" : heatContext ? "field_heat" : "field_voice",
-          relatedRefs: trimmed || audioOnlyLabel(lang),
-          traceDecision: "none",
-        },
-      };
-
-      registerTrace(payload);
-      setSentPayload(payload);
-      clearVoiceDraft();
-      setPendingDraft(null);
-
+      setSending(true);
       try {
-        await navigator.clipboard.writeText(
-          copyCitizenTraceText(payload, { heatContext: heatContext || undefined }),
-        );
-        setFlash(ui.copied);
-      } catch {
-        /* clipboard optional */
-      }
+        appendInteractionEvent("CHANGE", trimmed || "voice");
+        appendInteractionEvent("COMPLETE");
 
-      setPhase("sent");
-      onSent?.();
-      window.setTimeout(() => setFlash(null), 2400);
-    }, [geo, hasAudioBlob, heatContext, lang, onSent, text, ui.copied]);
+        const traceEvents = getInteractionTrace().events;
+        const place = geo
+          ? formatPlaceFromGeo(geo)
+          : lang === "pl"
+            ? "Miejsce nieznane (bez GPS)"
+            : "Unknown place (no GPS)";
+
+        const payload: ObservationTracePayload = {
+          lang,
+          trajectory: null,
+          engineIndex: 0,
+          attentionCount: 0,
+          clock: localeDateTime(lang),
+          logLines: heatContext ? ["field/heat"] : ["field/voice"],
+          createdAt: Date.now(),
+          traceEvents,
+          citizen: {
+            place,
+            observedAt: new Date().toISOString(),
+            subject: geo ? "field_voice_geo" : heatContext ? "field_heat" : "field_voice",
+            relatedRefs: trimmed || audioOnlyLabel(lang),
+            traceDecision: "none",
+          },
+        };
+
+        registerTrace(payload);
+        setSentPayload(payload);
+        clearVoiceDraft();
+        setPendingDraft(null);
+
+        try {
+          await navigator.clipboard.writeText(
+            copyCitizenTraceText(payload, { heatContext: heatContext || undefined }),
+          );
+          setFlash(ui.copied);
+        } catch {
+          /* clipboard optional */
+        }
+
+        setPhase("sent");
+        onSent?.();
+        window.setTimeout(() => setFlash(null), 2400);
+      } finally {
+        setSending(false);
+      }
+    }, [geo, hasAudioBlob, heatContext, lang, onSent, sending, text, ui.copied]);
 
     const startAnotherReport = useCallback(() => {
       clearVoiceDraft();
@@ -355,7 +363,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setAudioUrl(null);
     };
 
-    const canSend = Boolean(text.trim() || hasAudioBlob);
+    const canSend = Boolean(text.trim() || hasAudioBlob) && !sending;
 
     const draftBanner =
       pendingDraft && phase === "idle" ? (
@@ -470,11 +478,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
               <SignalControl
                 type="button"
                 direction="right"
-                disabled={!text.trim()}
+                disabled={!text.trim() || sending}
                 onClick={() => void sendReport()}
                 className="min-h-12 w-full border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
               >
-                {copy.voiceSend}
+                {sending ? copy.voiceSending : copy.voiceSend}
               </SignalControl>
               <button
                 type="button"
@@ -498,10 +506,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
             <SignalControl
               type="button"
               direction="right"
+              disabled={sending}
               onClick={() => void sendReport()}
-              className="min-h-12 w-full border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation"
+              className="min-h-12 w-full border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
             >
-              {copy.voiceSend}
+              {sending ? copy.voiceSending : copy.voiceSend}
             </SignalControl>
             <details className="border border-accent/15 bg-field/40 px-3 py-2">
               <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
@@ -569,7 +578,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 onClick={() => void sendReport()}
                 className="min-h-12 flex-1 border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
               >
-                {copy.voiceSend}
+                {sending ? copy.voiceSending : copy.voiceSend}
               </SignalControl>
               <button
                 type="button"

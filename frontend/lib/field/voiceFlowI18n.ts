@@ -10,6 +10,7 @@ export type VoiceFlowCopy = {
   voiceMicFallbackLead: string;
   voiceTypeObservation: string;
   voiceMicRetry: string;
+  voiceSending: string;
   voiceTranscribePending: string;
   voiceTranscribeFailed: string;
 };
@@ -22,6 +23,7 @@ const PL: VoiceFlowCopy = {
   voiceMicFallbackLead: "Możesz wpisać obserwację albo spróbować ponownie.",
   voiceTypeObservation: "Wpisz obserwację",
   voiceMicRetry: "Spróbuj ponownie",
+  voiceSending: "Wysyłanie…",
   voiceTranscribePending: "Próbuję rozpoznać mowę…",
   voiceTranscribeFailed: "Transkrypcja niedostępna — nagranie możesz wysłać bez tekstu.",
 };
@@ -34,6 +36,7 @@ const EN: VoiceFlowCopy = {
   voiceMicFallbackLead: "You can type your observation or try again.",
   voiceTypeObservation: "Type your observation",
   voiceMicRetry: "Try again",
+  voiceSending: "Sending…",
   voiceTranscribePending: "Trying to transcribe…",
   voiceTranscribeFailed: "Transcription unavailable — you can send the recording without text.",
 };
@@ -49,6 +52,7 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceMicFallbackLead: "Potete scrivere l'osservazione o riprovare.",
     voiceTypeObservation: "Scrivi l'osservazione",
     voiceMicRetry: "Riprova",
+    voiceSending: "Invio…",
     voiceTranscribePending: "Trascrizione in corso…",
     voiceTranscribeFailed: "Trascrizione non disponibile — potete inviare solo l'audio.",
   },
@@ -60,6 +64,7 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceMicFallbackLead: "Можете написати спостереження або спробувати знову.",
     voiceTypeObservation: "Напишіть спостереження",
     voiceMicRetry: "Спробуйте знову",
+    voiceSending: "Надсилання…",
     voiceTranscribePending: "Розпізнаю мовлення…",
     voiceTranscribeFailed: "Транскрипція недоступна — можна надіслати лише запис.",
   },
@@ -71,6 +76,7 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceMicFallbackLead: "Beírhatja a megfigyelést, vagy megpróbálhatja újra.",
     voiceTypeObservation: "Írja be a megfigyelést",
     voiceMicRetry: "Újra",
+    voiceSending: "Küldés…",
     voiceTranscribePending: "Beszéd felismerése…",
     voiceTranscribeFailed: "Az átírás nem elérhető — a felvétel küldhető szöveg nélkül.",
   },
