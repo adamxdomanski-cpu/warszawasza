@@ -27,7 +27,8 @@ python3 -m py_compile backend/api/main.py backend/engine/engine.py
 cd frontend && npm run build
 ```
 
-**Field / heat:** `/field/heat` — primary CTA **🎤 Powiedz, co widzisz** (voice); trace clipboard = citizen layer only; journey and technical are collapsed (`frontend/lib/observationTrace.ts`, `docs/core/final-integration-pass.md`).
+**Cold start (default `/`):** dwa CTA + głos — `ColdStartClient.tsx`; stary UI: `/?legacy=1`.  
+**Field / heat:** `/field/heat` — 🎤 + 📍 nad foldem; kontekst w *Więcej kontekstu*. Protokół testu: `docs/core/final-integration-pass.md`.
 
 ## Cursor
 
