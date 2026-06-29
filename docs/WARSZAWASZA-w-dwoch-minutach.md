@@ -499,8 +499,22 @@ Nie numer PR ani FOP — **dwa pytania**, **dwie zasady** i **jedno pytanie filt
 - **Interfejs o stałej strukturze** — *czy obecna struktura obsłuży tę sytuację?*
 - **Rozwijaj słownik częściej niż gramatykę.**
 - **Jedno znaczenie. Wiele języków.**
+- **Każda funkcja:** skraca drogę do działania **albo** zwiększa orientację — inaczej out.
+- **Sukces:** telefon do kieszeni. *Już wiesz. Idź.*
 
 Jeśli za rok ktoś pamięta te pytania i zasady, a nie architekturę — WARSZAWASZA zrobiła swoje. Reszta to implementacja.
+
+---
+
+## Niski koszt użycia (nie „lekka strona”)
+
+Szybkie ładowanie pomaga, ale celem jest **niski koszt dla człowieka**: uwagi, decyzji, nauki, czasu na ekranie.
+
+```
+Rzeczywistość → Interfejs → Lepsza decyzja → Telefon do kieszeni
+```
+
+Technologia wygrywa, gdy człowiek **może odejść** — nie gdy zostaje na ekranie.
 
 ---
 

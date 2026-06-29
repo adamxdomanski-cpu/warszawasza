@@ -140,13 +140,27 @@ START → RECORD → SEND → COMPLETE
 
 ## Distribution (what to build when)
 
-| Stage | When | Why |
-|-------|------|-----|
-| **Web** | **Now** | Link → click → done. No install, account, or store. Lowest friction in crisis. |
-| **PWA** | After field test passes | Icon, cache, faster reopen; still one codebase. |
-| **Native** | Only if reality requires it | Long offline, background record, deep OS integration, field services app. |
+**Nie trzy produkty — jeden interfejs, różne kanały (adaptery):**
 
-Do **not** build native app before web + PWA prove the interface in reality.
+```
+              INTERFEJS RZECZYWISTOŚCI
+                      │
+     ┌────────────────┼────────────────┐
+     │                │                │
+   WWW              PWA          Native App
+     │                │                │
+ link / QR      ikona telefonu   gdy naprawdę potrzebna
+```
+
+Struktura 🎤/📍 **ta sama**. Zmienia się tylko **sposób dotarcia**.
+
+| Kanał | Kiedy |
+|-------|--------|
+| **WWW** | **Teraz** — link → klik, bez instalacji |
+| **PWA** | Po teście terenowym — cache, ikona, ten sam kod |
+| **Native** | Gdy przeglądarka przestaje wystarczać (offline długo, tło, służby) |
+
+Do **not** build native before the interface is proven on web/PWA.
 
 ---
 

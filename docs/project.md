@@ -10,9 +10,9 @@
 
 **Meaning filter:** Czy nowy tekst w UI wyraża **tę samą intencję** we wszystkich językach (nie dosłowne tłumaczenie)? **Jedno znaczenie. Wiele języków.**
 
-**Development principles:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc) (always applied in Cursor).
+**Action filter (every new feature):** (1) Czy **skraca drogę do działania**? (2) Czy **zwiększa orientację w rzeczywistości**? Oba **nie** → nie trafia do produktu.
 
-**Success:** narzędzie znika — zostaje miasto.
+**Success:** narzędzie znika — zostaje miasto. **Najlepszy interfejs nie zatrzymuje człowieka przy ekranie** — mówi: *Już wiesz. Idź.*
 
 **Not a news portal.** WARSZAWASZA does not compete for attention — it helps direct attention where it is needed. No feeds, clickbait, “hot topics”, political debate, marketing CTAs, or artificial engagement loops.
 
