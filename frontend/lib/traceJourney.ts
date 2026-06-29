@@ -68,6 +68,19 @@ export function formatProcessNarrative(lang: Lang, _events?: InteractionEvent[])
   return [oc.stepReceived, oc.stepLocated, oc.stepListening].join("\n");
 }
 
+export type OperatorStepState = "done" | "active";
+
+export function getOperatorSteps(
+  lang: Lang,
+): { text: string; state: OperatorStepState }[] {
+  const oc = operatorCopy(lang);
+  return [
+    { text: oc.stepReceived, state: "done" },
+    { text: oc.stepLocated, state: "done" },
+    { text: oc.stepListening, state: "active" },
+  ];
+}
+
 export function journeyLayerTitle(lang: Lang): string {
   return operatorCopy(lang).title;
 }
