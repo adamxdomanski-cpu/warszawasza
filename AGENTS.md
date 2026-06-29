@@ -1,5 +1,9 @@
 # AGENTS.md
 
+## Język odpowiedzi
+
+**Domyślnie zawsze po polsku.** Użytkownik czyta po polsku; angielski tylko na wyraźną prośbę (np. „odpowiedz po angielsku”). Nie przełączać na EN tylko dlatego, że użytkownik wkleił angielski tekst, cytat lub komunikat UI — to nie jest prośba o zmianę języka agenta.
+
 ## Project
 
 **warszawasza** — FIRA Observation Protocol; primary UI in `frontend/` (Next.js), API/engine in `backend/`.
