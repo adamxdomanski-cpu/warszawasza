@@ -3,6 +3,39 @@
 **Pierwsza kartka** — dla programisty, projektanta, testera, rodzica, wolontariusza.  
 Bez FOP, bez warstw, bez filozofii technologii.
 
+> **WARSZAWASZA** to interfejs rzeczywistości, który łączy dwa kierunki: **miasto pomaga Tobie**, a **Ty pomagasz miastu**.
+
+Jeśli to jedno zdanie jest jasne, reszta dokumentacji będzie łatwiejsza.
+
+---
+
+## Piramida — w jakiej kolejności poznawać projekt
+
+Naturalna kolejność dla człowieka. **Nie od technologii. Od potrzeby.**
+
+```
+                 JAK?
+      (kod, API, trace, FOP)
+
+                  ▲
+
+              DLACZEGO?
+      (interfejs rzeczywistości)
+
+                  ▲
+
+                PO CO?
+
+      📍 Kto może mi pomóc?
+
+      🎤 Komu mogę powiedzieć,
+         co się stało?
+```
+
+**Ta kartka = PO CO.**  
+Dopiero potem: *dlaczego tak* (interfejs, test zimnego startu).  
+Na końcu: *jak* (repozytorium, warstwy, API).
+
 ---
 
 ## O co chodzi?
@@ -11,9 +44,12 @@ WARSZAWASZA **nie jest** portalem informacyjnym.
 **Nie jest** formularzem.  
 **Nie jest** systemem AI.
 
-To **prosty interfejs między człowiekiem a miastem**.
+To **prosty interfejs między człowiekiem a miejscem, w którym jest**.
 
 Są tylko **dwa kierunki**.
+
+**Warszawa** to pierwsze wdrożenie — codzienne pole testów.  
+**Mechanizm** działa wszędzie, gdzie są te same dwa pytania: miasto, szkoła, uczelnia, festiwal, park, lotnisko, osiedle. Zmienia się **sytuacja**, nie logika.
 
 ---
 
@@ -87,7 +123,7 @@ Zmienia się tylko sytuacja.
 ## Dwa kierunki — jedna rozmowa
 
 ```
-        MIASTO
+        MIASTO / MIEJSCE
            │
            ▼
     📍 Pomaga Tobie
@@ -137,16 +173,17 @@ Dwa pytania, które człowiek zadaje w trudnej chwili:
 | [warszawasza.online](https://www.warszawasza.online/) | Wejście (cold start) |
 | [warszawasza.online/field/heat](https://www.warszawasza.online/field/heat) | Scenariusz upału — ten sam interfejs |
 
-Stary pełny UI studia: `/?legacy=1` (warsztat, nie test terenowy).
+Stary pełny UI studia: `/?legacy=1` (warsztat — warstwa **JAK**, nie test terenowy).
 
 ---
 
-## Dla osób, które budują dalej
+## Co czytać dalej (kolejność)
 
-Szczegóły implementacji, warstwy odbiorców, voice, trace —  
-→ [`docs/core/final-integration-pass.md`](core/final-integration-pass.md)
-
-Ta kartka jest **pierwsza**. Reszta jest **druga**.
+| Kolejność | Warstwa | Dokument |
+|-----------|---------|----------|
+| **1** | PO CO | *Ta kartka* |
+| **2** | DLACZEGO | [`final-integration-pass.md`](core/final-integration-pass.md) — test zimnego startu, interfejs |
+| **3** | JAK | [`project.md`](project.md), [`fira/PROTOCOL.md`](../fira/PROTOCOL.md), kod w `frontend/` |
 
 ---
 
