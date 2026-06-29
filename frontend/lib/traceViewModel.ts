@@ -5,7 +5,7 @@
 import { formatEventLabel, compactTracePath } from "./interactionTrace";
 import type { InteractionEvent } from "./fira-core/interaction";
 import { traceArtifactCopy, traceResidentCopy, type Lang } from "./i18n";
-import { buildFopDocument, traceToObservation } from "./fopBridge";
+import { traceToObservation } from "./fopBridge";
 import {
   formatRelativeTime,
   formatShortTraceId,
@@ -44,7 +44,6 @@ export type TraceData = {
     chain: string;
     steps: string[];
     rawJson: Record<string, unknown>;
-    rawFop: string;
   };
 };
 
@@ -123,7 +122,6 @@ export function buildTraceViewModel(
         lang: trace.lang,
         ...(trace.citizen?.subject ? { subject: trace.citizen.subject } : {}),
       },
-      rawFop: buildFopDocument(trace),
     },
   };
 }
@@ -166,6 +164,5 @@ export const MOCK_DZIELNA_TRACE: TraceData = {
       trajectory: true,
       subject: "core-security",
     },
-    rawFop: "FOP/0.1 …",
   },
 };

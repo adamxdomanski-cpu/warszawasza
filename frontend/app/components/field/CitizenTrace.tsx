@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import type { ObservationTracePayload } from "../../../lib/observationTrace";
 import type { TraceData } from "../../../lib/traceViewModel";
+import TraceTechnicalDump from "./TraceTechnicalDump";
 
 type CitizenTraceProps = {
   data: TraceData;
+  tracePayload?: ObservationTracePayload;
   onNearbyClick?: () => void;
   nearbyHref?: string;
   flash?: string | null;
@@ -15,6 +18,7 @@ type CitizenTraceProps = {
 /** Three layers — L1 confirmation · L2 process · L3 technical (collapsed). */
 export default function CitizenTrace({
   data,
+  tracePayload,
   onNearbyClick,
   nearbyHref = "#nearby",
   flash,
@@ -152,16 +156,9 @@ export default function CitizenTrace({
                 <span className="text-accent/45">Log:</span>{" "}
                 {data.telemetry.steps.join(" → ")}
               </div>
-              <details className="pt-2">
-                <summary className="cursor-pointer select-none text-accent/45 touch-manipulation">
-                  [ {data.technicalDetailsLabel} ]
-                </summary>
-                <pre className="mt-2 max-h-64 overflow-auto text-[11px] leading-relaxed text-accent/50">
-                  {JSON.stringify(data.telemetry.rawJson, null, 2)}
-                  {"\n\n"}
-                  {data.telemetry.rawFop}
-                </pre>
-              </details>
+              {tracePayload && (
+                <TraceTechnicalDump data={data} tracePayload={tracePayload} />
+              )}
             </div>
           )}
         </div>

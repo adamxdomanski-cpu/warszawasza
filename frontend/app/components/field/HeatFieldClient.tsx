@@ -29,6 +29,7 @@ export default function HeatFieldClient() {
   const [lang, setLang] = useState<Lang>(() => initialFieldLang());
   const [helpOpen, setHelpOpen] = useState(false);
   const [traceTick, setTraceTick] = useState(0);
+  const [devPanelOpen, setDevPanelOpen] = useState(false);
   const nearbyRef = useRef<HTMLElement>(null);
   const voicePanelRef = useRef<HTMLElement>(null);
   const voiceRef = useRef<FieldVoiceReportHandle>(null);
@@ -203,10 +204,14 @@ export default function HeatFieldClient() {
           </div>
         </section>
 
-        <details className="mt-2 border-t border-accent/10 pt-4">
+        <details
+          className="mt-2 border-t border-accent/10 pt-4"
+          onToggle={(event) => setDevPanelOpen(event.currentTarget.open)}
+        >
           <summary className="cursor-pointer text-sm text-accent/45 touch-manipulation">
             ▼ {copy.technicalData}
           </summary>
+          {devPanelOpen && (
           <div className="mt-4 space-y-4 text-xs leading-relaxed text-accent/40">
             {events.length > 0 && (
               <details className="rounded border border-accent/10 bg-field/40 p-3">
@@ -257,6 +262,7 @@ export default function HeatFieldClient() {
               </p>
             </div>
           </div>
+          )}
         </details>
 
         <FieldBrandFooter />

@@ -59,6 +59,7 @@ export default function TraceReceiptPanel({
   return (
     <CitizenTrace
       data={data}
+      tracePayload={trace}
       flash={flash}
       onNearbyClick={onFindHelp}
       nearbyHref={href}
