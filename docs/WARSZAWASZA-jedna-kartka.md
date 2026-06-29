@@ -1,12 +1,14 @@
 # WARSZAWASZA · Jedna kartka
 
-**Wydrukuj. Powieś nad biurkiem. Nie trzeba otwierać repo.**
+**Kompas, nie dokumentacja.** Dokumentacja odpowiada: *Jak?* Kartka odpowiada: *Po co?*
+
+**Wydrukuj. Powieś nad biurkiem.**
 
 <style>
 @media print {
   body { font-size: 11pt; }
-  h1 { font-size: 14pt; margin-bottom: 0.5em; }
-  pre { font-size: 9pt; line-height: 1.2; }
+  h1 { font-size: 14pt; margin-bottom: 0.25em; }
+  pre { font-size: 10pt; line-height: 1.25; }
 }
 </style>
 
@@ -21,21 +23,21 @@
 </div>
 
 ```
-                 Rzeczywistość
-                       │
-                       ▼
-                  Interfejs
-                       │
-                       ▼
-               Lepsza decyzja
-                       │
-                       ▼
-              Telefon do kieszeni
+             Rzeczywistość
+                   │
+                   ▼
+               Interfejs
+                   │
+                   ▼
+            Lepsza decyzja
+                   │
+                   ▼
+          Telefon do kieszeni
 ```
 
 ---
 
-## Filtr produktu
+**Przed dodaniem czegokolwiek zapytaj:**
 
 - [ ] Czy **skraca drogę do działania**?
 - [ ] Czy **zwiększa orientację** w rzeczywistości?
@@ -44,32 +46,30 @@
 
 ---
 
-## Projektowanie
-
-Nie dodawanie funkcji.
-
-**Usuwanie wszystkiego, co stoi między człowiekiem a decyzją.**
+Projektowanie to usuwanie wszystkiego,  
+co stoi między człowiekiem  
+a **dobrą decyzją**.
 
 ---
 
-## Jeden wskaźnik · TTK
+## Test
 
-**Time To Knowing** — od otwarcia strony do *„Aha. Już wiem.”*
+Wyślij link.
 
-Nie time on page · nie engagement · nie retention.
+Obserwuj.
+
+Zapytaj:
+
+- **Co zrozumiałeś?**
+- **Co zrobiłbyś teraz?**
 
 ---
 
-## Test (dopiero potem)
+## Sukces
 
-1. Wyślij **sam link**.
-2. **Obserwuj** (bez pomocy).
-3. Dwa pytania:
-   - **Co zrozumiałeś?**
-   - **Co zrobiłbyś teraz?**
+Człowiek rozumie.
 
-Zgodne z intencją → interfejs działa.  
-Nie → popraw **interfejs**, nie dokumentację.
+Telefon wraca do kieszeni.
 
 ---
 
@@ -77,10 +77,4 @@ Nie → popraw **interfejs**, nie dokumentację.
 
 🎤 Powiedz, co widzisz · 📍 Znajdź w pobliżu
 
-*Już wiesz. Idź.*
-
 </div>
-
----
-
-*Pierwszy rozdział · warszawasza.online*
