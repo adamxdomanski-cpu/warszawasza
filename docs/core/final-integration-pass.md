@@ -136,7 +136,7 @@ START → RECORD → SEND → COMPLETE
 
 **Pass:** help + tell what you see. **Fail:** “strona o Warszawie”, “nie wiem”. → **One change**, retest.
 
-**Full protocol:** [field-test-5s.md](field-test-5s.md) — metryka *telefon do kieszeni*, arkusz notatek.
+**Full protocol:** [WARSZAWASZA-jedna-kartka.md](../WARSZAWASZA-jedna-kartka.md) — test dwóch pytań, TTK, filtr na kartce.
 
 ---
 
