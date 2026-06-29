@@ -5,6 +5,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ColdStartCopy } from "../../../lib/field/coldStartI18n";
 import type { Lang } from "../../../lib/i18n";
 import { speechRecognitionLocale, localeDateTime } from "../../../lib/localeMap";
+import {
+  formatPlaceFromGeo,
+  readCurrentPosition,
+  voiceGeoCopy,
+  type GeoPoint,
+} from "../../../lib/field/voiceGeoCopy";
 import { journeyUiCopy } from "../../../lib/traceJourney";
 import {
   appendInteractionEvent,
@@ -44,6 +50,11 @@ export default function FieldVoiceReport({
   const [canRecord, setCanRecord] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const [geo, setGeo] = useState<GeoPoint | null>(null);
+  const [geoBusy, setGeoBusy] = useState(false);
+  const [geoError, setGeoError] = useState<string | null>(null);
+
+  const geoCopy = voiceGeoCopy(lang);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
@@ -142,11 +153,31 @@ export default function FieldVoiceReport({
     setPhase("review");
   }, [stopTranscription]);
 
+  const attachLocation = useCallback(async () => {
+    setGeoBusy(true);
+    setGeoError(null);
+    try {
+      const point = await readCurrentPosition();
+      setGeo(point);
+      appendInteractionEvent("SELECT", "GEO");
+    } catch {
+      setGeoError(geoCopy.failed);
+    } finally {
+      setGeoBusy(false);
+    }
+  }, [geoCopy.failed]);
+
   const sendReport = useCallback(async () => {
     appendInteractionEvent("CHANGE", text.trim() || "voice");
     appendInteractionEvent("COMPLETE");
 
     const traceEvents = getInteractionTrace().events;
+    const place = geo
+      ? formatPlaceFromGeo(geo)
+      : lang === "pl"
+        ? "Miejsce nieznane (bez GPS)"
+        : "Unknown place (no GPS)";
+
     const payload: ObservationTracePayload = {
       lang,
       trajectory: null,
@@ -157,9 +188,9 @@ export default function FieldVoiceReport({
       createdAt: Date.now(),
       traceEvents,
       citizen: {
-        place: "Mokotów · Warszawa",
+        place,
         observedAt: new Date().toISOString(),
-        subject: "field_heat",
+        subject: geo ? "field_voice_geo" : "field_heat",
         relatedRefs: text.trim() || copy.ctaVoiceReport,
         traceDecision: "none",
       },
@@ -177,12 +208,14 @@ export default function FieldVoiceReport({
     setPhase("sent");
     onSent?.();
     window.setTimeout(() => setFlash(null), 2400);
-  }, [copy.ctaVoiceReport, lang, onSent, text, ui.copied]);
+  }, [copy.ctaVoiceReport, geo, lang, onSent, text, ui.copied]);
 
   const reset = () => {
     setPhase("idle");
     setText("");
     setSeconds(0);
+    setGeo(null);
+    setGeoError(null);
     if (audioUrl) URL.revokeObjectURL(audioUrl);
     setAudioUrl(null);
   };
@@ -285,6 +318,21 @@ export default function FieldVoiceReport({
               className="w-full min-h-20 touch-manipulation border border-accent/30 bg-field px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             />
           </label>
+          <div className="space-y-2">
+            <p className="m-0 text-xs text-accent/50">{geoCopy.hint}</p>
+            <button
+              type="button"
+              disabled={geoBusy || !!geo}
+              onClick={() => void attachLocation()}
+              className="min-h-11 w-full touch-manipulation border border-accent/30 bg-field/80 px-4 py-2.5 text-left text-sm text-ink disabled:opacity-60"
+            >
+              {geo ? geoCopy.attached : geoCopy.attach}
+            </button>
+            {geo && (
+              <p className="m-0 font-mono-field text-xs text-accent/55">{formatPlaceFromGeo(geo)}</p>
+            )}
+            {geoError && <p className="m-0 text-xs text-accent/55">{geoError}</p>}
+          </div>
           <div className="flex flex-col gap-2 sm:flex-row">
             <SignalControl
               type="button"

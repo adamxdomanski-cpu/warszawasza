@@ -153,6 +153,26 @@ Zmienia się tylko sytuacja.
 
 ---
 
+## Obce miasto, obcy język (np. Budapeszt)
+
+Jesteś świadkiem wypadku. **Nie znasz węgierskiego.** Nie przeczytasz tablicy ulicy. **Stres** — nie masz siły na formularz.
+
+Co możesz zrobić **już dziś**:
+
+| Potrzeba | Co robi interfejs |
+|----------|-------------------|
+| Mówić po swojemu | Wybierz **`[ PL ]`** (lub swój język) — mówisz głosem, nie piszesz |
+| Nie znać ulicy | **`📍 Dołącz, gdzie jestem`** — jedno dotknięcie, współrzędne GPS (bez czytania tablic) |
+| Opisać zdarzenie | 🎤 *„Widzę wypadek deskorolkarza, potrzebuje pomocy”* |
+
+**📍 Znajdź pomoc w pobliżu** w wdrożeniu warszawskim wskazuje **konkretne punkty w Warszawie**. W Budapeszcie ten przycisk na razie **nie zna lokalnej mapy** — to kolejne wdrożenie, ten sam mechanizm.
+
+**Tłumaczenie dla służb** (węgierski operator czyta po polsku) — to warstwa **operatora / backendu**, nie ekranu w stresie. Ty wysyłasz **głos + GPS w swoim języku**; system przekazuje dalej. Na ekranie obywatela: **zero tłumaczenia na siłę**, tylko dwa kierunki.
+
+Uniwersalna definicja na okładce obejmuje ten przypadek: **pomoc + obserwacja** — bez wymogu znajomości języka kraju.
+
+---
+
 ## Dwa kierunki — jedna rozmowa
 
 ```
