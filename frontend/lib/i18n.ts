@@ -1850,11 +1850,20 @@ export function traceArtifactCopy(lang: Lang): TraceArtifactCopy {
 export type TraceResidentCopy = {
   cityDefault: string;
   statusReceived: string;
+  statusLabel: string;
   statusAwaitingField: string;
   statusUnverified: string;
+  reportDescriptionLabel: string;
+  heatGuidance: string;
+  showNearbyPlaces: string;
   findWaterShade: string;
   reportObservation: string;
   technicalData: string;
+  technicalDetails: string;
+  traceIdLabel: string;
+  pipelineLabel: string;
+  telemetryLabel: string;
+  eventLogLabel: string;
   minutesAgo: string;
   hoursAgo: string;
   justNow: string;
@@ -1863,24 +1872,43 @@ export type TraceResidentCopy = {
 export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
   pl: {
     cityDefault: "Warszawa",
-    statusReceived: "✓ Zgłoszenie odebrane",
-    statusAwaitingField: "⚠ Część danych czeka na potwierdzenie w terenie",
-    statusUnverified: "Status: niezweryfikowane",
+    statusReceived: "✓ Ślad odebrany",
+    statusLabel: "Stan:",
+    statusAwaitingField: "Oczekuje na potwierdzenie.",
+    statusUnverified: "Niezweryfikowane.",
+    reportDescriptionLabel: "Opis zgłoszenia:",
+    heatGuidance:
+      "Jeżeli przebywasz na zewnątrz podczas upału,\nznajdź wodę i cień.",
+    showNearbyPlaces: "📍 Pokaż najbliższe miejsca",
     findWaterShade: "Znajdź wodę i cień",
     reportObservation: "Zgłoś obserwację",
     technicalData: "Dane techniczne",
+    technicalDetails: "Pełne szczegóły (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetria",
+    eventLogLabel: "Log zdarzeń",
     minutesAgo: "{n} min temu",
     hoursAgo: "{n} godz. temu",
     justNow: "przed chwilą",
   },
   en: {
     cityDefault: "Warsaw",
-    statusReceived: "✓ Report received",
-    statusAwaitingField: "⚠ Some data awaits field confirmation",
-    statusUnverified: "Status: unverified",
+    statusReceived: "✓ Trace received",
+    statusLabel: "Status:",
+    statusAwaitingField: "Awaiting confirmation.",
+    statusUnverified: "Unverified.",
+    reportDescriptionLabel: "Report description:",
+    heatGuidance: "If you are outside in the heat,\nfind water and shade.",
+    showNearbyPlaces: "📍 Show nearest places",
     findWaterShade: "Find water and shade",
     reportObservation: "Report an observation",
     technicalData: "Technical data",
+    technicalDetails: "Full details (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetry",
+    eventLogLabel: "Event log",
     minutesAgo: "{n} min ago",
     hoursAgo: "{n} h ago",
     justNow: "just now",
@@ -1888,26 +1916,65 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
   it: {
     cityDefault: "Varsavia",
     statusReceived: "✓ Segnalazione ricevuta",
-    statusAwaitingField: "⚠ Alcuni dati attendono conferma sul campo",
-    statusUnverified: "Stato: non verificato",
+    statusLabel: "Stato:",
+    statusAwaitingField: "In attesa di conferma.",
+    statusUnverified: "Non verificato.",
+    reportDescriptionLabel: "Descrizione della segnalazione:",
+    heatGuidance: "Se sei all'aperto con il caldo,\ntrova acqua e ombra.",
+    showNearbyPlaces: "📍 Mostra i posti più vicini",
     findWaterShade: "Trova acqua e ombra",
     reportObservation: "Segnala un'osservazione",
     technicalData: "Dati tecnici",
+    technicalDetails: "Dettagli completi (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetria",
+    eventLogLabel: "Log eventi",
     minutesAgo: "{n} min fa",
     hoursAgo: "{n} h fa",
     justNow: "proprio ora",
   },
   uk: {
     cityDefault: "Варшава",
-    statusReceived: "✓ Звернення прийнято",
-    statusAwaitingField: "⚠ Частина даних очікує підтвердження в полі",
-    statusUnverified: "Статус: не перевірено",
+    statusReceived: "✓ Слід отримано",
+    statusLabel: "Статус:",
+    statusAwaitingField: "Очікує підтвердження.",
+    statusUnverified: "Не перевірено.",
+    reportDescriptionLabel: "Опис звернення:",
+    heatGuidance: "Якщо ви на вулиці в спеку,\nзнайдіть воду та тінь.",
+    showNearbyPlaces: "📍 Показати найближчі місця",
     findWaterShade: "Знайти воду та тінь",
     reportObservation: "Повідомити спостереження",
     technicalData: "Технічні дані",
+    technicalDetails: "Повні деталі (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Телеметрія",
+    eventLogLabel: "Журнал подій",
     minutesAgo: "{n} хв тому",
     hoursAgo: "{n} год тому",
     justNow: "щойно",
+  },
+  hu: {
+    cityDefault: "Varsó",
+    statusReceived: "✓ Nyom rögzítve",
+    statusLabel: "Állapot:",
+    statusAwaitingField: "Megerősítésre vár.",
+    statusUnverified: "Ellenőrizetlen.",
+    reportDescriptionLabel: "Bejelentés leírása:",
+    heatGuidance: "Ha a hőségben kint vagy,\nkeress vizet és árnyékot.",
+    showNearbyPlaces: "📍 Legközelebbi helyek",
+    findWaterShade: "Víz és árnyék",
+    reportObservation: "Megfigyelés jelentése",
+    technicalData: "Műszaki adatok",
+    technicalDetails: "Teljes részletek (JSON, FOP)",
+    traceIdLabel: "Trace ID",
+    pipelineLabel: "Pipeline",
+    telemetryLabel: "Telemetria",
+    eventLogLabel: "Eseménynapló",
+    minutesAgo: "{n} perce",
+    hoursAgo: "{n} órája",
+    justNow: "épp most",
   },
 };
 

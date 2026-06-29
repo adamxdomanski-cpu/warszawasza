@@ -1,7 +1,8 @@
 import type { TrajectoryChoice } from "./artifactI18n";
-import { buildFopDocument, buildFopHumanLabels } from "./fopBridge";
+import { buildFopDocument, traceToObservation } from "./fopBridge";
 import type { CitizenTraceFields } from "./domain/traceContract";
 import {
+  compactTracePath,
   formatTracePath,
   suggestTraceHypotheses,
   traceEventsForLog,
@@ -20,8 +21,8 @@ import {
   isCriticalHumanTrace,
   isTerrainVerified,
 } from "./traceStatus";
-import { studioDiscoveryLine } from "./studioAnchor";
-import { formatJourneyBlock, journeyLayerTitle } from "./traceJourney";
+import { STUDIO_ANCHOR } from "./studioAnchor";
+import { formatProcessNarrative, journeyLayerTitle } from "./traceJourney";
 
 export type ObservationTracePayload = {
   lang: Lang;
@@ -37,7 +38,38 @@ export type ObservationTracePayload = {
   decisionEvents?: InteractionEvent[];
 };
 
+export type TracePresentationOptions = {
+  origin?: string;
+  /** Show heat guidance + nearby CTA (deployment context, not interpretation). */
+  heatContext?: boolean;
+  findHelpPath?: string;
+};
+
+export type TraceCitizenView = {
+  headline: string;
+  placeLine: string;
+  descriptionLabel?: string;
+  description?: string;
+  statusLabel: string;
+  statusLine: string;
+  heatGuidance?: string;
+  nearbyCta: string;
+  findHelpPath: string;
+};
+
+export type TraceTechnicalSummary = {
+  traceId: string;
+  pipelineLabel: string;
+  pipelineValue: string;
+  telemetryLabel: string;
+  telemetryValue: string;
+  eventLogLabel: string;
+  eventLogValue: string;
+};
+
 export const TRACE_REGISTRY_KEY = "warszawasza-field-traces";
+
+const TELEMETRY_CHAIN = "OBS → SIG → PROC → FIL → PAM → WAL → WIE";
 
 function readRegistry(): ObservationTracePayload[] {
   if (typeof window === "undefined") return [];
@@ -74,10 +106,17 @@ export function formatShortTraceLabel(createdAt: number, lang: Lang): string {
 
 function observationQuote(trace: ObservationTracePayload): string | null {
   const text = trace.citizen?.relatedRefs?.trim();
-  return text || null;
+  if (!text) return null;
+  const placeholders = [
+    "Powiedz, co widzisz",
+    "Say what you see",
+    "Report what you see",
+  ];
+  if (placeholders.some((p) => text === p)) return null;
+  return text;
 }
 
-function formatRelativeTime(trace: ObservationTracePayload): string {
+export function formatRelativeTime(trace: ObservationTracePayload): string {
   const rc = traceResidentCopy(trace.lang);
   const ms = Date.now() - trace.createdAt;
   if (ms < 60_000) return rc.justNow;
@@ -87,141 +126,187 @@ function formatRelativeTime(trace: ObservationTracePayload): string {
   return rc.hoursAgo.replace("{n}", String(hours));
 }
 
-function buildResidentStatusLines(trace: ObservationTracePayload): string[] {
-  const rc = traceResidentCopy(trace.lang);
-  const decision = trace.citizen?.traceDecision;
-  const lines: string[] = [];
-
-  if (decision === "true") lines.push(rc.statusReceived);
-  else if (decision === "false") lines.push(rc.statusUnverified);
-  else lines.push(rc.statusReceived);
-
-  if (!isTerrainVerified(trace)) lines.push(rc.statusAwaitingField);
-
-  if (isCriticalHumanTrace(trace)) {
-    const hint = crisisEmergencyHint(trace.lang);
-    if (hint) lines.push(hint);
-  }
-
-  return lines;
-}
-
-/** Resident-facing card — no WARSTWA / FOP / pipeline jargon. */
-export function buildTraceResidentLayer(
-  trace: ObservationTracePayload,
-  origin = "https://www.warszawasza.online",
-): string {
-  const rc = traceResidentCopy(trace.lang);
-  const place = trace.citizen?.place?.trim() || rc.cityDefault;
-  const quote = observationQuote(trace);
-  const lines: string[] = [];
-
-  if (quote) {
-    lines.push(`„${quote}"`, "");
-  }
-
-  lines.push(place, formatRelativeTime(trace), "");
-
-  for (const status of buildResidentStatusLines(trace)) {
-    lines.push(status);
-  }
-  lines.push(
-    "",
-    `${rc.findWaterShade}:`,
-    `${origin}/field/heat`,
-    "",
-    `${rc.reportObservation}:`,
-    `${origin}/`,
-    "",
-    formatShortTraceLabel(trace.createdAt, trace.lang),
-    "",
-    `· ${studioDiscoveryLine(trace.lang)}`,
-  );
-
-  return lines.join("\n");
+export function isHeatDeployment(trace: ObservationTracePayload): boolean {
+  const subject = trace.citizen?.subject ?? "";
+  if (/heat|upał|upa/i.test(subject)) return true;
+  return trace.logLines.some((l) => /field\/heat|heat/i.test(l));
 }
 
 function resolveTraceEvents(trace: ObservationTracePayload): InteractionEvent[] {
   return trace.traceEvents ?? trace.decisionEvents ?? [];
 }
 
-/** Level 1 — Citizen export (clipboard / mailto default). No telemetry. */
+function pipelineCoherence(trace: ObservationTracePayload): { level: number; bar: string } {
+  const events = resolveTraceEvents(trace);
+  const completed = events.some((e) => e.event === "COMPLETE");
+  const obs = traceToObservation(trace);
+  let level = obs.evidence.level as number;
+  if (completed) {
+    level = Math.max(level, Math.min(5, trace.engineIndex >= 7 ? 5 : trace.engineIndex + 1));
+  }
+  if (level < 1) level = completed ? 5 : 1;
+  level = Math.max(1, Math.min(5, level));
+  return { level, bar: "█".repeat(level) + "░".repeat(5 - level) };
+}
+
+function formatEventLogShort(events: InteractionEvent[]): string {
+  if (!events.length) return "—";
+  return events.map((e) => e.event).join(" → ");
+}
+
+function citizenStatusLine(trace: ObservationTracePayload): string {
+  const rc = traceResidentCopy(trace.lang);
+  if (trace.citizen?.traceDecision === "false") return rc.statusUnverified;
+  if (isTerrainVerified(trace)) {
+    return trace.lang === "pl" ? "Potwierdzone w terenie." : "Confirmed in the field.";
+  }
+  return rc.statusAwaitingField;
+}
+
+/** Structured L1 — observation separate from recommendation. */
+export function getTraceCitizenView(
+  trace: ObservationTracePayload,
+  options: TracePresentationOptions = {},
+): TraceCitizenView {
+  const rc = traceResidentCopy(trace.lang);
+  const place = trace.citizen?.place?.trim() || rc.cityDefault;
+  const quote = observationQuote(trace);
+  const heat = options.heatContext ?? isHeatDeployment(trace);
+  const findHelpPath = options.findHelpPath ?? "/field/heat#nearby";
+
+  return {
+    headline: rc.statusReceived,
+    placeLine: `${place} (${formatRelativeTime(trace)})`,
+    ...(quote
+      ? { descriptionLabel: rc.reportDescriptionLabel, description: quote }
+      : {}),
+    statusLabel: rc.statusLabel,
+    statusLine: citizenStatusLine(trace),
+    ...(heat ? { heatGuidance: rc.heatGuidance } : {}),
+    nearbyCta: rc.showNearbyPlaces,
+    findHelpPath,
+  };
+}
+
+/** Plain-text L1 for clipboard — no telemetry, no interpretation. */
+export function buildTraceResidentLayer(
+  trace: ObservationTracePayload,
+  options: TracePresentationOptions = {},
+): string {
+  const view = getTraceCitizenView(trace, options);
+  const lines: string[] = [view.headline, "", view.placeLine, ""];
+
+  if (view.descriptionLabel && view.description) {
+    lines.push(view.descriptionLabel, `„${view.description}"`, "");
+  }
+
+  lines.push(view.statusLabel, view.statusLine, "");
+
+  if (view.heatGuidance) {
+    lines.push(view.heatGuidance, "");
+  }
+
+  if (view.heatGuidance) {
+    lines.push(view.nearbyCta);
+  }
+
+  if (isCriticalHumanTrace(trace)) {
+    const hint = crisisEmergencyHint(trace.lang);
+    if (hint) lines.push("", hint);
+  }
+
+  return lines.join("\n").trimEnd();
+}
+
 export function buildTraceCitizenLayer(
   trace: ObservationTracePayload,
-  origin = "https://www.warszawasza.online",
+  _origin?: string,
+  options: TracePresentationOptions = {},
 ): string {
-  return buildTraceResidentLayer(trace, origin);
+  return buildTraceResidentLayer(trace, options);
 }
 
-/** Level 2 — Operator journey (human steps, collapsed by default in UI). */
 export function buildTraceJourneyLayer(trace: ObservationTracePayload): string {
-  const events = resolveTraceEvents(trace);
-  if (!events.length) return "";
-  return formatJourneyBlock(events, trace.lang);
+  return formatProcessNarrative(trace.lang, resolveTraceEvents(trace));
 }
 
-/** Level 3 — Developer telemetry only. Never mix with citizen UI. */
-export function buildTraceTechnicalLayer(trace: ObservationTracePayload): string {
-  const artifact = traceArtifactCopy(trace.lang);
+export function getTraceTechnicalSummary(trace: ObservationTracePayload): TraceTechnicalSummary {
   const rc = traceResidentCopy(trace.lang);
-  const copy = COPY[trace.lang];
+  const copy = traceArtifactCopy(trace.lang);
   const events = resolveTraceEvents(trace);
-  const traceLines = events.length ? traceEventsForLog(events) : [];
-  const pathBlock =
-    events.length > 0 ? ["", "trace:", formatTracePath(events)] : [];
+  const { level } = pipelineCoherence(trace);
+  const coherenceLabel =
+    trace.lang === "pl"
+      ? `Spójność ${level}/5`
+      : trace.lang === "en"
+        ? `Coherence ${level}/5`
+        : `${level}/5`;
+
+  return {
+    traceId: formatShortTraceId(trace.createdAt),
+    pipelineLabel: rc.pipelineLabel,
+    pipelineValue: coherenceLabel,
+    telemetryLabel: rc.telemetryLabel,
+    telemetryValue: copy.chainStages,
+    eventLogLabel: rc.eventLogLabel,
+    eventLogValue: formatEventLogShort(events),
+  };
+}
+
+/** L3 inner drawer — JSON + raw FOP + hypothesis (dev only). */
+export function buildTraceTechnicalDetails(trace: ObservationTracePayload): string {
+  const events = resolveTraceEvents(trace);
+  const { level, bar } = pipelineCoherence(trace);
   const hypothesis = buildTraceHypothesisLayer(trace);
 
+  const jsonBlock = JSON.stringify(
+    {
+      trace_id: formatShortTraceId(trace.createdAt),
+      pipeline_spojnosc: bar,
+      path: events.length ? compactTracePath(events) : undefined,
+      telemetry: TELEMETRY_CHAIN.replace(/ → /g, "->"),
+      anchor: [STUDIO_ANCHOR.lat, STUDIO_ANCHOR.lon],
+      ...(trace.attentionCount > 0 ? { impulsy_uwagi: trace.attentionCount } : {}),
+      pipeline_level: level,
+    },
+    null,
+    2,
+  );
+
+  const parts = [jsonBlock, "", buildFopDocument(trace)];
+  if (hypothesis) parts.push("", hypothesis);
+  if (events.length) {
+    parts.push("", "trace:", formatTracePath(events));
+  }
+  return parts.join("\n");
+}
+
+/** @deprecated L3 flat dump — use summary + details in UI */
+export function buildTraceTechnicalLayer(trace: ObservationTracePayload): string {
+  const rc = traceResidentCopy(trace.lang);
+  const summary = getTraceTechnicalSummary(trace);
   return [
-    artifact.separator,
+    `${rc.traceIdLabel}: ${summary.traceId}`,
+    `${summary.pipelineLabel}: ${summary.pipelineValue}`,
+    `${summary.telemetryLabel}: ${summary.telemetryValue}`,
+    `${summary.eventLogLabel}: ${summary.eventLogValue}`,
     "",
-    rc.technicalData,
-    "",
-    artifact.layer2,
-    "",
-    copy.trace.logHeader,
-    ...trace.logLines.map((line) => `  ${line}`),
-    ...traceLines,
-    ...pathBlock,
-    "",
-    artifact.layer3,
-    "",
-    ...buildFopHumanLabels(trace),
-    "",
-    buildFopDocument(trace),
-    ...(hypothesis ? ["", hypothesis] : []),
+    buildTraceTechnicalDetails(trace),
   ].join("\n");
 }
 
-/** @deprecated use buildTraceResidentLayer */
 export function buildTraceHumanLayer(trace: ObservationTracePayload): string {
   return buildTraceResidentLayer(trace);
 }
 
 export function buildTraceLogLayer(trace: ObservationTracePayload): string {
-  const artifact = traceArtifactCopy(trace.lang);
   const copy = COPY[trace.lang];
   const events = resolveTraceEvents(trace);
   const traceLines = events.length ? traceEventsForLog(events) : [];
-  const pathBlock =
-    events.length > 0 ? ["", "trace:", formatTracePath(events)] : [];
   return [
-    artifact.layer2,
-    "",
     copy.trace.logHeader,
     ...trace.logLines.map((line) => `  ${line}`),
     ...traceLines,
-    ...pathBlock,
-  ].join("\n");
-}
-
-export function buildTraceFopLayer(trace: ObservationTracePayload): string {
-  const artifact = traceArtifactCopy(trace.lang);
-  return [
-    artifact.layer3,
-    "",
-    ...buildFopHumanLabels(trace),
-    "",
-    buildFopDocument(trace),
   ].join("\n");
 }
 
@@ -239,27 +324,31 @@ export function buildTraceHypothesisLayer(trace: ObservationTracePayload): strin
   return lines.join("\n").trimEnd();
 }
 
-/** Clipboard / mailto: citizen layer only. */
 export function buildTraceDocument(trace: ObservationTracePayload): string {
   return buildTraceCitizenLayer(trace);
 }
 
-/** Full archive — all three layers with section markers (dev / explicit export). */
 export function buildTraceArchiveDocument(
   trace: ObservationTracePayload,
   origin = "https://www.warszawasza.online",
 ): string {
-  const artifact = traceArtifactCopy(trace.lang);
   const rc = traceResidentCopy(trace.lang);
   const journey = buildTraceJourneyLayer(trace);
-  const technical = buildTraceTechnicalLayer(trace);
-  const parts = [buildTraceCitizenLayer(trace, origin)];
-
-  if (journey) {
-    parts.push("", artifact.separator, "", `▼ ${journeyLayerTitle(trace.lang)}`, "", journey);
-  }
-
-  parts.push("", artifact.separator, "", rc.technicalData, "", technical);
+  const summary = getTraceTechnicalSummary(trace);
+  const parts = [
+    buildTraceCitizenLayer(trace, origin),
+    "",
+    "──",
+    "",
+    journeyLayerTitle(trace.lang),
+    journey,
+    "",
+    rc.technicalData,
+    `${rc.traceIdLabel}: ${summary.traceId}`,
+    `${summary.pipelineLabel}: ${summary.pipelineValue}`,
+    `${summary.telemetryLabel}: ${summary.telemetryValue}`,
+    `${summary.eventLogLabel}: ${summary.eventLogValue}`,
+  ];
   return parts.join("\n");
 }
 
@@ -290,7 +379,6 @@ export function buildMailtoHref(trace: ObservationTracePayload): string {
   return `mailto:hello@warszawasza.online?subject=${subject}&body=${body}`;
 }
 
-/** Full legacy export with WARSTWA headers in layer 1 (dev / archive). */
 export function buildTraceDocumentLegacy(trace: ObservationTracePayload): string {
   const artifact = traceArtifactCopy(trace.lang);
   const copy = COPY[trace.lang];
@@ -322,7 +410,7 @@ export function buildTraceDocumentLegacy(trace: ObservationTracePayload): string
     "",
     buildTraceLogLayer(trace),
     "",
-    buildTraceFopLayer(trace),
+    buildTraceTechnicalDetails(trace),
     ...(hypothesis ? ["", hypothesis] : []),
   ].join("\n");
 }

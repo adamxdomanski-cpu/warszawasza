@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   forwardRef,
   useCallback,
@@ -24,10 +23,10 @@ import {
   getInteractionTrace,
 } from "../../../lib/interactionTrace";
 import {
-  buildTraceCitizenLayer,
   registerTrace,
   type ObservationTracePayload,
 } from "../../../lib/observationTrace";
+import TraceReceiptPanel, { copyCitizenTraceText } from "./TraceReceiptPanel";
 import SignalControl from "../SignalControl";
 
 type VoicePhase = "idle" | "recording" | "review" | "sent";
@@ -43,6 +42,8 @@ type FieldVoiceReportProps = {
   onFindHelp?: () => void;
   /** Header CTAs already label 🎤 — hide duplicate chrome until recording. */
   lean?: boolean;
+  /** Heat deployment — show orientation CTA, not interpretation. */
+  heatContext?: boolean;
 };
 
 function formatTimer(seconds: number): string {
@@ -52,7 +53,7 @@ function formatTimer(seconds: number): string {
 }
 
 const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProps>(
-  function FieldVoiceReport({ lang, copy, onSent, onFindHelp, lean = false }, ref) {
+  function FieldVoiceReport({ lang, copy, onSent, onFindHelp, lean = false, heatContext = false }, ref) {
     const [phase, setPhase] = useState<VoicePhase>("idle");
     const [seconds, setSeconds] = useState(0);
     const [text, setText] = useState("");
@@ -62,6 +63,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const [geo, setGeo] = useState<GeoPoint | null>(null);
     const [geoBusy, setGeoBusy] = useState(false);
     const [geoError, setGeoError] = useState<string | null>(null);
+    const [sentPayload, setSentPayload] = useState<ObservationTracePayload | null>(null);
 
     const geoCopy = voiceGeoCopy(lang);
 
@@ -197,22 +199,25 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         engineIndex: 0,
         attentionCount: 0,
         clock: localeDateTime(lang),
-        logLines: ["field/voice"],
+        logLines: heatContext ? ["field/heat"] : ["field/voice"],
         createdAt: Date.now(),
         traceEvents,
         citizen: {
           place,
           observedAt: new Date().toISOString(),
-          subject: geo ? "field_voice_geo" : "field_heat",
+          subject: geo ? "field_voice_geo" : heatContext ? "field_heat" : "field_voice",
           relatedRefs: text.trim() || copy.ctaVoiceReport,
           traceDecision: "none",
         },
       };
 
       registerTrace(payload);
+      setSentPayload(payload);
 
       try {
-        await navigator.clipboard.writeText(buildTraceCitizenLayer(payload));
+        await navigator.clipboard.writeText(
+          copyCitizenTraceText(payload, { heatContext: heatContext || undefined }),
+        );
         setFlash(ui.copied);
       } catch {
         /* clipboard optional */
@@ -221,10 +226,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setPhase("sent");
       onSent?.();
       window.setTimeout(() => setFlash(null), 2400);
-    }, [copy.ctaVoiceReport, geo, lang, onSent, text, ui.copied]);
+    }, [copy.ctaVoiceReport, geo, heatContext, lang, onSent, text, ui.copied]);
 
     const reset = () => {
       setPhase("idle");
+      setSentPayload(null);
       setText("");
       setSeconds(0);
       setGeo(null);
@@ -237,34 +243,17 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       return null;
     }
 
-    if (phase === "sent") {
+    if (phase === "sent" && sentPayload) {
       return (
-        <section
-          aria-label={copy.voiceSentTitle}
-          className="rounded border-2 border-accent/40 bg-field px-4 py-5 sm:px-5"
-        >
-          <p className="m-0 text-lg font-medium text-ink">{copy.voiceSentTitle}</p>
-          <p className="mt-2 mb-5 text-sm text-accent/75">{copy.voiceSentBody}</p>
-          {flash && <p className="mb-3 text-xs text-accent/60">{flash}</p>}
-          <div className="flex flex-col gap-2">
-            <SignalControl
-              type="button"
-              direction="right"
-              onClick={() => {
-                onFindHelp?.();
-              }}
-              className="min-h-12 w-full border border-accent/35 bg-field px-4 py-3 text-left text-sm text-ink touch-manipulation"
-            >
-              {copy.ctaNearbyHelp}
-            </SignalControl>
-            <Link
-              href="/"
-              className="flex min-h-12 w-full items-center border border-accent/25 bg-field/80 px-4 py-3 text-sm text-accent/85 touch-manipulation"
-            >
-              {copy.ctaAnotherObservation}
-            </Link>
-          </div>
-        </section>
+        <TraceReceiptPanel
+          trace={sentPayload}
+          lang={lang}
+          presentation={{ heatContext }}
+          flash={flash}
+          onFindHelp={onFindHelp}
+          onAnother={reset}
+          anotherLabel={copy.ctaAnotherObservation}
+        />
       );
     }
 

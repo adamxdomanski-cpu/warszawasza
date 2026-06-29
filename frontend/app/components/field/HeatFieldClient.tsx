@@ -149,7 +149,7 @@ export default function HeatFieldClient() {
         </header>
 
         <section ref={voicePanelRef} aria-label={copy.ctaVoiceReport}>
-          <FieldVoiceReport ref={voiceRef} lang={lang} copy={copy} onFindHelp={onCta} lean />
+          <FieldVoiceReport ref={voiceRef} lang={lang} copy={copy} onFindHelp={onCta} lean heatContext />
         </section>
 
         <section
