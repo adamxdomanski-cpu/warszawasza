@@ -3,6 +3,7 @@
  */
 
 import type { Lang } from "../i18n";
+import { HEAT_FIELD_EXTRA } from "./heatFieldExtras";
 
 export type HeatPointStatus = "ok" | "fail";
 export type HeatPointKind = "water" | "shade" | "both";
@@ -312,7 +313,10 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
 };
 
 export function heatFieldCopy(lang: Lang): HeatCopy {
-  return COPY[lang] ?? COPY.en!;
+  const merged: Partial<Record<Lang, HeatCopy>> = { ...COPY, ...HEAT_FIELD_EXTRA };
+  const resolved = merged[lang];
+  if (resolved) return resolved;
+  return merged.en!;
 }
 
 export function formatDistance(copy: HeatCopy, meters: number, walkMin: number): string {

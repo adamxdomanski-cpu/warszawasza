@@ -14,16 +14,24 @@ import {
   HEAT_RCB_CRITICAL,
 } from "../../../lib/field/heatFieldI18n";
 import type { Lang } from "../../../lib/i18n";
+import { LANGS } from "../../../lib/i18n";
 import {
   appendInteractionEvent,
   clearInteractionTrace,
   formatTracePath,
   getInteractionTrace,
 } from "../../../lib/interactionTrace";
-import { formatJourneyBlock } from "../../../lib/traceJourney";
+import { formatJourneyBlock, journeyLayerTitle } from "../../../lib/traceJourney";
+
+function initialFieldLang(): Lang {
+  if (typeof window === "undefined") return "pl";
+  const nav = navigator.language.toLowerCase();
+  const hit = LANGS.find((code) => nav === code || nav.startsWith(`${code}-`));
+  return hit ?? "pl";
+}
 
 export default function HeatFieldClient() {
-  const [lang, setLang] = useState<Lang>("pl");
+  const [lang, setLang] = useState<Lang>(() => initialFieldLang());
   const [helpOpen, setHelpOpen] = useState(false);
   const [traceTick, setTraceTick] = useState(0);
   const nearbyRef = useRef<HTMLElement>(null);
@@ -214,7 +222,7 @@ export default function HeatFieldClient() {
             {events.length > 0 && (
               <details className="rounded border border-accent/10 bg-field/40 p-3">
                 <summary className="cursor-pointer text-sm text-accent/60 touch-manipulation">
-                  ▼ {lang === "pl" ? "Jak przebiegało zgłoszenie?" : "How was this processed?"}
+                  ▼ {journeyLayerTitle(lang)}
                 </summary>
                 <pre className="mt-3 mb-0 whitespace-pre-wrap text-sm text-accent/65" key={traceTick}>
                   {formatJourneyBlock(events, lang).replace(/^▼[^\n]*\n\n/, "")}

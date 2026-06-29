@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { HeatCopy } from "../../../lib/field/heatFieldI18n";
 import type { Lang } from "../../../lib/i18n";
+import { speechRecognitionLocale, localeDateTime } from "../../../lib/localeMap";
+import { journeyUiCopy } from "../../../lib/traceJourney";
 import {
   appendInteractionEvent,
   getInteractionTrace,
@@ -47,6 +49,7 @@ export default function FieldVoiceReport({
   const chunksRef = useRef<BlobPart[]>([]);
   const timerRef = useRef<number | null>(null);
   const recognitionRef = useRef<{ stop: () => void } | null>(null);
+  const ui = journeyUiCopy(lang);
 
   useEffect(() => {
     setCanRecord(
@@ -74,7 +77,7 @@ export default function FieldVoiceReport({
     if (!SR) return;
 
     const rec = new SR();
-    rec.lang = lang === "pl" ? "pl-PL" : lang === "uk" ? "uk-UA" : "en-US";
+    rec.lang = speechRecognitionLocale(lang);
     rec.continuous = true;
     rec.interimResults = true;
     rec.onresult = (event: SpeechRecognitionEventLike) => {
@@ -149,7 +152,7 @@ export default function FieldVoiceReport({
       trajectory: null,
       engineIndex: 0,
       attentionCount: 0,
-      clock: new Date().toLocaleTimeString(lang === "pl" ? "pl-PL" : "en-GB"),
+      clock: localeDateTime(lang),
       logLines: ["field/voice"],
       createdAt: Date.now(),
       traceEvents,
@@ -166,7 +169,7 @@ export default function FieldVoiceReport({
 
     try {
       await navigator.clipboard.writeText(buildTraceCitizenLayer(payload));
-      setFlash(lang === "pl" ? "Skopiowano potwierdzenie" : "Confirmation copied");
+      setFlash(ui.copied);
     } catch {
       /* clipboard optional */
     }
@@ -174,7 +177,7 @@ export default function FieldVoiceReport({
     setPhase("sent");
     onSent?.();
     window.setTimeout(() => setFlash(null), 2400);
-  }, [copy.ctaVoiceReport, lang, onSent, text]);
+  }, [copy.ctaVoiceReport, lang, onSent, text, ui.copied]);
 
   const reset = () => {
     setPhase("idle");
@@ -296,7 +299,7 @@ export default function FieldVoiceReport({
               onClick={reset}
               className="min-h-12 border border-accent/20 px-4 py-3 text-sm text-accent/60 touch-manipulation"
             >
-              {lang === "pl" ? "Od nowa" : "Start over"}
+              {ui.startOver}
             </button>
           </div>
         </div>

@@ -11,7 +11,7 @@ import {
   type CitizenTraceFields,
 } from "../../lib/domain/traceContract";
 import type { Lang } from "../../lib/i18n";
-import { COPY } from "../../lib/i18n";
+import { COPY, traceResidentCopy } from "../../lib/i18n";
 import { knowledgeGraph } from "../../lib/knowledge/KnowledgeGraph";
 import {
   buildMailtoHref,
@@ -30,6 +30,25 @@ import {
 } from "../../lib/interactionTrace";
 import { TRACE_FORM_COPY, traceSubjectOptions } from "../../lib/traceFormI18n";
 import SignalControl from "./SignalControl";
+
+function heatFieldAnotherLabel(lang: Lang): string {
+  const labels: Partial<Record<Lang, string>> = {
+    pl: "Zostaw kolejną obserwację",
+    it: "Lascia un'altra osservazione",
+    uk: "Залишити ще одне спостереження",
+    hu: "Új megfigyelés",
+  };
+  return labels[lang] ?? "Leave another observation";
+}
+
+function heatFieldMailtoLabel(lang: Lang): string {
+  const labels: Partial<Record<Lang, string>> = {
+    pl: "Wyślij e-mailem (opcjonalnie)",
+    it: "Invia via e-mail (opzionale)",
+    uk: "Надіслати e-mail (за бажанням)",
+  };
+  return labels[lang] ?? "Send by email (optional)";
+}
 
 type LeaveTraceControlProps = {
   lang: Lang;
@@ -148,22 +167,13 @@ export default function LeaveTraceControl({
     copy.trace.copyFailed,
   ]);
 
-  const residentNav =
-    lang === "pl"
-      ? {
-          findHelp: "Znajdź wodę i cień",
-          another: "Zostaw kolejną obserwację",
-          journeyTitle: journeyLayerTitle("pl"),
-          technicalTitle: "Dane techniczne",
-          mailto: "Wyślij e-mailem (opcjonalnie)",
-        }
-      : {
-          findHelp: "Find water and shade",
-          another: "Leave another observation",
-          journeyTitle: journeyLayerTitle("en"),
-          technicalTitle: "Technical data",
-          mailto: "Send by email (optional)",
-        };
+  const residentNav = {
+    findHelp: traceResidentCopy(lang).findWaterShade,
+    another: heatFieldAnotherLabel(lang),
+    journeyTitle: journeyLayerTitle(lang),
+    technicalTitle: traceResidentCopy(lang).technicalData,
+    mailto: heatFieldMailtoLabel(lang),
+  };
 
   if (sentPayload) {
     const journey = buildTraceJourneyLayer(sentPayload);

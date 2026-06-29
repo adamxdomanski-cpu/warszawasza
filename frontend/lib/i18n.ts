@@ -27,7 +27,7 @@ export const LANGS: Lang[] = [
 export const LANG_ACCESSIBLE_NAMES: Record<Lang, string> = {
   pl: "Polski, PL",
   it: "Italiano, IT",
-  uk: "Українська, UK",
+  uk: "Українська, UA",
   bg: "Български, BG",
   et: "Eesti, ET",
   fi: "Suomi, FI",
@@ -1860,7 +1860,7 @@ export type TraceResidentCopy = {
   justNow: string;
 };
 
-export const TRACE_RESIDENT: Record<"pl" | "en", TraceResidentCopy> = {
+export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
   pl: {
     cityDefault: "Warszawa",
     statusReceived: "✓ Zgłoszenie odebrane",
@@ -1885,8 +1885,32 @@ export const TRACE_RESIDENT: Record<"pl" | "en", TraceResidentCopy> = {
     hoursAgo: "{n} h ago",
     justNow: "just now",
   },
+  it: {
+    cityDefault: "Varsavia",
+    statusReceived: "✓ Segnalazione ricevuta",
+    statusAwaitingField: "⚠ Alcuni dati attendono conferma sul campo",
+    statusUnverified: "Stato: non verificato",
+    findWaterShade: "Trova acqua e ombra",
+    reportObservation: "Segnala un'osservazione",
+    technicalData: "Dati tecnici",
+    minutesAgo: "{n} min fa",
+    hoursAgo: "{n} h fa",
+    justNow: "proprio ora",
+  },
+  uk: {
+    cityDefault: "Варшава",
+    statusReceived: "✓ Звернення прийнято",
+    statusAwaitingField: "⚠ Частина даних очікує підтвердження в полі",
+    statusUnverified: "Статус: не перевірено",
+    findWaterShade: "Знайти воду та тінь",
+    reportObservation: "Повідомити спостереження",
+    technicalData: "Технічні дані",
+    minutesAgo: "{n} хв тому",
+    hoursAgo: "{n} год тому",
+    justNow: "щойно",
+  },
 };
 
 export function traceResidentCopy(lang: Lang): TraceResidentCopy {
-  return lang === "pl" ? TRACE_RESIDENT.pl : TRACE_RESIDENT.en;
+  return TRACE_RESIDENT[lang] ?? TRACE_RESIDENT.en!;
 }

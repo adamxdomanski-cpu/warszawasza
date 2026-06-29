@@ -4,6 +4,7 @@
 
 import type { InteractionEvent } from "./fira-core/interaction";
 import type { Lang } from "./i18n";
+import { pickLangCopy } from "./localeMap";
 
 type JourneyCopy = {
   title: string;
@@ -20,9 +21,11 @@ type JourneyCopy = {
   completed: string;
   next: string;
   typed: string;
+  startOver: string;
+  copied: string;
 };
 
-const COPY: Record<"pl" | "en", JourneyCopy> = {
+const COPY: Partial<Record<Lang, JourneyCopy>> = {
   pl: {
     title: "Jak przebiegało zgłoszenie?",
     start: "Start",
@@ -38,6 +41,8 @@ const COPY: Record<"pl" | "en", JourneyCopy> = {
     completed: "Zakończono",
     next: "Dalej",
     typed: "Wpisano tekst",
+    startOver: "Od nowa",
+    copied: "Skopiowano potwierdzenie",
   },
   en: {
     title: "How was this observation processed?",
@@ -54,11 +59,67 @@ const COPY: Record<"pl" | "en", JourneyCopy> = {
     completed: "Completed",
     next: "Next",
     typed: "Text entered",
+    startOver: "Start over",
+    copied: "Confirmation copied",
+  },
+  it: {
+    title: "Come è stata elaborata la segnalazione?",
+    start: "Inizio",
+    recordStart: "Registrazione avviata",
+    recordStop: "Registrazione terminata",
+    locationSelected: "Località selezionata",
+    helpNearby: "Cerca aiuto nelle vicinanze",
+    pointSelected: "Punto sulla mappa selezionato",
+    confirmed: "Confermato",
+    rejected: "Rifiutato",
+    review: "Revisione prima dell'invio",
+    sent: "Inviato",
+    completed: "Completato",
+    next: "Avanti",
+    typed: "Testo inserito",
+    startOver: "Ricomincia",
+    copied: "Conferma copiata",
+  },
+  uk: {
+    title: "Як оброблялося звернення?",
+    start: "Початок",
+    recordStart: "Запис розпочато",
+    recordStop: "Запис завершено",
+    locationSelected: "Локацію обрано",
+    helpNearby: "Шукаєте допомогу поруч",
+    pointSelected: "Обрано точку на мапі",
+    confirmed: "Підтверджено",
+    rejected: "Відхилено",
+    review: "Перевірка перед відправкою",
+    sent: "Надіслано",
+    completed: "Завершено",
+    next: "Далі",
+    typed: "Текст введено",
+    startOver: "Спочатку",
+    copied: "Підтвердження скопійовано",
+  },
+  hu: {
+    title: "Hogyan dolgoztuk fel a bejelentést?",
+    start: "Kezdet",
+    recordStart: "Felvétel elindítva",
+    recordStop: "Felvétel leállítva",
+    locationSelected: "Hely kiválasztva",
+    helpNearby: "Segítség keresése a közelben",
+    pointSelected: "Térképpont kiválasztva",
+    confirmed: "Megerősítve",
+    rejected: "Elutasítva",
+    review: "Ellenőrzés küldés előtt",
+    sent: "Elküldve",
+    completed: "Befejezve",
+    next: "Tovább",
+    typed: "Szöveg megadva",
+    startOver: "Újrakezdés",
+    copied: "Megerősítés másolva",
   },
 };
 
 function journeyCopy(lang: Lang): JourneyCopy {
-  return lang === "pl" ? COPY.pl : COPY.en;
+  return pickLangCopy(COPY, lang, COPY.en!);
 }
 
 function labelSelect(value: string, jc: JourneyCopy): string {
@@ -102,17 +163,16 @@ export function buildJourneySteps(events: InteractionEvent[], lang: Lang): strin
       steps.push(label);
     }
   }
-  if (steps.length > 0 && steps[steps.length - 1] !== journeyCopy(lang).completed) {
-    const hasComplete = events.some((e) => e.event === "COMPLETE");
-    if (hasComplete && !steps.includes(journeyCopy(lang).completed)) {
-      /* COMPLETE already mapped */
-    }
-  }
   return steps;
 }
 
 export function journeyLayerTitle(lang: Lang): string {
   return journeyCopy(lang).title;
+}
+
+export function journeyUiCopy(lang: Lang): Pick<JourneyCopy, "startOver" | "copied"> {
+  const jc = journeyCopy(lang);
+  return { startOver: jc.startOver, copied: jc.copied };
 }
 
 /** Plain-text journey block for export / UI. */
