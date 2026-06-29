@@ -4,7 +4,11 @@
 
 **Filter:** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
 
-**Grammar filter:** Czy obecna **gramatyka** (📍 pomoc · 🎤 obserwacja · kontekst od systemu) obsłuży tę sytuację bez nowego ekranu? Tak → nic nie dodawaj. Nie → wzmocnij gramatykę, nie doklejaj scenariusza. See [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md#gramatyka-nie-scenariusze).
+**Grammar filter:** Czy obecna **struktura** (📍 pomoc · 🎤 obserwacja · kontekst od systemu) obsłuży tę sytuację bez nowego ekranu? Tak → nic nie dodawaj. Nie → wzmocnij strukturę, nie doklejaj scenariusza.
+
+**Dictionary filter:** Czy to tylko nowe **miejsca / dane wdrożenia** (hydranty, AED, schronienia)? Tak → rozszerz słownik. **Rozwijaj słownik częściej niż gramatykę.** See [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md#interfejs-o-stalej-strukturze).
+
+**Meaning filter:** Czy nowy tekst w UI wyraża **tę samą intencję** we wszystkich językach (nie dosłowne tłumaczenie)? **Jedno znaczenie. Wiele języków.**
 
 **Development principles:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc) (always applied in Cursor).
 

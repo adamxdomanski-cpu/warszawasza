@@ -86,42 +86,164 @@ Mechanizm jest szerszy; zmienia się **sytuacja**, nie logika.
 
 ---
 
-## Gramatyka, nie scenariusze
+## Interfejs o stałej strukturze
 
-Scenariuszy może być nieskończenie wiele: upał, rower, Budapeszt, deskorolkarz, zagubione dziecko, awaria windy, zalana ulica, pożar, pies bez właściciela, zamknięty most, koncert, maraton…
+Scenariuszy może być nieskończenie wiele: upał, rower, Budapeszt, deskorolkarz, zagubione dziecko, awaria windy, zalana ulica, pożar…
 
-Dlatego **nie projektujesz scenariuszy**. Projektujesz **gramatykę**, nie zdania.
-
-| Źle (scenariusze) | Dobrze (gramatyka) |
-|-------------------|---------------------|
-| ekran dla roweru | 🎤 powiedz, co widzisz |
-| ekran dla upału | 📍 potrzebujesz pomocy? |
-| ekran dla Budapesztu | system dodaje kontekst |
-
-Język polski nie ma osobnego czasownika dla zgubionego roweru, upału, pożaru ani gradu. Ma **gramatykę**. WARSZAWASZA robi to samo — kilka elementów, z których składa się tysiące sytuacji.
+Dlatego **nie projektujesz scenariuszy**. Budujesz **interfejs o stałej strukturze** — wewnętrznie mówimy też *gramatyka*: **struktura się nie zmienia**, zmienia się tylko **treść** (słownik wdrożenia).
 
 ```
-Co się dzieje?          (sygnał — opcjonalnie, od systemu)
-        ↓
-🎤 Powiedz, co widzisz.
-        ↓
-📍 Potrzebujesz pomocy?
-        ↓
-System dodaje kontekst. (GPS, czas, język, trace)
-        ↓
-Działanie.
+        SYTUACJA
+            │
+            ▼
+      Co się dzieje?          (sygnał — opcjonalnie, od systemu)
+            │
+            ▼
+      🎤 Powiedz, co widzisz.
+            │
+            ▼
+      📍 Potrzebujesz pomocy?
+            │
+            ▼
+      System dodaje kontekst
+      (czas · miejsce · język)
+            │
+            ▼
+         Jeden krok dalej
 ```
+
+**Interfejs się nie zmienia. Zmienia się wyłącznie świat.**
+
+| Sytuacja | 🎤 Powiedz, co widzisz | 📍 Potrzebujesz pomocy |
+|----------|------------------------|-------------------------|
+| 39°C | „Na przystanku zasłabł starszy pan.” | Najbliższa woda, cień |
+| Rower | „Nie ma mojego roweru.” | Sekretariat, monitoring |
+| Wypadek | „Skateboardzista uderzył w słup.” | Numer alarmowy, lokalizacja |
+| Burza | „Drzewo zablokowało ulicę.” | Objazd, zgłoszenie |
+| Powódź | „Przejście jest pod wodą.” | Bezpieczna trasa |
 
 **Pytanie projektowe** — nie *„Jak obsłużyć ten scenariusz?”*, lecz:
 
-> **Czy obecna gramatyka potrafi obsłużyć ten scenariusz?**
+> **Czy obecna struktura obsłuży tę sytuację?**
 
-- **Tak** → nie dodajesz nic.
-- **Nie** → poprawiasz **gramatykę**, nie doklejasz kolejny ekran.
+- **Tak** → nie dodajesz nic (albo tylko **słownik** — patrz niżej).
+- **Nie** → poprawiasz **strukturę**, nie doklejasz kolejny ekran.
 
-Początkujący projekt rośnie przez dodawanie scenariuszy. Dojrzały — przez wzmacnianie kilku prostych reguł. Przykłady w tej kartce (upał, rower, Budapeszt, kwiaty na balkonie) to **zdania zbudowane z tej samej gramatyki**, nie osobne produkty.
+### Słownik vs struktura (gramatyka)
 
-`/field/heat` to **wdrożenie pola** (konkretny sygnał + mapa Warszawy), nie nowy język. Wejście na `/` to ta sama gramatyka bez konkretnego sygnału.
+Przy każdej nowej funkcji jedno pytanie:
+
+> **Czy rozszerzam słownik, czy zmieniam gramatykę?**
+
+| Słownik (codziennie) | Struktura (bardzo rzadko) |
+|----------------------|---------------------------|
+| punkty schronienia w upale | nowy sposób zgłaszania |
+| hydranty, AED, biblioteki | nowy przepływ interakcji |
+| nowe miasto, nowa mapa | zmiana głównych CTA 🎤 / 📍 |
+
+**Reguła:** **Rozwijaj słownik częściej niż gramatykę.**
+
+Nowe miejsca, zdarzenia i wdrożenia powinny mieścić się w istniejącym interfejsie. Zmieniaj strukturę tylko wtedy, gdy **rzeczywistość** pokaże, że obecna nie pozwala użytkownikowi wykonać zadania.
+
+**Analogia mapy:** mapa Polski nie zmienia sposobu działania, gdy otwarto nową drogę — zmienia się **zawartość**. Interfejs pozostaje stabilny; świat dostarcza nowe dane.
+
+`/field/heat` to **wdrożenie** (sygnał 39°C + słownik punktów w Warszawie), nie nowa struktura. Wejście na `/` to ta sama struktura bez konkretnego sygnału.
+
+---
+
+## Jedno znaczenie. Wiele języków
+
+Nie budujesz **10 osobnych stron**. Budujesz **jeden interfejs**, który mówi wieloma językami.
+
+| Zwykła strona | WARSZAWASZA |
+|---------------|-------------|
+| PL → kopia → EN → kopia → IT… | **Znaczenie** → wyrażenie w PL, IT, HU… |
+| Tłumaczenie słów | Tłumaczenie **intencji** |
+| Języki konkurują | Języki **współgrają** |
+
+**Projektujemy znaczenia, nie tłumaczenia.** Albo krócej: **Jedno znaczenie. Wiele języków.**
+
+Trzy poziomy:
+
+```
+Rzeczywistość
+      │
+      ▼
+  Znaczenie        (🎤 obserwacja · 📍 pomoc — ponad językiem)
+      │
+      ▼
+Interfejs o stałej strukturze
+      │
+      ▼
+PL · IT · EN · HU · BG · LT …
+```
+
+**Ikony są pierwszym językiem.** 🎤 i 📍 znaczą to samo w każdym kraju. Tekst jest drugim. Głos — trzecim.
+
+Przykład Budapeszt: ty mówisz po polsku; operator i ratownik dostają wersję po węgiersku; **ty nadal widzisz i słyszysz po polsku**. Tłumaczenie dzieje się **w systemie**, nie w głowie świadka.
+
+W kodzie: wspólne klucze copy (`coldStartI18n`, `heatFieldI18n`) + `[ PL ]` w `LangNav` — ten sam ekran, inne brzmienie intencji.
+
+---
+
+## Obsidian — gdzie jest w projekcie
+
+**Obsidian to nie strona www.** To **osobny vault** (notatki Markdown) — kanon, modele, raporty terenowe, pipeline badawczy operatora.
+
+Vault **nie leży w repozytorium Git** (u autora: iCloud `WARSZAWASZA/warszawasza/`). Strona **nie renderuje** Obsidian — tylko **może wskazać** na notatkę.
+
+```
+Teren / obywatel          Operator / badacz
+      │                           │
+      ▼                           ▼
+  🎤 zgłoszenie              Obsidian vault
+  trace w przeglądarce     00_DASHBOARD · 02_MODELE
+      │                    10_OBSERWACJE · …
+      └──── obsidianRef ──────────┘
+            (opcjonalny link)
+```
+
+| Warstwa | Co widzi człowiek |
+|---------|-------------------|
+| **Obywatel** | 🎤 · 📍 · proste potwierdzenie — **bez** Obsidian |
+| **Operator** | trace + FOP + opcjonalnie `10_OBSERWACJE/OBS-….md` |
+| **Badacz** | vault: modele, STAN-SYSTEMU, pipeline Obserwacja→Decyzja |
+
+W aplikacji: pole **„Ref notatki (opcjonalnie)”** w studiu (`LeaveTraceControl`) — ścieżka typu `10_OBSERWACJE/OBS-VCU-2026-06-18-01.md` trafia do FOP jako `source.ref`. Kontrakt: `frontend/lib/domain/traceContract.ts`.
+
+**Źródło prawdy** to domena aplikacji (trace + FOP), nie geometria folderów vaulta.
+
+---
+
+## Potwierdzenie e-mail — co powinno być w środku
+
+E-mail (lub kopia do schowka) to **warstwa 1 — obywatel**: dziadek, babcia, dziecko muszą zrozumieć **bez słownika technicznego**.
+
+**Tak** (prosty język):
+
+```
+✓ Odebraliśmy
+
+Co powiedziałeś:
+„Chłopak spadł z deskorolki. Chyba złamał rękę.”
+
+Gdzie: Bartók Béla út 37, Budapeszt   (albo: lokalizacja z telefonu)
+Kiedy: 28 czerwca, 16:30
+
+Numer zgłoszenia: WZS-20260628-163045
+```
+
+**Nie** w mailu obywatela: FOP, kody zdarzeń, „czeka na potwierdzenie w terenie”, współrzędne bez adresu, link na sztywno tylko do `/field/heat`.
+
+**Trzy warstwy exportu** (już w kodzie):
+
+| Warstwa | Dla kogo | Zawartość |
+|---------|----------|-----------|
+| **1 · Obywatel** | Ty, rodzina | cytat, miejsce, czas, ✓ odebrane, numer |
+| **2 · Droga** | Operator | kroki po ludzku („nagranie zakończone”, „dołączono GPS”) |
+| **3 · Techniczna** | Dev / archiwum | FOP, trace path — **nigdy** domyślnie w mailu |
+
+Dziś `buildTraceCitizenLayer` jest blisko tego modelu, ale wymaga dopracowania: uniwersalne linki (nie tylko upał), adres z GPS zamiast samych współrzędnych, prostszy temat wiadomości.
 
 ---
 
@@ -350,7 +472,9 @@ Nie numer PR ani FOP — **dwa pytania**, **dwie zasady** i **jedno pytanie filt
 - **📍 Kto może mi pomóc?**
 - **🎤 Komu mogę powiedzieć, co się stało?**
 - **Człowiek przekazuje fakty. System dodaje kontekst.**
-- **Gramatyka, nie scenariusze** — *czy obecna gramatyka obsłuży tę sytuację?*
+- **Interfejs o stałej strukturze** — *czy obecna struktura obsłuży tę sytuację?*
+- **Rozwijaj słownik częściej niż gramatykę.**
+- **Jedno znaczenie. Wiele języków.**
 
 Jeśli za rok ktoś pamięta te pytania i zasady, a nie architekturę — WARSZAWASZA zrobiła swoje. Reszta to implementacja.
 
