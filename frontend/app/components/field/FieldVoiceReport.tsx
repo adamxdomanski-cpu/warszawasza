@@ -9,7 +9,9 @@ import {
   useState,
 } from "react";
 import type { ColdStartCopy } from "../../../lib/field/coldStartI18n";
+import { clearVoiceDraft, loadVoiceDraft, saveVoiceDraft } from "../../../lib/field/voiceDraft";
 import type { Lang } from "../../../lib/i18n";
+import { traceResidentCopy } from "../../../lib/i18n";
 import { speechRecognitionLocale, localeDateTime } from "../../../lib/localeMap";
 import {
   formatPlaceFromGeo,
@@ -64,8 +66,10 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const [geoBusy, setGeoBusy] = useState(false);
     const [geoError, setGeoError] = useState<string | null>(null);
     const [sentPayload, setSentPayload] = useState<ObservationTracePayload | null>(null);
+    const [pendingDraft, setPendingDraft] = useState<ReturnType<typeof loadVoiceDraft>>(null);
 
     const geoCopy = voiceGeoCopy(lang);
+    const rc = traceResidentCopy(lang);
 
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<BlobPart[]>([]);
@@ -79,7 +83,15 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           typeof MediaRecorder !== "undefined" &&
           !!navigator.mediaDevices?.getUserMedia,
       );
+      const draft = loadVoiceDraft();
+      if (draft?.text.trim()) setPendingDraft(draft);
     }, []);
+
+    useEffect(() => {
+      if (phase !== "review" && phase !== "recording") return;
+      if (!text.trim()) return;
+      saveVoiceDraft({ text, lang, heatContext });
+    }, [text, phase, lang, heatContext]);
 
     useEffect(() => {
       return () => {
@@ -213,6 +225,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
       registerTrace(payload);
       setSentPayload(payload);
+      clearVoiceDraft();
+      setPendingDraft(null);
 
       try {
         await navigator.clipboard.writeText(
@@ -228,7 +242,12 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       window.setTimeout(() => setFlash(null), 2400);
     }, [copy.ctaVoiceReport, geo, heatContext, lang, onSent, text, ui.copied]);
 
-    const reset = () => {
+    const reset = (force = false) => {
+      if (!force && phase === "review" && text.trim()) {
+        if (!window.confirm(rc.resetConfirm)) return;
+      }
+      clearVoiceDraft();
+      setPendingDraft(null);
       setPhase("idle");
       setSentPayload(null);
       setText("");
@@ -239,7 +258,14 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setAudioUrl(null);
     };
 
-    if (lean && phase === "idle") {
+    const restoreDraft = () => {
+      if (!pendingDraft) return;
+      setText(pendingDraft.text);
+      setPhase("review");
+      setPendingDraft(null);
+    };
+
+    if (lean && phase === "idle" && !pendingDraft) {
       return null;
     }
 
@@ -250,16 +276,15 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           lang={lang}
           presentation={{ heatContext }}
           flash={flash}
+          savedHint={rc.savedOnDeviceHint}
           onFindHelp={onFindHelp}
-          onAnother={reset}
+          onAnother={() => reset(true)}
           anotherLabel={copy.ctaAnotherObservation}
         />
       );
     }
 
-    const panelClass = lean
-      ? "rounded border border-accent/30 bg-field/80 px-4 py-4 sm:px-5"
-      : "rounded border-2 border-accent/50 bg-field px-4 py-5 sm:px-5";
+    const panelClass = lean ? "px-0 py-2" : "px-0 py-3";
 
     return (
       <section aria-label={copy.ctaVoiceReport} className={panelClass}>
@@ -325,7 +350,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder={copy.voiceTranscribePlaceholder}
-                className="w-full min-h-20 touch-manipulation border border-accent/30 bg-field px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
               />
             </label>
             <div className="space-y-2">
@@ -356,7 +381,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
               </SignalControl>
               <button
                 type="button"
-                onClick={reset}
+                onClick={() => reset()}
                 className="min-h-12 border border-accent/20 px-4 py-3 text-sm text-accent/60 touch-manipulation"
               >
                 {ui.startOver}
