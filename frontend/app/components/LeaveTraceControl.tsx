@@ -268,6 +268,7 @@ export default function LeaveTraceControl({
 
         <label className="block space-y-1">
           <span className="font-mono-field text-xs tracking-wide text-accent/55">{formCopy.subject}</span>
+          <p className="m-0 text-xs text-accent/45">{formCopy.subjectOptionalHint}</p>
           <select
             name="wzs-subject"
             id="wzs-subject"

@@ -10,6 +10,11 @@ import {
 } from "react";
 import type { ColdStartCopy } from "../../../lib/field/coldStartI18n";
 import { clearVoiceDraft, loadVoiceDraft, saveVoiceDraft } from "../../../lib/field/voiceDraft";
+import {
+  canUseAudioRecording,
+  createAudioRecorder,
+  pickAudioMimeType,
+} from "../../../lib/field/mediaRecorderSupport";
 import type { Lang } from "../../../lib/i18n";
 import { traceResidentCopy } from "../../../lib/i18n";
 import { speechRecognitionLocale, localeDateTime } from "../../../lib/localeMap";
@@ -33,6 +38,7 @@ import TraceReceiptPanel, { copyCitizenTraceText } from "./TraceReceiptPanel";
 import SignalControl from "../SignalControl";
 
 type VoicePhase = "idle" | "recording" | "review" | "sent";
+type SttStatus = "idle" | "pending" | "ok" | "failed";
 
 export type FieldVoiceReportHandle = {
   startRecording: () => void;
@@ -55,14 +61,21 @@ function formatTimer(seconds: number): string {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
+function audioOnlyLabel(lang: Lang): string {
+  return lang === "pl" ? "[nagranie głosowe]" : "[voice recording]";
+}
+
 const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProps>(
   function FieldVoiceReport({ lang, copy, onSent, onFindHelp, lean = false, heatContext = false }, ref) {
     const [phase, setPhase] = useState<VoicePhase>("idle");
     const [seconds, setSeconds] = useState(0);
     const [text, setText] = useState("");
-    const [canRecord, setCanRecord] = useState(false);
+    const [canRecord, setCanRecord] = useState(() => canUseAudioRecording());
     const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [hasAudioBlob, setHasAudioBlob] = useState(false);
     const [flash, setFlash] = useState<string | null>(null);
+    const [micHint, setMicHint] = useState<string | null>(null);
+    const [sttStatus, setSttStatus] = useState<SttStatus>("idle");
     const [geo, setGeo] = useState<GeoPoint | null>(null);
     const [geoBusy, setGeoBusy] = useState(false);
     const [geoError, setGeoError] = useState<string | null>(null);
@@ -74,16 +87,14 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<BlobPart[]>([]);
+    const audioMimeRef = useRef<string>("audio/webm");
     const timerRef = useRef<number | null>(null);
     const recognitionRef = useRef<{ stop: () => void } | null>(null);
+    const sttStartedRef = useRef(false);
     const ui = journeyUiCopy(lang);
 
     useEffect(() => {
-      setCanRecord(
-        typeof window !== "undefined" &&
-          typeof MediaRecorder !== "undefined" &&
-          !!navigator.mediaDevices?.getUserMedia,
-      );
+      setCanRecord(canUseAudioRecording());
       const draft = loadVoiceDraft();
       if (draft?.text.trim()) setPendingDraft(draft);
     }, []);
@@ -106,6 +117,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       };
     }, [audioUrl]);
 
+    const stopTranscription = useCallback(() => {
+      recognitionRef.current?.stop();
+      recognitionRef.current = null;
+    }, []);
+
     const startTranscription = useCallback(() => {
       if (typeof window === "undefined") return;
       const W = window as Window & {
@@ -113,62 +129,88 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
       };
       const SR = W.SpeechRecognition ?? W.webkitSpeechRecognition;
-      if (!SR) return;
-
-      const rec = new SR();
-      rec.lang = speechRecognitionLocale(lang);
-      rec.continuous = true;
-      rec.interimResults = true;
-      rec.onresult = (event: SpeechRecognitionEventLike) => {
-        let transcript = "";
-        for (let i = 0; i < event.results.length; i += 1) {
-          transcript += event.results[i][0].transcript;
-        }
-        setText((prev) => (prev.trim() ? prev : transcript.trim()));
-      };
-      rec.start();
-      recognitionRef.current = rec;
-    }, [lang]);
-
-    const stopTranscription = useCallback(() => {
-      recognitionRef.current?.stop();
-      recognitionRef.current = null;
-    }, []);
-
-    const startRecording = useCallback(async () => {
-      if (!canRecord) {
-        setPhase("review");
-        appendInteractionEvent("RECORD", "manual");
+      if (!SR) {
+        setSttStatus("failed");
         return;
       }
 
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const recorder = new MediaRecorder(stream);
+        setSttStatus("pending");
+        const rec = new SR();
+        rec.lang = speechRecognitionLocale(lang);
+        rec.continuous = true;
+        rec.interimResults = true;
+        rec.onerror = () => {
+          setSttStatus((prev) => (prev === "ok" ? "ok" : "failed"));
+        };
+        rec.onresult = (event: SpeechRecognitionEventLike) => {
+          let transcript = "";
+          for (let i = 0; i < event.results.length; i += 1) {
+            transcript += event.results[i][0].transcript;
+          }
+          const trimmed = transcript.trim();
+          if (trimmed) {
+            setText((prev) => (prev.trim() ? prev : trimmed));
+            setSttStatus("ok");
+          }
+        };
+        rec.start();
+        recognitionRef.current = rec;
+      } catch {
+        setSttStatus("failed");
+      }
+    }, [lang]);
+
+    const startRecording = useCallback(async () => {
+      setMicHint(null);
+      setSttStatus("idle");
+      sttStartedRef.current = false;
+      stopTranscription();
+
+      const recordingCapable = canUseAudioRecording();
+      setCanRecord(recordingCapable);
+
+      if (!recordingCapable) {
+        setPhase("review");
+        setMicHint(copy.voiceUnsupported);
+        appendInteractionEvent("RECORD", "manual");
+        return;
+      }
+
+      let stream: MediaStream | null = null;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const picked = pickAudioMimeType();
+        audioMimeRef.current = picked?.split(";")[0] ?? "audio/webm";
+        const recorder = createAudioRecorder(stream);
         chunksRef.current = [];
         recorder.ondataavailable = (e) => {
           if (e.data.size > 0) chunksRef.current.push(e.data);
         };
         recorder.onstop = () => {
-          stream.getTracks().forEach((t) => t.stop());
-          const blob = new Blob(chunksRef.current, { type: "audio/webm" });
-          setAudioUrl((prev) => {
-            if (prev) URL.revokeObjectURL(prev);
-            return URL.createObjectURL(blob);
-          });
+          stream?.getTracks().forEach((t) => t.stop());
+          const blob = new Blob(chunksRef.current, { type: audioMimeRef.current });
+          if (blob.size > 0) {
+            setHasAudioBlob(true);
+            setAudioUrl((prev) => {
+              if (prev) URL.revokeObjectURL(prev);
+              return URL.createObjectURL(blob);
+            });
+          }
         };
         mediaRecorderRef.current = recorder;
         recorder.start();
         appendInteractionEvent("RECORD", "start");
-        startTranscription();
         setSeconds(0);
         setPhase("recording");
         timerRef.current = window.setInterval(() => setSeconds((s) => s + 1), 1000);
       } catch {
+        stream?.getTracks().forEach((t) => t.stop());
         setPhase("review");
+        setMicHint(copy.voiceMicDenied);
         appendInteractionEvent("RECORD", "denied");
       }
-    }, [canRecord, startTranscription]);
+    }, [copy.voiceMicDenied, copy.voiceUnsupported, stopTranscription]);
 
     useImperativeHandle(ref, () => ({ startRecording: () => void startRecording() }), [
       startRecording,
@@ -179,11 +221,16 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         window.clearInterval(timerRef.current);
         timerRef.current = null;
       }
-      stopTranscription();
       mediaRecorderRef.current?.stop();
       appendInteractionEvent("RECORD", "stop");
       setPhase("review");
-    }, [stopTranscription]);
+    }, []);
+
+    useEffect(() => {
+      if (phase !== "review" || sttStartedRef.current || !hasAudioBlob) return;
+      sttStartedRef.current = true;
+      startTranscription();
+    }, [phase, hasAudioBlob, startTranscription]);
 
     const attachLocation = useCallback(async () => {
       setGeoBusy(true);
@@ -200,7 +247,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     }, [geoCopy.failed]);
 
     const sendReport = useCallback(async () => {
-      appendInteractionEvent("CHANGE", text.trim() || "voice");
+      const trimmed = text.trim();
+      const canSend = Boolean(trimmed || hasAudioBlob);
+      if (!canSend) return;
+
+      appendInteractionEvent("CHANGE", trimmed || "voice");
       appendInteractionEvent("COMPLETE");
 
       const traceEvents = getInteractionTrace().events;
@@ -223,7 +274,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           place,
           observedAt: new Date().toISOString(),
           subject: geo ? "field_voice_geo" : heatContext ? "field_heat" : "field_voice",
-          relatedRefs: text.trim() || copy.ctaVoiceReport,
+          relatedRefs: trimmed || audioOnlyLabel(lang),
           traceDecision: "none",
         },
       };
@@ -245,7 +296,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setPhase("sent");
       onSent?.();
       window.setTimeout(() => setFlash(null), 2400);
-    }, [copy.ctaVoiceReport, geo, heatContext, lang, onSent, text, ui.copied]);
+    }, [geo, hasAudioBlob, heatContext, lang, onSent, text, ui.copied]);
 
     const startAnotherReport = useCallback(() => {
       clearVoiceDraft();
@@ -256,11 +307,15 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setSeconds(0);
       setGeo(null);
       setGeoError(null);
+      setHasAudioBlob(false);
+      setSttStatus("idle");
+      sttStartedRef.current = false;
+      stopTranscription();
       if (audioUrl) URL.revokeObjectURL(audioUrl);
       setAudioUrl(null);
       clearInteractionTrace();
       appendInteractionEvent("START");
-    }, [audioUrl]);
+    }, [audioUrl, stopTranscription]);
 
     const discardDraft = useCallback(() => {
       clearVoiceDraft();
@@ -282,7 +337,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     }, [pendingDraft]);
 
     const discardReview = () => {
-      if (text.trim() && !window.confirm(rc.resetConfirm)) return;
+      if ((text.trim() || hasAudioBlob) && !window.confirm(rc.resetConfirm)) return;
       clearVoiceDraft();
       setPendingDraft(null);
       setPhase("idle");
@@ -290,9 +345,15 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setSeconds(0);
       setGeo(null);
       setGeoError(null);
+      setHasAudioBlob(false);
+      setSttStatus("idle");
+      sttStartedRef.current = false;
+      stopTranscription();
       if (audioUrl) URL.revokeObjectURL(audioUrl);
       setAudioUrl(null);
     };
+
+    const canSend = Boolean(text.trim() || hasAudioBlob);
 
     const draftBanner =
       pendingDraft && phase === "idle" ? (
@@ -367,7 +428,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         )}
 
         {phase === "recording" && (
-          <div className={lean ? "space-y-3" : "mt-4 space-y-3"}>
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
             <p className="m-0 flex items-center gap-2 text-base text-ink">
               <span
                 className="inline-block h-3 w-3 animate-pulse rounded-full bg-[var(--color-warsaw-heat-critical)]"
@@ -390,15 +451,27 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         )}
 
         {phase === "review" && (
-          <div className={lean ? "space-y-3" : "mt-4 space-y-3"}>
-            <p className="m-0 text-sm font-medium text-ink">{copy.voiceSaved}</p>
-            <p className="m-0 text-sm text-accent/75">{copy.voiceReviewPrompt}</p>
-            {audioUrl && (
-              <div className="flex flex-wrap gap-2">
-                <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
-                  {copy.voicePlay}
-                </audio>
-              </div>
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            {micHint && <p className="m-0 text-sm text-accent/70">{micHint}</p>}
+            {hasAudioBlob && (
+              <>
+                <p className="m-0 text-sm font-medium text-ink">{copy.voiceSaved}</p>
+                {audioUrl && (
+                  <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
+                    {copy.voicePlay}
+                  </audio>
+                )}
+                <p className="m-0 text-xs text-accent/55">{copy.voiceAudioOnlyOk}</p>
+              </>
+            )}
+            {!hasAudioBlob && !micHint && (
+              <p className="m-0 text-sm text-accent/75">{copy.voiceReviewPrompt}</p>
+            )}
+            {sttStatus === "pending" && (
+              <p className="m-0 text-xs text-accent/55">{copy.voiceTranscribePending}</p>
+            )}
+            {sttStatus === "failed" && hasAudioBlob && (
+              <p className="m-0 text-xs text-accent/55">{copy.voiceTranscribeFailed}</p>
             )}
             <label className="block space-y-1">
               <span className="text-xs text-accent/55">{copy.voiceOrType}</span>
@@ -410,6 +483,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 className="w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
               />
             </label>
+            <p className="m-0 text-xs leading-relaxed text-accent/50">{copy.voiceTopicHint}</p>
             <div className="space-y-2">
               <p className="m-0 text-xs text-accent/50">{geoCopy.hint}</p>
               <button
@@ -431,8 +505,9 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
               <SignalControl
                 type="button"
                 direction="right"
+                disabled={!canSend}
                 onClick={() => void sendReport()}
-                className="min-h-12 flex-1 border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation"
+                className="min-h-12 flex-1 border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
               >
                 {copy.voiceSend}
               </SignalControl>
@@ -466,6 +541,7 @@ interface SpeechRecognitionInstance {
   continuous: boolean;
   interimResults: boolean;
   onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: ((event: unknown) => void) | null;
   start: () => void;
   stop: () => void;
 }

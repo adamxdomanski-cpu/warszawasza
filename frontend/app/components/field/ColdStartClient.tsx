@@ -45,12 +45,12 @@ export default function ColdStartClient() {
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
           </div>
 
-          <div className="grid gap-2 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <SignalControl
               type="button"
               direction="right"
               onClick={onVoice}
-              className="min-h-14 border-2 border-accent/50 bg-field px-4 py-3 text-left text-base font-medium leading-snug text-ink touch-manipulation"
+              className="min-h-[4.25rem] border-2 border-accent/55 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaVoiceReport}
             </SignalControl>
@@ -59,7 +59,7 @@ export default function ColdStartClient() {
               href="/field/heat#nearby"
               direction="right"
               onClick={() => appendInteractionEvent("SELECT", "POMOC_W_POBLIZU")}
-              className="min-h-14 border border-accent/35 bg-field px-4 py-3 text-left text-sm leading-snug text-ink touch-manipulation"
+              className="min-h-[4.25rem] border-2 border-accent/40 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaNearbyHelp}
             </SignalControl>

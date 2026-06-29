@@ -13,6 +13,8 @@ import {
   heatUrgency,
   HEAT_RCB_CRITICAL,
 } from "../../../lib/field/heatFieldI18n";
+import { voiceFlowCopy } from "../../../lib/field/voiceFlowI18n";
+import type { ColdStartCopy } from "../../../lib/field/coldStartI18n";
 import type { Lang } from "../../../lib/i18n";
 import { initialFieldLang } from "../../../lib/field/initialFieldLang";
 import {
@@ -32,6 +34,7 @@ export default function HeatFieldClient() {
   const voiceRef = useRef<FieldVoiceReportHandle>(null);
 
   const copy = heatFieldCopy(lang);
+  const voiceCopy = { ...copy, ...voiceFlowCopy(lang) } as ColdStartCopy;
   const events = getInteractionTrace().events;
   const urgency = heatUrgency(HEAT_TEMP_C, HEAT_RCB_CRITICAL);
 
@@ -90,12 +93,12 @@ export default function HeatFieldClient() {
             </span>
           </h1>
 
-          <div className="grid gap-2 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <SignalControl
               type="button"
               direction="right"
               onClick={onVoiceCta}
-              className="min-h-14 border-2 border-accent/50 bg-field px-4 py-3 text-left text-base font-medium leading-snug text-ink touch-manipulation"
+              className="min-h-[4.25rem] border-2 border-accent/55 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaVoiceReport}
             </SignalControl>
@@ -103,7 +106,7 @@ export default function HeatFieldClient() {
               type="button"
               direction="right"
               onClick={onCta}
-              className="min-h-14 border border-accent/35 bg-field px-4 py-3 text-left text-sm leading-snug text-ink touch-manipulation"
+              className="min-h-[4.25rem] border-2 border-accent/40 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaNearbyHelp}
             </SignalControl>
@@ -149,7 +152,7 @@ export default function HeatFieldClient() {
         </header>
 
         <section ref={voicePanelRef} aria-label={copy.ctaVoiceReport}>
-          <FieldVoiceReport ref={voiceRef} lang={lang} copy={copy} onFindHelp={onCta} lean heatContext />
+          <FieldVoiceReport ref={voiceRef} lang={lang} copy={voiceCopy} onFindHelp={onCta} lean heatContext />
         </section>
 
         <section

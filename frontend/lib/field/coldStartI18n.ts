@@ -4,10 +4,12 @@
 
 import type { Lang } from "../i18n";
 import { heatFieldCopy, type HeatCopy } from "./heatFieldI18n";
+import { voiceFlowCopy, type VoiceFlowCopy } from "./voiceFlowI18n";
 
 export type ColdStartCopy = Pick<
   HeatCopy,
   | "ctaVoiceReport"
+  | "ctaNearbyHelp"
   | "voiceStart"
   | "voiceRecording"
   | "voiceStop"
@@ -17,33 +19,19 @@ export type ColdStartCopy = Pick<
   | "voiceSend"
   | "voiceOrType"
   | "voiceTranscribePlaceholder"
+  | "voiceUnsupported"
+  | "voiceMicDenied"
   | "voiceSentTitle"
   | "voiceSentBody"
   | "ctaAnotherObservation"
-  | "voiceUnsupported"
-> & {
-  /** Generic 📍 on `/` — deployment-agnostic (not “help”). */
-  ctaNearbyHelp: string;
-};
-
-/** Cold `/` — no “pomoc”; heat deployment overrides in heatFieldCopy. */
-const NEARBY_GENERIC: Partial<Record<Lang, string>> = {
-  pl: "📍 Znajdź w pobliżu",
-  en: "📍 Find nearby",
-  it: "📍 Trova nelle vicinanze",
-  uk: "📍 Знайдіть поруч",
-  bg: "📍 Намерете наблизо",
-  et: "📍 Leia lähedal",
-  fi: "📍 Löydä läheltä",
-  lt: "📍 Raskite netoliese",
-  lv: "📍 Atrodiet tuvumā",
-  hu: "📍 Keressen a közelben",
-};
+> &
+  VoiceFlowCopy;
 
 export function coldStartCopy(lang: Lang): ColdStartCopy {
   const heat = heatFieldCopy(lang);
+  const flow = voiceFlowCopy(lang);
   return {
-    ctaNearbyHelp: NEARBY_GENERIC[lang] ?? NEARBY_GENERIC.en!,
+    ctaNearbyHelp: heat.ctaNearbyHelp,
     ctaVoiceReport: heat.ctaVoiceReport,
     voiceStart: heat.voiceStart,
     voiceRecording: heat.voiceRecording,
@@ -58,5 +46,7 @@ export function coldStartCopy(lang: Lang): ColdStartCopy {
     voiceSentBody: heat.voiceSentBody,
     ctaAnotherObservation: heat.ctaAnotherObservation,
     voiceUnsupported: heat.voiceUnsupported,
+    voiceMicDenied: heat.voiceMicDenied,
+    ...flow,
   };
 }
