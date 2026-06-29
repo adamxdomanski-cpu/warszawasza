@@ -59,6 +59,41 @@ Interfejs zostaje prosty: **🎤 Nagraj obserwację.** To mieszkańcy swoimi zg�
 
 ---
 
+## Kategorie są odkrywane, a nie projektowane
+
+> **Kategorie są odkrywane, a nie projektowane.**
+
+Najpierw rzeczywistość → obserwacja → analiza → **dopiero na końcu** struktura (jak w języku: ludzie mówią, potem słowo trafia do słownika — nie odwrotnie).
+
+**Nie** dodawać kategorii automatycznie w interfejsie. **Najpierw** w analizie zgromadzonych nagrań.
+
+```
+🎤 Nagraj obserwację
+        │
+        ▼
+Surowe nagrania
+        │
+        ▼
+Analiza zgłoszeń
+        │
+        ▼
+Wzorce
+        │
+        ▼
+Decyzja: czy potrzebna nowa kategoria?
+        │
+        ▼
+(dopiero wtedy — UI / słownik obserwacji)
+```
+
+**Przykład hulajnoga:** pierwsze zgłoszenie *„hulajnoga na chodniku”* → nic w UI. Po miesiącu: 37× hulajnogi, 19× gałęzie, 12× worki → **dopiero wtedy** decyzja: kategoria *Przeszkody na chodniku* — bo wyłoniła się z danych, nie z biurka.
+
+Rola WARSZAWASZA: **usłyszeć** miasto i uporządkować — nie zakładać z góry 25 kategorii, z których 20 nigdy nie będzie użytych.
+
+*(To dotyczy **typów obserwacji** z nagrań. Słownik wdrożenia — hydranty, punkty wody — to dane terenu, nie menu kategorii dla użytkownika.)*
+
+---
+
 ## Filtr decyzji
 
 > **Czy to pomaga człowiekowi podjąć lepszą decyzję?**
