@@ -439,13 +439,13 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
         {phase === "recording" && (
           <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
-            <p className="m-0 flex items-center gap-2 text-base text-ink">
+            <p className="m-0 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-base text-ink">
               <span
-                className="inline-block h-3 w-3 animate-pulse rounded-full bg-[var(--color-warsaw-heat-critical)]"
+                className="inline-block h-3 w-3 shrink-0 animate-pulse rounded-full bg-[var(--color-warsaw-heat-critical)]"
                 aria-hidden
               />
-              {copy.voiceRecording}
-              <span className="ml-auto font-mono-field tabular-nums text-accent/80">
+              <span className="field-text-wrap min-w-0 flex-1">{copy.voiceRecording}</span>
+              <span className="shrink-0 font-mono-field tabular-nums text-accent/80">
                 {formatTimer(seconds)}
               </span>
             </p>
@@ -471,7 +471,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder={copy.voiceDescriptionPlaceholder}
-                className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+                className="field-text-wrap w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
               />
             </label>
             <div className="flex flex-col gap-2">
@@ -528,19 +528,19 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder={copy.voiceDescriptionPlaceholder}
-                  className="w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+                  className="field-text-wrap w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
                 />
                 <div className="space-y-2">
                   <button
                     type="button"
                     disabled={geoBusy || !!geo}
                     onClick={() => void attachLocation()}
-                    className="min-h-11 w-full touch-manipulation border border-accent/25 bg-field/80 px-4 py-2.5 text-left text-sm text-ink disabled:opacity-60"
+                    className="field-text-wrap min-h-11 w-full min-w-0 touch-manipulation border border-accent/25 bg-field/80 px-4 py-2.5 text-left text-sm text-ink disabled:opacity-60"
                   >
                     {geo ? geoCopy.attached : geoCopy.attach}
                   </button>
                   {geo && (
-                    <p className="m-0 font-mono-field text-xs text-accent/55">
+                    <p className="field-text-wrap m-0 break-all font-mono-field text-xs text-accent/55">
                       {formatPlaceFromGeo(geo)}
                     </p>
                   )}
@@ -567,7 +567,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder={copy.voiceDescriptionPlaceholder}
-                className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+                className="field-text-wrap w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
               />
             </label>
             <div className="flex flex-col gap-2 sm:flex-row">
