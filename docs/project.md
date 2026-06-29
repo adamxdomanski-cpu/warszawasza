@@ -1,5 +1,7 @@
 # WARSZAWASZA · Project scope & purpose
 
+**Pierwsza kartka (wszyscy):** [WARSZAWASZA w dwóch minutach](WARSZAWASZA-w-dwoch-minutach.md)
+
 **Filter:** Czy po dodaniu tego mieszkańcowi Warszawy jest choć odrobinę **łatwiej zrozumieć swoje miasto i podjąć lepszą decyzję**? Nie → nie buduj albo usuń.
 
 **Development principles:** [`.cursor/rules/core.mdc`](../.cursor/rules/core.mdc) (always applied in Cursor).

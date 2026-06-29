@@ -8,6 +8,8 @@
 
 **warszawasza** — FIRA Observation Protocol; primary UI in `frontend/` (Next.js), API/engine in `backend/`.
 
+**Pierwsza kartka (każdy nowy człowiek):** [`docs/WARSZAWASZA-w-dwoch-minutach.md`](docs/WARSZAWASZA-w-dwoch-minutach.md)
+
 **COS Core Starter v1.0:** [`docs/core/starter-v0.md`](docs/core/starter-v0.md) · [`.cursorrules`](.cursorrules)
 
 ## Dev (from repo root)
