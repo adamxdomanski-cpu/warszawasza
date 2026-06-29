@@ -14,7 +14,6 @@ import type { Lang } from "../../lib/i18n";
 import { COPY } from "../../lib/i18n";
 import { knowledgeGraph } from "../../lib/knowledge/KnowledgeGraph";
 import {
-  buildMailtoHref,
   buildTraceDocument,
   getTraceRegistryCount,
   isHeatDeployment,
@@ -31,12 +30,13 @@ import SignalControl from "./SignalControl";
 
 function heatFieldAnotherLabel(lang: Lang): string {
   const labels: Partial<Record<Lang, string>> = {
-    pl: "Zostaw kolejną obserwację",
-    it: "Lascia un'altra osservazione",
-    uk: "Залишити ще одне спостереження",
-    hu: "Új megfigyelés",
+    pl: "Wyślij kolejne zgłoszenie",
+    en: "Submit another observation",
+    it: "Invia un'altra segnalazione",
+    uk: "Надіслати ще одне звернення",
+    hu: "Új bejelentés",
   };
-  return labels[lang] ?? "Leave another observation";
+  return labels[lang] ?? "Submit another observation";
 }
 
 function heatFieldMailtoLabel(lang: Lang): string {
@@ -185,8 +185,6 @@ export default function LeaveTraceControl({
             setStarted(false);
           }}
           anotherLabel={residentNav.another}
-          mailtoHref={buildMailtoHref(sentPayload)}
-          mailtoLabel={residentNav.mailto}
         />
       </div>
     );

@@ -24,13 +24,15 @@ export type TraceStatus = "PENDING" | "VERIFIED" | "CLOSED";
 export type TraceData = {
   headline: string;
   id: string;
+  traceReferenceLine: string;
   timestamp: string;
   location: string;
   description?: string;
-  descriptionLabel: string;
   status: TraceStatus;
   statusLabel: string;
   statusText: string;
+  savedConfirmation: string;
+  emailNote: string;
   heatGuidance?: string;
   nearbyCta?: string;
   processTitle: string;
@@ -91,14 +93,15 @@ export function buildTraceViewModel(
   return {
     headline: citizen.headline,
     id: summary.traceId,
+    traceReferenceLine: `${rc.traceReferencePrefix} #${summary.traceId}`,
     timestamp: formatRelativeTime(trace),
     location: place,
-    ...(citizen.description
-      ? { description: citizen.description, descriptionLabel: citizen.descriptionLabel ?? rc.reportDescriptionLabel }
-      : { descriptionLabel: rc.reportDescriptionLabel }),
+    ...(citizen.description ? { description: citizen.description } : {}),
     status: traceStatus(trace),
     statusLabel: rc.statusLabel,
     statusText: citizen.statusLine,
+    savedConfirmation: rc.savedConfirmation,
+    emailNote: rc.emailNotConfigured,
     ...(heat ? { heatGuidance: rc.heatGuidance, nearbyCta: rc.showNearbyPlaces } : {}),
     processTitle: journeyLayerTitle(lang),
     processSteps: getOperatorSteps(lang),
@@ -127,15 +130,17 @@ export function buildTraceViewModel(
 
 /** Field-test reference — Ślad #20260628-180642 (Dzielna). Dev / docs only. */
 export const MOCK_DZIELNA_TRACE: TraceData = {
-  headline: "✓ Ślad odebrany",
+  headline: "✓ Zgłoszenie odebrane",
   id: "20260628-180642",
+  traceReferenceLine: "Ślad #20260628-180642",
   timestamp: "2 minuty temu",
   location: "Warszawa, rejon ul. Dzielnej",
   description: "Przy tej temperaturze topi się asfalt i czuć intensywny zapach.",
-  descriptionLabel: "Opis zgłoszenia",
   status: "PENDING",
   statusLabel: "Stan:",
   statusText: "Oczekuje na potwierdzenie.",
+  savedConfirmation: "Zapisano na tym urządzeniu.",
+  emailNote: "Automatyczna kopia e-mail będzie dostępna w kolejnej wersji.",
   heatGuidance: "Jeżeli przebywasz na zewnątrz podczas upału,\nznajdź wodę i cień.",
   nearbyCta: "📍 Pokaż najbliższe miejsca",
   processTitle: "Jak przetwarzamy to zgłoszenie?",

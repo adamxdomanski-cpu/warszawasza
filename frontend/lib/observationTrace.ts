@@ -93,6 +93,12 @@ export function registerTrace(trace: ObservationTracePayload): number {
   return next.length;
 }
 
+/** Most recent trace on this device (localStorage). */
+export function getLastRegisteredTrace(): ObservationTracePayload | null {
+  const all = readRegistry();
+  return all.length ? all[all.length - 1]! : null;
+}
+
 export function formatShortTraceId(createdAt: number): string {
   const d = new Date(createdAt);
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -194,13 +200,21 @@ export function buildTraceResidentLayer(
   options: TracePresentationOptions = {},
 ): string {
   const view = getTraceCitizenView(trace, options);
-  const lines: string[] = [view.headline, "", view.placeLine, ""];
+  const rc = traceResidentCopy(trace.lang);
+  const traceId = formatShortTraceId(trace.createdAt);
+  const lines: string[] = [
+    view.headline,
+    `${rc.traceReferencePrefix} #${traceId}`,
+    "",
+    view.placeLine,
+    "",
+  ];
 
   if (view.descriptionLabel && view.description) {
     lines.push(view.descriptionLabel, `„${view.description}"`, "");
   }
 
-  lines.push(view.statusLabel, view.statusLine, "");
+  lines.push(view.statusLabel, view.statusLine, "", rc.savedConfirmation, "", rc.emailNotConfigured, "");
 
   if (view.heatGuidance) {
     lines.push(view.heatGuidance, "");

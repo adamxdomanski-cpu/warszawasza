@@ -22,6 +22,7 @@ import {
 import { journeyUiCopy } from "../../../lib/traceJourney";
 import {
   appendInteractionEvent,
+  clearInteractionTrace,
   getInteractionTrace,
 } from "../../../lib/interactionTrace";
 import {
@@ -89,9 +90,13 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
     useEffect(() => {
       if (phase !== "review" && phase !== "recording") return;
-      if (!text.trim()) return;
-      saveVoiceDraft({ text, lang, heatContext });
-    }, [text, phase, lang, heatContext]);
+      saveVoiceDraft({
+        text,
+        lang,
+        heatContext,
+        ...(geo ? { geo: { lat: geo.lat, lon: geo.lng, accuracy: geo.accuracyM } } : {}),
+      });
+    }, [text, phase, lang, heatContext, geo]);
 
     useEffect(() => {
       return () => {
@@ -242,14 +247,45 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       window.setTimeout(() => setFlash(null), 2400);
     }, [copy.ctaVoiceReport, geo, heatContext, lang, onSent, text, ui.copied]);
 
-    const reset = (force = false) => {
-      if (!force && phase === "review" && text.trim()) {
-        if (!window.confirm(rc.resetConfirm)) return;
+    const startAnotherReport = useCallback(() => {
+      clearVoiceDraft();
+      setPendingDraft(null);
+      setSentPayload(null);
+      setPhase("idle");
+      setText("");
+      setSeconds(0);
+      setGeo(null);
+      setGeoError(null);
+      if (audioUrl) URL.revokeObjectURL(audioUrl);
+      setAudioUrl(null);
+      clearInteractionTrace();
+      appendInteractionEvent("START");
+    }, [audioUrl]);
+
+    const discardDraft = useCallback(() => {
+      clearVoiceDraft();
+      setPendingDraft(null);
+    }, []);
+
+    const restoreDraft = useCallback(() => {
+      if (!pendingDraft) return;
+      setText(pendingDraft.text);
+      if (pendingDraft.geo) {
+        setGeo({
+          lat: pendingDraft.geo.lat,
+          lng: pendingDraft.geo.lon,
+          accuracyM: pendingDraft.geo.accuracy,
+        });
       }
+      setPhase("review");
+      setPendingDraft(null);
+    }, [pendingDraft]);
+
+    const discardReview = () => {
+      if (text.trim() && !window.confirm(rc.resetConfirm)) return;
       clearVoiceDraft();
       setPendingDraft(null);
       setPhase("idle");
-      setSentPayload(null);
       setText("");
       setSeconds(0);
       setGeo(null);
@@ -258,15 +294,35 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setAudioUrl(null);
     };
 
-    const restoreDraft = () => {
-      if (!pendingDraft) return;
-      setText(pendingDraft.text);
-      setPhase("review");
-      setPendingDraft(null);
-    };
+    const draftBanner =
+      pendingDraft && phase === "idle" ? (
+        <div className="space-y-2 py-2">
+          <p className="m-0 text-sm text-accent/80">{rc.draftRestorePrompt}</p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={restoreDraft}
+              className="min-h-11 touch-manipulation border-2 border-accent/45 px-4 py-2 text-sm font-medium text-ink"
+            >
+              {rc.draftRestoreAction}
+            </button>
+            <button
+              type="button"
+              onClick={discardDraft}
+              className="min-h-11 touch-manipulation border border-accent/25 px-4 py-2 text-sm text-accent/65"
+            >
+              {rc.draftDismissAction}
+            </button>
+          </div>
+        </div>
+      ) : null;
 
     if (lean && phase === "idle" && !pendingDraft) {
       return null;
+    }
+
+    if (lean && phase === "idle" && pendingDraft) {
+      return draftBanner;
     }
 
     if (phase === "sent" && sentPayload) {
@@ -276,9 +332,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           lang={lang}
           presentation={{ heatContext }}
           flash={flash}
-          savedHint={rc.savedOnDeviceHint}
           onFindHelp={onFindHelp}
-          onAnother={() => reset(true)}
+          onAnother={startAnotherReport}
           anotherLabel={copy.ctaAnotherObservation}
         />
       );
@@ -288,6 +343,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
     return (
       <section aria-label={copy.ctaVoiceReport} className={panelClass}>
+        {draftBanner}
+
         {!lean && (
           <h2 className="m-0 text-lg font-medium leading-snug text-ink sm:text-xl">
             {copy.ctaVoiceReport}
@@ -381,7 +438,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
               </SignalControl>
               <button
                 type="button"
-                onClick={() => reset()}
+                onClick={discardReview}
                 className="min-h-12 border border-accent/20 px-4 py-3 text-sm text-accent/60 touch-manipulation"
               >
                 {ui.startOver}

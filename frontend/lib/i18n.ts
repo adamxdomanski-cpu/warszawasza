@@ -1867,12 +1867,20 @@ export type TraceResidentCopy = {
   minutesAgo: string;
   hoursAgo: string;
   justNow: string;
+  sendByEmailOptional: string;
+  savedConfirmation: string;
+  emailNotConfigured: string;
+  traceReferencePrefix: string;
+  resetConfirm: string;
+  draftRestorePrompt: string;
+  draftRestoreAction: string;
+  draftDismissAction: string;
 };
 
 export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
   pl: {
     cityDefault: "Warszawa",
-    statusReceived: "✓ Ślad odebrany",
+    statusReceived: "✓ Zgłoszenie odebrane",
     statusLabel: "Stan:",
     statusAwaitingField: "Oczekuje na potwierdzenie.",
     statusUnverified: "Niezweryfikowane.",
@@ -1891,10 +1899,19 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     minutesAgo: "{n} min temu",
     hoursAgo: "{n} godz. temu",
     justNow: "przed chwilą",
+    sendByEmailOptional: "Otwórz e-mail (opcjonalnie)",
+    savedConfirmation: "Zapisano na tym urządzeniu.",
+    emailNotConfigured:
+      "Automatyczna kopia e-mail będzie dostępna w kolejnej wersji.",
+    traceReferencePrefix: "Ślad",
+    resetConfirm: "Porzucić wpisany tekst i zacząć od nowa?",
+    draftRestorePrompt: "Znaleźliśmy niewysłane zgłoszenie. Przywrócić?",
+    draftRestoreAction: "Przywróć",
+    draftDismissAction: "Porzuć",
   },
   en: {
     cityDefault: "Warsaw",
-    statusReceived: "✓ Trace received",
+    statusReceived: "✓ Observation received",
     statusLabel: "Status:",
     statusAwaitingField: "Awaiting confirmation.",
     statusUnverified: "Unverified.",
@@ -1912,6 +1929,14 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     minutesAgo: "{n} min ago",
     hoursAgo: "{n} h ago",
     justNow: "just now",
+    sendByEmailOptional: "Open email (optional)",
+    savedConfirmation: "Saved on this device.",
+    emailNotConfigured: "Automatic email copy will be available in a future version.",
+    traceReferencePrefix: "Trace",
+    resetConfirm: "Discard your text and start over?",
+    draftRestorePrompt: "We found an unfinished report. Restore it?",
+    draftRestoreAction: "Restore",
+    draftDismissAction: "Discard",
   },
   it: {
     cityDefault: "Varsavia",
@@ -1933,6 +1958,14 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     minutesAgo: "{n} min fa",
     hoursAgo: "{n} h fa",
     justNow: "proprio ora",
+    sendByEmailOptional: "Apri e-mail (opzionale)",
+    savedConfirmation: "Salvato su questo dispositivo.",
+    emailNotConfigured: "La copia e-mail automatica sarà disponibile in una versione successiva.",
+    traceReferencePrefix: "Traccia",
+    resetConfirm: "Scartare il testo e ricominciare?",
+    draftRestorePrompt: "Abbiamo trovato una segnalazione non inviata. Ripristinare?",
+    draftRestoreAction: "Ripristina",
+    draftDismissAction: "Scarta",
   },
   uk: {
     cityDefault: "Варшава",
@@ -1954,6 +1987,14 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     minutesAgo: "{n} хв тому",
     hoursAgo: "{n} год тому",
     justNow: "щойно",
+    sendByEmailOptional: "Відкрити e-mail (за бажанням)",
+    savedConfirmation: "Збережено на цьому пристрої.",
+    emailNotConfigured: "Автоматична копія e-mail буде доступна в наступній версії.",
+    traceReferencePrefix: "Слід",
+    resetConfirm: "Скасувати текст і почати спочатку?",
+    draftRestorePrompt: "Ми знайшли незавершене звернення. Відновити?",
+    draftRestoreAction: "Відновити",
+    draftDismissAction: "Відкинути",
   },
   hu: {
     cityDefault: "Varsó",
@@ -1975,6 +2016,14 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     minutesAgo: "{n} perce",
     hoursAgo: "{n} órája",
     justNow: "épp most",
+    sendByEmailOptional: "E-mail megnyitása (opcionális)",
+    savedConfirmation: "Elmentve ezen az eszközön.",
+    emailNotConfigured: "Az automatikus e-mail másolat egy későbbi verzióban érhető el.",
+    traceReferencePrefix: "Nyom",
+    resetConfirm: "Elveti a szöveget és újrakezdi?",
+    draftRestorePrompt: "Befejezetlen bejelentést találtunk. Visszaállítja?",
+    draftRestoreAction: "Visszaállítás",
+    draftDismissAction: "Elvetés",
   },
 };
 
