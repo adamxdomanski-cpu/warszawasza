@@ -42,13 +42,20 @@ Nie wyrzucamy — oznaczamy i **nie rozwijamy** bez dowodu z terenu, że rdzeń 
 
 ## Ślad ≠ funkcja
 
-Nagranie: *„Widziałem dziś jajko.”*
+**Otwarte nagranie ma sens właśnie dlatego**, że rzeczywistość nie mieści się w słowniku upału.
+
+| Przykład | Rozdział 1 |
+|----------|------------|
+| *„Widziałem dziś jajko.”* | zapis audio + czas + miejsce + ślad |
+| *„Przed Dzielną 3A hulajnoga na chodniku — uważajcie.”* | to samo — **bez** kategorii „przeszkoda na chodniku” |
 
 | Tak | Nie (bez obserwacji z pola) |
 |-----|------------------------------|
-| zapisać jako zwykły ślad (audio, opcjonalny tekst) | klasyfikować, analizować, reagować, budować model |
+| przyjąć zgłoszenie; nagranie, czas, miejsce, ślad | klasyfikować, grupować, budować model kategorii w UI |
 
-Nie każdy ślad musi zamienić się w funkcję.
+Nie każdy ślad musi zamienić się w funkcję. **Kategorie to materiał do obserwacji** — dopiero gdy np. 30 z 100 nagrań dotyczy przeszkód na chodniku, macie argument na lepszą obsługę. Nie wcześniej.
+
+Interfejs zostaje prosty: **🎤 Nagraj obserwację.** To mieszkańcy swoimi zgłoszeniami pokazują, jakiego miasta doświadczają — nie lista funkcji z biurka.
 
 ---
 
