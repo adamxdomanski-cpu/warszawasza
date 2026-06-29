@@ -30,7 +30,14 @@ cd frontend && npm run build
 ```
 
 **Cold start (default `/`):** dwa CTA + głos — `ColdStartClient.tsx`; stary UI: `/?legacy=1`.  
-**Field / heat:** `/field/heat` — 🎤 + 📍 nad foldem; kontekst w *Więcej kontekstu*. Protokół testu: `docs/core/final-integration-pass.md`.
+**Field / heat:** `/field/heat` — 🎤 Nagraj obserwację + 📍 Znajdź wodę i cień; kontekst w *Więcej kontekstu*.
+
+## Proces zespołu (nie kod)
+
+**Reguła:** nie dodajemy nowych funkcji przed zebraniem dowodów z pola.  
+Pełna tabela cyklu wydania, pytania do testerów i wskaźnik po deployu: [`docs/core/field-first-release.md`](docs/core/field-first-release.md)
+
+Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/final-integration-pass.md).
 
 ## Cursor
 
