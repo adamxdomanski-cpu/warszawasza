@@ -1875,6 +1875,7 @@ export type TraceResidentCopy = {
   draftRestorePrompt: string;
   draftRestoreAction: string;
   draftDismissAction: string;
+  descriptionShowFull?: string;
 };
 
 export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
@@ -1908,6 +1909,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     draftRestorePrompt: "Znaleźliśmy niewysłane zgłoszenie. Przywrócić?",
     draftRestoreAction: "Przywróć",
     draftDismissAction: "Porzuć",
+    descriptionShowFull: "Pokaż całość",
   },
   en: {
     cityDefault: "Warsaw",
@@ -1937,6 +1939,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     draftRestorePrompt: "We found an unfinished report. Restore it?",
     draftRestoreAction: "Restore",
     draftDismissAction: "Discard",
+    descriptionShowFull: "Show full",
   },
   it: {
     cityDefault: "Varsavia",
@@ -2028,5 +2031,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
 };
 
 export function traceResidentCopy(lang: Lang): TraceResidentCopy {
-  return TRACE_RESIDENT[lang] ?? TRACE_RESIDENT.en!;
+  const en = TRACE_RESIDENT.en!;
+  const local = TRACE_RESIDENT[lang];
+  return local ? { ...en, ...local } : en;
 }

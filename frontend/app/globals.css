@@ -1198,6 +1198,18 @@
   }
 }
 
+/* —— Field: mobile text containment (L1 — transcription, CTAs, location) —— */
+.heat-field-page {
+  overflow-x: clip;
+}
+
+.heat-field-page .field-text-wrap {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* —— Field heat: experience palette · urgency = motion (never decoration) —— */
 .heat-field-ambient {
   opacity: 0.34;
