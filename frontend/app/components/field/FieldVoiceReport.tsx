@@ -74,7 +74,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const [audioUrl, setAudioUrl] = useState<string | null>(null);
     const [hasAudioBlob, setHasAudioBlob] = useState(false);
     const [flash, setFlash] = useState<string | null>(null);
-    const [micHint, setMicHint] = useState<string | null>(null);
+    const [micFallback, setMicFallback] = useState(false);
     const [sttStatus, setSttStatus] = useState<SttStatus>("idle");
     const [geo, setGeo] = useState<GeoPoint | null>(null);
     const [geoBusy, setGeoBusy] = useState(false);
@@ -162,7 +162,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     }, [lang]);
 
     const startRecording = useCallback(async () => {
-      setMicHint(null);
+      setMicFallback(false);
       setSttStatus("idle");
       sttStartedRef.current = false;
       stopTranscription();
@@ -172,7 +172,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
       if (!recordingCapable) {
         setPhase("review");
-        setMicHint(copy.voiceUnsupported);
+        setMicFallback(true);
         appendInteractionEvent("RECORD", "manual");
         return;
       }
@@ -207,10 +207,10 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       } catch {
         stream?.getTracks().forEach((t) => t.stop());
         setPhase("review");
-        setMicHint(copy.voiceMicDenied);
+        setMicFallback(true);
         appendInteractionEvent("RECORD", "denied");
       }
-    }, [copy.voiceMicDenied, copy.voiceUnsupported, stopTranscription]);
+    }, [stopTranscription]);
 
     useImperativeHandle(ref, () => ({ startRecording: () => void startRecording() }), [
       startRecording,
@@ -308,6 +308,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setGeo(null);
       setGeoError(null);
       setHasAudioBlob(false);
+      setMicFallback(false);
       setSttStatus("idle");
       sttStartedRef.current = false;
       stopTranscription();
@@ -346,6 +347,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setGeo(null);
       setGeoError(null);
       setHasAudioBlob(false);
+      setMicFallback(false);
       setSttStatus("idle");
       sttStartedRef.current = false;
       stopTranscription();
@@ -450,57 +452,115 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           </div>
         )}
 
-        {phase === "review" && (
+        {phase === "review" && micFallback && (
           <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
-            {micHint && <p className="m-0 text-sm text-accent/70">{micHint}</p>}
-            {hasAudioBlob && (
-              <>
-                <p className="m-0 text-sm font-medium text-ink">{copy.voiceSaved}</p>
-                {audioUrl && (
-                  <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
-                    {copy.voicePlay}
-                  </audio>
-                )}
-                <p className="m-0 text-xs text-accent/55">{copy.voiceAudioOnlyOk}</p>
-              </>
-            )}
-            {!hasAudioBlob && !micHint && (
-              <p className="m-0 text-sm text-accent/75">{copy.voiceReviewPrompt}</p>
-            )}
-            {sttStatus === "pending" && (
-              <p className="m-0 text-xs text-accent/55">{copy.voiceTranscribePending}</p>
-            )}
-            {sttStatus === "failed" && hasAudioBlob && (
-              <p className="m-0 text-xs text-accent/55">{copy.voiceTranscribeFailed}</p>
-            )}
-            <label className="block space-y-1">
-              <span className="text-xs text-accent/55">{copy.voiceOrType}</span>
+            <p className="m-0 text-base font-medium text-ink">{copy.voiceMicFallbackTitle}</p>
+            <p className="m-0 text-sm text-accent/70">{copy.voiceMicFallbackLead}</p>
+            <label className="block space-y-2">
+              <span className="text-sm text-ink">📝 {copy.voiceTypeObservation}</span>
               <textarea
-                rows={3}
+                rows={4}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder={copy.voiceTranscribePlaceholder}
-                className="w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+                placeholder={copy.voiceDescriptionPlaceholder}
+                className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
               />
             </label>
-            <p className="m-0 text-xs leading-relaxed text-accent/50">{copy.voiceTopicHint}</p>
-            <div className="space-y-2">
-              <p className="m-0 text-xs text-accent/50">{geoCopy.hint}</p>
+            <div className="flex flex-col gap-2">
+              <SignalControl
+                type="button"
+                direction="right"
+                disabled={!text.trim()}
+                onClick={() => void sendReport()}
+                className="min-h-12 w-full border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation disabled:opacity-45"
+              >
+                {copy.voiceSend}
+              </SignalControl>
               <button
                 type="button"
-                disabled={geoBusy || !!geo}
-                onClick={() => void attachLocation()}
-                className="min-h-11 w-full touch-manipulation border border-accent/30 bg-field/80 px-4 py-2.5 text-left text-sm text-ink disabled:opacity-60"
+                onClick={() => void startRecording()}
+                className="min-h-12 border border-accent/30 px-4 py-3 text-sm text-ink touch-manipulation"
               >
-                {geo ? geoCopy.attached : geoCopy.attach}
+                {copy.voiceMicRetry}
               </button>
-              {geo && (
-                <p className="m-0 font-mono-field text-xs text-accent/55">
-                  {formatPlaceFromGeo(geo)}
-                </p>
-              )}
-              {geoError && <p className="m-0 text-xs text-accent/55">{geoError}</p>}
             </div>
+          </div>
+        )}
+
+        {phase === "review" && !micFallback && hasAudioBlob && (
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            <p className="m-0 text-base font-medium text-ink">{copy.voiceRecordingReady}</p>
+            {audioUrl && (
+              <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
+                {copy.voicePlay}
+              </audio>
+            )}
+            <SignalControl
+              type="button"
+              direction="right"
+              onClick={() => void sendReport()}
+              className="min-h-12 w-full border-2 border-accent/45 bg-field px-4 py-3 text-left text-sm font-medium text-ink touch-manipulation"
+            >
+              {copy.voiceSend}
+            </SignalControl>
+            <details className="border border-accent/15 bg-field/40 px-3 py-2">
+              <summary className="cursor-pointer text-sm text-accent/70 touch-manipulation">
+                {copy.voiceAddDescription}
+              </summary>
+              <div className="mt-3 space-y-3 pb-1">
+                {sttStatus === "pending" && (
+                  <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribePending}</p>
+                )}
+                {sttStatus === "failed" && (
+                  <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribeFailed}</p>
+                )}
+                <textarea
+                  rows={3}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder={copy.voiceDescriptionPlaceholder}
+                  className="w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+                />
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    disabled={geoBusy || !!geo}
+                    onClick={() => void attachLocation()}
+                    className="min-h-11 w-full touch-manipulation border border-accent/25 bg-field/80 px-4 py-2.5 text-left text-sm text-ink disabled:opacity-60"
+                  >
+                    {geo ? geoCopy.attached : geoCopy.attach}
+                  </button>
+                  {geo && (
+                    <p className="m-0 font-mono-field text-xs text-accent/55">
+                      {formatPlaceFromGeo(geo)}
+                    </p>
+                  )}
+                  {geoError && <p className="m-0 text-xs text-accent/55">{geoError}</p>}
+                </div>
+              </div>
+            </details>
+            <button
+              type="button"
+              onClick={discardReview}
+              className="min-h-11 text-sm text-accent/55 touch-manipulation"
+            >
+              {ui.startOver}
+            </button>
+          </div>
+        )}
+
+        {phase === "review" && !micFallback && !hasAudioBlob && (
+          <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            <label className="block space-y-2">
+              <span className="text-sm text-ink">📝 {copy.voiceTypeObservation}</span>
+              <textarea
+                rows={4}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder={copy.voiceDescriptionPlaceholder}
+                className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
+              />
+            </label>
             <div className="flex flex-col gap-2 sm:flex-row">
               <SignalControl
                 type="button"

@@ -114,7 +114,7 @@ function observationQuote(trace: ObservationTracePayload): string | null {
   const text = trace.citizen?.relatedRefs?.trim();
   if (!text) return null;
   const placeholders = [
-    "Powiedz, co widzisz",
+    "Nagraj obserwację",
     "Say what you see",
     "Report what you see",
   ];

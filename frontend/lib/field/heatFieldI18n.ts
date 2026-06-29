@@ -82,6 +82,7 @@ export type HeatCopy = {
   voiceSentBody: string;
   ctaAnotherObservation: string;
   voiceUnsupported: string;
+  voiceMicDenied: string;
   layer2Title: string;
   distanceM: string;
   distanceWalk: string;
@@ -121,7 +122,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     waterSaveQuestion:
       "Czy dziś naprawdę potrzebujesz trzeciej spłuczki, czy wystarczy jedna?",
     ctaNearbyHelp: "📍 Znajdź wodę i cień",
-    ctaVoiceReport: "🎤 Powiedz, co widzisz",
+    ctaVoiceReport: "🎤 Nagraj obserwację",
     voiceStart: "Rozpocznij nagrywanie",
     voiceRecording: "Nagrywanie…",
     voiceStop: "Zakończ",
@@ -135,6 +136,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     voiceSentBody: "Dziękujemy.",
     ctaAnotherObservation: "Wyślij kolejne zgłoszenie",
     voiceUnsupported: "Nagrywanie niedostępne w tej przeglądarce — wpisz tekst poniżej.",
+    voiceMicDenied: "Brak dostępu do mikrofonu — wpisz tekst poniżej.",
     layer2Title: "W pobliżu",
     distanceM: "{n} m",
     distanceWalk: "{n} min pieszo",
@@ -195,7 +197,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     waterSaveTitle: "How to save water?",
     waterSaveQuestion: "Do you really need a third flush today, or is one enough?",
     ctaNearbyHelp: "📍 Find water and shade",
-    ctaVoiceReport: "🎤 Tell us what you see",
+    ctaVoiceReport: "🎤 Record an observation",
     voiceStart: "Start recording",
     voiceRecording: "Recording…",
     voiceStop: "Stop",
@@ -209,6 +211,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     voiceSentBody: "Thank you.",
     ctaAnotherObservation: "Submit another observation",
     voiceUnsupported: "Recording unavailable in this browser — type below instead.",
+    voiceMicDenied: "Microphone access blocked — type your report below.",
     layer2Title: "Nearby",
     distanceM: "{n} m",
     distanceWalk: "{n} min walk",
@@ -267,7 +270,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     waterSaveTitle: "Як економити воду?",
     waterSaveQuestion: "Чи потрібен третій злив, чи достатньо одного?",
     ctaNearbyHelp: "📍 Вода та тінь поруч",
-    ctaVoiceReport: "🎤 Розкажіть, що бачите",
+    ctaVoiceReport: "🎤 Запишіть спостереження",
     voiceStart: "Почати запис",
     voiceRecording: "Запис…",
     voiceStop: "Зупинити",
@@ -281,6 +284,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     voiceSentBody: "Дякуємо.",
     ctaAnotherObservation: "Скажіть ще раз",
     voiceUnsupported: "Запис недоступний — введіть текст нижче.",
+    voiceMicDenied: "Немає доступу до мікрофона — введіть текст нижче.",
     layer2Title: "Поруч",
     distanceM: "{n} м",
     distanceWalk: "{n} хв пішки",
@@ -333,6 +337,7 @@ export function heatFieldCopy(lang: Lang): HeatCopy {
     ...resolved,
     microHintLabel: resolved.microHintLabel ?? en.microHintLabel,
     microHintBody: resolved.microHintBody ?? en.microHintBody,
+    voiceMicDenied: resolved.voiceMicDenied ?? en.voiceMicDenied,
   };
 }
 

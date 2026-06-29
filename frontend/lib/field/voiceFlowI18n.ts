@@ -1,58 +1,78 @@
-/** Voice-first flow copy — transcription optional, category never required. */
+/** Voice-first flow copy — recording is the artifact; text is optional. */
 
 import type { Lang } from "../i18n";
 
 export type VoiceFlowCopy = {
-  voiceTopicHint: string;
+  voiceRecordingReady: string;
+  voiceAddDescription: string;
+  voiceDescriptionPlaceholder: string;
+  voiceMicFallbackTitle: string;
+  voiceMicFallbackLead: string;
+  voiceTypeObservation: string;
+  voiceMicRetry: string;
   voiceTranscribePending: string;
   voiceTranscribeFailed: string;
-  voiceAudioOnlyOk: string;
 };
 
 const PL: VoiceFlowCopy = {
-  voiceTopicHint:
-    "Możesz opisać cokolwiek: upał, awaria, drzewo, hałas, bezpieczeństwo, transport… Kategoria nie jest wymagana.",
+  voiceRecordingReady: "Nagranie gotowe.",
+  voiceAddDescription: "Dodaj opis (opcjonalnie)",
+  voiceDescriptionPlaceholder: "Krótki opis — jeśli chcesz coś doprecyzować",
+  voiceMicFallbackTitle: "Nie udało się uruchomić mikrofonu.",
+  voiceMicFallbackLead: "Możesz wpisać obserwację albo spróbować ponownie.",
+  voiceTypeObservation: "Wpisz obserwację",
+  voiceMicRetry: "Spróbuj ponownie",
   voiceTranscribePending: "Próbuję rozpoznać mowę…",
-  voiceTranscribeFailed:
-    "Transkrypcja niedostępna — możesz wysłać samo nagranie lub wpisać tekst poniżej.",
-  voiceAudioOnlyOk: "Nagranie wystarczy — tekst jest opcjonalny.",
+  voiceTranscribeFailed: "Transkrypcja niedostępna — nagranie możesz wysłać bez tekstu.",
 };
 
 const EN: VoiceFlowCopy = {
-  voiceTopicHint:
-    "Describe anything: heat, outage, trees, noise, safety, transport… No category required.",
+  voiceRecordingReady: "Recording ready.",
+  voiceAddDescription: "Add a description (optional)",
+  voiceDescriptionPlaceholder: "Short note — only if you want to clarify something",
+  voiceMicFallbackTitle: "Could not start the microphone.",
+  voiceMicFallbackLead: "You can type your observation or try again.",
+  voiceTypeObservation: "Type your observation",
+  voiceMicRetry: "Try again",
   voiceTranscribePending: "Trying to transcribe…",
-  voiceTranscribeFailed:
-    "Transcription unavailable — you can send the recording alone or type below.",
-  voiceAudioOnlyOk: "The recording is enough — text is optional.",
+  voiceTranscribeFailed: "Transcription unavailable — you can send the recording without text.",
 };
 
 const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
   pl: PL,
   en: EN,
   it: {
-    voiceTopicHint:
-      "Descrivete qualsiasi cosa: caldo, guasto, alberi, rumore, sicurezza, trasporti… Nessuna categoria obbligatoria.",
+    voiceRecordingReady: "Registrazione pronta.",
+    voiceAddDescription: "Aggiungi descrizione (facoltativo)",
+    voiceDescriptionPlaceholder: "Breve nota — solo se volete precisare",
+    voiceMicFallbackTitle: "Impossibile avviare il microfono.",
+    voiceMicFallbackLead: "Potete scrivere l'osservazione o riprovare.",
+    voiceTypeObservation: "Scrivi l'osservazione",
+    voiceMicRetry: "Riprova",
     voiceTranscribePending: "Trascrizione in corso…",
-    voiceTranscribeFailed:
-      "Trascrizione non disponibile — potete inviare solo la registrazione o scrivere sotto.",
-    voiceAudioOnlyOk: "La registrazione basta — il testo è facoltativo.",
+    voiceTranscribeFailed: "Trascrizione non disponibile — potete inviare solo l'audio.",
   },
   uk: {
-    voiceTopicHint:
-      "Опишіть що завгодно: спека, аварія, дерево, шум, безпека, транспорт… Категорія не обов’язкова.",
+    voiceRecordingReady: "Запис готовий.",
+    voiceAddDescription: "Додати опис (за бажанням)",
+    voiceDescriptionPlaceholder: "Коротка нотатка — якщо хочете уточнити",
+    voiceMicFallbackTitle: "Не вдалося увімкнути мікрофон.",
+    voiceMicFallbackLead: "Можете написати спостереження або спробувати знову.",
+    voiceTypeObservation: "Напишіть спостереження",
+    voiceMicRetry: "Спробуйте знову",
     voiceTranscribePending: "Розпізнаю мовлення…",
-    voiceTranscribeFailed:
-      "Транскрипція недоступна — можна надіслати лише запис або написати текст.",
-    voiceAudioOnlyOk: "Запису достатньо — текст необов’язковий.",
+    voiceTranscribeFailed: "Транскрипція недоступна — можна надіслати лише запис.",
   },
   hu: {
-    voiceTopicHint:
-      "Bármit leírhat: hőség, hiba, fa, zaj, biztonság, közlekedés… Kategória nem kötelező.",
+    voiceRecordingReady: "Felvétel kész.",
+    voiceAddDescription: "Leírás hozzáadása (opcionális)",
+    voiceDescriptionPlaceholder: "Rövid megjegyzés — ha pontosítani szeretne",
+    voiceMicFallbackTitle: "A mikrofon nem indítható.",
+    voiceMicFallbackLead: "Beírhatja a megfigyelést, vagy megpróbálhatja újra.",
+    voiceTypeObservation: "Írja be a megfigyelést",
+    voiceMicRetry: "Újra",
     voiceTranscribePending: "Beszéd felismerése…",
-    voiceTranscribeFailed:
-      "Átírás nem elérhető — elküldheti csak a felvételt, vagy írjon alább.",
-    voiceAudioOnlyOk: "A felvétel elég — a szöveg opcionális.",
+    voiceTranscribeFailed: "Az átírás nem elérhető — a felvétel küldhető szöveg nélkül.",
   },
 };
 

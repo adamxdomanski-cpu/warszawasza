@@ -20,10 +20,10 @@ const firaMono = Fira_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.warszawasza.online"),
   title: "WARSZAWASZA",
-  description: "📍 Znajdź w pobliżu · 🎤 Powiedz, co widzisz",
+  description: "📍 Znajdź wodę i cień · 🎤 Nagraj obserwację",
   openGraph: {
     title: "WARSZAWASZA",
-    description: "📍 Znajdź w pobliżu · 🎤 Powiedz, co widzisz",
+    description: "📍 Znajdź wodę i cień · 🎤 Nagraj obserwację",
     url: "https://www.warszawasza.online",
     siteName: "Warszawasza",
     type: "website",
