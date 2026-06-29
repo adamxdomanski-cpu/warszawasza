@@ -245,6 +245,30 @@ Numer zgłoszenia: WZS-20260628-163045
 
 Dziś `buildTraceCitizenLayer` jest blisko tego modelu, ale wymaga dopracowania: uniwersalne linki (nie tylko upał), adres z GPS zamiast samych współrzędnych, prostszy temat wiadomości.
 
+### Test Babci
+
+Jeżeli potwierdzenie **nie da się spokojnie przeczytać na głos** osobie starszej — jest zbyt techniczne. Bez: trace, pipeline, FOP, SELECT(…).
+
+### Odarcie języka (nie architektury)
+
+Przed pierwszą akcją użytkownik **nie musi czytać**:
+
+- definicji (*interfejs rzeczywistości*),
+- tagline’u,
+- marki na środku ekranu,
+- słowa *pomoc* / *obserwacja* (zamiast tego: **Znajdź…** / **Powiedz, co widzisz**).
+
+Minimum wdrożenia (upał):
+
+```
+39°C
+📍 Znajdź wodę i cień
+🎤 Powiedz, co widzisz
+WARSZAWASZA   ← dyskretnie na dole
+```
+
+Reszta — sygnał szczegółowy, RCB, mikrowskazówka — dopiero w *Więcej kontekstu*. Etykiety przy 🎤/📍 zostawiamy **do testu terenowego** (może wystarczą same ikony — nie zgadujemy).
+
 ---
 
 ## 📍 Miasto pomaga Tobie

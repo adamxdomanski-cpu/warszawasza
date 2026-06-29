@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import LangNav from "../LangNav";
 import SignalControl from "../SignalControl";
-import FieldVoiceReport from "./FieldVoiceReport";
+import FieldBrandFooter from "./FieldBrandFooter";
+import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
 import {
   HEAT_POINTS,
   HEAT_TEMP_C,
@@ -28,7 +28,8 @@ export default function HeatFieldClient() {
   const [helpOpen, setHelpOpen] = useState(false);
   const [traceTick, setTraceTick] = useState(0);
   const nearbyRef = useRef<HTMLElement>(null);
-  const voiceRef = useRef<HTMLElement>(null);
+  const voicePanelRef = useRef<HTMLElement>(null);
+  const voiceRef = useRef<FieldVoiceReportHandle>(null);
 
   const copy = heatFieldCopy(lang);
   const events = getInteractionTrace().events;
@@ -49,8 +50,9 @@ export default function HeatFieldClient() {
   const onVoiceCta = () => {
     appendInteractionEvent("NEXT");
     bump();
+    voiceRef.current?.startRecording();
     window.requestAnimationFrame(() => {
-      voiceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      voicePanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   };
 
@@ -76,26 +78,16 @@ export default function HeatFieldClient() {
     >
       <div className="heat-field-ambient pointer-events-none fixed inset-0 z-0" aria-hidden />
 
-      <main className="relative z-10 mx-auto flex max-w-lg flex-col gap-6 p-5 pb-16 sm:gap-8 sm:p-8">
+      <main className="relative z-10 mx-auto flex min-h-dvh max-w-lg flex-col gap-6 p-5 pb-10 sm:gap-8 sm:p-8">
         <header className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <Link
-              href="/"
-              className="font-mono-field text-xs tracking-widest text-accent/70 uppercase"
-            >
-              WARSZAWASZA
-            </Link>
+          <div className="flex justify-end">
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
           </div>
 
-          <p className="m-0 font-mono-field text-sm tracking-wide text-accent/80">
-            {copy.statusLine}
-          </p>
-          <h1 className="m-0 text-2xl font-light leading-snug sm:text-3xl">
-            <span className="heat-signal" aria-label={`${copy.factTemp} ${copy.factSubtitle}`}>
+          <h1 className="m-0">
+            <span className="heat-signal text-3xl font-light sm:text-4xl" aria-label={copy.factTemp}>
               {copy.factTemp}
             </span>
-            <span className="text-ink/90"> · {copy.factSubtitle}</span>
           </h1>
 
           <div className="grid gap-2 sm:grid-cols-2">
@@ -117,21 +109,23 @@ export default function HeatFieldClient() {
             </SignalControl>
           </div>
 
-          {copy.microHintLabel && copy.microHintBody && (
-            <aside
-              className="rounded border border-accent/12 bg-field/50 px-4 py-3 text-sm leading-relaxed text-accent/70"
-              aria-label={copy.microHintLabel}
-            >
-              <p className="m-0 font-medium text-accent/80">{copy.microHintLabel}</p>
-              <p className="mt-1.5 mb-0">{copy.microHintBody}</p>
-            </aside>
-          )}
-
           <details className="rounded border border-accent/15 bg-field/60 px-4 py-3">
             <summary className="cursor-pointer text-sm text-accent/55 touch-manipulation">
               {copy.moreContextLabel}
             </summary>
             <div className="mt-3 space-y-3">
+              <p className="m-0 font-mono-field text-xs tracking-wide text-accent/55">
+                {copy.statusLine}
+              </p>
+              <p className="m-0 text-sm text-accent/70">{copy.factSubtitle}</p>
+
+              {copy.microHintLabel && copy.microHintBody && (
+                <aside className="rounded border border-accent/12 bg-field/50 px-3 py-2.5 text-sm leading-relaxed text-accent/70">
+                  <p className="m-0 font-medium text-accent/80">{copy.microHintLabel}</p>
+                  <p className="mt-1.5 mb-0">{copy.microHintBody}</p>
+                </aside>
+              )}
+
               <details className="rounded border border-accent/20 bg-field/80 px-4 py-3">
                 <summary className="cursor-pointer text-sm font-medium text-accent touch-manipulation">
                   {copy.alertRcbLabel}
@@ -154,12 +148,8 @@ export default function HeatFieldClient() {
           </details>
         </header>
 
-        <section ref={voiceRef} aria-label={copy.ctaVoiceReport}>
-          <FieldVoiceReport
-            lang={lang}
-            copy={copy}
-            onFindHelp={onCta}
-          />
+        <section ref={voicePanelRef} aria-label={copy.ctaVoiceReport}>
+          <FieldVoiceReport ref={voiceRef} lang={lang} copy={copy} onFindHelp={onCta} lean />
         </section>
 
         <section
@@ -265,7 +255,9 @@ export default function HeatFieldClient() {
             </div>
           </div>
         </details>
+
+        <FieldBrandFooter />
       </main>
     </div>
   );
-};
+}
