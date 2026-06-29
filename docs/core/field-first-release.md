@@ -10,6 +10,14 @@ Cykl zgodny z FIRA:
 
 **Rzeczywistość → Obserwacja → Kod → Rzeczywistość**
 
+> **Jeżeli dowody z pola przeczą naszym założeniom, zmieniamy założenia — nie próbujemy wyjaśniać danych.**
+
+To brzmi prosto, ale jest trudne w praktyce: zespół łatwo zakochuje się w swoich rozwiązaniach. Ta zasada przypomina, że pierwszeństwo ma **rzeczywistość**, nie narracja o produkcie.
+
+Rdzeń sposobu pracy (jedno zdanie):
+
+**Wypuść małą zmianę. Obserwuj bez uprzedzeń. Popraw tylko to, co rzeczywistość rzeczywiście pokazała.**
+
 ---
 
 ## Cykl wydania
@@ -78,7 +86,36 @@ Dopiero po kilku takich odpowiedziach decydujemy, czy potrzebna jest kolejna fun
 
 ---
 
-## Dla agentów i reviewerów
+## Rejestr wydań (jedna tabela, wypełniana po każdym cyklu)
+
+Nie osobny dokument — **ta sama tabela**, uzupełniana po obserwacji terenowej. Po roku: historia projektu opisana faktami, nie pamięcią.
+
+| Release | Liczba testerów | Najczęstszy cytat | Jedna poprawka | Status |
+|---------|-----------------|-------------------|----------------|--------|
+| 1.0 | — | — | — | ⏳ oczekuje testu terenowego po deployu |
+| 1.1 | … | … | … | … |
+
+**Przykład wpisu po teście** (format docelowy):
+
+| Release | Liczba testerów | Najczęstszy cytat | Jedna poprawka | Status |
+|---------|-----------------|-------------------|----------------|--------|
+| 1.0 | 8 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | ✅ |
+
+Opis decyzji **nie**:
+
+> „W wersji 1.1 dodaliśmy X.”
+
+**Tak:**
+
+> „Po ośmiu testach terenowych użytkownicy nie zauważali mikrofonu, więc zmieniliśmy pierwszy ekran.”
+
+---
+
+## Kropka (Rozdział 1)
+
+Od tego momentu największą wartością nie jest kolejny commit, lecz **pierwsze wiarygodne dane z terenu**. Rozdział 2 zaczyna się dopiero po nich — nie od pomysłów przy biurku.
+
+---
 
 PR można **approve** z warunkiem:
 
