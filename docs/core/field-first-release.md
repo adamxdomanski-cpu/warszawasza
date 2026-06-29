@@ -111,9 +111,48 @@ Opis decyzji **nie**:
 
 ---
 
+## Bezpiecznik zespołu (nie reguła AI)
+
+**Każda iteracja powinna być mniejsza od poprzedniej.**
+
+| Faza | Skala zmiany |
+|------|----------------|
+| Początek | całe ekrany |
+| Potem | pojedyncze sekcje |
+| Potem | jeden przycisk |
+| Potem | jedno słowo |
+
+Przykład dojrzałości: Release 1.6 może sprowadzić się do zmiany „Nagraj obserwację” → „Nagraj” — bo testy pokażą, że kontekst i tak jest zrozumiały.
+
+Pytanie przy każdej decyzji zmienia się z:
+
+> „Jaki mamy pomysł?”
+
+na:
+
+> „Co pokazała rzeczywistość?”
+
+---
+
+## Kryterium projektowe: telefon do kieszeni
+
+Nie mierzymy głównie kliknięć, czasu na stronie ani zaangażowania. **Sukces = człowiek jak najszybciej przestaje potrzebować aplikacji** — zadanie wykonane, decyzja podjęta, telefon wraca do kieszeni.
+
+Intuicja z kartki testowej stała się kryterium mierzalnym. Pilnuj tego przy każdym release.
+
+Powiązane: [`WARSZAWASZA-jedna-kartka.md`](../WARSZAWASZA-jedna-kartka.md) · [`WARSZAWASZA-w-dwoch-minutach.md`](../WARSZAWASZA-w-dwoch-minutach.md)
+
+---
+
 ## Kropka (Rozdział 1)
 
 Od tego momentu największą wartością nie jest kolejny commit, lecz **pierwsze wiarygodne dane z terenu**. Rozdział 2 zaczyna się dopiero po nich — nie od pomysłów przy biurku.
+
+**Zdanie zamykające Rozdział 1** (sposób pracy, nie opis kodu):
+
+> **Nie rozwijamy produktu przez dodawanie funkcji. Rozwijamy go przez skracanie drogi między rzeczywistością a działaniem.**
+
+Za pół roku: otwórz rejestr wydań. Jeśli każda zmiana rzeczywiście skróciła tę drogę — projekt zachował kierunek.
 
 ---
 
