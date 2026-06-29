@@ -16,32 +16,58 @@ Ta sama logika działa w szkole (skradziony rower), na festiwalu, w lesie, na lo
 
 ---
 
-## Piramida — w jakiej kolejności poznawać projekt
+## Piramida — fundament i implementacja
 
-Naturalna kolejność dla człowieka. **Nie od technologii. Od potrzeby.**
+**Czytanie:** od dołu do góry (od potrzeby do kodu).  
+**Architektura:** fundament u dołu — **PO CO**; na górze — **JAK**.
+
+Fundamentem projektu nie jest kod. Fundamentem jest **potrzeba człowieka**. Na niej stoi sens. Dopiero na tym budujesz implementację.
 
 ```
-                 JAK?
-      (kod, API, trace, FOP)
-
-                  ▲
-
-              DLACZEGO?
-      (interfejs rzeczywistości)
-
-                  ▲
-
-                PO CO?
-
-      📍 Kto może mi pomóc?
-
-      🎤 Komu mogę powiedzieć,
-         co się stało?
+                 ┌─────────────┐
+                 │     JAK?    │
+                 │ kod • API   │
+                 │ trace • FOP │
+                 └──────┬──────┘
+                        │
+              ┌─────────┴─────────┐
+              │    DLACZEGO?      │
+              │ interfejs         │
+              │ rzeczywistości    │
+              └─────────┬─────────┘
+                        │
+        ┌───────────────┴───────────────┐
+        │            PO CO?             │
+        │  📍 Odnaleźć pomoc            │
+        │  🎤 Przekazać ważną obserwację │
+        └───────────────────────────────┘
 ```
 
-**Ta kartka = PO CO.**  
-Dopiero potem: *dlaczego tak* (interfejs, test zimnego startu).  
-Na końcu: *jak* (repozytorium, warstwy, API).
+**Ta kartka = warstwa PO CO (fundament).**  
+Potem: *dlaczego tak* — interfejs, test zimnego startu.  
+Na górze: *jak* — repozytorium, warstwy, API.
+
+### Spirala
+
+Rzeczywistość nie czeka na koniec testu — **od niej zaczynasz** (upał, zginął rower, przewróciło się drzewo). **Do niej wracasz** (czy znalazł wodę? czy wiedział, co zrobić?).
+
+```
+Rzeczywistość
+      │
+      ▼
+  Potrzeba
+      │
+      ▼
+ Interfejs
+      │
+      ▼
+  Działanie
+      │
+      ▼
+Rzeczywistość
+```
+
+**Rzeczywistość jest pierwszym i ostatnim recenzentem.**
 
 ---
 
@@ -51,12 +77,12 @@ WARSZAWASZA **nie jest** portalem informacyjnym.
 **Nie jest** formularzem.  
 **Nie jest** systemem AI.
 
-To **prosty interfejs między człowiekiem a miejscem, w którym jest**.
+To **prosty interfejs między człowiekiem a miejscem, w którym jest** — pomoc **tu i teraz** oraz głos obserwacji.
 
-Są tylko **dwa kierunki**.
+Są tylko **dwa kierunki** (w Warszawie: miasto ↔ ty; wszędzie indziej: miejsce ↔ ty).
 
 **Warszawa** to pierwsze wdrożenie — codzienne pole testów.  
-**Mechanizm** działa wszędzie, gdzie są te same dwa pytania: miasto, szkoła, uczelnia, festiwal, park, lotnisko, osiedle. Zmienia się **sytuacja**, nie logika.
+Mechanizm jest szerszy; zmienia się **sytuacja**, nie logika.
 
 ---
 
@@ -169,7 +195,7 @@ Dwa pytania, które człowiek zadaje w trudnej chwili:
 
 → Poprawiamy **jedną rzecz** i sprawdzamy ponownie.
 
-**Rzeczywistość zawsze ma ostatnie słowo.**
+**Rzeczywistość jest pierwszym i ostatnim recenzentem.**
 
 ---
 
@@ -191,6 +217,17 @@ Stary pełny UI studia: `/?legacy=1` (warsztat — warstwa **JAK**, nie test ter
 | **1** | PO CO | *Ta kartka* |
 | **2** | DLACZEGO | [`final-integration-pass.md`](core/final-integration-pass.md) — test zimnego startu, interfejs |
 | **3** | JAK | [`project.md`](project.md), [`fira/PROTOCOL.md`](../fira/PROTOCOL.md), kod w `frontend/` |
+
+---
+
+## Co warto zapamiętać
+
+Nie numer PR ani FOP — **dwa pytania**:
+
+- **📍 Kto może mi pomóc?**
+- **🎤 Komu mogę powiedzieć, co się stało?**
+
+Jeśli za rok ktoś pamięta te pytania, a nie architekturę — WARSZAWASZA zrobiła swoje. Reszta to implementacja.
 
 ---
 

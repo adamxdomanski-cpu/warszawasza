@@ -76,7 +76,9 @@ Optimise **task completion** only — not scroll depth, pause, or click count.
 - „Nie wiem.”
 - „Jakiś projekt?”
 
-→ Change **one thing**, test again. Reality decides.
+→ Change **one thing**, test again.
+
+**Reality is the first and last reviewer** — not only at the end of the test; heat, stolen bike, fallen tree are where you start.
 
 **Hypothesis under test:** Do two primary actions suffice to explain WARSZAWASZA?  
 (not whether a specific label is perfect)
