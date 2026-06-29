@@ -49,7 +49,7 @@ type FieldVoiceReportProps = {
   copy: ColdStartCopy;
   onSent?: () => void;
   onFindHelp?: () => void;
-  /** Header CTAs already label 🎤 — hide duplicate chrome until recording. */
+  /** Header CTAs already label voice — hide duplicate chrome until recording. */
   lean?: boolean;
   /** Heat deployment — show orientation CTA, not interpretation. */
   heatContext?: boolean;
@@ -465,7 +465,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
             <p className="m-0 text-base font-medium text-ink">{copy.voiceMicFallbackTitle}</p>
             <p className="m-0 text-sm text-accent/70">{copy.voiceMicFallbackLead}</p>
             <label className="block space-y-2">
-              <span className="text-sm text-ink">📝 {copy.voiceTypeObservation}</span>
+              <span className="text-sm text-ink">{copy.voiceTypeObservation}</span>
               <textarea
                 rows={4}
                 value={text}
@@ -561,7 +561,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         {phase === "review" && !micFallback && !hasAudioBlob && (
           <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
             <label className="block space-y-2">
-              <span className="text-sm text-ink">📝 {copy.voiceTypeObservation}</span>
+              <span className="text-sm text-ink">{copy.voiceTypeObservation}</span>
               <textarea
                 rows={4}
                 value={text}

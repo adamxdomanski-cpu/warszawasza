@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { STATE, SEMANTIC } from "../../../lib/symbols";
 import type { ObservationTracePayload } from "../../../lib/observationTrace";
 import type { TraceData } from "../../../lib/traceViewModel";
 import TraceTechnicalDump from "./TraceTechnicalDump";
@@ -117,7 +118,7 @@ export default function CitizenTrace({
                     }
                     aria-hidden
                   >
-                    {step.state === "done" ? "✓" : "●"}
+                    {step.state === "done" ? SEMANTIC.validation : STATE.active}
                   </span>
                   <span>{step.text}</span>
                 </li>

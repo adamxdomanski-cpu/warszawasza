@@ -142,8 +142,8 @@ export default function HeatFieldClient() {
               <div className="rounded border border-accent/20 bg-field/80 px-4 py-3">
                 <p className="m-0 mb-2 text-sm font-medium text-ink/90">{copy.transportTitle}</p>
                 <ul className="m-0 list-none space-y-1.5 pl-0 text-sm text-accent/75">
-                  <li>⚠ {copy.transportTram}</li>
-                  <li>⚠ {copy.transportSkm}</li>
+                  <li>! {copy.transportTram}</li>
+                  <li>! {copy.transportSkm}</li>
                 </ul>
               </div>
 

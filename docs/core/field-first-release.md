@@ -88,18 +88,33 @@ Dopiero po kilku takich odpowiedziach decydujemy, czy potrzebna jest kolejna fun
 
 ## Rejestr wydań (jedna tabela, wypełniana po każdym cyklu)
 
-Nie osobny dokument — **ta sama tabela**, uzupełniana po obserwacji terenowej. Po roku: historia projektu opisana faktami, nie pamięcią.
+Nie osobny dokument — **ta sama tabela**, uzupełniana po obserwacji. Po roku: historia **dowodów**, nie implementacji.
+
+**Nie wpisuj:** „Zoptymalizowano JSON.”  
+**Wpisuj:** obserwacja → zmiana → wynik pomiaru.
+
+### Zachowanie użytkownika (test terenowy)
 
 | Release | Liczba testerów | Najczęstszy cytat | Jedna poprawka | Status |
 |---------|-----------------|-------------------|----------------|--------|
 | 1.0 | — | — | — | ⏳ oczekuje testu terenowego po deployu |
 | 1.1 | … | … | … | … |
 
-**Przykład wpisu po teście** (format docelowy):
+### Wydajność / INP (gdy profil wskaże problem)
+
+| Release | Obserwacja | Zmiana | Wynik |
+|---------|------------|--------|-------|
+| 1.1 | INP ~211 ms przy rozwijaniu L3 | Lazy render JSON/FOP | ⏳ zmierz po deployu (INP ↓ do … ms) |
+
+Po deployu: **dwa pytania** — czy klik „Dane techniczne” jest natychmiast odczuwalne? Czy profil pokazuje spadek Input Delay? Jeśli tak → **zamknij temat**, nie szukaj kolejnych 10 ms.
+
+Cykl: **jedna obserwacja → jedna poprawka → jeden pomiar.**
+
+**Przykład wpisu behawioralnego** (format docelowy):
 
 | Release | Liczba testerów | Najczęstszy cytat | Jedna poprawka | Status |
 |---------|-----------------|-------------------|----------------|--------|
-| 1.0 | 8 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | ✅ |
+| 1.0 | 8 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA głosu | ✅ |
 
 Opis decyzji **nie**:
 
