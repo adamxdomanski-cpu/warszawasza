@@ -1,9 +1,9 @@
 import HeatFieldClient from "../../components/field/HeatFieldClient";
 
 export const metadata = {
-  title: "WARSZAWASZA · Upał 2026 · Mokotów",
+  title: "WARSZAWASZA · Upał 2026",
   description:
-    "Field heat interface — observation-first civic deployment (Warsaw).",
+    "Scenariusz terenowy — woda, cień, POI. Obserwacja, nie werdykt.",
 };
 
 export default function HeatFieldPage() {

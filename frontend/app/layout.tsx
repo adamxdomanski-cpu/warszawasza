@@ -19,11 +19,13 @@ const firaMono = Fira_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.warszawasza.online"),
-  title: "WARSZAWASZA",
-  description: "📍 Znajdź wodę i cień · 🎤 Nagraj obserwację",
+  title: "WARSZAWASZA // FIRA | ● OBSERWACJA TRWA",
+  description:
+    "Interaktywny system obserwacji miejskiej. Sygnał, tarcie, adaptacja, trajektoria. Moja, Twoja, Wasza Warszawa.",
   openGraph: {
-    title: "WARSZAWASZA",
-    description: "📍 Znajdź wodę i cień · 🎤 Nagraj obserwację",
+    title: "WARSZAWASZA // FIRA | ● OBSERWACJA TRWA",
+    description:
+      "Interaktywny system obserwacji miejskiej — nie sklep, lecz żywe pole narracji.",
     url: "https://www.warszawasza.online",
     siteName: "Warszawasza",
     type: "website",
