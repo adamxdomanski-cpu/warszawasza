@@ -37,6 +37,15 @@ export const LANG_ACCESSIBLE_NAMES: Record<Lang, string> = {
   en: "English, EN",
 };
 
+/** Visible ISO-style codes in the lang bar (uk → UA avoids confusion with UK English). */
+export const LANG_DISPLAY_CODES: Partial<Record<Lang, string>> = {
+  uk: "UA",
+};
+
+export function langDisplayCode(code: Lang): string {
+  return LANG_DISPLAY_CODES[code] ?? code.toUpperCase();
+}
+
 type FlowKey = "signal" | "friction" | "adaptation" | "trajectory";
 
 export type PipelineKey =
@@ -1876,6 +1885,8 @@ export type TraceResidentCopy = {
   draftRestoreAction: string;
   draftDismissAction: string;
   descriptionShowFull?: string;
+  /** When trace has no place — not a default city name. */
+  placeWhenMissing: string;
 };
 
 export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
@@ -1909,6 +1920,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     draftRestoreAction: "Przywróć",
     draftDismissAction: "Porzuć",
     descriptionShowFull: "Pokaż całość",
+    placeWhenMissing: "📍 Lokalizacja nie została dołączona",
   },
   en: {
     cityDefault: "Warsaw",
@@ -1939,6 +1951,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     draftRestoreAction: "Restore",
     draftDismissAction: "Discard",
     descriptionShowFull: "Show full",
+    placeWhenMissing: "📍 Location was not attached",
   },
   it: {
     cityDefault: "Varsavia",
@@ -1968,6 +1981,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     draftRestorePrompt: "Abbiamo trovato una segnalazione non inviata. Ripristinare?",
     draftRestoreAction: "Ripristina",
     draftDismissAction: "Scarta",
+    placeWhenMissing: "📍 Posizione non allegata",
   },
   uk: {
     cityDefault: "Варшава",
@@ -1997,6 +2011,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     draftRestorePrompt: "Ми знайшли незавершене звернення. Відновити?",
     draftRestoreAction: "Відновити",
     draftDismissAction: "Відкинути",
+    placeWhenMissing: "📍 Локацію не додано",
   },
   hu: {
     cityDefault: "Varsó",
@@ -2026,6 +2041,7 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     draftRestorePrompt: "Befejezetlen bejelentést találtunk. Visszaállítja?",
     draftRestoreAction: "Visszaállítás",
     draftDismissAction: "Elvetés",
+    placeWhenMissing: "📍 A hely nincs csatolva",
   },
 };
 

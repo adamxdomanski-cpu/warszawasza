@@ -82,7 +82,7 @@ export function buildTraceViewModel(
   const events = resolveEvents(trace);
   const { level, bar } = pipelineBar(trace);
   const heat = options.heatContext ?? isHeatDeployment(trace);
-  const place = trace.citizen?.place?.trim() || rc.cityDefault;
+  const place = trace.citizen?.place?.trim() || rc.placeWhenMissing;
 
   const pipelineScore =
     lang === "pl" ? `${level}/5 ${bar}` : lang === "en" ? `${level}/5 ${bar}` : `${level}/5 ${bar}`;

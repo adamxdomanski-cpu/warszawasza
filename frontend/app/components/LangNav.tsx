@@ -1,6 +1,6 @@
 "use client";
 
-import { LANGS, LANG_ACCESSIBLE_NAMES, type Lang } from "../../lib/i18n";
+import { LANGS, LANG_ACCESSIBLE_NAMES, langDisplayCode, type Lang } from "../../lib/i18n";
 import SignalControl from "./SignalControl";
 
 type LangNavProps = {
@@ -21,12 +21,14 @@ export default function LangNav({
       className={`lang-nav flex max-w-full min-w-0 flex-wrap items-center justify-end gap-x-2 gap-y-1 font-mono-field text-sm tracking-wider sm:gap-x-3 sm:text-base${
         surface === "orient" ? " lang-nav--orient" : ""
       }`}
-      aria-label="Language"
+      aria-label="Język"
     >
       {LANGS.map((code, index) => {
         const active = lang === code;
         const visible =
-          variant === "bracket" ? `[ ${code.toUpperCase()} ]` : code.toUpperCase();
+          variant === "bracket"
+            ? `[ ${langDisplayCode(code)} ]`
+            : langDisplayCode(code);
         const accessibleName = `${visible}, ${LANG_ACCESSIBLE_NAMES[code]}`;
         const btnClass = `lang-nav-btn lang-nav-btn--${code} min-h-11 min-w-11 touch-manipulation px-1.5 sm:px-2 ${
           active ? "lang-nav-btn--active" : ""

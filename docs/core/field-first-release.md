@@ -93,6 +93,7 @@ W rozszerzonych wpisach (np. Retest #N) każda hipoteza dostaje kolumnę **Wynik
 | 1.1 | System | Chrome Profiler | INP = 211 ms | Opóźnione renderowanie JSON/FOP | ⏳ zmierz po wdrożeniu |
 | 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć przycisk 🎤 | … |
 | 1.3 | Rzeczywistość | Adam, teren | Cztery źródła tarcia na ekranie potwierdzenia (GPS, audio, duplikat, obietnica e-mail) | Wyłącznie poprawki tekstów warstwy L1 — PR #26 | ⏳ retest terenowy po wdrożeniu |
+| 1.4 | Rzeczywistość | Panel rodzinny, Parczew / okolice | Pilot: Oluś, Maja, rodzice, dziadkowie — prawdziwe obserwacje z okolicy | Scenariusz w arkuszu; bez nowych funkcji | ⏳ 5–10 testów |
 
 **Zamknięte wiersze (przykład):**
 
@@ -215,6 +216,40 @@ Do wykonania po wdrożeniu:
 
 ---
 
+## Test #7 (Oluś) — szkic obserwacji
+
+**Data:** *(uzupełnij)* · **Profil:** dziecko · **Źródło:** rozmowa przy teście strony
+
+### Obserwacja (fakty)
+
+- Tester rozumie **model użycia**: można zgłosić drzewa, rower, sytuację przy szkole (*„ktoś zabrał rower”*), grę na boisku — i że inni mogliby coś widzieć.
+- Obserwator (**Adam**) sprawdzał **skrzynkę e-mail**, czy „coś przyszło” po wysłaniu zgłoszenia.
+- Tester mylił etykietę języka: *„UK is EN. UK is Ukraine.”* — przycisk **UK** w pasku języków wyglądał jak angielski (Wielka Brytania), a chodzi o **ukraiński**.
+- Zachęcono do testowania: *„Only I will get it, I will see it”* (tylko obserwator zobaczy zgłoszenie).
+
+### Cytaty / modele mentalne *(„A czego się spodziewałeś?” — do uzupełnienia przy kolejnym teście)*
+
+- Use case rower: zostawiasz szkołę, nie ma roweru → nagranie / opis → aplikacja szuka świadków.
+- Use case boisko: ktoś gra w piłkę → może wyjść na to, że chłopcy będą wołać, żeby grać.
+
+### Hipoteza *(nie decyzja — pojedynczy test)*
+
+| # | Hipoteza |
+|---|----------|
+| H1 | Tester **oczekuje automatycznego e-maila** do obserwatora po wysłaniu; produkt zapisuje ślad **na urządzeniu** (+ opcjonalnie „Otwórz e-mail”). |
+| H2 | Kod **UK** w pasku języków myli z angielskim (Wielka Brytania). |
+
+### Wpływ / decyzja
+
+| # | Wynik | Wpływ | Dowód |
+|---|-------|-------|-------|
+| H2 | *(po wdrożeniu)* | W pasku języków ukraiński jako **UA**, nie UK | Test #7 — zmiana w `LangNav` |
+| H1 | ⏳ | — | Powtórzyć u ≥2 testerów; nie obiecywać e-maila bez backendu |
+
+**Decyzja produktowa:** H1 — **brak** (jeden test, możliwa rozbieżność w wyjaśnieniu oralnym vs aplikacja). H2 — **etykieta UA** (drobna poprawka z terenu).
+
+---
+
 ## Fakty vs interpretacja (testy spoza zespołu)
 
 Pierwszy użytkownik spoza zespołu (np. dziecko, osoba starsza) to **inny rodzaj danych** niż własne testy. Zapisuj najpierw fakt, potem — dopiero jeśli trzeba — hipotezę i decyzję.
@@ -235,12 +270,27 @@ Obserwacja = to, co widać na nagraniu / w czasie. Hipoteza = interpretacja. Dec
 
 ## Etap po Retest #2 — panel 5–10 osób
 
-Po scaleniu PR #26 i retescie **nie budujemy od razu nowych funkcji**. Zbieramy **5–10 rzeczywistych testów** od różnych profili:
+Po scaleniu PR #26 i retescie **nie budujemy od razu nowych funkcji**. Zbieramy **5–10 rzeczywistych testów** od różnych profili.
 
-- dziecko (np. Oluś),
-- osoba starsza,
-- użytkownik techniczny,
-- użytkownik nietechniczny,
-- *(inne, jeśli istotne)*
+### Panel rodzinny — Parczew / Lubartów *(pilot)*
 
-**Kolejna decyzja produktowa dopiero wtedy**, gdy ten sam problem powtórzy się w kilku testach. To przejście od produktu testowanego przez twórców do produktu rozwijanego na podstawie zachowań w terenie.
+**Przewaga małego miasta:** naturalna sieć zaufanych testerów — tego nie da się łatwo zorganizować w dużym mieście.
+
+| Tester | Profil | Co może pokazać |
+|--------|--------|-----------------|
+| Oluś (~12 lat) | dziecko | czy interfejs jest intuicyjny dla młodszych |
+| Maja | dziecko / inny wiek | inne zatrzymania niż u brata |
+| Mama, tata | dorośli | codzienne użycie, inne oczekiwania |
+| Babcia, dziadek | seniorzy | czy UI jest zrozumiały bez „nowych technologii” |
+
+**Nie chodzi o liczbę opinii — chodzi o różne modele myślenia.**
+
+Scenariusz i arkusz: [`field-observation-sheet.md`](field-observation-sheet.md) — jedno zadanie, trzy pytania po teście, **prawdziwa obserwacja** z okolicy każdego.
+
+**Pytanie pomiarowe (ważniejsze niż „czy UI ładne”):**
+
+> Czy aplikacja **zachęca ludzi do patrzenia na swoje otoczenie**?
+
+Jeśli tak — to silniejszy sygnał niż „formularz działa”. WARSZAWASZA zrodziła się na Muranowie; mechanizm obserwacji miejsca sprawdzamy też **poza Warszawą** (Parczew, Lubartów, …). Warszawa pozostaje głównym polem projektu; **rdzeniem jest lokalna obserwacja**, miasto to etykieta.
+
+**Kolejna decyzja produktowa dopiero wtedy**, gdy ten sam problem powtórzy się w kilku testach.

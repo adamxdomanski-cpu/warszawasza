@@ -5,6 +5,7 @@ import LangNav from "../LangNav";
 import SignalControl from "../SignalControl";
 import FieldBrandFooter from "./FieldBrandFooter";
 import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
+import FieldPlaceContext from "./FieldPlaceContext";
 import { coldStartCopy } from "../../../lib/field/coldStartI18n";
 import { initialFieldLang } from "../../../lib/field/initialFieldLang";
 import type { Lang } from "../../../lib/i18n";
@@ -41,8 +42,9 @@ export default function ColdStartClient() {
     <div className="heat-field-page relative min-h-dvh overflow-x-clip bg-field text-ink">
       <main className="relative z-10 mx-auto flex min-h-dvh w-full min-w-0 max-w-lg flex-col gap-6 overflow-x-clip p-5 pb-10 sm:gap-8 sm:p-8">
         <header className="flex min-w-0 flex-col gap-4">
-          <div className="flex min-w-0 justify-end">
+          <div className="flex min-w-0 flex-col items-end gap-1">
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
+            <FieldPlaceContext lang={lang} />
           </div>
 
           <div className="grid min-w-0 gap-3 md:grid-cols-2">

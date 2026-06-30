@@ -18,6 +18,7 @@ import {
 import type { Lang } from "../../../lib/i18n";
 import { traceResidentCopy } from "../../../lib/i18n";
 import { speechRecognitionLocale, localeDateTime } from "../../../lib/localeMap";
+import { fetchPlaceLabel } from "../../../lib/field/placeLabel";
 import {
   formatPlaceFromGeo,
   readCurrentPosition,
@@ -235,14 +236,15 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setGeoError(null);
       try {
         const point = await readCurrentPosition();
-        setGeo(point);
+        const label = await fetchPlaceLabel(point.lat, point.lng, lang);
+        setGeo(label ? { ...point, label } : point);
         appendInteractionEvent("SELECT", "GEO");
       } catch {
         setGeoError(geoCopy.failed);
       } finally {
         setGeoBusy(false);
       }
-    }, [geoCopy.failed]);
+    }, [geoCopy.failed, lang]);
 
     const sendReport = useCallback(async () => {
       if (sending) return;
@@ -257,9 +259,13 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         appendInteractionEvent("COMPLETE");
 
         const traceEvents = getInteractionTrace().events;
-        const flow = voiceFlowCopy(lang);
-        const place = geo
-          ? formatPlaceFromGeo(geo)
+        let resolvedGeo: GeoPoint | null = geo;
+        if (resolvedGeo && !resolvedGeo.label) {
+          const label = await fetchPlaceLabel(resolvedGeo.lat, resolvedGeo.lng, lang);
+          if (label) resolvedGeo = { ...resolvedGeo, label };
+        }
+        const place = resolvedGeo
+          ? formatPlaceFromGeo(resolvedGeo)
           : geoCopy.locationNotAttached;
         const bodyText = trimmed || (hasAudioBlob ? formatRecordingSummary(lang, seconds) : "");
 
