@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ORIGIN_CHANNEL_LINKS } from "../../lib/channelMap";
 import { STUDIO_ANCHOR, STUDIO_BROADCAST_LINES } from "../../lib/studioAnchor";
 
 export const metadata: Metadata = {
@@ -53,6 +54,35 @@ export default function OriginPage() {
           height={1024}
           className="mt-4 max-w-[200px] opacity-70"
         />
+      </section>
+
+      <section
+        className="mt-12 border-t border-ink/10 pt-8"
+        aria-labelledby="origin-channels-heading"
+      >
+        <h2
+          id="origin-channels-heading"
+          className="font-mono-field text-xs tracking-[0.14em] text-ink/50"
+        >
+          Kanały w polu
+        </h2>
+        <ul className="mt-4 space-y-2 font-mono-field text-sm text-ink/65">
+          {ORIGIN_CHANNEL_LINKS.map((channel) => (
+            <li key={channel.id}>
+              <a
+                href={channel.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-ink/72 underline decoration-ink/20 underline-offset-4 transition hover:text-accent hover:decoration-accent/40"
+              >
+                {channel.label}
+              </a>
+              <span className="ml-2 text-[10px] uppercase tracking-[0.12em] text-ink/35">
+                {channel.platform}
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <img
