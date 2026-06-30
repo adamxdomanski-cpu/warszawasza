@@ -45,7 +45,8 @@ export default function SignalControl<T extends ElementType = "button">({
     {
       ...rest,
       ref: elRef,
-      className: `signal-control ${className}`.trim(),
+      className:
+        `signal-control max-w-full min-w-0 break-words [overflow-wrap:anywhere] ${className}`.trim(),
       "data-signal-dir": direction,
       onPointerDown: (event: React.PointerEvent<HTMLElement>) => {
         detect();
