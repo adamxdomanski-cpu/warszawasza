@@ -4,27 +4,29 @@
 
 ---
 
-## Jak zaprosić (słowa, nie technologia)
+## Briefing przed testem *(powiedz na głos — krótko, naturalnie)*
 
-**Wszyscy (rodzina, dziadek, tata):**
+**Dla wszystkich (tata, dziadek, dorośli):**
 
-> Od kilku lat tworzę projekt WARSZAWASZA. Powstał na Muranowie w Warszawie.  
-> Chodzi o to, żeby w kilka sekund zgłosić to, co zauważyłeś wokół siebie — coś dobrego, niebezpiecznego albo wartego zapamiętania.  
-> Chcę sprawdzić, czy to jest naprawdę proste. **Nie interesuje mnie, czy aplikacja się podoba.** Chcę wiedzieć, czy potrafisz z niej skorzystać **bez mojej pomocy**.
+> Dzięki, że chcesz mi pomóc.  
+> Tworzę aplikację WARSZAWASZA. Powstała na warszawskim Muranowie, ale chcę sprawdzić, czy jest równie prosta i zrozumiała także tutaj.  
+> **Nie testujemy Ciebie. Testowana jest aplikacja.**  
+> Wyobraź sobie, że zauważyłeś coś w swojej okolicy, co warto zgłosić — coś dobrego, niebezpiecznego albo po prostu coś, co zwróciło Twoją uwagę.  
+> Spróbuj wysłać zgłoszenie tak, jak uważasz. **Nie będę podpowiadał.**  
+> Jeżeli się zatrzymasz albo będziesz miał pytanie — właśnie o to chodzi. To cenna informacja dla mnie.  
+> Po zakończeniu zapytam tylko o kilka krótkich rzeczy. Dziękuję za pomoc.
 
-**Oluś (prościej):**
+*(Bez słów o AI, FIRA, architekturze — tylko zadanie.)*
 
-> Wyobraź sobie, że idziesz przez Parczew i widzisz coś ciekawego albo coś, co powinno się zmienić. Otwórz aplikację i spróbuj mi to zgłosić. **Nie będę podpowiadał.** Chcę zobaczyć, czy wszystko jest jasne.
+**Oluś *(krócej)*:**
 
-**Tata (szerszy kontekst):**
+> Mam dla Ciebie misję. Wyobraź sobie, że zauważyłeś coś ciekawego albo coś, co warto zgłosić w Parczewie. Spróbuj zrobić to tą aplikacją. **Nie będę Ci pomagał.** Chcę sprawdzić, czy aplikacja sama wszystko dobrze tłumaczy.
 
-> Chcę sprawdzić, czy to, co zbudowałem w Warszawie, jest zrozumiałe również tutaj. **Nie testujemy Parczewa.** Testujemy, czy człowiek potrafi szybko przekazać obserwację o miejscu, w którym jest.
+**Tata i dziadek *(jedno zdanie kontekstu)*:**
 
-**Na koniec — zawsze:**
+> To, co powstało na Muranowie, chcę sprawdzić tutaj — w miejscu, które wszyscy dobrze znamy. Nie chodzi o ocenę aplikacji, tylko o to, czy rzeczywiście pomaga przekazać prostą obserwację z okolicy.
 
-> **Nie oszczędzajcie mnie.** Jeśli coś będzie niezrozumiałe albo niewygodne — właśnie o to chodzi. To nie egzamin dla was. **To egzamin dla aplikacji.**
-
-*Symbol:* WARSZAWASZA narodziła się na Muranowie; pierwsze testy mogą być w rodzinnym mieście. To nie zmienia tożsamości projektu — prosisz o zaufanie najpierw u ludzi, którzy Cię znają.
+**Sens pilotu:** test nie w anonimowym laboratorium, lecz **tam, skąd pochodzisz**, z ludźmi, którzy znają okolicę. Testujecie interfejs **i** to, czy aplikacja zachęca do uważniejszego patrzenia na otoczenie. Muranów = narodziny projektu; Parczew, Lubartów i inne miejsca = ten sam sposób patrzenia na miejsce.
 
 ---
 
