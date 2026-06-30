@@ -40,7 +40,7 @@ export default function TraceReceiptPanel({
     <div className="mt-2 flex flex-col gap-2">
       <a
         href={buildMailtoHref(trace)}
-        className="inline-flex min-h-11 items-center justify-center border border-accent/35 px-3 py-2 text-sm text-ink touch-manipulation"
+        className="field-text-wrap inline-flex min-h-11 w-full max-w-full items-center justify-center break-words border border-accent/35 px-3 py-2 text-center text-sm text-ink touch-manipulation"
       >
         {rc.sendByEmailOptional}
       </a>
@@ -48,7 +48,7 @@ export default function TraceReceiptPanel({
         <button
           type="button"
           onClick={onAnother}
-          className="inline-flex min-h-11 items-center justify-center border-2 border-accent/45 px-3 py-2 text-sm font-medium text-ink touch-manipulation"
+          className="field-text-wrap inline-flex min-h-11 w-full max-w-full items-center justify-center break-words border-2 border-accent/45 px-3 py-2 text-center text-sm font-medium text-ink touch-manipulation"
         >
           {anotherLabel}
         </button>
@@ -59,6 +59,7 @@ export default function TraceReceiptPanel({
   return (
     <CitizenTrace
       data={data}
+      lang={lang}
       tracePayload={trace}
       flash={flash}
       onNearbyClick={onFindHelp}

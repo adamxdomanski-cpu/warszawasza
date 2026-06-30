@@ -37,6 +37,15 @@ export const LANG_ACCESSIBLE_NAMES: Record<Lang, string> = {
   en: "English, EN",
 };
 
+/** Visible ISO-style codes in the lang bar (uk → UA avoids confusion with UK English). */
+export const LANG_DISPLAY_CODES: Partial<Record<Lang, string>> = {
+  uk: "UA",
+};
+
+export function langDisplayCode(code: Lang): string {
+  return LANG_DISPLAY_CODES[code] ?? code.toUpperCase();
+}
+
 type FlowKey = "signal" | "friction" | "adaptation" | "trajectory";
 
 export type PipelineKey =
@@ -1875,6 +1884,9 @@ export type TraceResidentCopy = {
   draftRestorePrompt: string;
   draftRestoreAction: string;
   draftDismissAction: string;
+  descriptionShowFull?: string;
+  /** When trace has no place — not a default city name. */
+  placeWhenMissing: string;
 };
 
 export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
@@ -1900,14 +1912,15 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     hoursAgo: "{n} godz. temu",
     justNow: "przed chwilą",
     sendByEmailOptional: "Otwórz e-mail (opcjonalnie)",
-    savedConfirmation: "Zapisano na tym urządzeniu.",
-    emailNotConfigured:
-      "Automatyczna kopia e-mail będzie dostępna w kolejnej wersji.",
+    savedConfirmation: "Zgłoszenie zostało zapisane na tym urządzeniu.",
+    emailNotConfigured: "",
     traceReferencePrefix: "Ślad",
     resetConfirm: "Porzucić wpisany tekst i zacząć od nowa?",
     draftRestorePrompt: "Znaleźliśmy niewysłane zgłoszenie. Przywrócić?",
     draftRestoreAction: "Przywróć",
     draftDismissAction: "Porzuć",
+    descriptionShowFull: "Pokaż całość",
+    placeWhenMissing: "📍 Lokalizacja nie została dołączona",
   },
   en: {
     cityDefault: "Warsaw",
@@ -1930,13 +1943,15 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     hoursAgo: "{n} h ago",
     justNow: "just now",
     sendByEmailOptional: "Open email (optional)",
-    savedConfirmation: "Saved on this device.",
-    emailNotConfigured: "Automatic email copy will be available in a future version.",
+    savedConfirmation: "Report saved on this device.",
+    emailNotConfigured: "",
     traceReferencePrefix: "Trace",
     resetConfirm: "Discard your text and start over?",
     draftRestorePrompt: "We found an unfinished report. Restore it?",
     draftRestoreAction: "Restore",
     draftDismissAction: "Discard",
+    descriptionShowFull: "Show full",
+    placeWhenMissing: "📍 Location was not attached",
   },
   it: {
     cityDefault: "Varsavia",
@@ -1960,12 +1975,13 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     justNow: "proprio ora",
     sendByEmailOptional: "Apri e-mail (opzionale)",
     savedConfirmation: "Salvato su questo dispositivo.",
-    emailNotConfigured: "La copia e-mail automatica sarà disponibile in una versione successiva.",
+    emailNotConfigured: "",
     traceReferencePrefix: "Traccia",
     resetConfirm: "Scartare il testo e ricominciare?",
     draftRestorePrompt: "Abbiamo trovato una segnalazione non inviata. Ripristinare?",
     draftRestoreAction: "Ripristina",
     draftDismissAction: "Scarta",
+    placeWhenMissing: "📍 Posizione non allegata",
   },
   uk: {
     cityDefault: "Варшава",
@@ -1989,12 +2005,13 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     justNow: "щойно",
     sendByEmailOptional: "Відкрити e-mail (за бажанням)",
     savedConfirmation: "Збережено на цьому пристрої.",
-    emailNotConfigured: "Автоматична копія e-mail буде доступна в наступній версії.",
+    emailNotConfigured: "",
     traceReferencePrefix: "Слід",
     resetConfirm: "Скасувати текст і почати спочатку?",
     draftRestorePrompt: "Ми знайшли незавершене звернення. Відновити?",
     draftRestoreAction: "Відновити",
     draftDismissAction: "Відкинути",
+    placeWhenMissing: "📍 Локацію не додано",
   },
   hu: {
     cityDefault: "Varsó",
@@ -2018,15 +2035,18 @@ export const TRACE_RESIDENT: Partial<Record<Lang, TraceResidentCopy>> = {
     justNow: "épp most",
     sendByEmailOptional: "E-mail megnyitása (opcionális)",
     savedConfirmation: "Elmentve ezen az eszközön.",
-    emailNotConfigured: "Az automatikus e-mail másolat egy későbbi verzióban érhető el.",
+    emailNotConfigured: "",
     traceReferencePrefix: "Nyom",
     resetConfirm: "Elveti a szöveget és újrakezdi?",
     draftRestorePrompt: "Befejezetlen bejelentést találtunk. Visszaállítja?",
     draftRestoreAction: "Visszaállítás",
     draftDismissAction: "Elvetés",
+    placeWhenMissing: "📍 A hely nincs csatolva",
   },
 };
 
 export function traceResidentCopy(lang: Lang): TraceResidentCopy {
-  return TRACE_RESIDENT[lang] ?? TRACE_RESIDENT.en!;
+  const en = TRACE_RESIDENT.en!;
+  const local = TRACE_RESIDENT[lang];
+  return local ? { ...en, ...local } : en;
 }

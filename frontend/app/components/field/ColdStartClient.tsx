@@ -5,6 +5,7 @@ import LangNav from "../LangNav";
 import SignalControl from "../SignalControl";
 import FieldBrandFooter from "./FieldBrandFooter";
 import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
+import FieldPlaceContext from "./FieldPlaceContext";
 import { coldStartCopy } from "../../../lib/field/coldStartI18n";
 import { initialFieldLang } from "../../../lib/field/initialFieldLang";
 import type { Lang } from "../../../lib/i18n";
@@ -38,19 +39,20 @@ export default function ColdStartClient() {
   };
 
   return (
-    <div className="heat-field-page relative min-h-dvh bg-field text-ink">
-      <main className="relative z-10 mx-auto flex min-h-dvh max-w-lg flex-col gap-6 p-5 pb-10 sm:gap-8 sm:p-8">
-        <header className="flex flex-col gap-4">
-          <div className="flex justify-end">
+    <div className="heat-field-page relative min-h-dvh overflow-x-clip bg-field text-ink">
+      <main className="relative z-10 mx-auto flex min-h-dvh w-full min-w-0 max-w-lg flex-col gap-6 overflow-x-clip p-5 pb-10 sm:gap-8 sm:p-8">
+        <header className="flex min-w-0 flex-col gap-4">
+          <div className="flex min-w-0 flex-col items-end gap-1">
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
+            <FieldPlaceContext lang={lang} />
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid min-w-0 gap-3 md:grid-cols-2">
             <SignalControl
               type="button"
               direction="right"
               onClick={onVoice}
-              className="min-h-[4.25rem] border-2 border-accent/55 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
+              className="field-text-wrap min-h-[4.25rem] border-2 border-accent/55 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaVoiceReport}
             </SignalControl>
@@ -59,7 +61,7 @@ export default function ColdStartClient() {
               href="/field/heat#nearby"
               direction="right"
               onClick={() => appendInteractionEvent("SELECT", "POMOC_W_POBLIZU")}
-              className="min-h-[4.25rem] border-2 border-accent/40 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
+              className="field-text-wrap min-h-[4.25rem] border-2 border-accent/40 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaNearbyHelp}
             </SignalControl>

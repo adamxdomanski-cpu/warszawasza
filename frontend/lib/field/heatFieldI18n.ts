@@ -1,5 +1,6 @@
 /**
- * Heat field · Upał 2026 — Warsaw/Mokotów orientation panel (Layer 1 UI copy).
+ * Heat field · Upał 2026 — wdrożenie polowe Warszawa (sektor: Muranów / pracownia Dzielna).
+ * L2 POI (Puławska, biblioteka…) to przykładowe punkty orientacyjne — osobna warstwa od `/`.
  */
 
 import type { Lang } from "../i18n";
@@ -19,6 +20,8 @@ export type HeatPoint = {
 
 export const HEAT_FIELD_OBSERVED_AT = "2026-06-28T14:30:00Z";
 export const HEAT_TEMP_C = 39;
+/** FOP / telemetry — origin Muranów (not Mokotów lab shorthand). */
+export const HEAT_DEPLOY_ID = "warszawa-muranow-heat-2026";
 
 export const HEAT_POINTS: HeatPoint[] = [
   {
@@ -165,7 +168,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     },
     traceTitle: "Ślad (EVENT → TRACE)",
     layer3Title: "Rolloutowo · artifacts",
-    fopLine: `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN | deploy=warszawa-mokotow-heat-2026`,
+    fopLine: `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN | deploy=${HEAT_DEPLOY_ID}`,
     knowledgeLink: "Miejski Plan Adaptacji do zmian klimatycznych dla m.st. Warszawy do roku 2030",
     paperLink: "Szulczewska et al. — wskaźnik powierzchni biologicznie czynnej w strukturze Warszawy",
     back: "← Wstecz",
@@ -240,7 +243,7 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
     },
     traceTitle: "Trace (EVENT → TRACE)",
     layer3Title: "Rolloutowo · artifacts",
-    fopLine: `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN | deploy=warszawa-mokotow-heat-2026`,
+    fopLine: `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN | deploy=${HEAT_DEPLOY_ID}`,
     knowledgeLink: "Warsaw climate adaptation plan to 2030",
     paperLink: "Szulczewska et al. — biologically active area index in Warsaw",
     back: "← Back",

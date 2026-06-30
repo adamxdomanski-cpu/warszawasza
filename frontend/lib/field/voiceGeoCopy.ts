@@ -5,20 +5,23 @@ export type VoiceGeoCopy = {
   attached: string;
   failed: string;
   hint: string;
+  locationNotAttached: string;
 };
 
-const COPY: Partial<Record<Lang, VoiceGeoCopy>> = {
+const COPY: Partial<Record<Lang, Partial<VoiceGeoCopy>>> = {
   pl: {
     attach: "📍 Dołącz, gdzie jestem",
     attached: "📍 Lokalizacja dołączona",
     failed: "Nie udało się odczytać lokalizacji — wyślij mimo to",
     hint: "Nie musisz znać nazwy ulicy. Jedno dotknięcie wysyła współrzędne.",
+    locationNotAttached: "📍 Lokalizacja nie została dołączona",
   },
   en: {
     attach: "📍 Attach where I am",
     attached: "📍 Location attached",
     failed: "Could not read location — you can still send",
     hint: "You don't need the street name. One tap sends coordinates.",
+    locationNotAttached: "📍 Location was not attached",
   },
   hu: {
     attach: "📍 Hol vagyok — csatolás",
@@ -40,18 +43,43 @@ const COPY: Partial<Record<Lang, VoiceGeoCopy>> = {
   },
 };
 
+const EN: VoiceGeoCopy = {
+  attach: "📍 Attach where I am",
+  attached: "📍 Location attached",
+  failed: "Could not read location — you can still send",
+  hint: "You don't need the street name. One tap sends coordinates.",
+  locationNotAttached: "📍 Location was not attached",
+};
+
 export function voiceGeoCopy(lang: Lang): VoiceGeoCopy {
-  return COPY[lang] ?? COPY.en!;
+  return { ...EN, ...(COPY[lang] ?? {}) };
 }
 
-export type GeoPoint = { lat: number; lng: number; accuracyM?: number };
+export type GeoPoint = { lat: number; lng: number; accuracyM?: number; label?: string };
 
 export function formatPlaceFromGeo(point: GeoPoint): string {
   const acc =
     point.accuracyM !== undefined
       ? ` ±${Math.round(point.accuracyM)} m`
       : "";
+  if (point.label?.trim()) {
+    return `${point.label.trim()}${acc}`;
+  }
   return `${point.lat.toFixed(5)}, ${point.lng.toFixed(5)}${acc}`;
+}
+
+/** Geolocation only when permission already granted — no surprise prompt on cold start. */
+export async function readPositionIfGranted(): Promise<GeoPoint | null> {
+  if (typeof navigator === "undefined" || !navigator.geolocation) return null;
+  try {
+    if (navigator.permissions) {
+      const perm = await navigator.permissions.query({ name: "geolocation" });
+      if (perm.state !== "granted") return null;
+    }
+    return await readCurrentPosition();
+  } catch {
+    return null;
+  }
 }
 
 export function readCurrentPosition(): Promise<GeoPoint> {

@@ -11,7 +11,7 @@ const HEAT_TEMP_C = 39;
 const POINT_IDS = ["hydrant_pulawska", "biblio_mokotow", "metro_kurtyna"] as const;
 
 function fopLine(): string {
-  return `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN | deploy=warszawa-mokotow-heat-2026`;
+  return `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN | deploy=warszawa-muranow-heat-2026`;
 }
 
 export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {

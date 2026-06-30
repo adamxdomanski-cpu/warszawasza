@@ -175,7 +175,7 @@ export function getTraceCitizenView(
   options: TracePresentationOptions = {},
 ): TraceCitizenView {
   const rc = traceResidentCopy(trace.lang);
-  const place = trace.citizen?.place?.trim() || rc.cityDefault;
+  const place = trace.citizen?.place?.trim() || rc.placeWhenMissing;
   const quote = observationQuote(trace);
   const heat = options.heatContext ?? isHeatDeployment(trace);
   const findHelpPath = options.findHelpPath ?? "/field/heat#nearby";
@@ -214,7 +214,7 @@ export function buildTraceResidentLayer(
     lines.push(view.descriptionLabel, `„${view.description}"`, "");
   }
 
-  lines.push(view.statusLabel, view.statusLine, "", rc.savedConfirmation, "", rc.emailNotConfigured, "");
+  lines.push(view.statusLabel, view.statusLine, "", rc.savedConfirmation, "");
 
   if (view.heatGuidance) {
     lines.push(view.heatGuidance, "");

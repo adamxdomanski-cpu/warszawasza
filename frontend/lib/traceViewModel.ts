@@ -82,7 +82,7 @@ export function buildTraceViewModel(
   const events = resolveEvents(trace);
   const { level, bar } = pipelineBar(trace);
   const heat = options.heatContext ?? isHeatDeployment(trace);
-  const place = trace.citizen?.place?.trim() || rc.cityDefault;
+  const place = trace.citizen?.place?.trim() || rc.placeWhenMissing;
 
   const pipelineScore =
     lang === "pl" ? `${level}/5 ${bar}` : lang === "en" ? `${level}/5 ${bar}` : `${level}/5 ${bar}`;
@@ -100,7 +100,7 @@ export function buildTraceViewModel(
     statusLabel: rc.statusLabel,
     statusText: citizen.statusLine,
     savedConfirmation: rc.savedConfirmation,
-    emailNote: rc.emailNotConfigured,
+    emailNote: "",
     ...(heat ? { heatGuidance: rc.heatGuidance, nearbyCta: rc.showNearbyPlaces } : {}),
     processTitle: journeyLayerTitle(lang),
     processSteps: getOperatorSteps(lang),
@@ -137,8 +137,8 @@ export const MOCK_DZIELNA_TRACE: TraceData = {
   status: "PENDING",
   statusLabel: "Stan:",
   statusText: "Oczekuje na potwierdzenie.",
-  savedConfirmation: "Zapisano na tym urządzeniu.",
-  emailNote: "Automatyczna kopia e-mail będzie dostępna w kolejnej wersji.",
+  savedConfirmation: "Zgłoszenie zostało zapisane na tym urządzeniu.",
+  emailNote: "",
   heatGuidance: "Jeżeli przebywasz na zewnątrz podczas upału,\nznajdź wodę i cień.",
   nearbyCta: "📍 Pokaż najbliższe miejsca",
   processTitle: "Jak przetwarzamy to zgłoszenie?",
@@ -155,7 +155,7 @@ export const MOCK_DZIELNA_TRACE: TraceData = {
   telemetry: {
     pipelineScore: "5/5 █████",
     chain: "OBS → SIG → PROC → FIL → PAM → WAL → WIE",
-    steps: ["START", "SELECT(MOKOTOW)", "PAUSE", "SELECT(TRUE)", "NEXT", "COMPLETE"],
+    steps: ["START", "SELECT(MURANOW)", "PAUSE", "SELECT(TRUE)", "NEXT", "COMPLETE"],
     rawJson: {
       src: "CHANNEL_A_CITIZEN",
       anchor: [52.24886, 20.99241],
