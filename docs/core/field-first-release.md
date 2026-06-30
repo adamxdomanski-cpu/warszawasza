@@ -4,7 +4,9 @@
 
 > **Nie dodajemy funkcji przed obserwacją z terenu.**
 
-**Dziennik wiedzy** — trzy poziomy: *co zaobserwowaliśmy?* · *jaką podjęliśmy decyzję?* · *czy decyzja zadziałała?* (commit odpowiada tylko na „co zmieniliśmy?”).
+**Dziennik wiedzy** — *co zaobserwowaliśmy?* · *jaką podjęliśmy decyzję?* · *czy zadziałała?* · *jaki ma to trwały wpływ?* (commit odpowiada tylko na „co zmieniliśmy?”).
+
+**Cykl hipotezy:** Obserwacja → Hipoteza → Decyzja → Pomiar → Wynik → **Wpływ** *(Wpływ tylko dla ✅ / ◐ — zamienia test w zasadę projektową)*.
 
 ### Metryka hipotez
 
@@ -28,13 +30,12 @@
 │ 2. Skąd to wiemy?                             │
 │ 3. Co zmieniamy?                              │
 │ 4. Czy pomiar potwierdził poprawę? (Wynik)    │
+│ 5. Jaki trwały wpływ? (Wpływ — ✅/◐)           │
 │                                               │
 ├───────────────────────────────────────────────┤
-│ Jedna obserwacja                             │
+│ Obserwacja → Hipoteza → Decyzja              │
 │        ↓                                      │
-│ Jedna decyzja                                 │
-│        ↓                                      │
-│ Jeden pomiar                                  │
+│ Pomiar → Wynik → Wpływ                        │
 └───────────────────────────────────────────────┘
 ```
 
@@ -57,6 +58,14 @@ W rozszerzonych wpisach (np. Retest #N) każda hipoteza dostaje kolumnę **Wynik
 | ✅ Potwierdzono | Hipoteza zweryfikowana pozytywnie w terenie |
 | ◐ Częściowo potwierdzono | Efekt widoczny, ale nie w pełni lub z zastrzeżeniami |
 | ❌ Odrzucono | Brak oczekiwanego efektu — wracamy do obserwacji |
+
+**Wpływ** — tylko gdy Wynik to ✅ lub ◐. Jedno zdanie: co zostaje na stałe w produkcie / copy / procesie.
+
+| Wynik | Przykład wpływu |
+|-------|-----------------|
+| ✅ | „Pozostaje na stałe jako standard copy L1.” |
+| ◐ | „Nie wracać do komunikatów o przyszłych funkcjach.” |
+| ❌ | *(puste — hipoteza odrzucona, bez nowej zasady)* |
 
 **Filtr PR (Zasada 001):** Czy zmiana wynika z obserwacji terenowej? Czy mamy dowód realnego problemu? Czy potrafimy zmierzyć efekt? Jeśli „nie” — zmiana czeka.
 
@@ -84,7 +93,7 @@ Kod gotowy. **Proces nie jest dalej projektowany** — rejestr rośnie wyłączn
 
 Sprzężenie zwrotne:
 
-**Rzeczywistość → Obserwacja → Decyzja → Pomiar → Rzeczywistość**
+**Rzeczywistość → Obserwacja → Decyzja → Pomiar → Wynik → Wpływ → Rzeczywistość**
 
 Pytanie projektu (nie procesu): **Czy to pomaga człowiekowi podjąć lepszą decyzję?**
 
@@ -147,15 +156,25 @@ bez wpływu na skuteczność wysyłania zgłoszeń.
 
 ### Wynik hipotez
 
-| Obserwacja | Decyzja | Hipoteza | Wynik |
-|------------|---------|----------|-------|
-| Copy GPS było zbyt techniczne | Zmieniono komunikat lokalizacji | Mniejsze tarcie przy braku GPS | ⏳ Oczekuje |
-| Placeholder „[nagranie głosowe]” | Etykieta nagrania z czasem trwania | Użytkownik rozumie, co wysłał | ⏳ Oczekuje |
-| Powtórzone potwierdzenie wysłania | Jeden ekran potwierdzenia | Mniej szumu informacyjnego | ⏳ Oczekuje |
-| Obietnica e-mail w przyszłości | Komunikat o zapisie na urządzeniu | Jasny stan obecny, bez fałszywej obietnicy | ⏳ Oczekuje |
-| **Łącznie** | **PR #26 — copy L1** | **Tarcie ↓, skuteczność wysyłki bez zmian** | **⏳ Oczekuje** |
+| Obserwacja | Decyzja | Hipoteza | Wynik | Wpływ |
+|------------|---------|----------|-------|-------|
+| Copy GPS było zbyt techniczne | Zmieniono komunikat lokalizacji | Mniejsze tarcie przy braku GPS | ⏳ Oczekuje | — |
+| Placeholder „[nagranie głosowe]” | Etykieta nagrania z czasem trwania | Użytkownik rozumie, co wysłał | ⏳ Oczekuje | — |
+| Powtórzone potwierdzenie wysłania | Jeden ekran potwierdzenia | Mniej szumu informacyjnego | ⏳ Oczekuje | — |
+| Obietnica e-mail w przyszłości | Komunikat o zapisie na urządzeniu | Jasny stan obecny, bez fałszywej obietnicy | ⏳ Oczekuje | — |
+| **Łącznie** | **PR #26 — copy L1** | **Tarcie ↓, skuteczność wysyłki bez zmian** | **⏳ Oczekuje** | — |
 
-Po retescie zamień ⏳ na ✅ / ◐ / ❌ i zaktualizuj wiersz **1.3** w tabeli rejestru.
+Po retescie: Wynik → ✅ / ◐ / ❌; przy ✅/◐ uzupełnij **Wpływ** (np. *„Format ‚🎤 Nagranie (Xs)’ — standard w całym systemie”*).
+
+**Przykład po zamknięciu retestu:**
+
+| Obserwacja | Wynik | Wpływ |
+|------------|-------|-------|
+| Komunikat GPS był techniczny | ✅ | Pozostaje na stałe jako standard copy L1 |
+| Placeholder nagrania był niejasny | ✅ | Stosować format „🎤 Nagranie (Xs)” w całym systemie |
+| Komunikat o e-mailu | ◐ | Nie wracać do komunikatów o przyszłych funkcjach |
+
+Po retescie zamień ⏳ na ✅ / ◐ / ❌, uzupełnij Wpływ i zaktualizuj wiersz **1.3** w tabeli rejestru.
 
 ### Pomiar
 
@@ -175,7 +194,9 @@ Do wykonania po deployu:
 
 Pierwszy użytkownik spoza zespołu (np. dziecko, osoba starsza) to **inny rodzaj danych** niż własne testy. Zapisuj najpierw fakt, potem — dopiero jeśli trzeba — hipotezę i decyzję.
 
-**Szablon notatki terenowej:**
+**Arkusz do wydruku / notatek:** [`field-observation-sheet.md`](field-observation-sheet.md)
+
+**Szablon notatki terenowej (po teście):**
 
 | Pole | Przykład |
 |------|----------|
