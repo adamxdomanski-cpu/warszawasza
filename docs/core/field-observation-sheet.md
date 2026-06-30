@@ -4,6 +4,30 @@
 
 ---
 
+## Jak zaprosić (słowa, nie technologia)
+
+**Wszyscy (rodzina, dziadek, tata):**
+
+> Od kilku lat tworzę projekt WARSZAWASZA. Powstał na Muranowie w Warszawie.  
+> Chodzi o to, żeby w kilka sekund zgłosić to, co zauważyłeś wokół siebie — coś dobrego, niebezpiecznego albo wartego zapamiętania.  
+> Chcę sprawdzić, czy to jest naprawdę proste. **Nie interesuje mnie, czy aplikacja się podoba.** Chcę wiedzieć, czy potrafisz z niej skorzystać **bez mojej pomocy**.
+
+**Oluś (prościej):**
+
+> Wyobraź sobie, że idziesz przez Parczew i widzisz coś ciekawego albo coś, co powinno się zmienić. Otwórz aplikację i spróbuj mi to zgłosić. **Nie będę podpowiadał.** Chcę zobaczyć, czy wszystko jest jasne.
+
+**Tata (szerszy kontekst):**
+
+> Chcę sprawdzić, czy to, co zbudowałem w Warszawie, jest zrozumiałe również tutaj. **Nie testujemy Parczewa.** Testujemy, czy człowiek potrafi szybko przekazać obserwację o miejscu, w którym jest.
+
+**Na koniec — zawsze:**
+
+> **Nie oszczędzajcie mnie.** Jeśli coś będzie niezrozumiałe albo niewygodne — właśnie o to chodzi. To nie egzamin dla was. **To egzamin dla aplikacji.**
+
+*Symbol:* WARSZAWASZA narodziła się na Muranowie; pierwsze testy mogą być w rodzinnym mieście. To nie zmienia tożsamości projektu — prosisz o zaufanie najpierw u ludzi, którzy Cię znają.
+
+---
+
 > **Instrukcja dla obserwatora:** Jeżeli tester zada pytanie, **nie odpowiadaj od razu**.  
 > Najpierw zapytaj: **„A czego się spodziewałeś?”**  
 > Zapisz odpowiedź dosłownie — często pokazuje model mentalny użytkownika, nie tylko miejsce zatrzymania.  
