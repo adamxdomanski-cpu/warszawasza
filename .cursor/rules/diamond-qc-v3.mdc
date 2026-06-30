@@ -17,3 +17,5 @@ Before major PR or production deploy, run the checklist in [`docs/protocol/diamo
 Identity layers (verify independently): **ORIGIN** · **SCENARIO** · **LOCATION** · **FIXTURES**.
 
 **Domain Identity Leak** = scenario in global product metadata — semantic error, severity often **Medium**.
+
+**Hierarchy:** filary (public) → klucze interpretacyjne → protokoły — [`filary-i-klucze.md`](../../docs/protocol/filary-i-klucze.md).

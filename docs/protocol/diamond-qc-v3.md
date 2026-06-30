@@ -11,7 +11,7 @@
 
 Evidence-first quality gate before production — udowodnij gotowość do kolejnego kroku i wskaż granice wiedzy.
 
-**Powiązania:** [`docs/core/product-vs-lab.md`](../core/product-vs-lab.md) · [`frontend/lib/studioAnchor.ts`](../../frontend/lib/studioAnchor.ts) · [`AGENTS.md`](../../AGENTS.md)
+**Powiązania:** [`docs/core/product-vs-lab.md`](../core/product-vs-lab.md) · [`filary-i-klucze.md`](./filary-i-klucze.md) · [`frontend/lib/studioAnchor.ts`](../../frontend/lib/studioAnchor.ts) · [`AGENTS.md`](../../AGENTS.md)
 
 ---
 
@@ -101,21 +101,11 @@ Zweryfikuj **niezależnie**:
 
 **Przykład severity:** **Medium** — build działa, użytkownik może korzystać, ale branding i metadane są niespójne.
 
-### Klucze krystalicznej czystości
-
-„Krystalicznie czyste” nie jest chronione kluczem kryptograficznym — chronią je **filtry semantyczne i granice warstw**:
-
-| Klucz | Chroni przed |
-|-------|----------------|
-| **Redukcja szumu** | akumulacją danych bez implikacji |
-| **Implikacja** | elementem UI bez odpowiedzi „co z tego wynika?” |
-| **Origin ≠ Scenario ≠ Location** | Domain Identity Leak |
-| **Aksjomaty 001–003** | myleniem dostępności / buildu z poprawnością treści i modelu |
-| **T/F (pole)** | szumem dekoracyjnym w interfejsie |
-
-Copy kanoniczne: `frontend/lib/i18n.ts` · origin: `frontend/lib/studioAnchor.ts`.
+**Filary i klucze:** ten dokument to **protokół** (warstwa III). Filozofia projektu → [`filary-i-klucze.md`](./filary-i-klucze.md).
 
 ---
+
+## Severity
 
 Ocena wpływu — **osobno** od PASS/FAIL w STATUS.
 

@@ -40,7 +40,7 @@ Jedna kartka: [`docs/core/field-first-release.md`](docs/core/field-first-release
 
 Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/final-integration-pass.md).
 
-**QC przed PR / produkcją:** [`docs/protocol/diamond-qc-v3.md`](docs/protocol/diamond-qc-v3.md) — Diamond QC v3 (evidence first, Origin ≠ Scenario ≠ Location).
+**QC przed PR / produkcją:** [`docs/protocol/diamond-qc-v3.md`](docs/protocol/diamond-qc-v3.md) · [`docs/protocol/filary-i-klucze.md`](docs/protocol/filary-i-klucze.md) — Diamond QC v3 + filary / klucze interpretacyjne.
 
 ## Cursor
 
