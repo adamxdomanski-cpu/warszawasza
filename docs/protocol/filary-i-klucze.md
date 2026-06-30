@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Owner** | WARSZAWASZA |
 | **Scope** | Filozofia projektu · interpretacja · procedury |
 
@@ -52,13 +52,15 @@ Kolejne osoby dostają klucze, gdy znają kontekst — to przekazanie instrument
 
 | Id | Nazwa | Treść |
 |----|--------|--------|
-| **001** | Tożsamość | Nigdy nie pozwól, aby scenariusz stał się tożsamością. |
-| **002** | Szum | Jeżeli informacja nie zmienia decyzji, jest szumem. |
-| **003** | Dowód | Każde twierdzenie musi wskazywać źródło pomiaru. |
-| **004** | Lustro | Każdy model musi dać się obalić. |
-| **005** | Pokora | System nigdy nie wie wszystkiego. |
+| **K001** | Tożsamość | Nigdy nie pozwól, aby scenariusz stał się tożsamością. |
+| **K002** | Szum | Jeżeli informacja nie zmienia decyzji, jest szumem. |
+| **K003** | Dowód | Każde twierdzenie musi wskazywać źródło pomiaru. |
+| **K004** | Lustro | Każdy model musi dać się obalić. |
+| **K005** | Pokora | System nigdy nie wie wszystkiego. |
 
-Klucze 001–003 pokrywają się z Domain Identity Leak, filarami 1–4 i warstwą 8 (Lustro) w matrix 85233.
+Identyfikatory **K001–K005** są stałe — używaj ich w DECISION, raportach QC i commitach, np. *Decyzja zgodna z K003* · *Naruszenie K001*.
+
+K001–K003 pokrywają się z Domain Identity Leak, filarami 1–4 i warstwą 8 (Lustro) w matrix 85233.
 
 ---
 
@@ -73,7 +75,7 @@ Odpowiadają na: **jak postępować w konkretnej sytuacji?**
 | **Babcia OS** | [`docs/identity/babcia-os-v1.md`](../identity/babcia-os-v1.md) | aksjomaty · capabilities · workflow |
 | **Log operacyjny** | [`docs/protocol/log-format-v1.md`](./log-format-v1.md) | LOG · DECISION · rejestr |
 
-Diamond QC v3 **implementuje** filary 4–5 i klucze 001–003 w checklistie odbioru technicznego.
+Diamond QC v3 **implementuje** filary 4–5 i klucze K001–K003 w checklistie odbioru technicznego.
 
 ---
 
@@ -81,10 +83,24 @@ Diamond QC v3 **implementuje** filary 4–5 i klucze 001–003 w checklistie odb
 
 | Pytanie | Poziom |
 |---------|--------|
-| Dlaczego nie mieszamy Mokotów z origin? | Filar 3 + Klucz 001 |
-| Czy ten element UI zostaje? | Filar 2 + Klucz 002 |
-| Czy mogę oznaczyć Production PASS? | Filar 4 + Klucz 003 + protokół Diamond QC |
-| Czy model jest pewny? | Klucz 004 + 005 |
+| Dlaczego nie mieszamy Mokotów z origin? | Filar 3 + **K001** |
+| Czy ten element UI zostaje? | Filar 2 + **K002** |
+| Czy mogę oznaczyć Production PASS? | Filar 4 + **K003** + protokół Diamond QC |
+| Czy model jest pewny? | **K004** + **K005** |
+
+---
+
+## Odwołania w decyzjach
+
+Identyfikatory działają jak norma techniczna — skrót zamiast powtarzania całej rozmowy.
+
+| Przykład | Znaczenie |
+|----------|-----------|
+| *Naruszenie K001* | Scenariusz w metadata produktu (Domain Identity Leak) |
+| *Decyzja zgodna z K003* | Production PASS dopiero po curl / pomiarze |
+| *Filar 3 + K001* | Origin ≠ scenario — oba poziomy naraz |
+
+W blokach DECISION (`docs/protocol/log-format-v1.md`) można dopisać jedną linię: `Keys: K003` lub `Violation: K001`.
 
 ---
 
