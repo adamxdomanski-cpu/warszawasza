@@ -34,6 +34,17 @@ Jeden wpis na zmianę.
 
 > **Wiersz jest zamknięty dopiero wtedy, gdy kolumna „Pomiar” zawiera wynik z rzeczywistego użycia, a nie przewidywany efekt zmiany.**
 
+W rozszerzonych wpisach (np. Retest #N) każda hipoteza dostaje kolumnę **Wynik**:
+
+| Wynik | Znaczenie |
+|-------|-----------|
+| ⏳ Oczekuje | Decyzja wdrożona; pomiar terenowy jeszcze nie wykonany |
+| ✅ Potwierdzono | Hipoteza zweryfikowana pozytywnie w terenie |
+| ◐ Częściowo potwierdzono | Efekt widoczny, ale nie w pełni lub z zastrzeżeniami |
+| ❌ Odrzucono | Brak oczekiwanego efektu — wracamy do obserwacji |
+
+**Filtr PR (Zasada 001):** Czy zmiana wynika z obserwacji terenowej? Czy mamy dowód realnego problemu? Czy potrafimy zmierzyć efekt? Jeśli „nie” — zmiana czeka.
+
 | Release | Typ | Źródło | Obserwacja | Decyzja | Pomiar |
 |---------|-----|--------|------------|---------|--------|
 | 1.0 | Rzeczywistość | Adam, teren | Pierwszy ślad wysłany (ID `20260630-174909`); brak GPS; copy techniczne | cold start + głos — przepływ działa bez kategorii, FOP w UI, dodatkowych ekranów | ✅ wysyłka bez tarcia; copy wymaga poprawy (→ 1.3) |
@@ -118,6 +129,18 @@ Nie zmieniono przebiegu zgłoszenia.
 
 Mniejsza liczba komunikatów technicznych zmniejszy tarcie
 bez wpływu na skuteczność wysyłania zgłoszeń.
+
+### Wynik hipotez
+
+| Obserwacja | Decyzja | Hipoteza | Wynik |
+|------------|---------|----------|-------|
+| Copy GPS było zbyt techniczne | Zmieniono komunikat lokalizacji | Mniejsze tarcie przy braku GPS | ⏳ Oczekuje |
+| Placeholder „[nagranie głosowe]” | Etykieta nagrania z czasem trwania | Użytkownik rozumie, co wysłał | ⏳ Oczekuje |
+| Powtórzone potwierdzenie wysłania | Jeden ekran potwierdzenia | Mniej szumu informacyjnego | ⏳ Oczekuje |
+| Obietnica e-mail w przyszłości | Komunikat o zapisie na urządzeniu | Jasny stan obecny, bez fałszywej obietnicy | ⏳ Oczekuje |
+| **Łącznie** | **PR #26 — copy L1** | **Tarcie ↓, skuteczność wysyłki bez zmian** | **⏳ Oczekuje** |
+
+Po retescie zamień ⏳ na ✅ / ◐ / ❌ i zaktualizuj wiersz **1.3** w tabeli rejestru.
 
 ### Pomiar
 
