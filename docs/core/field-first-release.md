@@ -91,7 +91,7 @@ W rozszerzonych wpisach (np. Retest #N) każda hipoteza dostaje kolumnę **Wynik
 |---------|-----|--------|------------|---------|--------|
 | 1.0 | Rzeczywistość | Adam, teren | Pierwszy ślad wysłany (ID `20260630-174909`); brak GPS; komunikaty techniczne | Ekran startowy + głos — przepływ działa bez kategorii, FOP w UI, dodatkowych ekranów | ✅ wysyłka bez tarcia; komunikaty wymagają poprawy (→ 1.3) |
 | 1.1 | System | Chrome Profiler | INP = 211 ms | Opóźnione renderowanie JSON/FOP | ⏳ zmierz po wdrożeniu |
-| 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | … |
+| 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć przycisk 🎤 | … |
 | 1.3 | Rzeczywistość | Adam, teren | Cztery źródła tarcia na ekranie potwierdzenia (GPS, audio, duplikat, obietnica e-mail) | Wyłącznie poprawki tekstów warstwy L1 — PR #26 | ⏳ retest terenowy po wdrożeniu |
 
 **Zamknięte wiersze (przykład):**
@@ -99,7 +99,7 @@ W rozszerzonych wpisach (np. Retest #N) każda hipoteza dostaje kolumnę **Wynik
 | Release | Typ | Źródło | Obserwacja | Decyzja | Pomiar |
 |---------|-----|--------|------------|---------|--------|
 | 1.1 | System | Chrome Profiler | INP = 211 ms | Opóźnione renderowanie JSON/FOP | INP: 211 → 63 ms |
-| 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | 5/5 testerów zauważyło 🎤 |
+| 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć przycisk 🎤 | 5/5 testerów zauważyło 🎤 |
 
 ❌ *powinno być szybciej* · ✅ *INP: 211 → 63 ms*
 
