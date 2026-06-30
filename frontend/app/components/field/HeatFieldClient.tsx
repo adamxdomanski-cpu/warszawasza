@@ -77,29 +77,32 @@ export default function HeatFieldClient() {
 
   return (
     <div
-      className="heat-field-page relative min-h-dvh bg-field text-ink"
+      className="heat-field-page relative min-h-dvh overflow-x-clip bg-field text-ink"
       data-urgency={urgency}
     >
       <div className="heat-field-ambient pointer-events-none fixed inset-0 z-0" aria-hidden />
 
-      <main className="relative z-10 mx-auto flex min-h-dvh max-w-lg flex-col gap-6 p-5 pb-10 sm:gap-8 sm:p-8">
-        <header className="flex flex-col gap-4">
-          <div className="flex justify-end">
+      <main className="relative z-10 mx-auto flex min-h-dvh w-full min-w-0 max-w-lg flex-col gap-6 overflow-x-clip p-5 pb-10 sm:gap-8 sm:p-8">
+        <header className="flex min-w-0 flex-col gap-4">
+          <div className="flex min-w-0 justify-end">
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
           </div>
 
-          <h1 className="m-0">
-            <span className="heat-signal text-3xl font-light sm:text-4xl" aria-label={copy.factTemp}>
+          <h1 className="m-0 min-w-0">
+            <span
+              className="heat-signal field-text-wrap text-3xl font-light sm:text-4xl"
+              aria-label={copy.factTemp}
+            >
               {copy.factTemp}
             </span>
           </h1>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid min-w-0 gap-3 md:grid-cols-2">
             <SignalControl
               type="button"
               direction="right"
               onClick={onVoiceCta}
-              className="min-h-[4.25rem] border-2 border-accent/55 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
+              className="field-text-wrap min-h-[4.25rem] border-2 border-accent/55 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaVoiceReport}
             </SignalControl>
@@ -107,7 +110,7 @@ export default function HeatFieldClient() {
               type="button"
               direction="right"
               onClick={onCta}
-              className="min-h-[4.25rem] border-2 border-accent/40 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
+              className="field-text-wrap min-h-[4.25rem] border-2 border-accent/40 bg-field px-4 py-4 text-left text-base font-medium leading-snug text-ink touch-manipulation sm:min-h-16 sm:text-lg"
             >
               {copy.ctaNearbyHelp}
             </SignalControl>
@@ -188,7 +191,7 @@ export default function HeatFieldClient() {
                   />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="flex flex-wrap items-baseline justify-between gap-2">
-                      <span className="text-sm leading-snug">{labels.name}</span>
+                      <span className="field-text-wrap min-w-0 text-sm leading-snug">{labels.name}</span>
                       <span className="shrink-0 text-xs tabular-nums text-accent/55">
                         {formatDistance(copy, point.distanceM, point.walkMin)}
                       </span>

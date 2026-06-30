@@ -13,6 +13,8 @@ export type VoiceFlowCopy = {
   voiceSending: string;
   voiceTranscribePending: string;
   voiceTranscribeFailed: string;
+  recordingSummary: string;
+  recordingSummaryReady: string;
 };
 
 const PL: VoiceFlowCopy = {
@@ -26,6 +28,8 @@ const PL: VoiceFlowCopy = {
   voiceSending: "Wysyłanie…",
   voiceTranscribePending: "Próbuję rozpoznać mowę…",
   voiceTranscribeFailed: "Transkrypcja niedostępna — nagranie możesz wysłać bez tekstu.",
+  recordingSummary: "🎤 Nagranie ({n} s)",
+  recordingSummaryReady: "🎤 Nagranie gotowe",
 };
 
 const EN: VoiceFlowCopy = {
@@ -39,9 +43,11 @@ const EN: VoiceFlowCopy = {
   voiceSending: "Sending…",
   voiceTranscribePending: "Trying to transcribe…",
   voiceTranscribeFailed: "Transcription unavailable — you can send the recording without text.",
+  recordingSummary: "🎤 Recording ({n} s)",
+  recordingSummaryReady: "🎤 Recording ready",
 };
 
-const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
+const COPY: Partial<Record<Lang, Partial<VoiceFlowCopy>>> = {
   pl: PL,
   en: EN,
   it: {
@@ -83,5 +89,14 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
 };
 
 export function voiceFlowCopy(lang: Lang): VoiceFlowCopy {
-  return COPY[lang] ?? EN;
+  return { ...EN, ...(COPY[lang] ?? {}) };
+}
+
+/** L1 label when the trace is audio-only (no STT text). */
+export function formatRecordingSummary(lang: Lang, durationSec: number): string {
+  const copy = voiceFlowCopy(lang);
+  if (durationSec > 0) {
+    return copy.recordingSummary.replace("{n}", String(durationSec));
+  }
+  return copy.recordingSummaryReady;
 }

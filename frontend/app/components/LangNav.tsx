@@ -18,7 +18,7 @@ export default function LangNav({
 }: LangNavProps) {
   return (
     <nav
-      className={`lang-nav flex flex-wrap items-center gap-x-2 gap-y-1 font-mono-field text-sm tracking-wider sm:gap-x-3 sm:text-base${
+      className={`lang-nav flex max-w-full min-w-0 flex-wrap items-center justify-end gap-x-2 gap-y-1 font-mono-field text-sm tracking-wider sm:gap-x-3 sm:text-base${
         surface === "orient" ? " lang-nav--orient" : ""
       }`}
       aria-label="Language"
