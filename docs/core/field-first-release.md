@@ -6,7 +6,25 @@
 
 **Dziennik wiedzy** — *co zaobserwowaliśmy?* · *jaką podjęliśmy decyzję?* · *czy zadziałała?* · *jaki ma to trwały wpływ?* (commit odpowiada tylko na „co zmieniliśmy?”).
 
-**Cykl hipotezy:** Obserwacja → Hipoteza → Decyzja → Pomiar → Wynik → **Wpływ** *(Wpływ tylko dla ✅ / ◐ — zamienia test w zasadę projektową)*.
+**Cykl hipotezy:** Obserwacja → Hipoteza → Decyzja → Pomiar → Wynik → **Wpływ** *(Wpływ ≠ Zasada — patrz trzy poziomy poniżej)*.
+
+### Trzy poziomy (nie mylić)
+
+| Poziom | Zakres | Przykład |
+|--------|--------|----------|
+| **1. Hipoteza** | Jedna zmiana, jeden test | „Komunikat GPS jest zbyt techniczny.” |
+| **2. Wpływ** | Co zostaje w produkcie po ✅/◐ | „Stosujemy język użytkownika zamiast języka systemowego.” |
+| **3. Zasada** | Wniosek z **wielu** niezależnych obserwacji | Dopiero gdy ten sam wzorzec powtórzy się w kilku testach |
+
+> **Nie twórz Zasad 002, 003… zbyt szybko.** Każda potwierdzona hipoteza to Wpływ, nie nowa Zasada. Inaczej za kilka miesięcy masz kilkadziesiąt „Zasad” z lokalnych decyzji.
+
+Przy każdym **Wpływie** dopisz **Dowód** (skąd wiemy):
+
+```
+Dowód: Retest #2 · Test #7 (Oluś) · Test #11 · Test #14
+```
+
+Po roku widać, że wniosek nie jest opinią autora, tylko wynikiem wielu obserwacji.
 
 ### Metryka hipotez
 
@@ -23,19 +41,19 @@
 
 ```
 ┌───────────────────────────────────────────────┐
-│              WARSZAWASZA PROCESS              │
+│            PROCES WARSZAWASZA                   │
 ├───────────────────────────────────────────────┤
 │                                               │
 │ 1. Co się wydarzyło?                          │
 │ 2. Skąd to wiemy?                             │
 │ 3. Co zmieniamy?                              │
 │ 4. Czy pomiar potwierdził poprawę? (Wynik)    │
-│ 5. Jaki trwały wpływ? (Wpływ — ✅/◐)           │
+│ 5. Co zostaje w produkcie? (Wpływ — ✅/◐)      │
 │                                               │
 ├───────────────────────────────────────────────┤
 │ Obserwacja → Hipoteza → Decyzja              │
 │        ↓                                      │
-│ Pomiar → Wynik → Wpływ                        │
+│ Pomiar → Wynik → Wpływ → (Zasada — rzadko)    │
 └───────────────────────────────────────────────┘
 ```
 
@@ -59,28 +77,28 @@ W rozszerzonych wpisach (np. Retest #N) każda hipoteza dostaje kolumnę **Wynik
 | ◐ Częściowo potwierdzono | Efekt widoczny, ale nie w pełni lub z zastrzeżeniami |
 | ❌ Odrzucono | Brak oczekiwanego efektu — wracamy do obserwacji |
 
-**Wpływ** — tylko gdy Wynik to ✅ lub ◐. Jedno zdanie: co zostaje na stałe w produkcie / copy / procesie.
+**Wpływ** — tylko gdy Wynik to ✅ lub ◐. Jedno zdanie: co zostaje w produkcie (komunikaty, przepływ, proces). **Dowód:** lista testów / retestów.
 
-| Wynik | Przykład wpływu |
-|-------|-----------------|
-| ✅ | „Pozostaje na stałe jako standard copy L1.” |
-| ◐ | „Nie wracać do komunikatów o przyszłych funkcjach.” |
-| ❌ | *(puste — hipoteza odrzucona, bez nowej zasady)* |
+| Wynik | Przykład wpływu | Dowód (przykład) |
+|-------|-----------------|------------------|
+| ✅ | „Format ‚🎤 Nagranie (Xs)’ — stosować wszędzie przy samym audio.” | Retest #2 |
+| ◐ | „Nie wracać do komunikatów o planowanych funkcjach.” | Retest #2 · Test #7 |
+| ❌ | *(puste — wracamy do obserwacji)* | — |
 
 **Filtr PR (Zasada 001):** Czy zmiana wynika z obserwacji terenowej? Czy mamy dowód realnego problemu? Czy potrafimy zmierzyć efekt? Jeśli „nie” — zmiana czeka.
 
 | Release | Typ | Źródło | Obserwacja | Decyzja | Pomiar |
 |---------|-----|--------|------------|---------|--------|
-| 1.0 | Rzeczywistość | Adam, teren | Pierwszy ślad wysłany (ID `20260630-174909`); brak GPS; copy techniczne | cold start + głos — przepływ działa bez kategorii, FOP w UI, dodatkowych ekranów | ✅ wysyłka bez tarcia; copy wymaga poprawy (→ 1.3) |
-| 1.1 | System | Chrome Profiler | INP = 211 ms | Lazy render JSON/FOP | ⏳ zmierz po deployu |
+| 1.0 | Rzeczywistość | Adam, teren | Pierwszy ślad wysłany (ID `20260630-174909`); brak GPS; komunikaty techniczne | Ekran startowy + głos — przepływ działa bez kategorii, FOP w UI, dodatkowych ekranów | ✅ wysyłka bez tarcia; komunikaty wymagają poprawy (→ 1.3) |
+| 1.1 | System | Chrome Profiler | INP = 211 ms | Opóźnione renderowanie JSON/FOP | ⏳ zmierz po wdrożeniu |
 | 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | … |
-| 1.3 | Rzeczywistość | Adam, teren | Cztery źródła tarcia na ekranie potwierdzenia (GPS, audio, duplikat, obietnica e-mail) | Wyłącznie poprawki copy L1 — PR #26 | ⏳ retest terenowy po deployu |
+| 1.3 | Rzeczywistość | Adam, teren | Cztery źródła tarcia na ekranie potwierdzenia (GPS, audio, duplikat, obietnica e-mail) | Wyłącznie poprawki tekstów warstwy L1 — PR #26 | ⏳ retest terenowy po wdrożeniu |
 
 **Zamknięte wiersze (przykład):**
 
 | Release | Typ | Źródło | Obserwacja | Decyzja | Pomiar |
 |---------|-----|--------|------------|---------|--------|
-| 1.1 | System | Chrome Profiler | INP = 211 ms | Lazy render JSON/FOP | INP: 211 → 63 ms |
+| 1.1 | System | Chrome Profiler | INP = 211 ms | Opóźnione renderowanie JSON/FOP | INP: 211 → 63 ms |
 | 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | 5/5 testerów zauważyło 🎤 |
 
 ❌ *powinno być szybciej* · ✅ *INP: 211 → 63 ms*
@@ -97,7 +115,7 @@ Sprzężenie zwrotne:
 
 Pytanie projektu (nie procesu): **Czy to pomaga człowiekowi podjąć lepszą decyzję?**
 
-Archiwum szczegółów: [`field-first-release-appendix.md`](field-first-release-appendix.md) · checklist: [`final-integration-pass.md`](final-integration-pass.md)
+Archiwum szczegółów: [`field-first-release-appendix.md`](field-first-release-appendix.md) · lista kontrolna: [`final-integration-pass.md`](final-integration-pass.md)
 
 ---
 
@@ -107,7 +125,14 @@ Każda nowa funkcja musi wynikać z obserwacji terenowej.
 
 Nie dodajemy funkcji wyłącznie dlatego, że wydają się przydatne.
 
-**Potwierdzenie z pierwszego testu (Release 1.0):** pierwszy prawdziwy użytkownik przeszedł cały proces bez kategorii, klasyfikacji, silnika reguł, FOP w UI ani dodatkowych ekranów. Najprostszy możliwy przepływ działa w praktyce — to punkt odniesienia: najpierw ślady z terenu, potem rozbudowa tam, gdzie pojawia się potrzeba.
+**Potwierdzenie z pierwszego testu (Release 1.0):** pierwszy prawdziwy użytkownik przeszedł cały proces bez kategorii, klasyfikacji, silnika reguł, FOP w interfejsie ani dodatkowych ekranów. Najprostszy możliwy przepływ działa w praktyce — to punkt odniesienia: najpierw ślady z terenu, potem rozbudowa tam, gdzie pojawia się potrzeba.
+
+**Przykład Zasady 002** *(nie tworzyć od razu — dopiero po wielu testach)*:
+
+> Komunikaty opisują **stan obecny** produktu.  
+> Nigdy nie opisują funkcji planowanych.
+
+Taka zasada wynika z wielu obserwacji (np. obietnica e-mailu, „w kolejnej wersji”), nie z jednego PR.
 
 ---
 
@@ -128,7 +153,7 @@ Pierwszy terenowy ślad ujawnił cztery źródła niepotrzebnego tarcia:
 
 ### Decyzja
 
-Wprowadzono wyłącznie poprawki copy.
+Wprowadzono wyłącznie poprawki tekstów interfejsu.
 
 Nie dodano nowych funkcji.
 Nie zmieniono architektury.
@@ -156,29 +181,29 @@ bez wpływu na skuteczność wysyłania zgłoszeń.
 
 ### Wynik hipotez
 
-| Obserwacja | Decyzja | Hipoteza | Wynik | Wpływ |
-|------------|---------|----------|-------|-------|
-| Copy GPS było zbyt techniczne | Zmieniono komunikat lokalizacji | Mniejsze tarcie przy braku GPS | ⏳ Oczekuje | — |
-| Placeholder „[nagranie głosowe]” | Etykieta nagrania z czasem trwania | Użytkownik rozumie, co wysłał | ⏳ Oczekuje | — |
-| Powtórzone potwierdzenie wysłania | Jeden ekran potwierdzenia | Mniej szumu informacyjnego | ⏳ Oczekuje | — |
-| Obietnica e-mail w przyszłości | Komunikat o zapisie na urządzeniu | Jasny stan obecny, bez fałszywej obietnicy | ⏳ Oczekuje | — |
-| **Łącznie** | **PR #26 — copy L1** | **Tarcie ↓, skuteczność wysyłki bez zmian** | **⏳ Oczekuje** | — |
+| Obserwacja | Decyzja | Hipoteza | Wynik | Wpływ | Dowód |
+|------------|---------|----------|-------|-------|-------|
+| Komunikat GPS zbyt techniczny | Zmieniono tekst lokalizacji | Mniejsze tarcie przy braku GPS | ⏳ Oczekuje | — | — |
+| Placeholder „[nagranie głosowe]” | Etykieta nagrania z czasem trwania | Użytkownik rozumie, co wysłał | ⏳ Oczekuje | — | — |
+| Powtórzone potwierdzenie wysłania | Jeden ekran potwierdzenia | Mniej szumu informacyjnego | ⏳ Oczekuje | — | — |
+| Obietnica e-mailu w przyszłości | Komunikat o zapisie na urządzeniu | Jasny stan obecny | ⏳ Oczekuje | — | — |
+| **Łącznie** | **PR #26 — warstwa L1** | **Tarcie ↓, wysyłka bez zmian** | **⏳ Oczekuje** | — | — |
 
-Po retescie: Wynik → ✅ / ◐ / ❌; przy ✅/◐ uzupełnij **Wpływ** (np. *„Format ‚🎤 Nagranie (Xs)’ — standard w całym systemie”*).
+Po retescie: uzupełnij Wynik, **Wpływ** i **Dowód** (np. `Retest #2`).
 
-**Przykład po zamknięciu retestu:**
+**Przykład po zamknięciu retestu** *(Wpływ, nie nowa Zasada)*:
 
-| Obserwacja | Wynik | Wpływ |
-|------------|-------|-------|
-| Komunikat GPS był techniczny | ✅ | Pozostaje na stałe jako standard copy L1 |
-| Placeholder nagrania był niejasny | ✅ | Stosować format „🎤 Nagranie (Xs)” w całym systemie |
-| Komunikat o e-mailu | ◐ | Nie wracać do komunikatów o przyszłych funkcjach |
+| Obserwacja | Wynik | Wpływ | Dowód |
+|------------|-------|-------|-------|
+| Komunikat GPS był techniczny | ✅ | Standard tekstów L1 — język użytkownika | Retest #2 |
+| Placeholder nagrania był niejasny | ✅ | Format „🎤 Nagranie (Xs)” w całym systemie | Retest #2 |
+| Komunikat o e-mailu | ◐ | Nie wracać do komunikatów o planowanych funkcjach | Retest #2 |
 
-Po retescie zamień ⏳ na ✅ / ◐ / ❌, uzupełnij Wpływ i zaktualizuj wiersz **1.3** w tabeli rejestru.
+Po retescie zaktualizuj wiersz **1.3** w tabeli rejestru i metrykę hipotez u góry dokumentu.
 
 ### Pomiar
 
-Do wykonania po deployu:
+Do wykonania po wdrożeniu:
 
 - [ ] ślad bez GPS
 - [ ] ślad tylko audio
@@ -201,7 +226,7 @@ Pierwszy użytkownik spoza zespołu (np. dziecko, osoba starsza) to **inny rodza
 | Pole | Przykład |
 |------|----------|
 | **Obserwacja (fakt)** | Oluś przez ~5 s szukał sposobu rozpoczęcia nagrywania; nie pytał o pomoc. |
-| **Hipoteza** | CTA nagrywania niewystarczająco widoczne na cold start. |
+| **Hipoteza** | Przycisk nagrywania niewystarczająco widoczny na ekranie startowym. |
 | **Decyzja** | *(pusta do czasu powtórzenia u ≥2 osób lub retestu)* |
 
 Obserwacja = to, co widać na nagraniu / w czasie. Hipoteza = interpretacja. Decyzja = dopiero po wzorcu, nie po jednym zdarzeniu.
@@ -210,12 +235,12 @@ Obserwacja = to, co widać na nagraniu / w czasie. Hipoteza = interpretacja. Dec
 
 ## Etap po Retest #2 — panel 5–10 osób
 
-Po merge PR #26 i retescie **nie budujemy od razu nowych funkcji**. Zbieramy **5–10 rzeczywistych testów** od różnych profili:
+Po scaleniu PR #26 i retescie **nie budujemy od razu nowych funkcji**. Zbieramy **5–10 rzeczywistych testów** od różnych profili:
 
 - dziecko (np. Oluś),
 - osoba starsza,
 - użytkownik techniczny,
 - użytkownik nietechniczny,
-- *(inne, jeśli relevantne)*
+- *(inne, jeśli istotne)*
 
 **Kolejna decyzja produktowa dopiero wtedy**, gdy ten sam problem powtórzy się w kilku testach. To przejście od produktu testowanego przez twórców do produktu rozwijanego na podstawie zachowań w terenie.
