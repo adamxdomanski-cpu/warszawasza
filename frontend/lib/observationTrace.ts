@@ -214,7 +214,7 @@ export function buildTraceResidentLayer(
     lines.push(view.descriptionLabel, `„${view.description}"`, "");
   }
 
-  lines.push(view.statusLabel, view.statusLine, "", rc.savedConfirmation, "", rc.emailNotConfigured, "");
+  lines.push(view.statusLabel, view.statusLine, "", rc.savedConfirmation, "");
 
   if (view.heatGuidance) {
     lines.push(view.heatGuidance, "");

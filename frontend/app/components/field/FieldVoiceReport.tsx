@@ -24,6 +24,7 @@ import {
   voiceGeoCopy,
   type GeoPoint,
 } from "../../../lib/field/voiceGeoCopy";
+import { voiceFlowCopy, formatRecordingSummary } from "../../../lib/field/voiceFlowI18n";
 import { journeyUiCopy } from "../../../lib/traceJourney";
 import {
   appendInteractionEvent,
@@ -59,10 +60,6 @@ function formatTimer(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-}
-
-function audioOnlyLabel(lang: Lang): string {
-  return lang === "pl" ? "[nagranie głosowe]" : "[voice recording]";
 }
 
 const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProps>(
@@ -260,11 +257,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         appendInteractionEvent("COMPLETE");
 
         const traceEvents = getInteractionTrace().events;
+        const flow = voiceFlowCopy(lang);
         const place = geo
           ? formatPlaceFromGeo(geo)
-          : lang === "pl"
-            ? "Miejsce nieznane (bez GPS)"
-            : "Unknown place (no GPS)";
+          : geoCopy.locationNotAttached;
+        const bodyText = trimmed || (hasAudioBlob ? formatRecordingSummary(lang, seconds) : "");
 
         const payload: ObservationTracePayload = {
           lang,
@@ -279,7 +276,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
             place,
             observedAt: new Date().toISOString(),
             subject: geo ? "field_voice_geo" : heatContext ? "field_heat" : "field_voice",
-            relatedRefs: trimmed || audioOnlyLabel(lang),
+            relatedRefs: bodyText,
             traceDecision: "none",
           },
         };
@@ -304,7 +301,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       } finally {
         setSending(false);
       }
-    }, [geo, hasAudioBlob, heatContext, lang, onSent, sending, text, ui.copied]);
+    }, [geo, hasAudioBlob, heatContext, lang, onSent, seconds, sending, text, ui.copied, geoCopy.locationNotAttached]);
 
     const startAnotherReport = useCallback(() => {
       clearVoiceDraft();

@@ -5,20 +5,23 @@ export type VoiceGeoCopy = {
   attached: string;
   failed: string;
   hint: string;
+  locationNotAttached: string;
 };
 
-const COPY: Partial<Record<Lang, VoiceGeoCopy>> = {
+const COPY: Partial<Record<Lang, Partial<VoiceGeoCopy>>> = {
   pl: {
     attach: "📍 Dołącz, gdzie jestem",
     attached: "📍 Lokalizacja dołączona",
     failed: "Nie udało się odczytać lokalizacji — wyślij mimo to",
     hint: "Nie musisz znać nazwy ulicy. Jedno dotknięcie wysyła współrzędne.",
+    locationNotAttached: "📍 Lokalizacja nie została dołączona",
   },
   en: {
     attach: "📍 Attach where I am",
     attached: "📍 Location attached",
     failed: "Could not read location — you can still send",
     hint: "You don't need the street name. One tap sends coordinates.",
+    locationNotAttached: "📍 Location was not attached",
   },
   hu: {
     attach: "📍 Hol vagyok — csatolás",
@@ -40,8 +43,16 @@ const COPY: Partial<Record<Lang, VoiceGeoCopy>> = {
   },
 };
 
+const EN: VoiceGeoCopy = {
+  attach: "📍 Attach where I am",
+  attached: "📍 Location attached",
+  failed: "Could not read location — you can still send",
+  hint: "You don't need the street name. One tap sends coordinates.",
+  locationNotAttached: "📍 Location was not attached",
+};
+
 export function voiceGeoCopy(lang: Lang): VoiceGeoCopy {
-  return COPY[lang] ?? COPY.en!;
+  return { ...EN, ...(COPY[lang] ?? {}) };
 }
 
 export type GeoPoint = { lat: number; lng: number; accuracyM?: number };

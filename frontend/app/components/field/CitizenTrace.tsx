@@ -58,7 +58,6 @@ export default function CitizenTrace({
         )}
 
         <p className="m-0 text-sm text-ink">{data.savedConfirmation}</p>
-        <p className="m-0 text-sm text-accent/65">{data.emailNote}</p>
 
         {(data.heatGuidance || data.nearbyCta) && (
           <div className="space-y-3 pt-1">
