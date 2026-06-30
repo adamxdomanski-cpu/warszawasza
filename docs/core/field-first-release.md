@@ -294,3 +294,5 @@ Scenariusz i arkusz: [`field-observation-sheet.md`](field-observation-sheet.md) 
 Jeśli tak — to silniejszy sygnał niż „formularz działa”. WARSZAWASZA zrodziła się na Muranowie; mechanizm obserwacji miejsca sprawdzamy też **poza Warszawą** (Parczew, Lubartów, …). Warszawa pozostaje głównym polem projektu; **rdzeniem jest lokalna obserwacja**, miasto to etykieta.
 
 **Kolejna decyzja produktowa dopiero wtedy**, gdy ten sam problem powtórzy się w kilku testach.
+
+**Sąsiedzi** (po rodzinie): ten sam arkusz, krótszy briefing — patrz [`field-observation-sheet.md`](field-observation-sheet.md), sekcja *Sąsiedzi*. Osobista historia (*Muranów → rodzinne miasto*) zamiast technologii.

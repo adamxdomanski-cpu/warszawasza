@@ -28,6 +28,26 @@
 
 **Sens pilotu:** test nie w anonimowym laboratorium, lecz **tam, skąd pochodzisz**, z ludźmi, którzy znają okolicę. Testujecie interfejs **i** to, czy aplikacja zachęca do uważniejszego patrzenia na otoczenie. Muranów = narodziny projektu; Parczew, Lubartów i inne miejsca = ten sam sposób patrzenia na miejsce.
 
+### Sąsiedzi *(jeszcze prościej — bez historii projektu)*
+
+**Zaproszenie *(~30 s)*:**
+
+> Cześć! Tworzę aplikację, która powstała na warszawskim Muranowie. Jej zadanie jest bardzo proste — pozwala w kilkanaście sekund zgłosić coś, co zauważyliśmy w swojej okolicy. Chciałbym sprawdzić, czy jest na tyle prosta, że da się z niej skorzystać bez żadnej instrukcji. **Czy poświęcisz mi dwie minuty?**
+
+**Gdy się zgodzą:**
+
+> Wyobraź sobie, że widzisz coś, o czym warto powiedzieć innym — uszkodzony chodnik, ciekawe miejsce, problem albo coś pozytywnego. Spróbuj zgłosić to przez aplikację. **Nie będę pomagał. Testowana jest aplikacja, nie Ty.**
+
+**„Po co?”**
+
+> Chcę, żeby mieszkańcy mogli łatwo przekazywać swoje obserwacje o miejscu, w którym żyją. Zanim pokażę to większej liczbie osób, chcę mieć pewność, że jest naprawdę proste w użyciu.
+
+**„Dlaczego tutaj?”**
+
+> Projekt powstał na Muranowie w Warszawie, ale ja pochodzę stąd. Chciałem sprawdzić go najpierw w miejscu, które dobrze znam — z ludźmi, którym ufam. Jeżeli zadziała tutaj, będzie mi łatwiej rozwijać go dalej.
+
+*(Nie brzmi jak „przyjechałem testować waszą miejscowość” — wracasz z pomysłem do swojego miejsca.)*
+
 ---
 
 > **Instrukcja dla obserwatora:** Jeżeli tester zada pytanie, **nie odpowiadaj od razu**.  
@@ -37,21 +57,13 @@
 
 ---
 
-## Jedno zadanie (powiedz testerowi)
+## Po teście — trzy pytania *(dosłownie; nie: „Jak ci się podoba?”)*
 
-**Nie pytaj:** „Jak ci się podoba?” *(→ „fajne”, „spoko” — mało użyteczne)*
+**Nie pytaj:** „Jak ci się podoba?” *(→ „fajne”, „spoko”)*
 
-**Powiedz:**
-
-> Wyobraź sobie, że zauważyłeś coś w swojej okolicy, co warto zgłosić.  
-> **Spróbuj zrobić to bez mojej pomocy.**
-
-Każdy niech zgłosi **prawdziwą** obserwację ze swojego miejsca — nie wymyślony przykład.  
-Np. uszkodzony chodnik, brak cienia na placu zabaw, niebezpieczne przejście, ciekawe drzewo, miejsce spotkań, zepsuta ławka.
+**Przykłady prawdziwej obserwacji** *(nie wymyślony scenariusz):* uszkodzony chodnik, brak cienia na placu zabaw, niebezpieczne przejście, ciekawe drzewo, miejsce spotkań, zepsuta ławka.
 
 ---
-
-## Po zakończeniu — trzy pytania (dosłownie)
 
 1. **Co było najłatwiejsze?**  
    _______________________________________________
