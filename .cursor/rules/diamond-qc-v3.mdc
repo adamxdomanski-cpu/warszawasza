@@ -1,0 +1,19 @@
+---
+description: Diamond QC v3 — evidence-first quality control before PR and production deploy
+alwaysApply: false
+globs: ["frontend/**", "fira/**", "backend/**"]
+---
+
+# Diamond QC v3
+
+Before major PR or production deploy, run the checklist in [`docs/protocol/diamond-qc-v3.md`](../../docs/protocol/diamond-qc-v3.md).
+
+**Do not develop during QC.** Measure → evidence → conclusion → minimal fix only.
+
+**Axioms:** HTTP 200 ≠ content correctness · Build PASS ≠ domain model · confidence ends at deploy.
+
+**Production:** split **Availability** (HTTP) vs **Identity** (metadata / ORIGIN vs SCENARIO).
+
+Identity layers (verify independently): **ORIGIN** · **SCENARIO** · **LOCATION** · **FIXTURES**.
+
+**Domain Identity Leak** = scenario in global product metadata — semantic error, severity often **Medium**.
