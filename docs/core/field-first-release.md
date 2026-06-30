@@ -4,6 +4,21 @@
 
 > **Nie dodajemy funkcji przed obserwacją z terenu.**
 
+**Dziennik wiedzy** — trzy poziomy: *co zaobserwowaliśmy?* · *jaką podjęliśmy decyzję?* · *czy decyzja zadziałała?* (commit odpowiada tylko na „co zmieniliśmy?”).
+
+### Metryka hipotez
+
+> Aktualizuj po każdym zamkniętym wpisie (Retest #N). Nie ścigamy się na procenty — chodzi o to, jak często intuicje znajdują potwierdzenie w terenie.
+
+| | Liczba |
+|---|--------|
+| ✅ Potwierdzone | 0 |
+| ◐ Częściowo | 0 |
+| ❌ Odrzucone | 0 |
+| ⏳ Oczekuje | 5 |
+
+**Skuteczność zmian:** — *(brak zamkniętych hipotez; wzór: ✅ ÷ (✅ + ◐ + ❌))*
+
 ```
 ┌───────────────────────────────────────────────┐
 │              WARSZAWASZA PROCESS              │
@@ -12,7 +27,7 @@
 │ 1. Co się wydarzyło?                          │
 │ 2. Skąd to wiemy?                             │
 │ 3. Co zmieniamy?                              │
-│ 4. Czy pomiar potwierdził poprawę?            │
+│ 4. Czy pomiar potwierdził poprawę? (Wynik)    │
 │                                               │
 ├───────────────────────────────────────────────┤
 │ Jedna obserwacja                             │
@@ -153,3 +168,33 @@ Do wykonania po deployu:
 - [ ] użytkownik rozumie zakończenie zgłoszenia bez dodatkowych wyjaśnień
 
 **Status:** ⏳ oczekuje na retest terenowy
+
+---
+
+## Fakty vs interpretacja (testy spoza zespołu)
+
+Pierwszy użytkownik spoza zespołu (np. dziecko, osoba starsza) to **inny rodzaj danych** niż własne testy. Zapisuj najpierw fakt, potem — dopiero jeśli trzeba — hipotezę i decyzję.
+
+**Szablon notatki terenowej:**
+
+| Pole | Przykład |
+|------|----------|
+| **Obserwacja (fakt)** | Oluś przez ~5 s szukał sposobu rozpoczęcia nagrywania; nie pytał o pomoc. |
+| **Hipoteza** | CTA nagrywania niewystarczająco widoczne na cold start. |
+| **Decyzja** | *(pusta do czasu powtórzenia u ≥2 osób lub retestu)* |
+
+Obserwacja = to, co widać na nagraniu / w czasie. Hipoteza = interpretacja. Decyzja = dopiero po wzorcu, nie po jednym zdarzeniu.
+
+---
+
+## Etap po Retest #2 — panel 5–10 osób
+
+Po merge PR #26 i retescie **nie budujemy od razu nowych funkcji**. Zbieramy **5–10 rzeczywistych testów** od różnych profili:
+
+- dziecko (np. Oluś),
+- osoba starsza,
+- użytkownik techniczny,
+- użytkownik nietechniczny,
+- *(inne, jeśli relevantne)*
+
+**Kolejna decyzja produktowa dopiero wtedy**, gdy ten sam problem powtórzy się w kilku testach. To przejście od produktu testowanego przez twórców do produktu rozwijanego na podstawie zachowań w terenie.
