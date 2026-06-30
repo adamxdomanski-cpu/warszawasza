@@ -291,6 +291,21 @@ Scenariusz i arkusz: [`field-observation-sheet.md`](field-observation-sheet.md) 
 
 > Czy aplikacja **zachęca ludzi do patrzenia na swoje otoczenie**?
 
+**Rdzeń produktu (nie „co jest zepsute?”):**
+
+> **„Co zauważyłeś?”** — szersze niż zgłoszenie usterki. Może to być dziura w chodniku, piękne drzewo, cień w upale albo stary młyn, o którym dziadek wspomina. Wtedy to nie tylko formularz — **lokalne historie i obserwacje**.
+
+**Sygnały do słuchania po teście** *(zapisuj cytaty dosłownie)*:
+
+| Sygnał | Przykład | Znaczenie |
+|--------|----------|-----------|
+| ✅ Historia miejsca | „Tu kiedyś był młyn…” | Ludzie opowiadają o swoim miejscu — silniejsze niż „fajna apka” |
+| ✅ Obserwacja codzienności | „Dzieci jeżdżą rowerami, nie ma przejścia” | Rzeczywistość, nie scenariusz testowy |
+| ✅ Miejsce spotkań | „Tu wszyscy stoją po szkole” | Aplikacja otwiera patrzenie, nie tylko skargę |
+| ⏳ Naturalna potrzeba | „A co już ktoś zgłosił?” / „Też chcę coś dodać” | **Dopiero wtedy** rozważamy kolejny krok (np. wspólna lista) — nie wcześniej |
+
+**Na razie:** jak najmniej funkcji, jak najwięcej rozmów. Każda rozmowa z Olusiem, tatą, sąsiadem może powiedzieć więcej niż tydzień nad kolejnym ekranem.
+
 Jeśli tak — to silniejszy sygnał niż „formularz działa”. WARSZAWASZA zrodziła się na Muranowie; mechanizm obserwacji miejsca sprawdzamy też **poza Warszawą** (Parczew, Lubartów, …). Warszawa pozostaje głównym polem projektu; **rdzeniem jest lokalna obserwacja**, miasto to etykieta.
 
 **Kolejna decyzja produktowa dopiero wtedy**, gdy ten sam problem powtórzy się w kilku testach.
