@@ -6,6 +6,7 @@ import SignalControl from "../SignalControl";
 import FieldBrandFooter from "./FieldBrandFooter";
 import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
 import {
+  HEAT_DEPLOY_ID,
   HEAT_POINTS,
   HEAT_TEMP_C,
   formatDistance,
@@ -42,7 +43,7 @@ export default function HeatFieldClient() {
   useEffect(() => {
     clearInteractionTrace();
     appendInteractionEvent("START");
-    appendInteractionEvent("SELECT", "MOKOTOW");
+    appendInteractionEvent("SELECT", "MURANOW");
   }, []);
 
   useEffect(() => {
@@ -261,7 +262,7 @@ export default function HeatFieldClient() {
               <p className="m-0">{copy.layer3Title}</p>
               <p className="m-0">{copy.fopLine}</p>
               <p className="m-0">
-                Observation: temp={HEAT_TEMP_C}°C · deployment=warsaw · adapter=web
+                Observation: temp={HEAT_TEMP_C}°C · deployment={HEAT_DEPLOY_ID} · adapter=web
               </p>
             </div>
           </div>

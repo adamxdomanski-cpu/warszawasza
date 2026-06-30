@@ -155,7 +155,7 @@ export const MOCK_DZIELNA_TRACE: TraceData = {
   telemetry: {
     pipelineScore: "5/5 █████",
     chain: "OBS → SIG → PROC → FIL → PAM → WAL → WIE",
-    steps: ["START", "SELECT(MOKOTOW)", "PAUSE", "SELECT(TRUE)", "NEXT", "COMPLETE"],
+    steps: ["START", "SELECT(MURANOW)", "PAUSE", "SELECT(TRUE)", "NEXT", "COMPLETE"],
     rawJson: {
       src: "CHANNEL_A_CITIZEN",
       anchor: [52.24886, 20.99241],
