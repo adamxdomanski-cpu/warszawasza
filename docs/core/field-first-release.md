@@ -32,6 +32,10 @@
 └───────────────────────────────────────────────┘
 ```
 
+> **Nie wdrażamy hipotez. Wdrażamy najstabilniejszą wersję hipotezy, którą jesteśmy gotowi zmierzyć z rzeczywistością.**
+
+> **Nie dotykaj rzeczywistości, której jeszcze nie zmierzyłeś.**
+
 **Typ** w rejestrze: Człowiek · System · Rzeczywistość · **Rozmowa naturalna** (nie „test użytkownika” — zwykła rozmowa, w której projekt się pojawił).  
 **Obserwacja ≠ decyzja** — najpierw: *co naprawdę wiemy?*
 
@@ -101,6 +105,7 @@ Jeden wpis na zmianę.
 | 1.1 | System | Chrome Profiler | INP = 211 ms | Lazy render JSON/FOP | ⏳ zmierz po deployu |
 | 1.2 | Człowiek | Tester #4 | „Nie zauważyłem mikrofonu.” | Powiększyć CTA 🎤 | … |
 | 1.3 | System | Chrome Interaction Timing | lang-nav INP ~887 ms | no-op active lang · useTransition · dev panel split | ◐ 887 → 224 ms · zmierz ponownie przed P2 |
+| 1.4 | System | warsztat · `b4976a6` | Autoplay po STOP — ryzyko niespójnego zachowania na mobile (Chrome/Safari/Firefox) | TAP biały/czerwony · `[ OD_SŁUCHAJ ]` z gestem użytkownika zamiast autoplay | ⏳ test terenowy · 5 pytań (nagrywa · koniec · odsłuch · wyślij · co dalej) |
 
 **Zamknięte wiersze (przykład):**
 

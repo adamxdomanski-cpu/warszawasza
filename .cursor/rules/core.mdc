@@ -1,22 +1,31 @@
 ---
-description: Reality interface — observe facts, understand context, decide better
+description: Reality interface — observe facts, support understanding, humans decide
 alwaysApply: true
 ---
 
 # Core filter
 
-**Does this help someone understand reality and make a better decision?**
+**Does this help represent observable reality or support human understanding?**
 
 If not, don't build it.
 
 ---
 
+## Design rules
+
 - Start from observable facts. Clearly separate raw observations from hypotheses and conclusions.
 - Prefer the simplest working solution. Remove unnecessary abstractions, theoretical layers, and unused code.
-- Keep humans responsible for decisions. Software records, processes, and presents information; it does not infer user intentions or psychological states.
-- Log only behavior trajectories (e.g. START, CLICK_MAP, FINISH, EXIT). Do not optimize scroll depth or pause duration as failure indicators.
+- Keep humans responsible for decisions. Software records, organizes, and presents information; it does not decide for the user.
+- Do not present inferred intentions, emotions, or psychological states as facts.
+- Treat observable behavior as data. Treat interpretations as hypotheses.
+- Every interface element must justify its existence. If removing an element does not reduce the user's ability to complete the current task, the element should not exist.
 - Design for low cognitive load. Clear language, explicit assumptions, simple interfaces.
+- In this repo, log behavior trajectories only (e.g. START, CLICK_MAP, FINISH, EXIT). Do not treat scroll depth or pause duration as failure indicators.
+
+## Process rules
+
 - Deployment begins validation; true validation is in the field under real-world load.
-- Small changes are hypotheses until reality confirms them. No single metric is sole truth.
+- Field observations override assumptions.
+- Iterate from real usage; small changes are hypotheses until reality confirms them. No single metric is sole truth.
 
 Project scope (this repo): `docs/project.md`

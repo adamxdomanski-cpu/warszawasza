@@ -58,6 +58,8 @@ Zobacz · Zrozum · Pomóż · Sprawdź · Powtórz.
 
 Show facts. Do not fight for attention. Do not guess the human. Let reality lead the next change.
 
+**Integralność zadania (kanon):** [`core/CANON.md`](core/CANON.md#integralność-zadania) — wartość projektu. Uniwersalna reguła interfejsu: `.cursorrules` (design rules).
+
 ## In scope (civic tech)
 
 - **Climate (primary):** extreme heat and cold, heat alerts, hydration, shade, adaptation to weather that affects daily decisions (e.g. 39°C, RCB alerts, public water points, climate plan context). First deployment: [`/field/heat`](/field/heat).

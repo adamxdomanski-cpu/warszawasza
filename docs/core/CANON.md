@@ -17,8 +17,10 @@ szybciej je zrozumieć w konkretnym kontekście rzeczywistości.
 Kaskada pochodzenia:
 
 ```
-Rzeczywistość → Znaczenie → Gramatyka → Nośnik
+Rzeczywistość → Znaczenie → Zadanie użytkownika → Gramatyka → Nośnik
 ```
+
+Gramatyka nie istnieje sama dla siebie — obsługuje wykonanie konkretnego zadania.
 
 Nośnik jest wymienny. Znaczenie i gramatyka pozostają ustabilizowane, dopóki
 rzeczywistość nie wykaże konieczności ich zmiany.
@@ -37,9 +39,21 @@ Zbieraj tylko informacje, z których wynika konkretna wartość dla człowieka l
 
 Człowiek zawsze wie, jakie dane przekazuje, po co i komu.
 
+## Integralność zadania
+
+Interfejs istnieje wyłącznie po to, aby pomóc użytkownikowi wykonać jego aktualne
+zadanie.
+
+Każdy element interfejsu musi wnosić mierzalną wartość do realizacji tego
+zadania.
+
+Jeżeli usunięcie elementu nie pogarsza możliwości wykonania zadania, element
+nie powinien istnieć.
+
 ## Filtry
 
-Przed każdą zmianą zadaj dwa pytania:
+Przed każdą zmianą zadaj trzy pytania:
 
 1. Czy rozszerzam słownik, czy zmieniam gramatykę?
 2. Czy ta zmiana zmniejsza czy zwiększa ilość informacji, których naprawdę potrzebujemy?
+3. Gdyby ten element zniknął jutro — czy użytkownik gorzej wykonałby aktualne zadanie?

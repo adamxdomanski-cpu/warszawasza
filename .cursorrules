@@ -1,14 +1,33 @@
 {
-  "description": "Guidelines for implementing simple, reality-grounded software.",
+  "description": "Build simple software that faithfully represents observable reality and supports human understanding and decision-making.",
+  "designRules": [
+    "Start from observable facts. Clearly separate observations, hypotheses, and conclusions.",
+    "Prefer the simplest working solution. Remove unnecessary abstractions, decorative layers, duplicated logic, and unused code.",
+    "Keep humans responsible for decisions. Software records, organizes, and presents information; it does not decide for the user.",
+    "Do not present inferred intentions, emotions, or psychological states as facts.",
+    "Treat observable behavior as data. Treat interpretations as hypotheses.",
+    "Design for real-world constraints: light, temperature, battery, network quality, time, accessibility, and device performance.",
+    "Every interface element must justify its existence. If removing an element does not reduce the user's ability to complete the current task, the element should not exist.",
+    "Before implementing a feature ask: Does this help represent observable reality or support human understanding? If not, simplify or remove it."
+  ],
+  "processRules": [
+    "Deployment starts validation. True validation happens in the field.",
+    "Field observations override assumptions.",
+    "Iterate from real usage; small changes are hypotheses until reality confirms them.",
+    "When uncertain, ask for clarification instead of inventing assumptions."
+  ],
   "rules": [
     "Start from observable facts. Clearly separate observations, hypotheses, and conclusions.",
     "Prefer the simplest working solution. Remove unnecessary abstractions, decorative layers, duplicated logic, and unused code.",
-    "Keep humans responsible for decisions. Software stores, processes, and presents information. Never infer intentions or psychological states from user behavior.",
-    "Log only observable events. Treat interactions as facts, not interpretations.",
+    "Keep humans responsible for decisions. Software records, organizes, and presents information; it does not decide for the user.",
+    "Do not present inferred intentions, emotions, or psychological states as facts.",
+    "Treat observable behavior as data. Treat interpretations as hypotheses.",
     "Design for real-world constraints: light, temperature, battery, network quality, time, accessibility, and device performance.",
-    "Every visual element must have a functional purpose. Avoid decorative complexity.",
-    "Deployment starts validation. Verify changes against real-world outcomes.",
-    "When uncertain, ask for clarification instead of inventing assumptions.",
-    "Before implementing a feature ask: Does this reduce effort while preserving understanding? If not, simplify or remove it."
+    "Every interface element must justify its existence. If removing an element does not reduce the user's ability to complete the current task, the element should not exist.",
+    "Before implementing a feature ask: Does this help represent observable reality or support human understanding? If not, simplify or remove it.",
+    "Deployment starts validation. True validation happens in the field.",
+    "Field observations override assumptions.",
+    "Iterate from real usage; small changes are hypotheses until reality confirms them.",
+    "When uncertain, ask for clarification instead of inventing assumptions."
   ]
 }
