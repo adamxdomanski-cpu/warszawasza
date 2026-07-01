@@ -9,9 +9,13 @@
 
 ## Purpose
 
-Evidence-first quality gate before production — udowodnij gotowość do kolejnego kroku i wskaż granice wiedzy.
+**Cel (biznesowy):** upewnić się, że **tożsamość produktu nie zależy od aktualnego scenariusza wdrożenia**.
 
-**Powiązania:** [`docs/core/product-vs-lab.md`](../core/product-vs-lab.md) · [`filary-i-klucze.md`](./filary-i-klucze.md) · [`frontend/lib/studioAnchor.ts`](../../frontend/lib/studioAnchor.ts) · [`AGENTS.md`](../../AGENTS.md)
+Dopiero potem: build, curl, diff, metadata.
+
+Evidence-first quality gate before production — udowodnij gotowość do kolejnego kroku i wskaż granice wiedzy. Raport QC opisuje **architekturę znaczeń** (produkt · scenariusz · lokalizacja · fakt · prognoza), nie tylko kod.
+
+**Powiązania:** [`diamond-protocol-v1.md`](./diamond-protocol-v1.md) · [`docs/core/product-vs-lab.md`](../core/product-vs-lab.md) · [`filary-i-klucze.md`](./filary-i-klucze.md) · [`frontend/lib/studioAnchor.ts`](../../frontend/lib/studioAnchor.ts) · [`AGENTS.md`](../../AGENTS.md)
 
 ---
 
@@ -31,7 +35,7 @@ Twoim zadaniem jest **udowodnić, że produkt jest gotowy do kolejnego kroku** �
 
 **AXIOM 002** — Build PASS potwierdza **poprawność kompilacji**. Nigdy nie potwierdza **poprawności modelu domenowego**.
 
-**AXIOM 003** — Pewność kończy się tam, gdzie zaczyna się **deploy**.
+**AXIOM 003** — Pewność kończy się tam, gdzie **kończy się pomiar**. (Kanonicznie: [`diamond-protocol-v1.md`](./diamond-protocol-v1.md))
 
 ---
 
@@ -95,11 +99,17 @@ Zweryfikuj **niezależnie**:
 
 ### Domain Identity Leak
 
-**Definicja:** scenariusz (SCENARIO) w globalnych metadanych produktu (ORIGIN).
+**Nazwa klasy (zachować):** Domain Identity Leak.
+
+**Opis klasy (kanoniczny):** *Scenario leaked into product identity* — scenariusz wszedł na poziom tożsamości produktu.
+
+**Definicja:** warstwa **SCENARIO** (np. heat, copy „Znajdź wodę i cień”) w globalnych metadanych **ORIGIN** (np. `layout.tsx`, Open Graph domyślny).
 
 **Klasa błędu:** semantyczny / model domenowy — nie techniczny. Kod działa, build przechodzi, deploy odpowiada.
 
-**Przykład severity:** **Medium** — build działa, użytkownik może korzystać, ale branding i metadane są niespójne.
+**Przykład (instancja, nie definicja):** Mokotów / heat CTA w `<title>` globalnym — jeden przypadek wycieku, nie nazwa błędu.
+
+**Severity typowa:** **Medium** — build działa, użytkownik może korzystać, branding i metadane niespójne.
 
 **Filary i klucze:** ten dokument to **protokół** (warstwa III). Filozofia projektu → [`filary-i-klucze.md`](./filary-i-klucze.md).
 
@@ -165,21 +175,29 @@ Preview deployment — ten sam podział: **Availability** · **Identity**. Brak 
 
 ### CEL
 
-Jedno zdanie — dlaczego wykonano kontrolę.
+**Pierwsze zdanie (biznesowe, obowiązkowe):**
+
+> Upewnić się, że tożsamość produktu nie zależy od aktualnego scenariusza wdrożenia.
+
+**Drugie zdanie (kontekst kontroli):** dlaczego wykonano kontrolę teraz (PR · RC · deploy).
+
+Potem dopiero: build, curl, diff, metadata.
 
 ---
 
 ### STATUS
 
-| Obszar | PASS / FAIL / NIEZWERYFIKOWANE |
-|--------|--------------------------------|
-| Build | |
-| TypeScript | |
-| Accessibility (axe) | |
-| Preview Availability | |
-| Preview Identity | |
-| **Production Availability** | |
-| **Production Identity** | |
+| Obszar | PASS / FAIL / NIEZWERYFIKOWANE | Etykieta |
+|--------|--------------------------------|----------|
+| Build | | **FAKT** (log lokalny) |
+| TypeScript | | **FAKT** (w ramach build) |
+| Accessibility (axe) | | **FAKT** lub **NIEZWERYFIKOWANE** |
+| Preview Availability | | **NIEZWERYFIKOWANE** bez URL |
+| Preview Identity | | **NIEZWERYFIKOWANE** bez URL |
+| **Production Availability** | | **FAKT** (HTTP) |
+| **Production Identity** | | **FAKT** (curl metadata) |
+
+> **Rozdzielenie pewności:** Build PASS = **fakt**. HTTP 200 = **fakt**. Produkcja po push = **prognoza**. Preview bez dostępu = **niewiadoma**.
 
 > **Uwaga:** Production Availability PASS + Production Identity FAIL = **brak awarii**, błąd semantyczny. Nie skracaj do jednego „Production FAIL”.
 
@@ -242,11 +260,33 @@ Minimalna liczba zmian. Nie refaktoryzuj. Nie zmieniaj architektury. Nie dodawaj
 
 ### ROOT CAUSE
 
-Jedno zdanie — po pół roku bezcenne.
+Jedno zdanie — po pół roku bezcenne. Opisuj **klasę** błędu, nie pojedynczy przypadek.
 
 Przykład (Domain Identity Leak):
 
-> Global metadata inherited scenario copy instead of product identity.
+> Scenario leaked into product identity — global metadata inherited scenario copy instead of product identity.
+
+---
+
+### RELEASE DECISION
+
+| Obszar | Status |
+|--------|--------|
+| Build | ✅ READY / ❌ BLOCKED |
+| Architecture | ✅ READY / ⏳ / ❌ |
+| Identity | ✅ OK / ⚠️ FIX REQUIRED / ❌ |
+| Deployment | ✅ DEPLOYED / ⏳ WAITING FOR PUSH / ❌ |
+
+**GO / NO-GO**
+
+| Decyzja | Warunek |
+|---------|---------|
+| **GO** | Wszystkie wymagane wiersze ✅; Identity OK na produkcji (curl) |
+| **NO-GO** | Identity FIX REQUIRED nie wdrożony · build FAIL · Critical/High open |
+
+Przykład:
+
+> **NO-GO** — until metadata fix is deployed and Production Identity verified by curl.
 
 ---
 
@@ -277,15 +317,31 @@ Krystaliczna prostota > złożoność
 
 ## Przykład (skrót) — Domain Identity Leak · 2026-06-30
 
-| STATUS | |
+### CEL
+
+Upewnić się, że tożsamość produktu nie zależy od aktualnego scenariusza wdrożenia.
+
+### STATUS
+
+| | |
 |--------|--|
-| Production Availability | **PASS** (HTTP 200) |
-| Production Identity | **FAIL** (scenario CTA w `<title>` / `og:description`) |
+| Production Availability | **PASS** (HTTP 200) — **FAKT** |
+| Production Identity | **FAIL** — **FAKT** (scenario CTA w `<title>` / `og:description`) |
 
-| SEVERITY | |
-|----------|--|
-| Domain Identity Leak | **Medium** |
+### SEVERITY
 
-**ROOT CAUSE:** Global metadata inherited scenario copy instead of product identity.
+| Problem | Severity |
+|---------|----------|
+| Domain Identity Leak (*Scenario leaked into product identity*) | **Medium** |
+
+**ROOT CAUSE:** Scenario leaked into product identity — global metadata inherited scenario copy instead of product identity.
+
+### RELEASE DECISION
+
+| Build | Architecture | Identity | Deployment |
+|-------|--------------|----------|------------|
+| ✅ READY | ✅ READY | ⚠️ FIX REQUIRED | ⏳ WAITING FOR PUSH |
+
+**GO / NO-GO:** **NO-GO** — until metadata fix is deployed and Production Identity verified by curl.
 
 **NASTĘPNY KROK:** commit + push fix metadata → curl weryfikujący `OBSERWACJA TRWA` w produkcji.

@@ -6,16 +6,18 @@ globs: ["frontend/**", "fira/**", "backend/**"]
 
 # Diamond QC v3
 
-Before major PR or production deploy, run the checklist in [`docs/protocol/diamond-qc-v3.md`](../../docs/protocol/diamond-qc-v3.md).
+Before major PR or production deploy, run the checklist in [`docs/protocol/diamond-qc-v3.md`](../../docs/protocol/diamond-qc-v3.md). Constitution: [`diamond-protocol-v1.md`](../../docs/protocol/diamond-protocol-v1.md) (living, opt-in).
 
 **Do not develop during QC.** Measure → evidence → conclusion → minimal fix only.
 
-**Axioms:** HTTP 200 ≠ content correctness · Build PASS ≠ domain model · confidence ends at deploy.
+**Axioms:** HTTP 200 ≠ content · Build PASS ≠ domain model · certainty ends at **measurement**.
 
 **Production:** split **Availability** (HTTP) vs **Identity** (metadata / ORIGIN vs SCENARIO).
 
 Identity layers (verify independently): **ORIGIN** · **SCENARIO** · **LOCATION** · **FIXTURES**.
 
-**Domain Identity Leak** = scenario in global product metadata — semantic error, severity often **Medium**.
+**Domain Identity Leak** = *Scenario leaked into product identity* — scenario in global product metadata; semantic error, severity often **Medium**. (Mokotów / heat in title = example instance only.)
+
+**Report:** business goal first → STATUS (fact vs forecast labels) → … → **RELEASE DECISION** (GO/NO-GO) → one next step.
 
 **Hierarchy:** filary (public) → klucze interpretacyjne → protokoły — [`filary-i-klucze.md`](../../docs/protocol/filary-i-klucze.md).
