@@ -10,6 +10,9 @@ export type PrivacyCopy = {
   navLabel: string;
   title: string;
   intro: string;
+  listenNavLabel: string;
+  listenAction: string;
+  fullPolicy: string;
   collect: PrivacySection;
   notCollect: PrivacySection;
   security: PrivacySection;
@@ -29,7 +32,10 @@ const PL: PrivacyCopy = {
   navLabel: "Jak chronimy dane",
   title: "Jak chronimy Twoje dane",
   intro:
-    "Krótko i bez regulaminowego języka. Chodzi o to, co naprawdę dzieje się z informacjami, które sam zdecydujesz się przekazać.",
+    "Odpowiedź na pytania, które ludzie naprawdę zadają — nie regulamin do wkuwania. Szczegóły znajdziesz poniżej.",
+  listenNavLabel: "Sposób odbioru",
+  listenAction: "▶️ Posłuchaj, jak chronimy Twoje dane (ok. 2 min)",
+  fullPolicy: "📖 Pełna polityka prywatności",
   collect: {
     heading: "Co zapisujemy — tylko gdy Ty zdecydujesz",
     items: [
@@ -128,7 +134,10 @@ const EN: PrivacyCopy = {
   navLabel: "How we protect data",
   title: "How we protect your data",
   intro:
-    "Plain language, no legal wall of text. This is what actually happens to information you choose to share.",
+    "Answers to questions people actually ask — not a legal wall of text. Details are below.",
+  listenNavLabel: "How to read this",
+  listenAction: "▶️ Listen: how we protect your data (about 2 min)",
+  fullPolicy: "📖 Full privacy policy",
   collect: {
     heading: "What we store — only when you decide",
     items: [
@@ -227,7 +236,10 @@ const IT: PrivacyCopy = {
   navLabel: "Come proteggiamo i dati",
   title: "Come proteggiamo i tuoi dati",
   intro:
-    "In linguaggio semplice. Ecco cosa succede davvero alle informazioni che decidi di condividere.",
+    "Risposte alle domande che le persone si fanno davvero — non un regolamento da memorizzare. I dettagli sono sotto.",
+  listenNavLabel: "Come leggere",
+  listenAction: "▶️ Ascolta: come proteggiamo i tuoi dati (circa 2 min)",
+  fullPolicy: "📖 Informativa completa sulla privacy",
   collect: {
     heading: "Cosa registriamo — solo se decidi tu",
     items: [

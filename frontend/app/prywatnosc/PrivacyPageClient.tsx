@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LangNav from "../components/LangNav";
 import { initialFieldLang } from "../../lib/field/initialFieldLang";
 import type { Lang } from "../../lib/i18n";
+import { privacyAudioExists, privacyAudioSrc } from "../../lib/privacyAudio";
 import { privacyCopy, privacyLangs } from "../../lib/privacyCopy";
 
 function SectionBlock({ section }: { section: { heading: string; items?: readonly string[]; body?: readonly string[] } }) {
@@ -31,11 +32,27 @@ function SectionBlock({ section }: { section: { heading: string; items?: readonl
 
 export default function PrivacyPageClient() {
   const [lang, setLang] = useState<Lang>(() => initialFieldLang());
+  const [listenOpen, setListenOpen] = useState(false);
+  const [audioReady, setAudioReady] = useState(false);
+  const textRef = useRef<HTMLDivElement>(null);
   const copy = privacyCopy(lang);
+  const audioSrc = privacyAudioSrc(lang);
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
+  useEffect(() => {
+    let active = true;
+    setListenOpen(false);
+    setAudioReady(false);
+    void privacyAudioExists(audioSrc).then((ok) => {
+      if (active) setAudioReady(ok);
+    });
+    return () => {
+      active = false;
+    };
+  }, [audioSrc]);
 
   const onLangChange = (next: Lang) => {
     if (privacyLangs().includes(next as "pl" | "en" | "it")) {
@@ -43,6 +60,10 @@ export default function PrivacyPageClient() {
     } else {
       setLang("pl");
     }
+  };
+
+  const scrollToText = () => {
+    textRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -60,9 +81,42 @@ export default function PrivacyPageClient() {
         <p className="m-0 text-base leading-relaxed text-[var(--color-fira-structure-bright)]">
           {copy.intro}
         </p>
+
+        {audioReady ? (
+          <nav
+            className="flex flex-col gap-2 border border-[var(--color-fira-structure)] bg-field/40 px-4 py-4"
+            aria-label={copy.listenNavLabel}
+          >
+            {!listenOpen ? (
+              <button
+                type="button"
+                onClick={() => setListenOpen(true)}
+                className="min-h-11 touch-manipulation text-left text-base font-medium leading-snug text-ink"
+              >
+                {copy.listenAction}
+              </button>
+            ) : (
+              <audio
+                key={audioSrc}
+                controls
+                preload="metadata"
+                src={audioSrc}
+                className="w-full"
+              />
+            )}
+            <p className="m-0 text-center text-xs text-[var(--color-fira-structure-mid)]">lub</p>
+            <button
+              type="button"
+              onClick={scrollToText}
+              className="min-h-11 touch-manipulation text-left text-base leading-snug text-[var(--color-fira-structure-bright)]"
+            >
+              {copy.fullPolicy}
+            </button>
+          </nav>
+        ) : null}
       </header>
 
-      <div className="flex flex-col gap-10">
+      <div ref={textRef} className="flex flex-col gap-10 scroll-mt-6">
         <SectionBlock section={copy.collect} />
         <SectionBlock section={copy.notCollect} />
         <SectionBlock section={copy.security} />
