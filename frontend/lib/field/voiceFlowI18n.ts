@@ -16,6 +16,9 @@ export type VoiceFlowCopy = {
   /** Shown before first tap — browser may offer “allow once”; we release mic after each recording. */
   voiceMicOnceHint: string;
   voiceMicReleased: string;
+  voiceTapLabel: string;
+  voiceTapAriaStart: string;
+  voiceTapAriaStop: string;
 };
 
 const PL: VoiceFlowCopy = {
@@ -32,6 +35,9 @@ const PL: VoiceFlowCopy = {
   voiceMicOnceHint:
     "Przy pytaniu przeglądarki możesz wybrać „zezwól tylko tym razem”. Mikrofon działa wyłącznie na czas nagrania — potem dostęp jest zwalniany.",
   voiceMicReleased: "Mikrofon wyłączony. Kolejne nagranie poprosi o zgodę ponownie.",
+  voiceTapLabel: "TAP",
+  voiceTapAriaStart: "Stuknij, aby rozpocząć nagrywanie",
+  voiceTapAriaStop: "Stuknij, aby zatrzymać nagrywanie",
 };
 
 const EN: VoiceFlowCopy = {
@@ -48,6 +54,9 @@ const EN: VoiceFlowCopy = {
   voiceMicOnceHint:
     "If the browser asks, you can choose “allow this time only”. The microphone is active only while recording — then access is released.",
   voiceMicReleased: "Microphone off. The next recording will ask for permission again.",
+  voiceTapLabel: "TAP",
+  voiceTapAriaStart: "Tap to start recording",
+  voiceTapAriaStop: "Tap to stop recording",
 };
 
 const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
@@ -67,6 +76,9 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceMicOnceHint:
       "Se il browser chiede, potete scegliere «consenti solo questa volta». Il microfono è attivo solo durante la registrazione.",
     voiceMicReleased: "Microfono disattivato. La prossima registrazione chiederà di nuovo il permesso.",
+    voiceTapLabel: "TAP",
+    voiceTapAriaStart: "Tocca per iniziare la registrazione",
+    voiceTapAriaStop: "Tocca per fermare la registrazione",
   },
   uk: {
     voiceRecordingReady: "Запис готовий.",
@@ -82,6 +94,9 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceMicOnceHint:
       "У діалогу браузера можна обрати «дозволити лише цього разу». Мікрофон активний лише під час запису.",
     voiceMicReleased: "Мікрофон вимкнено. Наступний запис знову попросить дозволу.",
+    voiceTapLabel: "TAP",
+    voiceTapAriaStart: "Торкніться, щоб почати запис",
+    voiceTapAriaStop: "Торкніться, щоб зупинити запис",
   },
   hu: {
     voiceRecordingReady: "Felvétel kész.",
@@ -97,6 +112,9 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceMicOnceHint:
       "A böngésző kérdezhet — választhatja az „egyszer engedélyezem” lehetőséget. A mikrofon csak felvétel közben aktív.",
     voiceMicReleased: "Mikrofon kikapcsolva. A következő felvétel újra engedélyt kér.",
+    voiceTapLabel: "TAP",
+    voiceTapAriaStart: "Érintse meg a felvétel indításához",
+    voiceTapAriaStop: "Érintse meg a felvétel leállításához",
   },
 };
 

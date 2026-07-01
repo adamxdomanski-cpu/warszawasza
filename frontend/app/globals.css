@@ -1240,6 +1240,56 @@
   }
 }
 
+/* Voice TAP — white idle · red live (one control, mobile-first) */
+.voice-tap {
+  display: block;
+  width: 100%;
+  min-height: 3.75rem;
+  margin-top: 0.75rem;
+  border-width: 2px;
+  border-style: solid;
+  font-family: var(--font-fira-mono), ui-monospace, monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+}
+
+.voice-tap--idle {
+  border-color: var(--color-accent);
+  background: #fafafa;
+  color: var(--color-accent);
+}
+
+.voice-tap--live {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #fafafa;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .voice-tap--live {
+    animation: voice-tap-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes voice-tap-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.88;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-tap--live {
+    animation: none;
+  }
+}
+
 @keyframes heat-ambient-breathe {
   0%,
   100% {

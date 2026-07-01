@@ -38,6 +38,7 @@ import {
 } from "../../../lib/observationTrace";
 import TraceReceiptPanel, { copyCitizenTraceText } from "./TraceReceiptPanel";
 import SignalControl from "../SignalControl";
+import VoiceTapControl from "./VoiceTapControl";
 
 type VoicePhase = "idle" | "recording" | "review" | "sent";
 type SttStatus = "idle" | "pending" | "ok" | "failed";
@@ -95,6 +96,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const timerRef = useRef<number | null>(null);
     const recognitionRef = useRef<{ stop: () => void } | null>(null);
     const userEditedTextRef = useRef(false);
+    const playbackAudioRef = useRef<HTMLAudioElement>(null);
+    const autoPlayAfterStopRef = useRef(false);
     const ui = journeyUiCopy(lang);
 
     useEffect(() => {
@@ -112,6 +115,18 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         ...(geo ? { geo: { lat: geo.lat, lon: geo.lng, accuracy: geo.accuracyM } } : {}),
       });
     }, [text, phase, lang, heatContext, geo]);
+
+    useEffect(() => {
+      if (phase !== "review" || !audioUrl || !hasAudioBlob || !autoPlayAfterStopRef.current) {
+        return;
+      }
+      autoPlayAfterStopRef.current = false;
+      const el = playbackAudioRef.current;
+      if (!el) return;
+      void el.play().catch(() => {
+        /* autoplay blocked — user uses controls */
+      });
+    }, [phase, audioUrl, hasAudioBlob]);
 
     useEffect(() => {
       return () => {
@@ -259,6 +274,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       stopTranscription();
       mediaRecorderRef.current?.stop();
       appendInteractionEvent("RECORD", "stop");
+      autoPlayAfterStopRef.current = true;
       setPhase("review");
     }, [stopTranscription]);
 
@@ -457,14 +473,13 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         )}
 
         {phase === "idle" && !lean && (
-          <SignalControl
-            type="button"
-            direction="right"
-            onClick={() => void startRecording()}
-            className="mt-3 min-h-14 w-full border-2 border-accent/45 bg-field px-4 py-4 text-left text-base font-medium text-ink touch-manipulation"
-          >
-            {canRecord ? copy.voiceStart : copy.voiceOrType}
-          </SignalControl>
+          <VoiceTapControl
+            mode="start"
+            label={copy.voiceTapLabel}
+            ariaLabel={copy.voiceTapAriaStart}
+            onPress={() => void startRecording()}
+            disabled={!canRecord}
+          />
         )}
 
         {phase === "recording" && (
@@ -472,27 +487,19 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
             {lean && (
               <p className="m-0 text-xs leading-relaxed text-accent/50">{copy.voiceMicOnceHint}</p>
             )}
-            <p className="m-0 flex items-center gap-2 text-base text-ink">
-              <span
-                className="inline-block h-3 w-3 animate-pulse rounded-full bg-[var(--color-warsaw-heat-critical)]"
-                aria-hidden
-              />
-              {copy.voiceRecording}
-              <span className="ml-auto font-mono-field tabular-nums text-accent/80">
-                {formatTimer(seconds)}
-              </span>
+            <VoiceTapControl
+              mode="stop"
+              label={copy.voiceTapLabel}
+              ariaLabel={copy.voiceTapAriaStop}
+              onPress={stopRecording}
+            />
+            <p className="m-0 flex items-center justify-between gap-2 text-sm text-accent/75">
+              <span>{copy.voiceRecording}</span>
+              <span className="font-mono-field tabular-nums">{formatTimer(seconds)}</span>
             </p>
             {sttStatus === "pending" && (
               <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribePending}</p>
             )}
-            <SignalControl
-              type="button"
-              direction="right"
-              onClick={stopRecording}
-              className="min-h-12 w-full border border-accent/40 bg-field px-4 py-3 text-left text-sm text-ink touch-manipulation"
-            >
-              {copy.voiceStop}
-            </SignalControl>
           </div>
         )}
 
@@ -536,7 +543,13 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
             <p className="m-0 text-base font-medium text-ink">{copy.voiceRecordingReady}</p>
             <p className="m-0 text-xs text-accent/50">{copy.voiceMicReleased}</p>
             {audioUrl && (
-              <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
+              <audio
+                ref={playbackAudioRef}
+                controls
+                src={audioUrl}
+                className="w-full max-w-full"
+                preload="metadata"
+              >
                 {copy.voicePlay}
               </audio>
             )}
