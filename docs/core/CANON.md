@@ -10,6 +10,19 @@ Gramatyka jest ustabilizowana.
 
 Dystrybucja i punkty wejścia są zmienne.
 
+Jedno znaczenie może być przekazywane wieloma nośnikami. Nośnik nie zmienia
+znaczenia. Tekst pozostaje źródłem prawdy; inne nośniki pomagają człowiekowi
+szybciej je zrozumieć w konkretnym kontekście rzeczywistości.
+
+Kaskada pochodzenia:
+
+```
+Rzeczywistość → Znaczenie → Gramatyka → Nośnik
+```
+
+Nośnik jest wymienny. Znaczenie i gramatyka pozostają ustabilizowane, dopóki
+rzeczywistość nie wykaże konieczności ich zmiany.
+
 ## Rozwój
 
 Rozwijaj słownik częściej niż gramatykę.
