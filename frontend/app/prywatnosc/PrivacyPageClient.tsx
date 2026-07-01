@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import LangNav from "../components/LangNav";
 import { initialFieldLang } from "../../lib/field/initialFieldLang";
 import type { Lang } from "../../lib/i18n";
-import { privacyAudioExists, privacyAudioSrc } from "../../lib/privacyAudio";
+import { isPrivacyAudioEnabled, privacyAudioSrc } from "../../lib/privacyAudio";
 import { privacyCopy, privacyLangs } from "../../lib/privacyCopy";
 
 function SectionBlock({ section }: { section: { heading: string; items?: readonly string[]; body?: readonly string[] } }) {
@@ -33,26 +33,18 @@ function SectionBlock({ section }: { section: { heading: string; items?: readonl
 export default function PrivacyPageClient() {
   const [lang, setLang] = useState<Lang>(() => initialFieldLang());
   const [listenOpen, setListenOpen] = useState(false);
-  const [audioReady, setAudioReady] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
   const copy = privacyCopy(lang);
   const audioSrc = privacyAudioSrc(lang);
+  const audioReady = isPrivacyAudioEnabled(lang);
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
   useEffect(() => {
-    let active = true;
     setListenOpen(false);
-    setAudioReady(false);
-    void privacyAudioExists(audioSrc).then((ok) => {
-      if (active) setAudioReady(ok);
-    });
-    return () => {
-      active = false;
-    };
-  }, [audioSrc]);
+  }, [lang, audioSrc]);
 
   const onLangChange = (next: Lang) => {
     if (privacyLangs().includes(next as "pl" | "en" | "it")) {
