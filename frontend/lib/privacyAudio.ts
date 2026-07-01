@@ -6,12 +6,12 @@ import { privacyLangs } from "./privacyCopy";
  * No runtime HEAD — predictable UI, zero extra requests.
  */
 export const privacyAudioEnabled: Record<"pl" | "en" | "it", boolean> = {
-  pl: false,
+  pl: true,
   en: false,
   it: false,
 };
 
-/** ~2 min — answers real questions, not a read-aloud of the page. */
+/** ~2 min · script: public/audio/prywatnosc-pl-script.txt — commitment, not policy read-aloud. */
 export function privacyAudioSrc(lang: Lang): string {
   const code = privacyLangs().includes(lang as "pl" | "en" | "it") ? lang : "pl";
   return `/audio/prywatnosc-${code}.mp3`;
