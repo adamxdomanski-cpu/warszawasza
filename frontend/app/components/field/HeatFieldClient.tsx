@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import LangNav from "../LangNav";
+import WarszawaszaLogoLink from "../WarszawaszaLogoLink";
 import SignalControl from "../SignalControl";
 import FieldBrandFooter from "./FieldBrandFooter";
 import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
@@ -36,7 +37,6 @@ export default function HeatFieldClient() {
   useEffect(() => {
     clearInteractionTrace();
     appendInteractionEvent("START");
-    appendInteractionEvent("SELECT", "MOKOTOW");
   }, []);
 
   const bump = () => setTraceTick((t) => t + 1);
@@ -73,7 +73,8 @@ export default function HeatFieldClient() {
 
       <main className="relative z-10 mx-auto flex min-h-dvh max-w-lg flex-col gap-6 p-5 pb-10 sm:gap-8 sm:p-8">
         <header className="flex flex-col gap-4">
-          <div className="flex justify-end">
+          <div className="flex items-start justify-between gap-4">
+            <WarszawaszaLogoLink label="WARSZAWASZA" variant="field" />
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
           </div>
 
