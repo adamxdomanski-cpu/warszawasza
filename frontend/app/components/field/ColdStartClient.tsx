@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import LangNav from "../LangNav";
 import SignalControl from "../SignalControl";
 import FieldBrandFooter from "./FieldBrandFooter";
 import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
+import PrivacyLink from "../PrivacyLink";
 import { coldStartCopy } from "../../../lib/field/coldStartI18n";
-import { initialFieldLang } from "../../../lib/field/initialFieldLang";
-import type { Lang } from "../../../lib/i18n";
+import { useFieldLang } from "../../../lib/field/useFieldLang";
+import { projectMotto } from "../../../lib/projectMotto";
 import {
   appendInteractionEvent,
   clearInteractionTrace,
@@ -15,7 +16,7 @@ import {
 
 /** Minimal cold-start — read nothing before first tap. */
 export default function ColdStartClient() {
-  const [lang, setLang] = useState<Lang>(() => initialFieldLang());
+  const [lang, setLang] = useFieldLang();
   const voiceRef = useRef<FieldVoiceReportHandle>(null);
   const voicePanelRef = useRef<HTMLElement>(null);
   const copy = coldStartCopy(lang);
@@ -24,10 +25,6 @@ export default function ColdStartClient() {
     clearInteractionTrace();
     appendInteractionEvent("START");
   }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
 
   const onVoice = () => {
     appendInteractionEvent("NEXT");
@@ -44,6 +41,10 @@ export default function ColdStartClient() {
           <div className="flex justify-end">
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
           </div>
+
+          <p className="m-0 max-w-md text-base font-light leading-relaxed text-[var(--color-fira-structure-bright)]">
+            {projectMotto(lang)}
+          </p>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <SignalControl
@@ -69,6 +70,10 @@ export default function ColdStartClient() {
         <section ref={voicePanelRef} aria-label={copy.ctaVoiceReport}>
           <FieldVoiceReport ref={voiceRef} lang={lang} copy={copy} lean />
         </section>
+
+        <p className="m-0 text-center text-sm text-[var(--color-fira-structure-mid)]">
+          <PrivacyLink lang={lang} className="text-[var(--color-fira-structure-mid)] hover:text-ink" />
+        </p>
 
         <FieldBrandFooter />
       </main>

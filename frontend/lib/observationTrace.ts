@@ -23,6 +23,9 @@ import {
 } from "./traceStatus";
 import { STUDIO_ANCHOR } from "./studioAnchor";
 import { formatProcessNarrative, journeyLayerTitle } from "./traceJourney";
+import {
+  localizeCitizenPlace,
+} from "./field/citizenPlace";
 
 export type ObservationTracePayload = {
   lang: Lang;
@@ -40,10 +43,19 @@ export type ObservationTracePayload = {
 
 export type TracePresentationOptions = {
   origin?: string;
+  /** UI language — may differ from trace.lang (language at submission). */
+  displayLang?: Lang;
   /** Show heat guidance + nearby CTA (deployment context, not interpretation). */
   heatContext?: boolean;
   findHelpPath?: string;
 };
+
+function resolveDisplayLang(
+  trace: ObservationTracePayload,
+  options: TracePresentationOptions = {},
+): Lang {
+  return options.displayLang ?? trace.lang;
+}
 
 export type TraceCitizenView = {
   headline: string;
@@ -122,8 +134,11 @@ function observationQuote(trace: ObservationTracePayload): string | null {
   return text;
 }
 
-export function formatRelativeTime(trace: ObservationTracePayload): string {
-  const rc = traceResidentCopy(trace.lang);
+export function formatRelativeTime(
+  trace: ObservationTracePayload,
+  displayLang?: Lang,
+): string {
+  const rc = traceResidentCopy(displayLang ?? trace.lang);
   const ms = Date.now() - trace.createdAt;
   if (ms < 60_000) return rc.justNow;
   const minutes = Math.floor(ms / 60_000);
@@ -160,11 +175,15 @@ function formatEventLogShort(events: InteractionEvent[]): string {
   return events.map((e) => e.event).join(" → ");
 }
 
-function citizenStatusLine(trace: ObservationTracePayload): string {
-  const rc = traceResidentCopy(trace.lang);
+function citizenStatusLine(trace: ObservationTracePayload, displayLang: Lang): string {
+  const rc = traceResidentCopy(displayLang);
   if (trace.citizen?.traceDecision === "false") return rc.statusUnverified;
   if (isTerrainVerified(trace)) {
-    return trace.lang === "pl" ? "Potwierdzone w terenie." : "Confirmed in the field.";
+    return displayLang === "pl"
+      ? "Potwierdzone w terenie."
+      : displayLang === "it"
+        ? "Confermato sul campo."
+        : "Confirmed in the field.";
   }
   return rc.statusAwaitingField;
 }
@@ -174,20 +193,22 @@ export function getTraceCitizenView(
   trace: ObservationTracePayload,
   options: TracePresentationOptions = {},
 ): TraceCitizenView {
-  const rc = traceResidentCopy(trace.lang);
-  const place = trace.citizen?.place?.trim() || rc.cityDefault;
+  const displayLang = resolveDisplayLang(trace, options);
+  const rc = traceResidentCopy(displayLang);
+  const place =
+    localizeCitizenPlace(trace.citizen?.place, displayLang) || rc.cityDefault;
   const quote = observationQuote(trace);
   const heat = options.heatContext ?? isHeatDeployment(trace);
   const findHelpPath = options.findHelpPath ?? "/field/heat#nearby";
 
   return {
     headline: rc.statusReceived,
-    placeLine: `${place} (${formatRelativeTime(trace)})`,
+    placeLine: `${place} (${formatRelativeTime(trace, displayLang)})`,
     ...(quote
       ? { descriptionLabel: rc.reportDescriptionLabel, description: quote }
       : {}),
     statusLabel: rc.statusLabel,
-    statusLine: citizenStatusLine(trace),
+    statusLine: citizenStatusLine(trace, displayLang),
     ...(heat ? { heatGuidance: rc.heatGuidance } : {}),
     nearbyCta: rc.showNearbyPlaces,
     findHelpPath,
@@ -244,15 +265,19 @@ export function buildTraceJourneyLayer(trace: ObservationTracePayload): string {
   return formatProcessNarrative(trace.lang, resolveTraceEvents(trace));
 }
 
-export function getTraceTechnicalSummary(trace: ObservationTracePayload): TraceTechnicalSummary {
-  const rc = traceResidentCopy(trace.lang);
-  const copy = traceArtifactCopy(trace.lang);
+export function getTraceTechnicalSummary(
+  trace: ObservationTracePayload,
+  displayLang?: Lang,
+): TraceTechnicalSummary {
+  const lang = displayLang ?? trace.lang;
+  const rc = traceResidentCopy(lang);
+  const copy = traceArtifactCopy(lang);
   const events = resolveTraceEvents(trace);
   const { level } = pipelineCoherence(trace);
   const coherenceLabel =
-    trace.lang === "pl"
+    lang === "pl"
       ? `Spójność ${level}/5`
-      : trace.lang === "en"
+      : lang === "en"
         ? `Coherence ${level}/5`
         : `${level}/5`;
 

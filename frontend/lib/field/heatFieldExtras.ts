@@ -3,7 +3,7 @@
  */
 
 import type { Lang } from "../i18n";
-import type { HeatCopy } from "./heatFieldI18n";
+import type { HeatCopy, HeatCopyInput } from "./heatFieldI18n";
 
 const HEAT_FIELD_OBSERVED_AT = "2026-06-28T14:30:00Z";
 const HEAT_TEMP_C = 39;
@@ -14,7 +14,7 @@ function fopLine(): string {
   return `FOP/0.1 @${HEAT_FIELD_OBSERVED_AT} | temp=${HEAT_TEMP_C}.0 | src=CHANNEL_A_CITIZEN | deploy=warszawa-mokotow-heat-2026`;
 }
 
-export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
+export const HEAT_FIELD_EXTRA: Partial<Record<Lang, Partial<HeatCopyInput>>> = {
   it: {
     statusLine: "VARSAVIA · 28 GIUGNO 2026 · 16:30",
     factTemp: "39°C",
@@ -512,7 +512,7 @@ export const HEAT_FIELD_EXTRA: Partial<Record<Lang, HeatCopy>> = {
 for (const lang of Object.keys(HEAT_FIELD_EXTRA) as Lang[]) {
   const block = HEAT_FIELD_EXTRA[lang]!;
   for (const id of POINT_IDS) {
-    if (!block.pointLabels[id]) {
+    if (!block.pointLabels?.[id]) {
       throw new Error(`heat field ${lang} missing point label ${id}`);
     }
   }

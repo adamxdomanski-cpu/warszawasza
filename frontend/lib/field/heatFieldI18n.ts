@@ -4,6 +4,7 @@
 
 import type { Lang } from "../i18n";
 import { HEAT_FIELD_EXTRA } from "./heatFieldExtras";
+import { heatScenarioLabel } from "./heatScenarioLabel";
 
 export type HeatPointStatus = "ok" | "fail";
 export type HeatPointKind = "water" | "shade" | "both";
@@ -56,6 +57,9 @@ type PointLabel = {
 };
 
 export type HeatCopy = {
+  /** Above factTemp — scenario framing (Narracja ≠ Fakt). */
+  scenarioLabel: string;
+  scenarioWhen: string;
   statusLine: string;
   factTemp: string;
   factSubtitle: string;
@@ -106,7 +110,10 @@ export type HeatCopy = {
   microHintBody?: string;
 };
 
-const COPY: Partial<Record<Lang, HeatCopy>> = {
+/** Copy blocks in COPY / HEAT_FIELD_EXTRA — scenario lines merged at runtime. */
+export type HeatCopyInput = Omit<HeatCopy, "scenarioLabel" | "scenarioWhen">;
+
+const COPY: Partial<Record<Lang, HeatCopyInput>> = {
   pl: {
     statusLine: "WARSZAWA · 28 CZERWCA 2026 · 16:30",
     factTemp: "39°C",
@@ -329,16 +336,23 @@ const COPY: Partial<Record<Lang, HeatCopy>> = {
   },
 };
 
+const heatCopyCache = new Map<Lang, HeatCopy>();
+
 export function heatFieldCopy(lang: Lang): HeatCopy {
-  const merged: Partial<Record<Lang, HeatCopy>> = { ...COPY, ...HEAT_FIELD_EXTRA };
-  const en = merged.en!;
-  const resolved = merged[lang] ?? en;
-  return {
+  const cached = heatCopyCache.get(lang);
+  if (cached) return cached;
+  const merged: Partial<Record<Lang, Partial<HeatCopyInput>>> = { ...COPY, ...HEAT_FIELD_EXTRA };
+  const en = (merged.en ?? COPY.en!) as HeatCopyInput;
+  const resolved = (merged[lang] ?? en) as HeatCopyInput;
+  const built: HeatCopy = {
     ...resolved,
+    ...heatScenarioLabel(lang),
     microHintLabel: resolved.microHintLabel ?? en.microHintLabel,
     microHintBody: resolved.microHintBody ?? en.microHintBody,
     voiceMicDenied: resolved.voiceMicDenied ?? en.voiceMicDenied,
   };
+  heatCopyCache.set(lang, built);
+  return built;
 }
 
 export function formatDistance(copy: HeatCopy, meters: number, walkMin: number): string {

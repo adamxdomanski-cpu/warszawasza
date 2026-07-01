@@ -25,6 +25,7 @@ import {
   type GeoPoint,
 } from "../../../lib/field/voiceGeoCopy";
 import { journeyUiCopy } from "../../../lib/traceJourney";
+import { unknownPlaceLabel } from "../../../lib/field/citizenPlace";
 import {
   appendInteractionEvent,
   clearInteractionTrace,
@@ -92,6 +93,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const timerRef = useRef<number | null>(null);
     const recognitionRef = useRef<{ stop: () => void } | null>(null);
     const sttStartedRef = useRef(false);
+    const userEditedTextRef = useRef(false);
     const ui = journeyUiCopy(lang);
 
     useEffect(() => {
@@ -123,6 +125,15 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       recognitionRef.current = null;
     }, []);
 
+    const handleTextChange = useCallback(
+      (value: string) => {
+        userEditedTextRef.current = true;
+        stopTranscription();
+        setText(value);
+      },
+      [stopTranscription],
+    );
+
     const startTranscription = useCallback(() => {
       if (typeof window === "undefined") return;
       const W = window as Window & {
@@ -150,8 +161,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
             transcript += event.results[i][0].transcript;
           }
           const trimmed = transcript.trim();
-          if (trimmed) {
-            setText((prev) => (prev.trim() ? prev : trimmed));
+          if (trimmed && !userEditedTextRef.current) {
+            setText(trimmed);
             setSttStatus("ok");
           }
         };
@@ -166,6 +177,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setMicFallback(false);
       setSttStatus("idle");
       sttStartedRef.current = false;
+      userEditedTextRef.current = false;
       stopTranscription();
 
       const recordingCapable = canUseAudioRecording();
@@ -260,11 +272,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         appendInteractionEvent("COMPLETE");
 
         const traceEvents = getInteractionTrace().events;
-        const place = geo
-          ? formatPlaceFromGeo(geo)
-          : lang === "pl"
-            ? "Miejsce nieznane (bez GPS)"
-            : "Unknown place (no GPS)";
+        const place = geo ? formatPlaceFromGeo(geo) : unknownPlaceLabel(lang);
 
         const payload: ObservationTracePayload = {
           lang,
@@ -469,7 +477,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
               <textarea
                 rows={4}
                 value={text}
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => handleTextChange(e.target.value)}
                 placeholder={copy.voiceDescriptionPlaceholder}
                 className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
               />
@@ -526,7 +534,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 <textarea
                   rows={3}
                   value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  onChange={(e) => handleTextChange(e.target.value)}
                   placeholder={copy.voiceDescriptionPlaceholder}
                   className="w-full min-h-20 touch-manipulation border-0 border-b border-accent/20 bg-transparent px-0 py-2 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
                 />
@@ -565,7 +573,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
               <textarea
                 rows={4}
                 value={text}
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => handleTextChange(e.target.value)}
                 placeholder={copy.voiceDescriptionPlaceholder}
                 className="w-full min-h-24 touch-manipulation border border-accent/20 bg-field/80 px-3 py-2.5 text-sm text-ink placeholder:text-accent/35 focus-visible:border-accent/40 focus-visible:outline-none"
               />

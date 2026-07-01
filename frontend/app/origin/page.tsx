@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { STUDIO_ANCHOR, STUDIO_BROADCAST_LINES } from "../../lib/studioAnchor";
 
 export const metadata: Metadata = {
@@ -33,6 +34,15 @@ export default function OriginPage() {
       <p className="mt-8 text-sm leading-relaxed text-ink/55">
         Jeżeli tu trafiłeś, to znaczy, że również lubisz zaglądać pod
         powierzchnię.
+      </p>
+
+      <p className="mt-6 text-sm">
+        <Link
+          href="/prywatnosc"
+          className="font-mono-field text-[var(--color-fira-structure-mid)] underline-offset-4 hover:text-ink hover:underline"
+        >
+          Jak chronimy Twoje dane
+        </Link>
       </p>
 
       <section

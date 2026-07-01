@@ -27,10 +27,14 @@ export type ColdStartCopy = Pick<
 > &
   VoiceFlowCopy;
 
+const coldStartCopyCache = new Map<Lang, ColdStartCopy>();
+
 export function coldStartCopy(lang: Lang): ColdStartCopy {
+  const cached = coldStartCopyCache.get(lang);
+  if (cached) return cached;
   const heat = heatFieldCopy(lang);
   const flow = voiceFlowCopy(lang);
-  return {
+  const built: ColdStartCopy = {
     ctaNearbyHelp: heat.ctaNearbyHelp,
     ctaVoiceReport: heat.ctaVoiceReport,
     voiceStart: heat.voiceStart,
@@ -49,4 +53,6 @@ export function coldStartCopy(lang: Lang): ColdStartCopy {
     voiceMicDenied: heat.voiceMicDenied,
     ...flow,
   };
+  coldStartCopyCache.set(lang, built);
+  return built;
 }

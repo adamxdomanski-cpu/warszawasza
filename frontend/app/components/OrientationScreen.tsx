@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { EntryCopy } from "../../lib/artifactI18n";
 import type { Lang } from "../../lib/i18n";
 import LangNav from "./LangNav";
+import PrivacyLink from "./PrivacyLink";
 import SignalControl from "./SignalControl";
 
 type OrientationScreenProps = {
@@ -57,10 +58,11 @@ export default function OrientationScreen({
           {copy.gateOrientAction}
         </SignalControl>
       </div>
-      <footer className="font-mono-field text-xs text-accent/35">
+      <footer className="flex flex-col gap-2 font-mono-field text-xs text-accent/35">
         <Link href="/origin" className="hover:text-accent/60">
           STUDIO:WAW_DZ3A7
         </Link>
+        <PrivacyLink lang={lang} className="text-accent/35 hover:text-accent/60" />
       </footer>
     </div>
   );

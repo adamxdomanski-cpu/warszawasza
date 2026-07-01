@@ -42,7 +42,9 @@ export default function LangNav({
               ) : null}
               <button
                 type="button"
-                onClick={() => onChange(code)}
+                onClick={() => {
+                  if (!active) onChange(code);
+                }}
                 className={btnClass}
                 aria-label={accessibleName}
                 aria-current={active ? "true" : undefined}
@@ -63,7 +65,9 @@ export default function LangNav({
             <SignalControl
               type="button"
               direction="none"
-              onClick={() => onChange(code)}
+              onClick={() => {
+                if (!active) onChange(code);
+              }}
               className={btnClass}
               aria-label={accessibleName}
               aria-current={active ? "true" : undefined}

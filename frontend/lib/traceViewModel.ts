@@ -18,6 +18,7 @@ import {
 import { isTerrainVerified } from "./traceStatus";
 import { STUDIO_ANCHOR } from "./studioAnchor";
 import { getOperatorSteps, journeyLayerTitle } from "./traceJourney";
+import { localizeCitizenPlace } from "./field/citizenPlace";
 
 export type TraceStatus = "PENDING" | "VERIFIED" | "CLOSED";
 
@@ -74,18 +75,18 @@ export function buildTraceViewModel(
   trace: ObservationTracePayload,
   options: TracePresentationOptions = {},
 ): TraceData {
-  const lang = trace.lang;
-  const rc = traceResidentCopy(lang);
-  const artifact = traceArtifactCopy(lang);
+  const displayLang = options.displayLang ?? trace.lang;
+  const rc = traceResidentCopy(displayLang);
+  const artifact = traceArtifactCopy(displayLang);
   const citizen = getTraceCitizenView(trace, options);
-  const summary = getTraceTechnicalSummary(trace);
+  const summary = getTraceTechnicalSummary(trace, displayLang);
   const events = resolveEvents(trace);
   const { level, bar } = pipelineBar(trace);
   const heat = options.heatContext ?? isHeatDeployment(trace);
-  const place = trace.citizen?.place?.trim() || rc.cityDefault;
+  const place =
+    localizeCitizenPlace(trace.citizen?.place, displayLang) || rc.cityDefault;
 
-  const pipelineScore =
-    lang === "pl" ? `${level}/5 ${bar}` : lang === "en" ? `${level}/5 ${bar}` : `${level}/5 ${bar}`;
+  const pipelineScore = `${level}/5 ${bar}`;
 
   const obs = traceToObservation(trace);
 
@@ -93,7 +94,7 @@ export function buildTraceViewModel(
     headline: citizen.headline,
     id: summary.traceId,
     traceReferenceLine: `${rc.traceReferencePrefix} #${summary.traceId}`,
-    timestamp: formatRelativeTime(trace),
+    timestamp: formatRelativeTime(trace, displayLang),
     location: place,
     ...(citizen.description ? { description: citizen.description } : {}),
     status: traceStatus(trace),
@@ -102,8 +103,8 @@ export function buildTraceViewModel(
     savedConfirmation: rc.savedConfirmation,
     emailNote: rc.emailNotConfigured,
     ...(heat ? { heatGuidance: rc.heatGuidance, nearbyCta: rc.showNearbyPlaces } : {}),
-    processTitle: journeyLayerTitle(lang),
-    processSteps: getOperatorSteps(lang),
+    processTitle: journeyLayerTitle(displayLang),
+    processSteps: getOperatorSteps(displayLang, trace),
     technicalTitle: rc.technicalData,
     technicalDetailsLabel: rc.technicalDetails,
     telemetry: {

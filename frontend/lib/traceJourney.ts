@@ -5,11 +5,14 @@
 import type { InteractionEvent } from "./fira-core/interaction";
 import type { Lang } from "./i18n";
 import { pickLangCopy } from "./localeMap";
+import { isUnknownCitizenPlace } from "./field/citizenPlace";
+import type { ObservationTracePayload } from "./observationTrace";
 
 type OperatorCopy = {
   title: string;
   stepReceived: string;
   stepLocated: string;
+  stepNoGps: string;
   stepListening: string;
   startOver: string;
   copied: string;
@@ -20,6 +23,7 @@ const COPY: Partial<Record<Lang, OperatorCopy>> = {
     title: "Jak przetwarzamy to zgłoszenie?",
     stepReceived: "Odebraliśmy zgłoszenie z kanału obywatelskiego.",
     stepLocated: "Zlokalizowaliśmy obszar i przypisaliśmy punkt odniesienia.",
+    stepNoGps: "Brak GPS — nie przypisano współrzędnych; punkt odniesienia to studio (anchor).",
     stepListening: "Uruchomiliśmy nasłuch i czekamy na potwierdzenie z terenu.",
     startOver: "Od nowa",
     copied: "Skopiowano potwierdzenie",
@@ -28,6 +32,7 @@ const COPY: Partial<Record<Lang, OperatorCopy>> = {
     title: "How we process this report",
     stepReceived: "We received the report from the citizen channel.",
     stepLocated: "We located the area and assigned a reference point.",
+    stepNoGps: "No GPS — no coordinates assigned; reference point is studio anchor.",
     stepListening: "Listening is active — awaiting field confirmation.",
     startOver: "Start over",
     copied: "Confirmation copied",
@@ -36,6 +41,7 @@ const COPY: Partial<Record<Lang, OperatorCopy>> = {
     title: "Come elaboriamo questa segnalazione",
     stepReceived: "Abbiamo ricevuto la segnalazione dal canale cittadino.",
     stepLocated: "Abbiamo localizzato l'area e assegnato un punto di riferimento.",
+    stepNoGps: "GPS assente — nessuna coordinata; punto di riferimento: studio (anchor).",
     stepListening: "Ascolto attivo — in attesa di conferma sul campo.",
     startOver: "Ricomincia",
     copied: "Conferma copiata",
@@ -44,6 +50,7 @@ const COPY: Partial<Record<Lang, OperatorCopy>> = {
     title: "Як ми обробляємо це звернення",
     stepReceived: "Ми отримали звернення з громадянського каналу.",
     stepLocated: "Ми локалізували зону та призначили опорну точку.",
+    stepNoGps: "Немає GPS — координати не призначено; опорна точка — studio (anchor).",
     stepListening: "Слухання активне — очікуємо підтвердження з поля.",
     startOver: "Спочатку",
     copied: "Підтвердження скопійовано",
@@ -52,6 +59,7 @@ const COPY: Partial<Record<Lang, OperatorCopy>> = {
     title: "Hogyan dolgozzuk fel ezt a bejelentést",
     stepReceived: "Fogadtuk a bejelentést a polgári csatornán.",
     stepLocated: "Lokalizáltuk a területet és hozzárendeltünk referenciapontot.",
+    stepNoGps: "Nincs GPS — koordináta nélkül; referenciapont: studio (anchor).",
     stepListening: "Figyelés aktív — terepi megerősítésre várunk.",
     startOver: "Újrakezdés",
     copied: "Megerősítés másolva",
@@ -72,11 +80,13 @@ export type OperatorStepState = "done" | "active";
 
 export function getOperatorSteps(
   lang: Lang,
+  trace?: ObservationTracePayload,
 ): { text: string; state: OperatorStepState }[] {
   const oc = operatorCopy(lang);
+  const noGps = trace ? isUnknownCitizenPlace(trace.citizen?.place) : false;
   return [
     { text: oc.stepReceived, state: "done" },
-    { text: oc.stepLocated, state: "done" },
+    { text: noGps ? oc.stepNoGps : oc.stepLocated, state: "done" },
     { text: oc.stepListening, state: "active" },
   ];
 }

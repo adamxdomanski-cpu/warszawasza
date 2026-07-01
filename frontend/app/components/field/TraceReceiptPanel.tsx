@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import type { Lang } from "../../../lib/i18n";
 import { traceResidentCopy } from "../../../lib/i18n";
 import {
@@ -33,7 +34,10 @@ export default function TraceReceiptPanel({
   flash,
 }: TraceReceiptPanelProps) {
   const rc = traceResidentCopy(lang);
-  const data = buildTraceViewModel({ ...trace, lang }, presentation);
+  const data = useMemo(
+    () => buildTraceViewModel(trace, { ...presentation, displayLang: lang }),
+    [trace, lang, presentation?.heatContext, presentation?.findHelpPath],
+  );
   const href = findHelpHref ?? presentation?.findHelpPath ?? "/field/heat#nearby";
 
   const footer = (
