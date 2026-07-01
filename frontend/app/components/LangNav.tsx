@@ -16,26 +16,28 @@ export default function LangNav({
   variant = "plain",
   surface = "field",
 }: LangNavProps) {
+  const bracket = variant === "bracket";
+
   return (
     <nav
-      className={`lang-nav flex flex-wrap items-center gap-x-2 gap-y-1 font-mono-field text-sm tracking-wider sm:gap-x-3 sm:text-base${
+      className={`lang-nav flex max-w-full flex-wrap items-center justify-end gap-x-1.5 gap-y-1 font-mono-field text-xs tracking-wide sm:gap-x-2 sm:text-sm md:text-base${
         surface === "orient" ? " lang-nav--orient" : ""
-      }`}
+      }${bracket ? " lang-nav--bracket" : ""}`}
       aria-label="Language"
     >
       {LANGS.map((code, index) => {
         const active = lang === code;
-        const visible =
-          variant === "bracket" ? `[ ${code.toUpperCase()} ]` : code.toUpperCase();
+        const visible = bracket ? `[ ${code.toUpperCase()} ]` : code.toUpperCase();
         const accessibleName = `${visible}, ${LANG_ACCESSIBLE_NAMES[code]}`;
-        const btnClass = `lang-nav-btn lang-nav-btn--${code} min-h-11 min-w-11 touch-manipulation px-1.5 sm:px-2 ${
+        const btnClass = `lang-nav-btn lang-nav-btn--${code} min-h-11 touch-manipulation px-1 sm:px-1.5 md:px-2 ${
           active ? "lang-nav-btn--active" : ""
         }`;
+        const showSepBefore = index > 0 || bracket;
 
         if (surface === "orient") {
           return (
-            <span key={code} className="inline-flex items-center gap-x-2 sm:gap-x-3">
-              {index > 0 ? (
+            <span key={code} className="inline-flex items-center gap-x-1.5 sm:gap-x-2">
+              {showSepBefore ? (
                 <span className="lang-nav-sep select-none" aria-hidden="true">
                   ·
                 </span>
@@ -56,8 +58,8 @@ export default function LangNav({
         }
 
         return (
-          <span key={code} className="inline-flex items-center gap-x-2 sm:gap-x-3">
-            {index > 0 ? (
+          <span key={code} className="inline-flex items-center gap-x-1.5 sm:gap-x-2">
+            {showSepBefore ? (
               <span className="lang-nav-sep select-none" aria-hidden="true">
                 ·
               </span>

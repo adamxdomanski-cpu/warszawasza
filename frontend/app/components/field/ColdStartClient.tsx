@@ -39,8 +39,8 @@ export default function ColdStartClient() {
     <div className="heat-field-page relative min-h-dvh bg-field text-ink">
       <main className="relative z-10 mx-auto flex min-h-dvh max-w-lg flex-col gap-6 p-5 pb-10 sm:gap-8 sm:p-8">
         <header className="flex flex-col gap-4">
-          <div className="flex items-start justify-between gap-4">
-            <WarszawaszaLogoLink label="WARSZAWASZA" variant="field" />
+          <div className="flex items-start justify-between gap-3 sm:gap-4">
+            <WarszawaszaLogoLink label="WARSZAWASZA" variant="field" className="shrink-0" />
             <LangNav lang={lang} onChange={setLang} variant="bracket" />
           </div>
 

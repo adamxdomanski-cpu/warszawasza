@@ -19,6 +19,9 @@ export type VoiceFlowCopy = {
   voiceTapLabel: string;
   voiceTapAriaStart: string;
   voiceTapAriaStop: string;
+  /** Explicit listen — user gesture; no autoplay. */
+  voiceListenAction: string;
+  voiceListenAria: string;
 };
 
 const PL: VoiceFlowCopy = {
@@ -38,6 +41,8 @@ const PL: VoiceFlowCopy = {
   voiceTapLabel: "TAP",
   voiceTapAriaStart: "Stuknij, aby rozpocząć nagrywanie",
   voiceTapAriaStop: "Stuknij, aby zatrzymać nagrywanie",
+  voiceListenAction: "[ OD_SŁUCHAJ ]",
+  voiceListenAria: "Odsłuchaj nagranie",
 };
 
 const EN: VoiceFlowCopy = {
@@ -57,6 +62,8 @@ const EN: VoiceFlowCopy = {
   voiceTapLabel: "TAP",
   voiceTapAriaStart: "Tap to start recording",
   voiceTapAriaStop: "Tap to stop recording",
+  voiceListenAction: "[ LISTEN ]",
+  voiceListenAria: "Play back your recording",
 };
 
 const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
@@ -79,6 +86,8 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceTapLabel: "TAP",
     voiceTapAriaStart: "Tocca per iniziare la registrazione",
     voiceTapAriaStop: "Tocca per fermare la registrazione",
+    voiceListenAction: "[ ASCOLTA ]",
+    voiceListenAria: "Riascolta la registrazione",
   },
   uk: {
     voiceRecordingReady: "Запис готовий.",
@@ -97,6 +106,8 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceTapLabel: "TAP",
     voiceTapAriaStart: "Торкніться, щоб почати запис",
     voiceTapAriaStop: "Торкніться, щоб зупинити запис",
+    voiceListenAction: "[ ПРОСЛУХАТИ ]",
+    voiceListenAria: "Прослухати запис",
   },
   hu: {
     voiceRecordingReady: "Felvétel kész.",
@@ -115,6 +126,8 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceTapLabel: "TAP",
     voiceTapAriaStart: "Érintse meg a felvétel indításához",
     voiceTapAriaStop: "Érintse meg a felvétel leállításához",
+    voiceListenAction: "[ MEGHALLGAT ]",
+    voiceListenAria: "Felvétel meghallgatása",
   },
 };
 

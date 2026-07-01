@@ -173,6 +173,27 @@
 
   .lang-nav-sep {
     color: var(--color-lang-sep);
+    flex-shrink: 0;
+  }
+
+  .lang-nav--bracket {
+    line-height: 1.2;
+  }
+
+  .lang-nav--bracket .lang-nav-btn {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 389px) {
+    .lang-nav--bracket {
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+    }
+
+    .lang-nav--bracket .lang-nav-btn {
+      padding-inline: 0.25rem;
+    }
   }
 
   .lang-nav-btn {
@@ -1251,9 +1272,16 @@
   font-family: var(--font-fira-mono), ui-monospace, monospace;
   font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.42em;
-  text-indent: 0.42em;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
   text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .voice-tap {
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+  }
 }
 
 .voice-tap--idle {

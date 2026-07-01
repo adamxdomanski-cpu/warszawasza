@@ -26,6 +26,7 @@ import {
   type GeoPoint,
 } from "../../../lib/field/voiceGeoCopy";
 import { journeyUiCopy } from "../../../lib/traceJourney";
+import { voiceFlowCopy } from "../../../lib/field/voiceFlowI18n";
 import { unknownPlaceLabel } from "../../../lib/field/citizenPlace";
 import {
   appendInteractionEvent,
@@ -88,6 +89,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
     const geoCopy = voiceGeoCopy(lang);
     const rc = traceResidentCopy(lang);
+    const voiceCopy = voiceFlowCopy(lang);
 
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const mediaStreamRef = useRef<MediaStream | null>(null);
@@ -97,7 +99,6 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const recognitionRef = useRef<{ stop: () => void } | null>(null);
     const userEditedTextRef = useRef(false);
     const playbackAudioRef = useRef<HTMLAudioElement>(null);
-    const autoPlayAfterStopRef = useRef(false);
     const ui = journeyUiCopy(lang);
 
     useEffect(() => {
@@ -115,18 +116,6 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         ...(geo ? { geo: { lat: geo.lat, lon: geo.lng, accuracy: geo.accuracyM } } : {}),
       });
     }, [text, phase, lang, heatContext, geo]);
-
-    useEffect(() => {
-      if (phase !== "review" || !audioUrl || !hasAudioBlob || !autoPlayAfterStopRef.current) {
-        return;
-      }
-      autoPlayAfterStopRef.current = false;
-      const el = playbackAudioRef.current;
-      if (!el) return;
-      void el.play().catch(() => {
-        /* autoplay blocked — user uses controls */
-      });
-    }, [phase, audioUrl, hasAudioBlob]);
 
     useEffect(() => {
       return () => {
@@ -274,9 +263,17 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       stopTranscription();
       mediaRecorderRef.current?.stop();
       appendInteractionEvent("RECORD", "stop");
-      autoPlayAfterStopRef.current = true;
       setPhase("review");
     }, [stopTranscription]);
+
+    const playRecording = useCallback(() => {
+      const el = playbackAudioRef.current;
+      if (!el) return;
+      appendInteractionEvent("RECORD", "listen");
+      void el.play().catch(() => {
+        /* blocked — user can tap again */
+      });
+    }, []);
 
     const attachLocation = useCallback(async () => {
       setGeoBusy(true);
@@ -545,13 +542,22 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
             {audioUrl && (
               <audio
                 ref={playbackAudioRef}
-                controls
                 src={audioUrl}
-                className="w-full max-w-full"
                 preload="metadata"
+                className="sr-only"
+                aria-hidden="true"
+              />
+            )}
+            {audioUrl && (
+              <SignalControl
+                type="button"
+                direction="right"
+                onClick={playRecording}
+                aria-label={voiceCopy.voiceListenAria}
+                className="min-h-12 w-full border border-accent/40 bg-field px-4 py-3 text-left font-mono-field text-sm tracking-wide text-ink touch-manipulation"
               >
-                {copy.voicePlay}
-              </audio>
+                {voiceCopy.voiceListenAction}
+              </SignalControl>
             )}
             <SignalControl
               type="button"
