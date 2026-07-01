@@ -79,3 +79,5 @@ Zasady decyzji projektowych:
 - Rozmowa jest ważniejsza niż dokument.
 - Minimum informacji, maksimum zrozumienia.
 - Interfejs pokazuje wyłącznie dostępne możliwości.
+
+Każda zmiana powinna sprawić, że człowiek szybciej zrozumie, co może zrobić, a nie szybciej zobaczy, co potrafi system.
