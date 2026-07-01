@@ -40,6 +40,8 @@ Jedna kartka: [`docs/core/field-first-release.md`](docs/core/field-first-release
 
 Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/final-integration-pass.md).
 
+**Diamond Protocol (roboczy, opt-in):** [`docs/protocol/diamond-protocol-v1.md`](docs/protocol/diamond-protocol-v1.md) — zasady robocze · `@diamond-protocol-v1.mdc` gdy potrzebny filtr. **Nie** konstytucja — żyje w Cursorze, czeka na moment.
+
 **QC przed PR / produkcją:** [`docs/protocol/diamond-qc-v3.md`](docs/protocol/diamond-qc-v3.md) · [`docs/protocol/filary-i-klucze.md`](docs/protocol/filary-i-klucze.md) — Diamond QC v3 + filary / klucze interpretacyjne.
 
 ## Cursor
@@ -48,6 +50,6 @@ Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/
 |-------|------|------|
 | Principles | `.cursorrules` + `.cursor/rules/core.mdc` | same rules; core.mdc also `alwaysApply` |
 | Project | `.cursor/rules/warszawasza.mdc` | globs: `frontend/`, `fira/`, `backend/`, … |
-| Depth | `fira-protocol.mdc`, `warszawasza-field.mdc` | narrower globs, on demand |
+| Depth | `fira-protocol.mdc`, `warszawasza-field.mdc`, `diamond-protocol-v1.mdc` | narrower globs / **opt-in** — `@` gdy potrzebny filtr |
 
 Historical methodology lives in `docs/` only — not in core rules.

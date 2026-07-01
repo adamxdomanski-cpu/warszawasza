@@ -1,6 +1,6 @@
 # WARSZAWASZA · Proces terenowy — załącznik
 
-Materiał pomocniczy: **nie jest potrzebny do każdej decyzji**. Główny dokument: [`field-first-release.md`](field-first-release.md).
+Materiał pomocniczy: **nie jest potrzebny do każdej decyzji**. Główny dokument: [`field-first-release.md`](field-first-release.md) · słownik pojęć: ten sam plik, sekcja **Słownik**.
 
 ---
 
@@ -20,9 +20,12 @@ Materiał pomocniczy: **nie jest potrzebny do każdej decyzji**. Główny dokume
 
 | Typ (rejestr) | Kiedy wpisujesz |
 |---------------|-----------------|
-| Człowiek | cytat, test terenowy, zrozumiałość |
+| Człowiek | cytat, test terenowy, zachowanie w UI |
+| **Rozmowa naturalna** | projekt wszedł w zwykłą rozmowę — bez scenariusza „testu użytkownika” |
 | System | profiler, INP, logi, awaria techniczna |
 | Rzeczywistość | cel osiągnięty / nie |
+
+**Zachowanie, nie ocena:** zapisuj co się wydarzyło (*zatrzymał się na 5 s*), nie werdykt (*nie zrozumiał*).
 
 ---
 

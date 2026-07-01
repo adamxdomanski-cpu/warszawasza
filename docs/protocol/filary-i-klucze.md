@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Active |
-| **Version** | 1.1 |
+| **Version** | 1.3 |
 | **Owner** | WARSZAWASZA |
 | **Scope** | Filozofia projektu · interpretacja · procedury |
 
@@ -16,7 +16,7 @@ FILARY      → publiczne zasady projektu
     ↓
 KLUCZE      → sposób interpretacji (wymaga kontekstu)
     ↓
-PROTOKOŁY   → konkretne procedury (Diamond QC, FIRA, Babcia OS…)
+PROTOKOŁY   → konkretne procedury (Diamond Protocol v1.0 · Diamond QC v3 · FIRA · Babcia OS…)
 ```
 
 **Filary** i **klucze** to nie sekrety kryptograficzne (nie API key, nie SSH). To język projektu.
@@ -36,8 +36,15 @@ Publiczne. Każdy może przeczytać. Odpowiadają na: **na czym stoimy?**
 | 3 | **Origin ≠ Scenario ≠ Location** | Muranów/Dzielna (origin) · heat/POI (scenario) · GPS użytkownika (location) — nigdy razem w metadata produktu. |
 | 4 | **Dowód ponad przypuszczenie** | FAKT · HIPOTEZA · PROGNOZA · NIEZWERYFIKOWANE — merge i deploy nie są dowodem; pomiar na produkcji zamyka pętlę. |
 | 5 | **Minimalna zmiana** | Napraw tylko bloker. Bez refaktoru „przy okazji”. |
+| 6 | **Minimalizacja danych** | Jeżeli dana nie jest potrzebna do obsługi zgłoszenia, nie zbieraj jej. Redukcja szumu w warstwie prywatności. |
 
-Filary mapują się na aksjomaty Diamond QC (001–003) i reguły pola (T/F).
+Filary mapują się na aksjomaty Diamond QC (001–003) i reguły pola (T/F). W aplikacji: `/prywatnosc` · copy: `frontend/lib/privacyCopy.ts`.
+
+### Most: uwaga i dane
+
+> **Szanuj uwagę człowieka tak samo, jak szanujesz jego dane.**
+
+Łączy Filar 1 (redukcja szumu w interfejsie) z Filar 6 (minimalizacja danych). Ta sama filozofia w dwóch warstwach: mniej hałasu informacyjnego · mniej danych, których nie potrzebujesz.
 
 ---
 
@@ -70,6 +77,7 @@ Odpowiadają na: **jak postępować w konkretnej sytuacji?**
 
 | Protokół | Ścieżka | Kiedy |
 |----------|---------|--------|
+| **Diamond Protocol v1.0** | [`diamond-protocol-v1.md`](./diamond-protocol-v1.md) | Zasady robocze · Living · opt-in w Cursorze |
 | **Diamond QC v3** | [`diamond-qc-v3.md`](./diamond-qc-v3.md) | PR · release candidate · deploy produkcji |
 | **FIRA / FOP** | [`fira/PROTOCOL.md`](../../fira/PROTOCOL.md) | encode · parse · obserwacja |
 | **Babcia OS** | [`docs/identity/babcia-os-v1.md`](../identity/babcia-os-v1.md) | aksjomaty · capabilities · workflow |

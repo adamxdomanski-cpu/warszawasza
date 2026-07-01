@@ -1,0 +1,64 @@
+---
+description: Diamond Protocol v1.0 — zasady robocze WARSZAWASZA (Living Protocol, opt-in)
+alwaysApply: false
+---
+
+# 💎 Diamond Protocol v1.0 (Living)
+
+**Zasady robocze** — nie konstytucja. Włącz `@`-mention lub wklej prompt, gdy potrzebny filtr spójności. Pełny tekst: [`docs/protocol/diamond-protocol-v1.md`](../../docs/protocol/diamond-protocol-v1.md)
+
+> **Żywy dokument.** Zasada może zniknąć, jeśli teren pokaże, że nie służy produktowi.
+
+## Cel
+
+System: krystalicznie czysty · zrozumiały · minimalny · mierzalny · uczciwy. Nie zwiększaj złożoności bez lepszego wyniku.
+
+## Filary (F1–F6)
+
+F1 Redukcja szumu · F2 Jasna implikacja · F3 Origin≠Scenario≠Location≠Fixtures · F4 Dowód przed decyzją · F5 Minimalna zmiana · F6 Minimalizacja danych
+
+**Most:** Szanuj uwagę człowieka tak samo, jak szanujesz jego dane.
+
+## Reguły projektowe
+
+**Narracja ≠ Fakt** — użytkownik wie, czy widzi rzeczywistość · scenariusz · symulację · zapis historyczny. Etykieta scenariusza **przed** liczbą, którą można pomylić z „teraz”.
+
+**displayLang ≠ trace.lang** — UI ≠ artefakt FOP.
+
+## Klucze
+
+K001 Tożsamość · K002 Szum · K003 Dowód · K004 Lustro · K005 Pokora — [`filary-i-klucze.md`](../../docs/protocol/filary-i-klucze.md)
+
+## Aksjomaty
+
+- **001** HTTP 200 = dostępność, nie treść
+- **002** Build PASS = kompilacja, nie model domenowy
+- **003** Pewność kończy się na pomiarze
+
+## Łańcuch
+
+Obserwacja → Hipoteza → Decyzja → Pomiar → Wynik → Wpływ
+
+## QC przed PR / produkcją
+
+[`diamond-qc-v3.md`](../../docs/protocol/diamond-qc-v3.md) — CEL · STATUS · CONFIDENCE · FAKTY/HIPOTEZY/PROGNOZY/NIEZWERYFIKOWANE · ROOT CAUSE · SEVERITY · jeden NASTĘPNY KROK.
+
+Merge ≠ dowód · Deploy ≠ dowód · Availability ≠ Identity.
+
+## Prywatność
+
+`/prywatnosc` — wyjaśniaj cookies, nie moralizuj. F6 + Most.
+
+## Zakazy
+
+Bez funkcji bez obserwacji terenowej · bez refaktoru/architektury bez dowodu · nie mieszaj produktu/procesu/docs/tożsamości.
+
+## Ostateczna zasada
+
+Technologia ma pomagać lepiej rozumieć świat. Wątpliwość → usuń · brak dowodu → zmierz · brak korzyści dla użytkownika → prawdopodobnie usuń.
+
+Mark claims: **FAKT** | **HIPOTEZA** | **PROGNOZA** | **NIEZWERYFIKOWANE**
+
+**Nadrzędny dokument:** [`field-first-release.md`](../../docs/core/field-first-release.md) — dziennik terenowy. Kod i protokoły mu służą.
+
+**Przypomnienia:** problem > rozwiązanie · odrzucona hipoteza = sukces · najcenniejszy commit = z obserwacji człowieka.
