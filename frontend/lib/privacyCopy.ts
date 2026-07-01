@@ -12,7 +12,10 @@ export type PrivacyCopy = {
   intro: string;
   listenNavLabel: string;
   listenAction: string;
+  listenDuration: string;
+  listenAria: string;
   fullPolicy: string;
+  orLabel: string;
   collect: PrivacySection;
   notCollect: PrivacySection;
   security: PrivacySection;
@@ -34,8 +37,11 @@ const PL: PrivacyCopy = {
   intro:
     "Odpowiedź na pytania, które ludzie naprawdę zadają — nie regulamin do wkuwania. Szczegóły znajdziesz poniżej.",
   listenNavLabel: "Sposób odbioru",
-  listenAction: "▶️ Posłuchaj, jak chronimy Twoje dane (ok. 2 min)",
-  fullPolicy: "📖 Pełna polityka prywatności",
+  listenAction: "Posłuchaj, jak chronimy Twoje dane",
+  listenDuration: "ok. 2 min",
+  listenAria: "Odtwórz nagranie o prywatności",
+  fullPolicy: "Pełna polityka prywatności",
+  orLabel: "lub",
   collect: {
     heading: "Co zapisujemy — tylko gdy Ty zdecydujesz",
     items: [
@@ -136,8 +142,11 @@ const EN: PrivacyCopy = {
   intro:
     "Answers to questions people actually ask — not a legal wall of text. Details are below.",
   listenNavLabel: "How to read this",
-  listenAction: "▶️ Listen: how we protect your data (about 2 min)",
-  fullPolicy: "📖 Full privacy policy",
+  listenAction: "Listen: how we protect your data",
+  listenDuration: "about 2 min",
+  listenAria: "Play the privacy brief",
+  fullPolicy: "Full privacy policy",
+  orLabel: "or",
   collect: {
     heading: "What we store — only when you decide",
     items: [
@@ -238,8 +247,11 @@ const IT: PrivacyCopy = {
   intro:
     "Risposte alle domande che le persone si fanno davvero — non un regolamento da memorizzare. I dettagli sono sotto.",
   listenNavLabel: "Come leggere",
-  listenAction: "▶️ Ascolta: come proteggiamo i tuoi dati (circa 2 min)",
-  fullPolicy: "📖 Informativa completa sulla privacy",
+  listenAction: "Ascolta: come proteggiamo i tuoi dati",
+  listenDuration: "circa 2 min",
+  listenAria: "Riproduci il messaggio sulla privacy",
+  fullPolicy: "Informativa completa sulla privacy",
+  orLabel: "oppure",
   collect: {
     heading: "Cosa registriamo — solo se decidi tu",
     items: [

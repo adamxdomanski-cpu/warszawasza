@@ -76,31 +76,42 @@ export default function PrivacyPageClient() {
 
         {audioReady ? (
           <nav
-            className="flex flex-col gap-2 border border-[var(--color-fira-structure)] bg-field/40 px-4 py-4"
+            className="flex flex-col items-center gap-4 py-2"
             aria-label={copy.listenNavLabel}
           >
             {!listenOpen ? (
-              <button
-                type="button"
-                onClick={() => setListenOpen(true)}
-                className="min-h-11 touch-manipulation text-left text-base font-medium leading-snug text-ink"
-              >
-                {copy.listenAction}
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={() => setListenOpen(true)}
+                  className="privacy-listen-dot touch-manipulation"
+                  aria-label={copy.listenAria}
+                >
+                  <span className="privacy-listen-dot__core" aria-hidden="true" />
+                </button>
+                <div className="flex flex-col items-center gap-1 text-center">
+                  <p className="m-0 text-base leading-snug text-ink">{copy.listenAction}</p>
+                  <p className="m-0 font-mono-field text-xs tracking-wide text-[var(--color-fira-structure-mid)]">
+                    {copy.listenDuration}
+                  </p>
+                </div>
+              </>
             ) : (
               <audio
                 key={audioSrc}
                 controls
                 preload="metadata"
                 src={audioSrc}
-                className="w-full"
+                className="privacy-listen-audio w-full max-w-sm"
               />
             )}
-            <p className="m-0 text-center text-xs text-[var(--color-fira-structure-mid)]">lub</p>
+            <p className="m-0 font-mono-field text-xs tracking-wide text-[var(--color-fira-structure-mid)]">
+              {copy.orLabel}
+            </p>
             <button
               type="button"
               onClick={scrollToText}
-              className="min-h-11 touch-manipulation text-left text-base leading-snug text-[var(--color-fira-structure-bright)]"
+              className="min-h-11 touch-manipulation text-base leading-snug text-[var(--color-fira-structure-bright)] underline-offset-4 hover:underline"
             >
               {copy.fullPolicy}
             </button>

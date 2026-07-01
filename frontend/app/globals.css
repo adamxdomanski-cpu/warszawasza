@@ -1318,6 +1318,43 @@
   }
 }
 
+/* Privacy listen — beetroot circle · white dot (iPhone-like, no tab chrome) */
+.privacy-listen-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.privacy-listen-dot:focus-visible {
+  outline: 2px solid var(--color-accent-edge);
+  outline-offset: 3px;
+}
+
+.privacy-listen-dot:active {
+  transform: scale(0.96);
+}
+
+.privacy-listen-dot__core {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 9999px;
+  background: #fafafa;
+}
+
+.privacy-listen-audio {
+  min-height: 2.75rem;
+}
+
 @keyframes heat-ambient-breathe {
   0%,
   100% {
