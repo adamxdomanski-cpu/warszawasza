@@ -69,3 +69,5 @@ Przed każdą zmianą zadaj trzy pytania:
 1. Czy rozszerzam słownik, czy zmieniam gramatykę?
 2. Czy ta zmiana zmniejsza czy zwiększa ilość informacji, których naprawdę potrzebujemy?
 3. Gdy jest zadanie operacyjne: gdyby ten element zniknął jutro — czy użytkownik gorzej by je wykonał?
+
+Nie wdrażamy pustych obietnic.
