@@ -14,6 +14,7 @@ import {
   canUseAudioRecording,
   createAudioRecorder,
   pickAudioMimeType,
+  releaseMediaStream,
 } from "../../../lib/field/mediaRecorderSupport";
 import type { Lang } from "../../../lib/i18n";
 import { traceResidentCopy } from "../../../lib/i18n";
@@ -88,11 +89,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const rc = traceResidentCopy(lang);
 
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+    const mediaStreamRef = useRef<MediaStream | null>(null);
     const chunksRef = useRef<BlobPart[]>([]);
     const audioMimeRef = useRef<string>("audio/webm");
     const timerRef = useRef<number | null>(null);
     const recognitionRef = useRef<{ stop: () => void } | null>(null);
-    const sttStartedRef = useRef(false);
     const userEditedTextRef = useRef(false);
     const ui = journeyUiCopy(lang);
 
@@ -117,6 +118,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         if (timerRef.current) window.clearInterval(timerRef.current);
         if (audioUrl) URL.revokeObjectURL(audioUrl);
         recognitionRef.current?.stop();
+        releaseMediaStream(mediaStreamRef.current);
+        mediaStreamRef.current = null;
       };
     }, [audioUrl]);
 
@@ -124,6 +127,22 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       recognitionRef.current?.stop();
       recognitionRef.current = null;
     }, []);
+
+    /** One recording = one mic session; release tracks so “allow once” can apply next time. */
+    const releaseMicSession = useCallback(() => {
+      stopTranscription();
+      const recorder = mediaRecorderRef.current;
+      if (recorder && recorder.state !== "inactive") {
+        try {
+          recorder.stop();
+        } catch {
+          /* already stopped */
+        }
+      }
+      mediaRecorderRef.current = null;
+      releaseMediaStream(mediaStreamRef.current);
+      mediaStreamRef.current = null;
+    }, [stopTranscription]);
 
     const handleTextChange = useCallback(
       (value: string) => {
@@ -176,7 +195,6 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const startRecording = useCallback(async () => {
       setMicFallback(false);
       setSttStatus("idle");
-      sttStartedRef.current = false;
       userEditedTextRef.current = false;
       stopTranscription();
 
@@ -193,6 +211,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       let stream: MediaStream | null = null;
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaStreamRef.current = stream;
         const picked = pickAudioMimeType();
         audioMimeRef.current = picked?.split(";")[0] ?? "audio/webm";
         const recorder = createAudioRecorder(stream);
@@ -201,7 +220,9 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           if (e.data.size > 0) chunksRef.current.push(e.data);
         };
         recorder.onstop = () => {
-          stream?.getTracks().forEach((t) => t.stop());
+          releaseMediaStream(mediaStreamRef.current);
+          mediaStreamRef.current = null;
+          mediaRecorderRef.current = null;
           const blob = new Blob(chunksRef.current, { type: audioMimeRef.current });
           if (blob.size > 0) {
             setHasAudioBlob(true);
@@ -213,17 +234,18 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         };
         mediaRecorderRef.current = recorder;
         recorder.start();
+        startTranscription();
         appendInteractionEvent("RECORD", "start");
         setSeconds(0);
         setPhase("recording");
         timerRef.current = window.setInterval(() => setSeconds((s) => s + 1), 1000);
       } catch {
-        stream?.getTracks().forEach((t) => t.stop());
+        releaseMicSession();
         setPhase("review");
         setMicFallback(true);
         appendInteractionEvent("RECORD", "denied");
       }
-    }, [stopTranscription]);
+    }, [releaseMicSession, startTranscription, stopTranscription]);
 
     useImperativeHandle(ref, () => ({ startRecording: () => void startRecording() }), [
       startRecording,
@@ -234,16 +256,11 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         window.clearInterval(timerRef.current);
         timerRef.current = null;
       }
+      stopTranscription();
       mediaRecorderRef.current?.stop();
       appendInteractionEvent("RECORD", "stop");
       setPhase("review");
-    }, []);
-
-    useEffect(() => {
-      if (phase !== "review" || sttStartedRef.current || !hasAudioBlob) return;
-      sttStartedRef.current = true;
-      startTranscription();
-    }, [phase, hasAudioBlob, startTranscription]);
+    }, [stopTranscription]);
 
     const attachLocation = useCallback(async () => {
       setGeoBusy(true);
@@ -267,6 +284,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       if (!canSendNow) return;
 
       setSending(true);
+      releaseMicSession();
       try {
         appendInteractionEvent("CHANGE", trimmed || "voice");
         appendInteractionEvent("COMPLETE");
@@ -312,9 +330,10 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       } finally {
         setSending(false);
       }
-    }, [geo, hasAudioBlob, heatContext, lang, onSent, sending, text, ui.copied]);
+    }, [geo, hasAudioBlob, heatContext, lang, onSent, releaseMicSession, sending, text, ui.copied]);
 
     const startAnotherReport = useCallback(() => {
+      releaseMicSession();
       clearVoiceDraft();
       setPendingDraft(null);
       setSentPayload(null);
@@ -326,13 +345,12 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setHasAudioBlob(false);
       setMicFallback(false);
       setSttStatus("idle");
-      sttStartedRef.current = false;
       stopTranscription();
       if (audioUrl) URL.revokeObjectURL(audioUrl);
       setAudioUrl(null);
       clearInteractionTrace();
       appendInteractionEvent("START");
-    }, [audioUrl, stopTranscription]);
+    }, [audioUrl, releaseMicSession, stopTranscription]);
 
     const discardDraft = useCallback(() => {
       clearVoiceDraft();
@@ -355,6 +373,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
     const discardReview = () => {
       if ((text.trim() || hasAudioBlob) && !window.confirm(rc.resetConfirm)) return;
+      releaseMicSession();
       clearVoiceDraft();
       setPendingDraft(null);
       setPhase("idle");
@@ -365,7 +384,6 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setHasAudioBlob(false);
       setMicFallback(false);
       setSttStatus("idle");
-      sttStartedRef.current = false;
       stopTranscription();
       if (audioUrl) URL.revokeObjectURL(audioUrl);
       setAudioUrl(null);
@@ -434,12 +452,16 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           <p className="mt-2 mb-0 text-sm text-accent/65">{copy.voiceUnsupported}</p>
         )}
 
+        {phase === "idle" && !lean && canRecord && (
+          <p className="mt-3 mb-0 text-xs leading-relaxed text-accent/50">{copy.voiceMicOnceHint}</p>
+        )}
+
         {phase === "idle" && !lean && (
           <SignalControl
             type="button"
             direction="right"
             onClick={() => void startRecording()}
-            className="mt-4 min-h-14 w-full border-2 border-accent/45 bg-field px-4 py-4 text-left text-base font-medium text-ink touch-manipulation"
+            className="mt-3 min-h-14 w-full border-2 border-accent/45 bg-field px-4 py-4 text-left text-base font-medium text-ink touch-manipulation"
           >
             {canRecord ? copy.voiceStart : copy.voiceOrType}
           </SignalControl>
@@ -447,6 +469,9 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
         {phase === "recording" && (
           <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            {lean && (
+              <p className="m-0 text-xs leading-relaxed text-accent/50">{copy.voiceMicOnceHint}</p>
+            )}
             <p className="m-0 flex items-center gap-2 text-base text-ink">
               <span
                 className="inline-block h-3 w-3 animate-pulse rounded-full bg-[var(--color-warsaw-heat-critical)]"
@@ -457,6 +482,9 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 {formatTimer(seconds)}
               </span>
             </p>
+            {sttStatus === "pending" && (
+              <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribePending}</p>
+            )}
             <SignalControl
               type="button"
               direction="right"
@@ -506,6 +534,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         {phase === "review" && !micFallback && hasAudioBlob && (
           <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
             <p className="m-0 text-base font-medium text-ink">{copy.voiceRecordingReady}</p>
+            <p className="m-0 text-xs text-accent/50">{copy.voiceMicReleased}</p>
             {audioUrl && (
               <audio controls src={audioUrl} className="w-full max-w-full" preload="metadata">
                 {copy.voicePlay}
@@ -525,10 +554,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 {copy.voiceAddDescription}
               </summary>
               <div className="mt-3 space-y-3 pb-1">
-                {sttStatus === "pending" && (
-                  <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribePending}</p>
-                )}
-                {sttStatus === "failed" && (
+                {sttStatus === "failed" && text.trim().length === 0 && (
                   <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribeFailed}</p>
                 )}
                 <textarea
@@ -599,9 +625,6 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           </div>
         )}
 
-        {phase === "idle" && !lean && (
-          <p className="mt-3 mb-0 text-xs text-accent/50">{copy.voiceOrType}</p>
-        )}
       </section>
     );
   },

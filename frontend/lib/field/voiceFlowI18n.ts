@@ -13,6 +13,9 @@ export type VoiceFlowCopy = {
   voiceSending: string;
   voiceTranscribePending: string;
   voiceTranscribeFailed: string;
+  /** Shown before first tap — browser may offer “allow once”; we release mic after each recording. */
+  voiceMicOnceHint: string;
+  voiceMicReleased: string;
 };
 
 const PL: VoiceFlowCopy = {
@@ -26,6 +29,9 @@ const PL: VoiceFlowCopy = {
   voiceSending: "Wysyłanie…",
   voiceTranscribePending: "Próbuję rozpoznać mowę…",
   voiceTranscribeFailed: "Transkrypcja niedostępna — nagranie możesz wysłać bez tekstu.",
+  voiceMicOnceHint:
+    "Przy pytaniu przeglądarki możesz wybrać „zezwól tylko tym razem”. Mikrofon działa wyłącznie na czas nagrania — potem dostęp jest zwalniany.",
+  voiceMicReleased: "Mikrofon wyłączony. Kolejne nagranie poprosi o zgodę ponownie.",
 };
 
 const EN: VoiceFlowCopy = {
@@ -39,6 +45,9 @@ const EN: VoiceFlowCopy = {
   voiceSending: "Sending…",
   voiceTranscribePending: "Trying to transcribe…",
   voiceTranscribeFailed: "Transcription unavailable — you can send the recording without text.",
+  voiceMicOnceHint:
+    "If the browser asks, you can choose “allow this time only”. The microphone is active only while recording — then access is released.",
+  voiceMicReleased: "Microphone off. The next recording will ask for permission again.",
 };
 
 const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
@@ -55,6 +64,9 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceSending: "Invio…",
     voiceTranscribePending: "Trascrizione in corso…",
     voiceTranscribeFailed: "Trascrizione non disponibile — potete inviare solo l'audio.",
+    voiceMicOnceHint:
+      "Se il browser chiede, potete scegliere «consenti solo questa volta». Il microfono è attivo solo durante la registrazione.",
+    voiceMicReleased: "Microfono disattivato. La prossima registrazione chiederà di nuovo il permesso.",
   },
   uk: {
     voiceRecordingReady: "Запис готовий.",
@@ -67,6 +79,9 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceSending: "Надсилання…",
     voiceTranscribePending: "Розпізнаю мовлення…",
     voiceTranscribeFailed: "Транскрипція недоступна — можна надіслати лише запис.",
+    voiceMicOnceHint:
+      "У діалогу браузера можна обрати «дозволити лише цього разу». Мікрофон активний лише під час запису.",
+    voiceMicReleased: "Мікрофон вимкнено. Наступний запис знову попросить дозволу.",
   },
   hu: {
     voiceRecordingReady: "Felvétel kész.",
@@ -79,9 +94,13 @@ const COPY: Partial<Record<Lang, VoiceFlowCopy>> = {
     voiceSending: "Küldés…",
     voiceTranscribePending: "Beszéd felismerése…",
     voiceTranscribeFailed: "Az átírás nem elérhető — a felvétel küldhető szöveg nélkül.",
+    voiceMicOnceHint:
+      "A böngésző kérdezhet — választhatja az „egyszer engedélyezem” lehetőséget. A mikrofon csak felvétel közben aktív.",
+    voiceMicReleased: "Mikrofon kikapcsolva. A következő felvétel újra engedélyt kér.",
   },
 };
 
 export function voiceFlowCopy(lang: Lang): VoiceFlowCopy {
-  return COPY[lang] ?? EN;
+  const block = COPY[lang];
+  return block ? { ...EN, ...block } : EN;
 }

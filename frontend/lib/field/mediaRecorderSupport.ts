@@ -28,3 +28,10 @@ export function createAudioRecorder(stream: MediaStream): MediaRecorder {
   const mimeType = pickAudioMimeType();
   return mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
 }
+
+/** Stop capture immediately — helps browsers treat permission as session-scoped (“allow once”). */
+export function releaseMediaStream(stream: MediaStream | null | undefined): void {
+  stream?.getTracks().forEach((track) => {
+    track.stop();
+  });
+}
