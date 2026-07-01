@@ -70,4 +70,12 @@ Przed każdą zmianą zadaj trzy pytania:
 2. Czy ta zmiana zmniejsza czy zwiększa ilość informacji, których naprawdę potrzebujemy?
 3. Gdy jest zadanie operacyjne: gdyby ten element zniknął jutro — czy użytkownik gorzej by je wykonał?
 
-Nie wdrażamy pustych obietnic.
+## Dyscyplina
+
+Zasady decyzji projektowych:
+
+- Projektujemy znaczenia, nie tłumaczenia.
+- Gramatyka jest ważniejsza niż scenariusze.
+- Rozmowa jest ważniejsza niż dokument.
+- Minimum informacji, maksimum zrozumienia.
+- Interfejs pokazuje wyłącznie dostępne możliwości.
