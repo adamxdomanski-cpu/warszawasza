@@ -2,11 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import LangNav from "../components/LangNav";
-import { initialFieldLang } from "../../lib/field/initialFieldLang";
-import type { Lang } from "../../lib/i18n";
-import { isPrivacyAudioEnabled, privacyAudioSrc } from "../../lib/privacyAudio";
-import { privacyCopy, privacyLangs } from "../../lib/privacyCopy";
+import { isPrivacyAudioEnabled, resolvePrivacyAudio } from "../../lib/privacyAudio";
+import { privacyCopy } from "../../lib/privacyCopy";
 
 function SectionBlock({ section }: { section: { heading: string; items?: readonly string[]; body?: readonly string[] } }) {
   return (
@@ -31,28 +28,19 @@ function SectionBlock({ section }: { section: { heading: string; items?: readonl
 }
 
 export default function PrivacyPageClient() {
-  const [lang, setLang] = useState<Lang>(() => initialFieldLang());
   const [listenOpen, setListenOpen] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
-  const copy = privacyCopy(lang);
-  const audioSrc = privacyAudioSrc(lang);
-  const audioReady = isPrivacyAudioEnabled(lang);
+  const copy = privacyCopy("pl");
+  const privacyAudio = resolvePrivacyAudio("pl");
+  const audioReady = isPrivacyAudioEnabled("pl");
 
   useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
+    document.documentElement.lang = "pl";
+  }, []);
 
   useEffect(() => {
     setListenOpen(false);
-  }, [lang, audioSrc]);
-
-  const onLangChange = (next: Lang) => {
-    if (privacyLangs().includes(next as "pl" | "en" | "it")) {
-      setLang(next);
-    } else {
-      setLang("pl");
-    }
-  };
+  }, [privacyAudio?.src]);
 
   const scrollToText = () => {
     textRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -61,9 +49,6 @@ export default function PrivacyPageClient() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-lg flex-col gap-8 px-6 py-16 sm:px-8">
       <header className="flex flex-col gap-4">
-        <div className="flex justify-end">
-          <LangNav lang={lang} onChange={onLangChange} variant="bracket" />
-        </div>
         <p className="m-0 font-mono-field text-sm font-medium tracking-[0.2em] text-accent">
           WARSZAWASZA
         </p>
@@ -98,10 +83,10 @@ export default function PrivacyPageClient() {
               </>
             ) : (
               <audio
-                key={audioSrc}
+                key={privacyAudio?.src}
                 controls
                 preload="metadata"
-                src={audioSrc}
+                src={privacyAudio?.src}
                 className="privacy-listen-audio w-full max-w-sm"
               />
             )}

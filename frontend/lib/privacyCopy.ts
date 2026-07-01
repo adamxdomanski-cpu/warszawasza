@@ -354,5 +354,10 @@ export function privacyCopy(lang: Lang): PrivacyCopy {
 }
 
 export function privacyLangs(): readonly ("pl" | "en" | "it")[] {
-  return ["pl", "en", "it"];
+  /** Live on /prywatnosc — add en/it when copy + audio are complete. */
+  return ["pl"];
+}
+
+export function initialPrivacyLang(): "pl" {
+  return "pl";
 }

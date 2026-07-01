@@ -1,0 +1,20 @@
+How we protect your data
+(~2 min · tone: system commitment to the person, not a policy read-aloud)
+
+---
+
+Hello.
+
+Before you use WARSZAWASZA, I want to explain in simple terms how we treat your data.
+
+Our rule is simple: we collect only what the system needs to work. We do not ask for information just because it might be useful someday.
+
+If you record an observation, you decide what to share. If you choose to attach your location, you do that consciously. We try to show clearly which information is used and for what purpose.
+
+We do not sell your data and we do not build user profiles. Our goal is not to know as much as possible about you. Our goal is to understand the situation you chose to report.
+
+Where possible, we limit the data we process to the minimum necessary. That is not only about regulations. It is one of the basic principles behind how we build WARSZAWASZA.
+
+If you want all the details, you will find the full privacy policy below.
+
+Thank you for listening.

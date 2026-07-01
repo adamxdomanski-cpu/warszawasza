@@ -8,6 +8,8 @@ type LangNavProps = {
   onChange: (lang: Lang) => void;
   variant?: "bracket" | "plain";
   surface?: "field" | "orient";
+  /** Defaults to all field languages. */
+  langs?: readonly Lang[];
 };
 
 export default function LangNav({
@@ -15,6 +17,7 @@ export default function LangNav({
   onChange,
   variant = "plain",
   surface = "field",
+  langs = LANGS,
 }: LangNavProps) {
   const bracket = variant === "bracket";
 
@@ -25,7 +28,7 @@ export default function LangNav({
       }${bracket ? " lang-nav--bracket" : ""}`}
       aria-label="Language"
     >
-      {LANGS.map((code, index) => {
+      {langs.map((code, index) => {
         const active = lang === code;
         const visible = bracket ? `[ ${code.toUpperCase()} ]` : code.toUpperCase();
         const accessibleName = `${visible}, ${LANG_ACCESSIBLE_NAMES[code]}`;
