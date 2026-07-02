@@ -1,220 +1,351 @@
-# LiveMesh — pilotaż operacyjny (wersja 0.1)
+# Pilotaż operacyjny — instrukcja (wersja 0.3)
 
-**Dla:** Tomek Karwowski (sponsor pilotażu), zespół testowy, potem Pokojowy Patrol  
-**Pytanie dokumentu:** *Czy warto wykonać pilotaż LiveMesh z własnym zespołem terenowym — zanim pójdziemy do Marcina z obserwacjami, nie z teorią?*  
+**Dla:** Tomek Karwowski, zespół prowadzący test  
+**Zacznij od:** [`livemesh-propozycja-pilotazu.md`](livemesh-propozycja-pilotazu.md) (~2 min)  
 **Data:** lipiec 2026
 
 ---
 
-## Cel
+# 1. DLACZEGO
 
-Zweryfikować, czy rozmieszczenie kilku **punktów obserwacji** na terenie dużego wydarzenia może pomóc **jednemu operatorowi** szybciej zorientować się, **który fragment pola wymaga uwagi**.
+## Jedno pytanie
 
-Pilotaż **nie** służy ocenie technologii jako produktu. Ma odpowiedzieć, czy taka **metoda pracy** wnosi wartość operacyjną.
+Czy kilka punktów obserwacji w stałych miejscach pomaga **jednemu operatorowi** szybciej wskazać, **który fragment pola wymaga uwagi**?
 
-**Nie pytamy:** „Czy LiveMesh jest dobry?”  
-**Pytamy:** „Czy warto zrobić ten eksperyment — i co z niego wynika?”
+To test **metody pracy**. Telefon jest narzędziem — bo już go mamy, bez zakupu sprzętu.
+
+**Wynik dla prowadzącego pilotaż:** albo masz podstawę do kolejnego kroku, albo uczciwe „zamykamy” — oba są dobre.
 
 ---
 
-## Założenia pilotażu
+## Dlaczego zaczynamy od naszego zespołu
+
+- znamy się i pracujemy razem,
+- poruszamy się po terenie wydarzenia,
+- możemy poprawiać sposób działania na bieżąco.
+
+**Wynik dla prowadzącego:** pierwsze wnioski bez angażowania Pokojowego Patrolu. Do Marcina idziemy z obserwacjami — nie z koncepcją.
+
+---
+
+## Dlaczego nie od razu cały festiwal
 
 | | |
 |---|---|
 | **Czas** | Jeden wieczór lub jedna zmiana |
 | **Teren** | 2–3 sektory |
-| **Punkty obserwacji** | 2–3 (na pilotaż: zwykłe telefony w stałych miejscach) |
-| **Operator** | 1 osoba przy ekranie |
-| **Patrol** | Bez zmian procedur Pokojowego Patrolu |
-| **Wyjście** | Test można **zakończyć w dowolnym momencie** |
+| **Wyjście** | Test można przerwać w dowolnym momencie |
 
-**Koszt — uczciwie:**
-
-- **Sprzęt:** bliski zeru, jeśli używamy telefonów, które już są.
-- **Organizacja:** czas operatora, osoby kontaktowej, ~30 minut debriefu, obecność zespołu przy pierwszym ustawieniu. To **nie** jest „darmowe” — to **niski koszt** przy małym zakresie.
+**Wynik dla prowadzącego:** niskie ryzyko dla wydarzenia. Wniosek dotyczy wąskiego fragmentu pola — nie całego Pol’and’Rock.
 
 ---
 
-## Cel operacyjny
+# 2. CO ROBIMY
 
-**Nie sprawdzamy:** czy system działa w laboratorium.
+## EPIC-001 — walidacja pilotażu
 
-**Sprawdzamy:** czy **pomaga ludziom** podejmować decyzje w terenie — albo szczerze mówi, że nie pomaga.
-
----
-
-## Przebieg testu
-
-### Etap 1 — Wyznaczenie sektorów
-
-Wspólnie na kartce: 2–3 fragmenty pola (np. A, B, C) — **nazwy operacyjne zespołu**, nie nasze.
-
-### Etap 2 — Punkty obserwacji
-
-W każdym sektorze stoi **jeden telefon** (punkt obserwacji):
-
-- nieruchomy,
-- **nie** w kieszeni ratownika,
-- **nie** używany przez patrol w trakcie akcji,
-- zasilany (powerbank lub prąd w punkcie służbowym).
-
-### Etap 3 — Informacja do operatora
-
-Punkty obserwacji okresowo przekazują **dwie liczby ze swojego sektora** (głośność otoczenia, anonimowa „gęstość” sygnałów radiowych w powietrzu — bez tożsamości osób).
-
-Przy słabym GSM dane mogą **opóźniać się** lub sektor może być oznaczony jako **brak danych** — to nie znaczy „spokój”, tylko „nie wiemy teraz”.
-
-### Etap 4 — Operator
-
-Patrzy na ekran. Jeśli któryś sektor wyraźnie odbiega od pozostałych, może powiedzieć patrolowi:
-
-> „Sprawdź sektor B.”
-
-I tyle. Nie: „jedź”, „wezwij karetkę”, „to pożar”.
-
-### Etap 5 — Patrol
-
-Robi dokładnie to, co robiłby normalnie. System **niczego nie nakazuje**. Decyzja zawsze po stronie człowieka.
-
-### Po zakończeniu — 30 minut rozmowy
-
-- Czy wskazania były **zrozumiałe**?
-- Czy **pomagały**?
-- Czy **przeszkadzały**?
-- Czy **odwracały uwagę**?
-- Czy użyłbyś tego **drugi raz**?
-
----
-
-## Co pilotaż może przynieść — plusy i minusy (skrót)
-
-| Plusy (jeśli się sprawdzi) | Minusy (nawet przy udanym teście technicznym) |
-|----------------------------|-----------------------------------------------|
-| Krótsza chwila orientacji: *gdzie patrzeć najpierw* | Zależność od sieci i zasilania punktów |
-| Jeden operator, bez szkolenia całej załogi | Ryzyko błędnej interpretacji: „ekran milczy = jest OK” |
-| Niski koszt sprzętu na start | Koszt **czasu** ludzi pod presją — trzeba policzyć |
-| Łatwo przerwać bez zmiany procedur medycznych | Tylko 2–3 sektory — wniosek **lokalny**, nie o całym polu |
-| Wnioski przed rozmową z Pokojowym Patrolem | Prototyp wymaga obecności twórców przy pierwszym teście |
-| Materiał do decyzji: kontynuować / nie | Oczekiwania „system wie wszystko” — trzeba tłumić z góry |
-
----
-
-## SWOT pilotażu
-
-*SWOT dotyczy **eksperymentu organizacyjnego**, nie oceny „czy LiveMesh jako produkt wygra rynek”.*
-
-### S — Mocne strony (Strengths)
-
-- Bardzo niski **koszt sprzętowy** — telefony, które już są.
-- Prosty **model organizacyjny**: jeden operator, 2–3 punkty, jedna zmiana.
-- **Łatwo przerwać** test bez konsekwencji dla procedur ratowniczych.
-- **Brak aplikacji w kieszeni** każdego ratownika — telefony stoją w miejscach.
-- Możliwość wykonania testu **jeszcze przed festiwalem** — na własnym terenie, z ludźmi, którzy się znają.
-- Zespół testowy **pracuje razem** — szybki debrief i poprawki.
-- Jasny kontrakt: system wskazuje **sektor**, nie diagnozę i nie rozkaz.
-
-### W — Słabe strony (Weaknesses)
-
-- **Zależność od sieci GSM** — na masowym evencie sieć bywa bezużyteczna; synchronizacja może być opóźniona.
-- **Zasilanie** punktów obserwacji — kto podłącza, kto sprawdza w trakcie zmiany.
-- **Mała liczba punktów** (2–3) — ograniczona reprezentatywność.
-- **Brak danych historycznych** z poprzednich edycji festiwalu pod te progi.
-- **Prototyp** — pierwszy test wymaga obecności twórców (ustawienie, GSM, debrief).
-- **Bufor offline na telefonie w terenie** — zaplanowany, **jeszcze do domknięcia na polu** (uczciwie przed obietnicą).
-- **Koszt organizacyjny** łatwo niedoszacować, jeśli mówi się tylko „0 zł za telefony”.
-
-### O — Szanse (Opportunities)
-
-*Jeśli pilotaż da użyteczne wnioski — nie automatycznie „wdrożenie”:*
-
-- Rozszerzenie liczby sektorów po **świadomej** decyzji.
-- **Dedykowane urządzenia** zamiast telefonów prywatnych (stare, stabilne smartfony — bez fortuny).
-- Lepsza orientacja operatora przy rozciągniętym patrolu.
-- Krótszy czas lokalizacji „gdzie patrzeć” w szczycie wieczoru.
-- Metoda sprawdzona na **innych wydarzeniach masowych** — osobna decyzja za każdym razem.
-- Wejście do rozmowy z Pokojowym Patrolem z **obserwacjami z terenu**, nie ze slajdów.
-
-### T — Zagrożenia (Threats)
-
-- **Przeciążenie GSM** — system nie daje obrazu na żywo; ryzyko frustracji operatora.
-- **Błędna interpretacja** wskazań lub ich braku.
-- Uznanie ekranu za **„wyrocznię”** zamiast podpowiedzi — **rozmycie odpowiedzialności**.
-- **Zbyt duże oczekiwania** wobec pilotażu („system załatwi orientację całego pola”).
-- **Brak czasu operatora** — kolejny ekran przy pełnych rękach roboty.
-- **Logistyka punktów** — złe miejsce telefonu = bezużyteczne dane.
-- **Zła komunikacja** („śledzimy was na mapie”) — opór zespołu mimo że tak nie działa.
-- Próba **skalowania wizji** (woda, śmieci, technicy) **przed** udanym testem jednego procesu — chaos w sztabie.
-
----
-
-## Pytania, na które ma odpowiedzieć pilotaż
-
-*Rdzeń dokumentu — plan eksperymentu, nie dowód sukcesu z góry.*
-
-1. Czy **jeden operator** jest w stanie efektywnie korzystać z takiego widoku sytuacji?
-2. Czy rozmieszczenie **2–3 punktów obserwacji** daje **użyteczne** informacje (nie tylko technicznie poprawne)?
-3. Czy **telefony** sprawdzają się jako pierwsza platforma testowa?
-4. Jak zachowuje się układ przy **słabym lub niestabilnym** zasięgu GSM?
-5. Czy zespół uzna, że **korzyści przewyższają koszt organizacyjny** (czas, nie tylko sprzęt)?
-6. Jakie **zmiany** należy wprowadzić przed ewentualnym testem z **Pokojowym Patrolem**?
-7. Czy ktoś z zespołu uznałby ciszę na ekranie za **„nie ma problemu”** — i jak temu zapobiec w rozmowie?
-
----
-
-## Kryteria sukcesu
-
-Pilotaż uznajemy za **udany**, gdy większość poniższych odpowiedzi brzmi **tak**:
-
-- [ ] Operator **rozumiał** wskazania.
-- [ ] Patrol **rozumiał** komunikaty („sprawdź sektor …”).
-- [ ] Wskazania były **pomocne** (nawet jeśli rzadkie).
-- [ ] Układ **nie przeszkadzał** w normalnej pracy.
-- [ ] Obsługa **nie wymagała** dodatkowego szkolenia całej załogi.
-- [ ] Zespół **chciałby powtórzyć** test (z poprawkami) **albo** szczerze powiedział dlaczego nie — i wiemy co dalej.
-
-**Sukces nie oznacza** „wdrażamy na cały festiwal”. Oznacza: **mamy podstawę do decyzji**.
-
----
-
-## Kryteria niepowodzenia
-
-Pilotaż uznajemy za **nieudany**, gdy wystąpi **przynajmniej jedno** z poniższych:
-
-- [ ] Operator **ignorował** ekran (bo nie wnosił wartości lub rozpraszał).
-- [ ] Wskazania były **niezrozumiałe** lub mylące.
-- [ ] Układ **rozpraszał** ludzi w terenie.
-- [ ] Konfiguracja była **zbyt skomplikowana** na warunki pola.
-- [ ] Utrzymanie punktów obserwacji wymagało **zbyt dużego wysiłku** względem korzyści.
-- [ ] Zespół uznał, że **nie wnosi żadnej wartości** — i potrafimy to opisać konkretnie.
-- [ ] Pojawiła się **błędna interpretacja odpowiedzialności** („skoro system nie pokazał, to było OK”) **bez** korekty w debriefu.
-
-**Niepowodzenie pilotażu to też wynik** — pozwala zakończyć lub zmienić metodę bez wdrożenia.
-
----
-
-## Plan w trzech krokach (zalecany)
+**Cel:** sprawdzić, czy metoda orientacji sektorowej wnosi wartość operacyjną.
 
 ```
-Krok 1   Test z własnym zespołem terenowym
-              ↓
-         własne telefony, własny wieczór, debrief
-              ↓
-Krok 2   Omówienie z Tomkiem
-              ↓
-         co zadziałało, co nie, czy iść do Marcina
-              ↓
-Krok 3   Rozmowa z Marcinem / Pokojowym Patrolem
-              ↓
-         nie koncepcja — pierwsze obserwacje z terenu
+STORY-01  Wyznaczyć sektory
+STORY-02  Ustawić punkty obserwacji
+STORY-03  Przeprowadzić test (jedna zmiana)
+STORY-04  Debrief i decyzja STOP / ITERACJA
 ```
+
+**Wynik dla prowadzącego:** cztery kroki, cztery momenty „done” — bez rozlewania zakresu.
+
+---
+
+## Co z tego ma osoba decyzyjna (Tomek)
+
+| Co robimy | Co z tego masz |
+|-----------|----------------|
+| 2–3 telefony z zespołu | Nie kupujesz sprzętu |
+| Jeden operator | Nie szkolisz całej załogi |
+| Jeden wieczór | Wynik następnego dnia |
+| Test można przerwać | Nie ryzykujesz całego eventu |
+| Najpierw nasz zespół | Patrol nie jest poligonem |
+| Ustawienie po naszej stronie | Zespół w zmianie tego nie obsługuje |
+
+**Wynik dla prowadzącego:** wiesz, co powiedzieć osobie, która liczy koszt czasu ludzi — nie tylko „0 zł za telefony”.
+
+---
+
+# 3. KTO CO ROBI
+
+| Kto | Robi | Nie robi |
+|-----|------|----------|
+| **Zespół twórców** | Ustawia punkty przed zmianą, ekran operatora, obecność przy starcie, podsumowanie po teście | Nie zastępuje sztabu festiwalu |
+| **Operator (wyznaczony)** | Patrzy na ekran, mówi: „sprawdź sektor …” | Nie wydaje rozkazów medycznych |
+| **Patrol** | Decyduje w terenie, radio, procedury jak dotąd | Nie obsługuje telefonów w akcji |
+| **Tomek** | Ocenia, czy eksperyment ma sens; czy iść dalej | Nie organizuje testu w terenie |
+| **Marcin / Patrol** | Dopiero po naszym teście — jeśli w ogóle | Nie jest poligonem na start |
+
+**Wynik dla prowadzącego:** przed zmianą wiesz, kogo do kogo z adresatem problemu.
+
+---
+
+# 4. CO POTRZEBA
+
+## Sprzęt i zasoby
+
+| Potrzebne | Skąd | Koszt |
+|-----------|------|-------|
+| 2–3 telefony w punktach | Z zasobów zespołu | 0 zł |
+| Zasilanie (powerbank / prąd) | Przy ustawieniu | Niski |
+| 1 ekran dla operatora | Po stronie zespołu twórców na pilotaż | Po naszej stronie |
+| Kartka z szkicem sektorów | — | 0 zł |
+
+Telefony **po ustawieniu działają samodzielnie**. Zespół w trakcie zmiany **nie musi ich obsługiwać**.
+
+## Koszt prawdziwy (czas)
+
+- operator przy ekranie (jedna zmiana),
+- ustawienie przed startem,
+- ~30 min debrief po teście.
+
+**Wynik dla prowadzącego:** budżet liczysz w godzinach ludzi — nie tylko w sprzęcie.
+
+---
+
+## Ryzyka — krótko
+
+| Ryzyko | Co robimy |
+|--------|-----------|
+| GSM pada | Ekran może pokazać „brak danych” — to nie znaczy „spokój”. Test można przerwać. |
+| Zasilanie | Ustalamy przy ustawieniu — my. |
+| „Ekran milczy = OK” | Ustalamy w debriefu — to błąd interpretacji. |
+| Zbyt duże oczekiwania | Pilotaż ≠ wdrożenie na całe pole. |
+
+**Wynik dla prowadzącego:** wiesz, co powiedzieć zespołowi, zanim włączysz ekran.
+
+---
+
+# 5. JAK WYGLĄDA TEST
+
+## Schemat pola
+
+```
+         OBSERWACJA W TERENIE
+              A1  B1  C1
+                   │
+         informacja z sektorów
+                   │
+            wspólny obraz
+                   │
+           operator ocenia
+                   │
+           decyzja człowieka
+                   │
+      patrol / radio / procedury
+
+──────────────────────────────
+Nie decyduje · nie diagnozuje · nie zastępuje
+Pomaga zobaczyć, gdzie warto spojrzeć
+──────────────────────────────
+```
+
+---
+
+## STORY-01 — Wyznaczyć sektory
+
+- Kartka, ~30 minut wspólnie.
+- 2–3 fragmenty pola — **nazwy operacyjne zespołu**.
+- Wiadomo, który patrol reaguje na który sektor.
+
+**Done when:**
+
+- [ ] istnieją 3 sektory (lub 2 — jeśli tak ustalicie),
+- [ ] mają nazwy,
+- [ ] wiadomo, kto odpowiada.
+
+**Wynik dla prowadzącego:** bez szkicu nie startujecie.
+
+---
+
+## STORY-02 — Ustawić punkty obserwacji
+
+- Po jednym telefonie na sektor, w stałym miejscu.
+- Nie w kieszeni ratownika.
+- Zasilanie podłączone przed zmianą.
+
+**Done when:**
+
+- [ ] telefony stoją,
+- [ ] zasilanie działa,
+- [ ] operator widzi dane na ekranie.
+
+**Wynik dla prowadzącego:** patrol wchodzi w zmianę — punkty już działają.
+
+---
+
+## STORY-03 — Przeprowadzić test
+
+1. Operator patrzy na ekran.
+2. Jeśli sektor wymaga uwagi: **„Sprawdź sektor B.”** — i tyle.
+3. Patrol robi to, co zawsze.
+
+Przy słabym GSM: **brak danych ≠ brak problemu**.
+
+**Done when:**
+
+- [ ] jedna zmiana zakończona,
+- [ ] operator korzystał z ekranu,
+- [ ] patrol pracował normalnie.
+
+**Wynik dla prowadzącego:** jedna zmiana, jeden wieczór — koniec testu, nie kontynuacja „bo może coś się jeszcze wydarzy”.
+
+---
+
+## STORY-04 — Debrief
+
+30 minut. Pytania:
+
+- Czy wskazania były zrozumiałe?
+- Czy pomagały?
+- Czy przeszkadzały?
+- Czy użyłbyś tego drugi raz?
+
+**Done when:**
+
+- [ ] zapisane: co działało, co przeszkadzało,
+- [ ] decyzja: **STOP** lub **ITERACJA** (kolejny test z poprawkami).
+
+**Wynik dla prowadzącego:** następnego dnia wiesz, czy idziecie do Marcina — czy zamykacie.
+
+---
+
+# 6. JAK OCENIMY WYNIK
+
+## Sukces (większość „tak”)
+
+- [ ] Operator rozumiał wskazania.
+- [ ] Patrol rozumiał komunikaty.
+- [ ] Wskazania były pomocne.
+- [ ] Test nie przeszkadzał.
+- [ ] Bez szkolenia całej załogi.
+- [ ] Powtórzylibyście **albo** wiecie dlaczego nie.
+
+**Sukces ≠ wdrożenie na cały festiwal.**
+
+**Wynik dla prowadzącego:** masz argument „idziemy dalej” albo „poprawiamy i powtarzamy” — nie „wdrażamy wszędzie”.
+
+---
+
+## Niepowodzenie (choć jedno)
+
+- [ ] Operator ignorował ekran.
+- [ ] Wskazania niezrozumiałe lub mylące.
+- [ ] Test rozpraszał ludzi.
+- [ ] Utrzymanie punktów > korzyść.
+- [ ] Zespół: „nie wnosi wartości”.
+- [ ] „Nie pokazało = było OK” — bez korekty w debriefu.
+
+**Niepowodzenie też jest wynikiem.**
+
+**Wynik dla prowadzącego:** masz pozwolenie, żeby zamknąć — bez tłumaczenia się technologią.
+
+---
+
+## SWOT pilotażu (skrót)
+
+Każdy wiersz: **co to znaczy dla osoby decyzyjnej**.
+
+### Mocne
+
+| | Dla decydenta |
+|---|---------------|
+| Niski koszt sprzętu | Bez budżetu na start |
+| 1 operator, 2–3 punkty | Bez przebudowy organizacji |
+| Łatwo przerwać | Bez ryzyka całego eventu |
+| Test na nas przed Patrolem | Marcin nie jest poligonem |
+
+### Słabe
+
+| | Dla decydenta |
+|---|---------------|
+| GSM na evencie | Opóźnienia lub przerwanie testu |
+| Zasilanie punktów | Ustalone przy ustawieniu — my |
+| Tylko 2–3 sektory | Wąski wniosek — świadomie |
+| Pierwszy raz | Bez historii z poprzednich edycji |
+
+### Szanse (po „tak” — osobna decyzja)
+
+| | Dla decydenta |
+|---|---------------|
+| Więcej sektorów | Skalowanie dopiero po teście |
+| Osobne telefony festiwalowe | Bez prywatnych urządzeń |
+| Wnioski przed Marcinem | Rozmowa z terenu, nie ze slajdów |
+
+### Zagrożenia
+
+| | Dla decydenta |
+|---|---------------|
+| GSM pada | Mało danych — też wynik |
+| Ekran jako „wyrocznia” | Wyłączamy, jeśli przeszkadza |
+| Rozszerzanie na inne zespoły przed testem | Nie robimy |
+
+**Wynik dla prowadzącego:** SWOT służy decyzji o **eksperymencie** — nie o „produkcie”.
+
+---
+
+## Plan po teście
+
+```
+Test na naszym zespole
+        ↓
+Omówienie z Tomkiem
+        ↓
+Marcin / Patrol — tylko jeśli ITERACJA ma sens
+        ↓
+z obserwacjami, nie z koncepcją
+```
+
+---
+
+# Załączniki
+
+## Mail do Tomka
+
+**Temat:** Propozycja pilotażu — proszę o krytykę
+
+**Załącznik:** [`livemesh-propozycja-pilotazu.md`](livemesh-propozycja-pilotazu.md) (zacznij od tego)
+
+Treść maila jest w pierwszej stronie załącznika — list do Tomka na początku dokumentu. Wysyłasz plik, nie kopiujesz całości do body.
+
+Krótko w body wystarczy:
+
+> Master — w załączniku propozycja małego testu. Zacznij od pierwszej strony (list). Jak coś nie gra — powiedz wprost. Pozdro, Adam
 
 ---
 
 ## Powiązane dokumenty
 
-- Instrukcja dla operacji w terenie (Marcin): [`marcin-garczynski-livemesh-brief.md`](marcin-garczynski-livemesh-brief.md)
-- Szczegóły techniczne — na żądanie, osobno (`polandrock-livemesh`, `docs/RATOWNIK.md`)
+| Warstwa | Plik |
+|---------|------|
+| 1 strona · 2 min | [`livemesh-propozycja-pilotazu.md`](livemesh-propozycja-pilotazu.md) |
+| Instrukcja operacyjna | ten dokument |
+| Granice zakresu | [`livemesh-pilot-manifest.md`](livemesh-pilot-manifest.md) |
+| Marcin (po teście) | [`marcin-garczynski-livemesh-brief.md`](marcin-garczynski-livemesh-brief.md) |
+| Specyfikacja techniczna | na żądanie (`polandrock-livemesh`) |
 
 ---
 
-Celem pilotażu nie jest udowodnienie, że system działa. Celem jest sprawdzenie, czy **pomaga ludziom pracującym w terenie** — albo uczciwe stwierdzenie, że nie pomaga.
+## Notatka redakcyjna (wewnętrzna)
+
+Miejsca, gdzie nadal przebija język twórcy — do dalszego cięcia przy kolejnej wersji:
+
+| Miejsce | Problem | Propozycja |
+|---------|---------|------------|
+| „EPIC / STORY” | Język narzędzi projektowych, nie sztabu | Zostawić jako checklistę „krok 1–4” w PDF dla Tomka; w rozmowie mówić „cztery kroki” |
+| „walidacja pilotażu” | Brzmi jak produkt IT | „sprawdzenie, czy metoda ma sens” |
+| „operator widzi dane” | Architekt | „operator widzi, który sektor wymaga uwagi” |
+| „informacja z sektorów” | Nadal abstrakcyjne | „porównanie tego, co dzieje się w A, B i C” |
+| Schemat FIELD | Dobry — zostawić | — |
+| Mail „eksperyment operacyjny” | Lekko akademickie | „mały test na naszym zespole” |
+| Odniesienia do LiveMesh w stopce | Nazwa produktu | Max 1× na końcu dokumentu |
+
+---
+
+Celem testu nie jest udowodnienie, że coś działa. Celem jest sprawdzenie, czy metoda pracy pomaga ludziom w terenie — albo uczciwe zamknięcie.

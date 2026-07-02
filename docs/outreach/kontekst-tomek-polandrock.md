@@ -108,7 +108,9 @@ Wspólna zasada wszystkich torów: **człowiek decyduje**; oprogramowanie porzą
 
 | Plik | Przeznaczenie |
 |------|----------------|
-| [`livemesh-pilot-operacyjny-swot.md`](livemesh-pilot-operacyjny-swot.md) | Tomek — czy warto pilotaż |
+| [`livemesh-propozycja-pilotazu.md`](livemesh-propozycja-pilotazu.md) | Tomek — 1 strona, ~2 min |
+| [`livemesh-pilot-manifest.md`](livemesh-pilot-manifest.md) | Zasady brzegowe pilotażu (hard rules) |
+| [`livemesh-pilot-operacyjny-swot.md`](livemesh-pilot-operacyjny-swot.md) | Tomek — instrukcja operacyjna |
 | [`marcin-garczynski-livemesh-brief.md`](marcin-garczynski-livemesh-brief.md) | Marcin — co przygotować |
 | [`../WARSZAWASZA-w-dwoch-minutach.md`](../WARSZAWASZA-w-dwoch-minutach.md) | WARSZAWASZA — osobny produkt |
 | `polandrock-livemesh/docs/RATOWNIK.md` | LiveMesh — fakty techniczne (na żądanie) |
