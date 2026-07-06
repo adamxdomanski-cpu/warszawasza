@@ -42,6 +42,19 @@ Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/
 
 **Diamond Protocol (roboczy, opt-in):** [`docs/protocol/diamond-protocol-v1.md`](docs/protocol/diamond-protocol-v1.md) — zasady robocze · `@diamond-protocol-v1.mdc` gdy potrzebny filtr. **Nie** konstytucja — żyje w Cursorze, czeka na moment.
 
+**Lejek projektowy v1.0:** [`docs/core/project-funnel.md`](docs/core/project-funnel.md) · `@project-funnel-v1`
+
+**Decision Review System:** [`docs/core/decision-review-system.md`](docs/core/decision-review-system.md) · `@review-roles` · `@role-profesor` … `@role-operator`
+
+**Heurystyki (kanon pracy):** [`docs/core/heurystyki.md`](docs/core/heurystyki.md) · `@heurystyki` · `alwaysApply`
+
+**Decision Engine (`warsztat/`):** [`docs/core/decision-engine-architecture.md`](docs/core/decision-engine-architecture.md) · `@decision-engine-architecture` — jeden silnik, profile (`field/safety` = Pol'and'Rock)
+
+```bash
+PYTHONPATH=. python3 warsztat/main.py          # symulacja field/safety
+python3 -m unittest discover -s warsztat/tests -v
+```
+
 **QC przed PR / produkcją:** [`docs/protocol/diamond-qc-v3.md`](docs/protocol/diamond-qc-v3.md) · [`docs/protocol/filary-i-klucze.md`](docs/protocol/filary-i-klucze.md) — Diamond QC v3 + filary / klucze interpretacyjne.
 
 ## Cursor
@@ -50,6 +63,6 @@ Build checklist Rozdziału 1: [`docs/core/final-integration-pass.md`](docs/core/
 |-------|------|------|
 | Principles | `.cursorrules` + `.cursor/rules/core.mdc` | same rules; core.mdc also `alwaysApply` |
 | Project | `.cursor/rules/warszawasza.mdc` | globs: `frontend/`, `fira/`, `backend/`, … |
-| Depth | `fira-protocol.mdc`, `warszawasza-field.mdc`, `diamond-protocol-v1.mdc` | narrower globs / **opt-in** — `@` gdy potrzebny filtr |
+| Depth | `project-funnel-v1.mdc`, `review-roles.mdc`, `role-*.mdc`, `next-step-heuristic.mdc`, `decision-engine-architecture.mdc`, `fira-protocol.mdc`, … | opt-in — `@` · `decision-engine-architecture` auto przy `warsztat/` |
 
 Historical methodology lives in `docs/` only — not in core rules.

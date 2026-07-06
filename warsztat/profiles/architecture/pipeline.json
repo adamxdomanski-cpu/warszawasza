@@ -1,0 +1,6 @@
+{
+  "profile": "architecture",
+  "description": "Decyzje architektoniczne — warsztat, kod, system.",
+  "reviewers": ["profesor", "cietrzew", "orzel", "jurek", "operator"],
+  "observers": ["markdown"]
+}

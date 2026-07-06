@@ -1,0 +1,13 @@
+# Decision Engine · kontrakt architekta
+
+**Evidence Pipeline v1.0** — architektura poznania, nie sterowania.
+
+**Kanon:** [`docs/core/decision-engine-architecture.md`](../../docs/core/decision-engine-architecture.md) · [`warsztat/CANON.md`](../../warsztat/CANON.md)
+
+`ingest → observe → match → review → assess → test`
+
+**Aksjomaty 28–32:** jeden silnik · silnik nie decyduje · traceability · odwracalność · milczenie = UNKNOWN
+
+**Nie:** `EvidencePipeline` · `DecisionSupport` · `recommended_action` · `festival_*`
+
+Operator decyduje. Silnik dostarcza audytowalną `Assessment`.

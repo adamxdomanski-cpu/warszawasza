@@ -1,0 +1,7 @@
+{
+  "profile": "field/safety",
+  "description": "Pol'and'Rock — redukcja niepewności sztabu. Nie osobny silnik.",
+  "reviewers": ["crowd_density", "medical", "infrastructure", "radio", "operator"],
+  "observers": ["manual", "radio"],
+  "matchers": ["regex"]
+}

@@ -1,0 +1,6 @@
+{
+  "profile": "communication/mail",
+  "description": "Outreach, mail — ten sam Decision Engine.",
+  "reviewers": ["profesor", "gil", "cietrzew", "operator"],
+  "observers": ["markdown"]
+}
