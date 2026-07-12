@@ -13,8 +13,11 @@ import { clearVoiceDraft, loadVoiceDraft, saveVoiceDraft } from "../../../lib/fi
 import {
   canUseAudioRecording,
   createAudioRecorder,
-  pickAudioMimeType,
+  prefersDeferredSpeechRecognition,
+  recorderBlobMime,
   releaseMediaStream,
+  startAudioRecorder,
+  stopAudioRecorder,
 } from "../../../lib/field/mediaRecorderSupport";
 import type { Lang } from "../../../lib/i18n";
 import { traceResidentCopy } from "../../../lib/i18n";
@@ -94,7 +97,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const mediaStreamRef = useRef<MediaStream | null>(null);
     const chunksRef = useRef<BlobPart[]>([]);
-    const audioMimeRef = useRef<string>("audio/webm");
+    const audioMimeRef = useRef<string>("audio/mp4");
     const timerRef = useRef<number | null>(null);
     const recognitionRef = useRef<{ stop: () => void } | null>(null);
     const userEditedTextRef = useRef(false);
@@ -137,11 +140,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       stopTranscription();
       const recorder = mediaRecorderRef.current;
       if (recorder && recorder.state !== "inactive") {
-        try {
-          recorder.stop();
-        } catch {
-          /* already stopped */
-        }
+        stopAudioRecorder(recorder);
       }
       mediaRecorderRef.current = null;
       releaseMediaStream(mediaStreamRef.current);
@@ -216,9 +215,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         mediaStreamRef.current = stream;
-        const picked = pickAudioMimeType();
-        audioMimeRef.current = picked?.split(";")[0] ?? "audio/webm";
         const recorder = createAudioRecorder(stream);
+        audioMimeRef.current = recorderBlobMime(recorder);
         chunksRef.current = [];
         recorder.ondataavailable = (e) => {
           if (e.data.size > 0) chunksRef.current.push(e.data);
@@ -237,8 +235,10 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
           }
         };
         mediaRecorderRef.current = recorder;
-        recorder.start();
-        startTranscription();
+        startAudioRecorder(recorder);
+        if (!prefersDeferredSpeechRecognition()) {
+          startTranscription();
+        }
         appendInteractionEvent("RECORD", "start");
         setSeconds(0);
         setPhase("recording");
@@ -261,7 +261,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         timerRef.current = null;
       }
       stopTranscription();
-      mediaRecorderRef.current?.stop();
+      const recorder = mediaRecorderRef.current;
+      if (recorder) stopAudioRecorder(recorder);
       appendInteractionEvent("RECORD", "stop");
       setPhase("review");
     }, [stopTranscription]);

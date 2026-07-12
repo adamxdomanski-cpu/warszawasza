@@ -101,7 +101,11 @@ export function getTraceRegistryCount(): number {
 
 export function registerTrace(trace: ObservationTracePayload): number {
   const next = [...readRegistry(), trace].slice(-99);
-  localStorage.setItem(TRACE_REGISTRY_KEY, JSON.stringify(next));
+  try {
+    localStorage.setItem(TRACE_REGISTRY_KEY, JSON.stringify(next));
+  } catch {
+    /* Safari private mode / quota */
+  }
   return next.length;
 }
 
