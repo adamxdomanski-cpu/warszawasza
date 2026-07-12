@@ -15,6 +15,7 @@ import {
   HEAT_RCB_CRITICAL,
 } from "../../../lib/field/heatFieldI18n";
 import { coldStartCopy } from "../../../lib/field/coldStartI18n";
+import { requestMicStream, canUseAudioRecording } from "../../../lib/field/mediaRecorderSupport";
 import { useFieldLang } from "../../../lib/field/useFieldLang";
 import {
   appendInteractionEvent,
@@ -44,7 +45,9 @@ export default function HeatFieldClient() {
   const onVoiceCta = () => {
     appendInteractionEvent("NEXT");
     bump();
-    voiceRef.current?.startRecording();
+    voiceRef.current?.startRecording(
+      canUseAudioRecording() ? requestMicStream() : undefined,
+    );
     window.requestAnimationFrame(() => {
       voicePanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });

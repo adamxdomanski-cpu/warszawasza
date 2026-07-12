@@ -13,8 +13,36 @@ const MIME_CANDIDATES = [
 /** Safari/iOS needs periodic slices + requestData before stop or blobs stay empty. */
 export const RECORDER_TIMESLICE_MS = 1000;
 
+/** Shorter slices on WebKit — first chunk before user stops a quick tap. */
+const RECORDER_TIMESLICE_SAFARI_MS = 250;
+
 /** Brief pause after requestData so Safari flushes the final chunk before stop. */
-const SAFARI_STOP_FLUSH_MS = 80;
+const SAFARI_STOP_FLUSH_MS = 120;
+
+export function recorderTimesliceMs(): number {
+  return needsSafariRecorderWorkarounds() ? RECORDER_TIMESLICE_SAFARI_MS : RECORDER_TIMESLICE_MS;
+}
+
+/** iOS Safari: call synchronously inside the tap handler — not after await/setState. */
+export function getAudioConstraints(): MediaTrackConstraints {
+  return {
+    echoCancellation: true,
+    noiseSuppression: true,
+  };
+}
+
+/** Start mic capture in the same user-gesture turn as the 🎤 tap (iOS requirement). */
+export function requestMicStream(): Promise<MediaStream> {
+  return navigator.mediaDevices.getUserMedia({ audio: getAudioConstraints() });
+}
+
+export function micAccessErrorName(err: unknown): string | null {
+  if (err instanceof DOMException) return err.name;
+  if (err && typeof err === "object" && "name" in err && typeof err.name === "string") {
+    return err.name;
+  }
+  return null;
+}
 
 export function isIOS(): boolean {
   if (typeof navigator === "undefined") return false;
@@ -58,7 +86,14 @@ export function canUseAudioRecording(): boolean {
 
 export function createAudioRecorder(stream: MediaStream): MediaRecorder {
   const mimeType = pickAudioMimeType();
-  return mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+  if (mimeType) {
+    try {
+      return new MediaRecorder(stream, { mimeType });
+    } catch {
+      /* iOS may report isTypeSupported yet throw on constructor */
+    }
+  }
+  return new MediaRecorder(stream);
 }
 
 export function recorderBlobMime(recorder: MediaRecorder): string {
@@ -69,7 +104,7 @@ export function recorderBlobMime(recorder: MediaRecorder): string {
 
 export function startAudioRecorder(recorder: MediaRecorder): void {
   if (needsSafariRecorderWorkarounds()) {
-    recorder.start(RECORDER_TIMESLICE_MS);
+    recorder.start(recorderTimesliceMs());
     return;
   }
   recorder.start();

@@ -8,6 +8,7 @@ import FieldBrandFooter from "./FieldBrandFooter";
 import FieldVoiceReport, { type FieldVoiceReportHandle } from "./FieldVoiceReport";
 import PrivacyLink from "../PrivacyLink";
 import { coldStartCopy } from "../../../lib/field/coldStartI18n";
+import { requestMicStream, canUseAudioRecording } from "../../../lib/field/mediaRecorderSupport";
 import { useFieldLang } from "../../../lib/field/useFieldLang";
 import { projectMotto } from "../../../lib/projectMotto";
 import {
@@ -29,7 +30,9 @@ export default function ColdStartClient() {
 
   const onVoice = () => {
     appendInteractionEvent("NEXT");
-    voiceRef.current?.startRecording();
+    voiceRef.current?.startRecording(
+      canUseAudioRecording() ? requestMicStream() : undefined,
+    );
     window.requestAnimationFrame(() => {
       voicePanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
