@@ -89,6 +89,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const [sentPayload, setSentPayload] = useState<ObservationTracePayload | null>(null);
     const [pendingDraft, setPendingDraft] = useState<ReturnType<typeof loadVoiceDraft>>(null);
     const [sending, setSending] = useState(false);
+    /** True while awaiting getUserMedia — lean mode hides idle UI, so show recording chrome immediately. */
+    const [micArming, setMicArming] = useState(false);
 
     const geoCopy = voiceGeoCopy(lang);
     const rc = traceResidentCopy(lang);
@@ -104,6 +106,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const playbackAudioRef = useRef<HTMLAudioElement>(null);
     const stopFinalizeTimerRef = useRef<number | null>(null);
     const deferredSttTimerRef = useRef<number | null>(null);
+    const armingGenRef = useRef(0);
     const ui = journeyUiCopy(lang);
 
     useEffect(() => {
@@ -243,25 +246,40 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
     const startRecording = useCallback(async () => {
       setMicFallback(false);
+      setMicArming(false);
       setSttStatus("idle");
       userEditedTextRef.current = false;
       recordingFinalizedRef.current = false;
       clearDeferredSttTimer();
       stopTranscription();
+      if (timerRef.current) {
+        window.clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
 
       const recordingCapable = canUseAudioRecording();
       setCanRecord(recordingCapable);
 
       if (!recordingCapable) {
+        setMicArming(false);
         setPhase("review");
         setMicFallback(true);
         appendInteractionEvent("RECORD", "manual");
         return;
       }
 
+      const armingGen = ++armingGenRef.current;
+      setSeconds(0);
+      setMicArming(true);
+      setPhase("recording");
+
       let stream: MediaStream | null = null;
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        if (armingGen !== armingGenRef.current) {
+          releaseMediaStream(stream);
+          return;
+        }
         mediaStreamRef.current = stream;
         const recorder = createAudioRecorder(stream);
         audioMimeRef.current = recorderBlobMime(recorder);
@@ -272,16 +290,17 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         recorder.onstop = () => finalizeRecording();
         mediaRecorderRef.current = recorder;
         startAudioRecorder(recorder);
+        setMicArming(false);
         if (prefersDeferredSpeechRecognition()) {
           scheduleDeferredStt();
         } else {
           startTranscription();
         }
         appendInteractionEvent("RECORD", "start");
-        setSeconds(0);
-        setPhase("recording");
         timerRef.current = window.setInterval(() => setSeconds((s) => s + 1), 1000);
       } catch {
+        if (armingGen !== armingGenRef.current) return;
+        setMicArming(false);
         releaseMicSession();
         setPhase("review");
         setMicFallback(true);
@@ -294,6 +313,14 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     ]);
 
     const stopRecording = useCallback(() => {
+      if (micArming) {
+        armingGenRef.current += 1;
+        setMicArming(false);
+        releaseMicSession();
+        setPhase("idle");
+        appendInteractionEvent("RECORD", "cancel");
+        return;
+      }
       if (timerRef.current) {
         window.clearInterval(timerRef.current);
         timerRef.current = null;
@@ -311,7 +338,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         return;
       }
       enterReviewPhase();
-    }, [clearDeferredSttTimer, enterReviewPhase, finalizeRecording, stopTranscription]);
+    }, [clearDeferredSttTimer, enterReviewPhase, finalizeRecording, micArming, releaseMicSession, stopTranscription]);
 
     const playRecording = useCallback(() => {
       const el = playbackAudioRef.current;
@@ -404,6 +431,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setGeoError(null);
       setHasAudioBlob(false);
       setMicFallback(false);
+      setMicArming(false);
       setSttStatus("idle");
       stopTranscription();
       if (audioUrl) URL.revokeObjectURL(audioUrl);
@@ -443,6 +471,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       setGeoError(null);
       setHasAudioBlob(false);
       setMicFallback(false);
+      setMicArming(false);
       setSttStatus("idle");
       stopTranscription();
       if (audioUrl) URL.revokeObjectURL(audioUrl);
@@ -528,7 +557,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
         {phase === "recording" && (
           <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
-            {lean && (
+            {(lean || micArming) && (
               <p className="m-0 text-xs leading-relaxed text-accent/50">{copy.voiceMicOnceHint}</p>
             )}
             <VoiceTapControl
@@ -664,6 +693,9 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
 
         {phase === "review" && !micFallback && !hasAudioBlob && (
           <div className={lean ? "space-y-3" : "mt-4 space-y-3"} aria-live="polite">
+            {seconds > 0 && (
+              <p className="m-0 text-sm text-accent/65">{copy.voiceTranscribeFailed}</p>
+            )}
             <label className="block space-y-2">
               <span className="text-sm text-ink">{copy.voiceTypeObservation}</span>
               <textarea
