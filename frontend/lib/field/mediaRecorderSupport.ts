@@ -2,6 +2,8 @@
 
 const MIME_CANDIDATES = [
   "audio/mp4",
+  "audio/aac",
+  "audio/x-m4a",
   "audio/webm;codecs=opus",
   "audio/webm",
   "audio/ogg;codecs=opus",
@@ -11,15 +13,31 @@ const MIME_CANDIDATES = [
 /** Safari/iOS needs periodic slices + requestData before stop or blobs stay empty. */
 export const RECORDER_TIMESLICE_MS = 1000;
 
+/** Brief pause after requestData so Safari flushes the final chunk before stop. */
+const SAFARI_STOP_FLUSH_MS = 80;
+
+export function isIOS(): boolean {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent;
+  if (/iPad|iPhone|iPod/i.test(ua)) return true;
+  // iPadOS 13+ may report as Mac with touch
+  return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+}
+
 export function isLikelySafari(): boolean {
   if (typeof navigator === "undefined") return false;
   const ua = navigator.userAgent;
   return /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|FxiOS|EdgiOS/i.test(ua);
 }
 
-/** Live STT + MediaRecorder on the same mic breaks on Safari desktop. */
+/** All WebKit-based mobile browsers use the same MediaRecorder quirks as Safari. */
+export function needsSafariRecorderWorkarounds(): boolean {
+  return isLikelySafari() || isIOS();
+}
+
+/** Live STT + MediaRecorder on the same mic breaks on Safari / iOS WebKit. */
 export function prefersDeferredSpeechRecognition(): boolean {
-  return isLikelySafari();
+  return needsSafariRecorderWorkarounds();
 }
 
 export function pickAudioMimeType(): string | undefined {
@@ -46,11 +64,11 @@ export function createAudioRecorder(stream: MediaStream): MediaRecorder {
 export function recorderBlobMime(recorder: MediaRecorder): string {
   const raw = recorder.mimeType?.split(";")[0]?.trim();
   if (raw) return raw;
-  return isLikelySafari() ? "audio/mp4" : "audio/webm";
+  return needsSafariRecorderWorkarounds() ? "audio/mp4" : "audio/webm";
 }
 
 export function startAudioRecorder(recorder: MediaRecorder): void {
-  if (isLikelySafari()) {
+  if (needsSafariRecorderWorkarounds()) {
     recorder.start(RECORDER_TIMESLICE_MS);
     return;
   }
@@ -60,8 +78,16 @@ export function startAudioRecorder(recorder: MediaRecorder): void {
 export function stopAudioRecorder(recorder: MediaRecorder): void {
   if (recorder.state === "inactive") return;
   try {
-    if (isLikelySafari() && typeof recorder.requestData === "function") {
+    if (needsSafariRecorderWorkarounds() && typeof recorder.requestData === "function") {
       recorder.requestData();
+      window.setTimeout(() => {
+        try {
+          if (recorder.state !== "inactive") recorder.stop();
+        } catch {
+          /* already stopped */
+        }
+      }, SAFARI_STOP_FLUSH_MS);
+      return;
     }
     recorder.stop();
   } catch {

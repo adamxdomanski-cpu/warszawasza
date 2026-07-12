@@ -102,6 +102,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     const recognitionRef = useRef<{ stop: () => void } | null>(null);
     const userEditedTextRef = useRef(false);
     const playbackAudioRef = useRef<HTMLAudioElement>(null);
+    const stopFinalizeTimerRef = useRef<number | null>(null);
+    const deferredSttTimerRef = useRef<number | null>(null);
     const ui = journeyUiCopy(lang);
 
     useEffect(() => {
@@ -123,6 +125,8 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
     useEffect(() => {
       return () => {
         if (timerRef.current) window.clearInterval(timerRef.current);
+        if (stopFinalizeTimerRef.current) window.clearTimeout(stopFinalizeTimerRef.current);
+        if (deferredSttTimerRef.current) window.clearTimeout(deferredSttTimerRef.current);
         if (audioUrl) URL.revokeObjectURL(audioUrl);
         recognitionRef.current?.stop();
         releaseMediaStream(mediaStreamRef.current);
@@ -195,10 +199,54 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
       }
     }, [lang]);
 
+    const clearDeferredSttTimer = useCallback(() => {
+      if (deferredSttTimerRef.current) {
+        window.clearTimeout(deferredSttTimerRef.current);
+        deferredSttTimerRef.current = null;
+      }
+    }, []);
+
+    const scheduleDeferredStt = useCallback(() => {
+      clearDeferredSttTimer();
+      deferredSttTimerRef.current = window.setTimeout(() => {
+        deferredSttTimerRef.current = null;
+        startTranscription();
+      }, 500);
+    }, [clearDeferredSttTimer, startTranscription]);
+
+    const enterReviewPhase = useCallback(() => {
+      setPhase("review");
+    }, []);
+
+    const recordingFinalizedRef = useRef(false);
+
+    const finalizeRecording = useCallback(() => {
+      if (recordingFinalizedRef.current) return;
+      recordingFinalizedRef.current = true;
+      if (stopFinalizeTimerRef.current) {
+        window.clearTimeout(stopFinalizeTimerRef.current);
+        stopFinalizeTimerRef.current = null;
+      }
+      releaseMediaStream(mediaStreamRef.current);
+      mediaStreamRef.current = null;
+      mediaRecorderRef.current = null;
+      const blob = new Blob(chunksRef.current, { type: audioMimeRef.current });
+      if (blob.size > 0) {
+        setHasAudioBlob(true);
+        setAudioUrl((prev) => {
+          if (prev) URL.revokeObjectURL(prev);
+          return URL.createObjectURL(blob);
+        });
+      }
+      enterReviewPhase();
+    }, [enterReviewPhase]);
+
     const startRecording = useCallback(async () => {
       setMicFallback(false);
       setSttStatus("idle");
       userEditedTextRef.current = false;
+      recordingFinalizedRef.current = false;
+      clearDeferredSttTimer();
       stopTranscription();
 
       const recordingCapable = canUseAudioRecording();
@@ -221,22 +269,12 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         recorder.ondataavailable = (e) => {
           if (e.data.size > 0) chunksRef.current.push(e.data);
         };
-        recorder.onstop = () => {
-          releaseMediaStream(mediaStreamRef.current);
-          mediaStreamRef.current = null;
-          mediaRecorderRef.current = null;
-          const blob = new Blob(chunksRef.current, { type: audioMimeRef.current });
-          if (blob.size > 0) {
-            setHasAudioBlob(true);
-            setAudioUrl((prev) => {
-              if (prev) URL.revokeObjectURL(prev);
-              return URL.createObjectURL(blob);
-            });
-          }
-        };
+        recorder.onstop = () => finalizeRecording();
         mediaRecorderRef.current = recorder;
         startAudioRecorder(recorder);
-        if (!prefersDeferredSpeechRecognition()) {
+        if (prefersDeferredSpeechRecognition()) {
+          scheduleDeferredStt();
+        } else {
           startTranscription();
         }
         appendInteractionEvent("RECORD", "start");
@@ -249,7 +287,7 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         setMicFallback(true);
         appendInteractionEvent("RECORD", "denied");
       }
-    }, [releaseMicSession, startTranscription, stopTranscription]);
+    }, [clearDeferredSttTimer, finalizeRecording, releaseMicSession, scheduleDeferredStt, startTranscription, stopTranscription]);
 
     useImperativeHandle(ref, () => ({ startRecording: () => void startRecording() }), [
       startRecording,
@@ -260,12 +298,20 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
         window.clearInterval(timerRef.current);
         timerRef.current = null;
       }
+      clearDeferredSttTimer();
       stopTranscription();
-      const recorder = mediaRecorderRef.current;
-      if (recorder) stopAudioRecorder(recorder);
       appendInteractionEvent("RECORD", "stop");
-      setPhase("review");
-    }, [stopTranscription]);
+      const recorder = mediaRecorderRef.current;
+      if (recorder && recorder.state !== "inactive") {
+        stopAudioRecorder(recorder);
+        // Safari occasionally skips onstop — don't leave user stuck on recording UI.
+        stopFinalizeTimerRef.current = window.setTimeout(() => {
+          if (mediaRecorderRef.current) finalizeRecording();
+        }, 1500);
+        return;
+      }
+      enterReviewPhase();
+    }, [clearDeferredSttTimer, enterReviewPhase, finalizeRecording, stopTranscription]);
 
     const playRecording = useCallback(() => {
       const el = playbackAudioRef.current;
@@ -545,9 +591,13 @@ const FieldVoiceReport = forwardRef<FieldVoiceReportHandle, FieldVoiceReportProp
                 ref={playbackAudioRef}
                 src={audioUrl}
                 preload="metadata"
+                playsInline
                 className="sr-only"
                 aria-hidden="true"
               />
+            )}
+            {sttStatus === "pending" && (
+              <p className="m-0 text-xs text-accent/50">{copy.voiceTranscribePending}</p>
             )}
             {audioUrl && (
               <SignalControl
